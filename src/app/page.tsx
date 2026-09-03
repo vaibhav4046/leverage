@@ -130,9 +130,9 @@ export default async function Home() {
               <div className="min-w-0">
                 <Reveal y={12}>
                   <div className="mono mb-7 inline-flex items-center gap-2 rounded-full border border-[var(--color-sapphire-hairline)] bg-[rgba(13,23,43,0.6)] px-3.5 py-1.5 text-[11px] text-[var(--color-frosted-lilac)] backdrop-blur">
-                    <span className="relative flex h-1.5 w-1.5">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-state-pass)] opacity-60" />
-                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-state-pass)]" />
+                    <span className="relative flex h-2 w-2">
+                      <span className="dot-live-halo absolute inline-flex h-full w-full animate-ping rounded-full" />
+                      <span className="dot-live relative inline-flex h-2 w-2 rounded-full" />
                     </span>
                     Hire your own host seat. No API key.
                   </div>
@@ -622,11 +622,11 @@ function Ribbon({ label, node, accent }: { label: string; node: React.ReactNode;
         {label}
       </div>
       <div
-        className="mt-1.5 text-[28px]"
+        className={`mt-1.5 text-[28px] ${accent ? 'grad-text-pass' : ''}`}
         style={{
           fontFamily: 'var(--font-display)',
           fontWeight: 500,
-          color: accent ? 'var(--color-state-pass)' : 'var(--color-quartz)',
+          color: accent ? undefined : 'var(--color-quartz)',
         }}
       >
         {node}

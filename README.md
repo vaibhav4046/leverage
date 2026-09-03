@@ -2,12 +2,21 @@
 
 **One frontier brain. An elastic workforce.**
 
+> Your best model should make the expensive decisions. It should not write the fortieth test.
+
+[![Live](https://img.shields.io/badge/live-useleverage.vercel.app-4ade80?style=flat-square)](https://useleverage.vercel.app)
+[![Tests](https://img.shields.io/badge/tests-47%20passing-4ade80?style=flat-square)](tests/invariants.test.ts)
+[![Paid inference](https://img.shields.io/badge/actual%20paid%20inference-%240.00-4ade80?style=flat-square)](demo/canonical-run.json)
+[![RocketRide](https://img.shields.io/badge/RocketRide-staging%20verified-85a6e9?style=flat-square)](docs/ROCKETRIDE_FINDINGS.md)
+
 **Live: https://useleverage.vercel.app** — a read-only public demo, seeded with the
 runs that actually happened. Every mutating route answers `403`; executing a mission
 needs a local repository to write into and a local model pool to hire from.
 
+![Leverage landing page](docs/shots/landing-hero.png)
+
 Leverage gives Claude, Codex and other MCP hosts a dynamic workforce of local, free and
-connected models — then verifies the work and replaces workers that fail.
+connected models, then verifies the work and replaces workers that fail.
 
 Your best model should decide the architecture. It should not spend the same premium
 compute writing the fortieth boilerplate test.
@@ -28,6 +37,13 @@ against each task, hires the best *eligible* one, gives it the smallest context 
 the job, executes it as a RocketRide pipeline, and refuses to call the task done until a
 compiler or a test runner says so. When a worker dies it keeps the worker's understanding
 and hands it to a replacement.
+
+### The cognitive handoff, replayed from the real event log
+
+![Mission replay](docs/shots/demo.png)
+
+*A worker hits a provider limit. Leverage checkpoints what it understood, hires a
+replacement, and the work resumes instead of restarting.*
 
 ## See it produce something
 
@@ -50,6 +66,17 @@ npm run fixture:reset:arcade
 npm run mission -- --arcade
 cd benchmark/arcade && npm test
 ```
+
+### Mission Control
+
+![Mission Control](docs/shots/app-overview.png)
+
+### Connected compute
+
+![Providers](docs/shots/app-providers.png)
+
+*Local runtimes, free routes, your MCP host seat, and your agent-CLI subscription.
+Credential values never leave the server and are never rendered.*
 
 ## The run this repository ships with
 

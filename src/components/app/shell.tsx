@@ -114,7 +114,10 @@ export function Stat({
       <span
         aria-hidden
         className="absolute inset-y-0 left-0 w-[2px]"
-        style={{ background: accent, opacity: tone === 'neutral' ? 0.5 : 0.9 }}
+        style={{
+          backgroundImage: `linear-gradient(180deg, ${accent} 0%, ${accent} 42%, transparent 100%)`,
+          opacity: tone === 'neutral' ? 0.55 : 0.95,
+        }}
       />
       <div className="flex items-start justify-between gap-3">
         <div className="mono text-[10.5px] uppercase tracking-[0.1em] text-[var(--color-ash)]">
@@ -201,16 +204,37 @@ export function Cell({
 
 export type Tone = 'pass' | 'fail' | 'warn' | 'live' | 'idle';
 
+/*
+ * Pill fills are gradients rather than flat tints, lit from the top left like the
+ * glass rims so state badges belong to the same material language. The text colour
+ * stays solid: gradient text at 10.5px is unreadable.
+ */
 const TONES: Record<Tone, { fg: string; bg: string; bd: string }> = {
-  pass: { fg: 'var(--color-state-pass)', bg: 'rgba(74,222,128,0.10)', bd: 'rgba(74,222,128,0.45)' },
-  fail: { fg: 'var(--color-state-fail)', bg: 'rgba(248,113,113,0.10)', bd: 'rgba(248,113,113,0.45)' },
-  warn: { fg: 'var(--color-state-warn)', bg: 'rgba(251,191,36,0.10)', bd: 'rgba(251,191,36,0.42)' },
+  pass: {
+    fg: 'var(--color-state-pass)',
+    bg: 'linear-gradient(135deg, rgba(74,222,128,0.20) 0%, rgba(52,211,153,0.07) 100%)',
+    bd: 'rgba(74,222,128,0.45)',
+  },
+  fail: {
+    fg: 'var(--color-state-fail)',
+    bg: 'linear-gradient(135deg, rgba(248,113,113,0.20) 0%, rgba(239,68,68,0.07) 100%)',
+    bd: 'rgba(248,113,113,0.45)',
+  },
+  warn: {
+    fg: 'var(--color-state-warn)',
+    bg: 'linear-gradient(135deg, rgba(251,191,36,0.20) 0%, rgba(217,119,6,0.07) 100%)',
+    bd: 'rgba(251,191,36,0.42)',
+  },
   live: {
     fg: 'var(--color-frosted-lilac)',
-    bg: 'rgba(133,166,233,0.10)',
+    bg: 'linear-gradient(135deg, rgba(133,166,233,0.22) 0%, rgba(98,95,255,0.08) 100%)',
     bd: 'rgba(133,166,233,0.45)',
   },
-  idle: { fg: 'var(--color-ash)', bg: 'rgba(171,174,187,0.07)', bd: 'var(--color-sapphire-hairline)' },
+  idle: {
+    fg: 'var(--color-ash)',
+    bg: 'linear-gradient(135deg, rgba(171,174,187,0.12) 0%, rgba(171,174,187,0.03) 100%)',
+    bd: 'var(--color-sapphire-hairline)',
+  },
 };
 
 export function Pill({
@@ -226,7 +250,7 @@ export function Pill({
   return (
     <span
       className="mono inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[10.5px] uppercase tracking-[0.08em]"
-      style={{ color: t.fg, background: t.bg, borderColor: t.bd }}
+      style={{ color: t.fg, backgroundImage: t.bg, borderColor: t.bd }}
     >
       {icon}
       {children}

@@ -126,6 +126,50 @@ body {
   border-radius: var(--radius-card);
 }
 
+/*
+ * Status dot.
+ *
+ * A flat fill reads as a printed circle. A radial gradient with the light source
+ * offset toward the top left gives it a curved surface, and the ring underneath
+ * separates it from whatever it sits on rather than relying on the fill alone.
+ */
+.dot-live {
+  background:
+    radial-gradient(circle at 32% 28%, #a7f3c8 0%, #4ade80 46%, #16a34a 100%);
+  box-shadow:
+    0 0 0 1px rgba(74, 222, 128, 0.28),
+    0 0 9px 1px rgba(74, 222, 128, 0.5);
+}
+
+.dot-live-halo {
+  background: radial-gradient(circle, rgba(74, 222, 128, 0.55) 0%, rgba(74, 222, 128, 0) 70%);
+}
+
+/*
+ * Gradient rules for the accents that were flat.
+ *
+ * Used on the meaningful pieces only: state, the primary action, section rules.
+ * A gradient on every surface is how a page turns to soup.
+ */
+.grad-text-pass {
+  background: linear-gradient(100deg, #4ade80 0%, #86efac 55%, #34d399 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.grad-rule {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(36, 55, 90, 0) 0%,
+    rgba(133, 166, 233, 0.55) 22%,
+    rgba(98, 95, 255, 0.45) 55%,
+    rgba(36, 55, 90, 0) 100%
+  );
+}
+
 .surface-highlight {
   background: var(--color-cobalt);
   border: 1px solid #1e2b48;
