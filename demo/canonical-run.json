@@ -1,6 +1,6 @@
 {
   "mission": {
-    "id": "LVR-c3770b4b",
+    "id": "LVR-f8f72d56",
     "goal": "Finish the forge-app receipt splitting library so the whole existing test suite passes. Do not modify any file under test/. Budget: $0. Quality: production.",
     "status": "COMPLETED",
     "budget": {
@@ -13,9 +13,9 @@
     "privacy": {
       "mode": "prefer-local"
     },
-    "startedAt": "2026-09-03T02:30:15.340Z",
-    "completedAt": "2026-09-03T02:32:19.263Z",
-    "elapsedMs": 123923
+    "startedAt": "2026-09-03T03:24:07.867Z",
+    "completedAt": "2026-09-03T03:26:37.471Z",
+    "elapsedMs": 149604
   },
   "tasks": [
     {
@@ -24,8 +24,9 @@
       "category": "backend",
       "state": "PASSED",
       "dependencies": [],
-      "attemptCount": 1,
-      "workerRunId": "wr_3d2931d0",
+      "attemptCount": 3,
+      "workerRunId": "wr_27e5e820",
+      "checkpointId": "cp_9e28829ad996",
       "fileScope": [
         "src/money.js"
       ]
@@ -36,9 +37,9 @@
       "category": "backend",
       "state": "PASSED",
       "dependencies": [],
-      "attemptCount": 3,
-      "workerRunId": "wr_318b7993",
-      "checkpointId": "cp_b269132c1e4f",
+      "attemptCount": 2,
+      "workerRunId": "wr_e432ff20",
+      "checkpointId": "cp_f749a1d987f6",
       "fileScope": [
         "src/validate.js"
       ]
@@ -53,7 +54,7 @@
         "validate"
       ],
       "attemptCount": 1,
-      "workerRunId": "wr_aa4a95cf",
+      "workerRunId": "wr_b9e07cd2",
       "fileScope": [
         "src/split.js"
       ]
@@ -67,7 +68,7 @@
         "split"
       ],
       "attemptCount": 1,
-      "workerRunId": "wr_48b6d11b",
+      "workerRunId": "wr_c64c8afd",
       "fileScope": [
         "src/index.js"
       ]
@@ -75,25 +76,81 @@
   ],
   "workers": [
     {
-      "id": "wr_823e109c",
-      "missionId": "LVR-c3770b4b",
-      "taskId": "validate",
+      "id": "wr_8e7162b8",
+      "missionId": "LVR-f8f72d56",
+      "taskId": "money",
       "modelKey": "pool:auto/best-free",
       "providerId": "pool",
       "displayName": "Pool · best-free",
       "role": "Backend Engineer",
       "costClass": "free",
       "status": "replaced",
-      "startedAt": "2026-09-03T02:30:16.790Z",
+      "startedAt": "2026-09-03T03:24:09.751Z",
       "actualCostUsd": 0,
-      "auctionRationale": "72 task fit · 83 verified success over 17 prior jobs · free route, no spend",
-      "contextTokens": 421,
+      "auctionRationale": "72 task fit · 70 verified success over 28 prior jobs · free route, no spend",
+      "contextTokens": 453,
       "failureType": "RATE_LIMIT",
-      "finishedAt": "2026-09-03T02:30:16.791Z"
+      "finishedAt": "2026-09-03T03:24:09.752Z"
     },
     {
-      "id": "wr_3d2931d0",
-      "missionId": "LVR-c3770b4b",
+      "id": "wr_57fb59db",
+      "missionId": "LVR-f8f72d56",
+      "taskId": "validate",
+      "modelKey": "ollama:kodro-tutor:latest",
+      "providerId": "ollama",
+      "displayName": "kodro-tutor",
+      "role": "Backend Engineer",
+      "costClass": "local",
+      "status": "replaced",
+      "startedAt": "2026-09-03T03:24:09.754Z",
+      "actualCostUsd": 0,
+      "auctionRationale": "100 task fit · 29 verified success over 15 prior jobs · local runtime, no spend",
+      "contextTokens": 421,
+      "promptTokens": 695,
+      "completionTokens": 414,
+      "failureType": "TEST_FAILURE",
+      "finishedAt": "2026-09-03T03:24:33.459Z"
+    },
+    {
+      "id": "wr_4fa9467b",
+      "missionId": "LVR-f8f72d56",
+      "taskId": "money",
+      "modelKey": "ollama:kodro-tutor:latest",
+      "providerId": "ollama",
+      "displayName": "kodro-tutor",
+      "role": "Backend Engineer",
+      "costClass": "local",
+      "status": "replaced",
+      "startedAt": "2026-09-03T03:24:09.762Z",
+      "actualCostUsd": 0,
+      "resumedFromCheckpointId": "cp_e79faf1d95be",
+      "auctionRationale": "100 task fit · 29 verified success over 15 prior jobs · local runtime, no spend · 1 candidate excluded by policy",
+      "contextTokens": 464,
+      "promptTokens": 1203,
+      "completionTokens": 295,
+      "failureType": "TEST_FAILURE",
+      "finishedAt": "2026-09-03T03:24:39.994Z"
+    },
+    {
+      "id": "wr_e432ff20",
+      "missionId": "LVR-f8f72d56",
+      "taskId": "validate",
+      "modelKey": "pool:auto/best-free",
+      "providerId": "pool",
+      "displayName": "Pool · best-free",
+      "role": "Backend Engineer",
+      "costClass": "free",
+      "status": "passed",
+      "startedAt": "2026-09-03T03:24:33.467Z",
+      "actualCostUsd": 0,
+      "resumedFromCheckpointId": "cp_f749a1d987f6",
+      "auctionRationale": "72 task fit · 68 verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy",
+      "contextTokens": 858,
+      "finishedAt": "2026-09-03T03:25:51.578Z"
+    },
+    {
+      "id": "wr_27e5e820",
+      "missionId": "LVR-f8f72d56",
       "taskId": "money",
       "modelKey": "pool:auto/best-free",
       "providerId": "pool",
@@ -101,52 +158,16 @@
       "role": "Backend Engineer",
       "costClass": "free",
       "status": "passed",
-      "startedAt": "2026-09-03T02:30:16.791Z",
+      "startedAt": "2026-09-03T03:24:40.125Z",
       "actualCostUsd": 0,
-      "auctionRationale": "72 task fit · 79 verified success over 18 prior jobs · free route, no spend",
-      "contextTokens": 453,
-      "finishedAt": "2026-09-03T02:30:35.629Z"
+      "resumedFromCheckpointId": "cp_9e28829ad996",
+      "auctionRationale": "72 task fit · 68 verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy",
+      "contextTokens": 621,
+      "finishedAt": "2026-09-03T03:25:32.708Z"
     },
     {
-      "id": "wr_b23df57d",
-      "missionId": "LVR-c3770b4b",
-      "taskId": "validate",
-      "modelKey": "ollama:kodro-tutor:latest",
-      "providerId": "ollama",
-      "displayName": "kodro-tutor",
-      "role": "Backend Engineer",
-      "costClass": "local",
-      "status": "replaced",
-      "startedAt": "2026-09-03T02:30:16.794Z",
-      "actualCostUsd": 0,
-      "resumedFromCheckpointId": "cp_bf0c2bd4a287",
-      "auctionRationale": "100 task fit · 28 verified success over 12 prior jobs · local runtime, no spend · 1 candidate excluded by policy",
-      "contextTokens": 432,
-      "promptTokens": 1027,
-      "completionTokens": 385,
-      "failureType": "TEST_FAILURE",
-      "finishedAt": "2026-09-03T02:30:47.314Z"
-    },
-    {
-      "id": "wr_318b7993",
-      "missionId": "LVR-c3770b4b",
-      "taskId": "validate",
-      "modelKey": "pool:auto/best-free",
-      "providerId": "pool",
-      "displayName": "Pool · best-free",
-      "role": "Backend Engineer",
-      "costClass": "free",
-      "status": "passed",
-      "startedAt": "2026-09-03T02:30:47.332Z",
-      "actualCostUsd": 0,
-      "resumedFromCheckpointId": "cp_b269132c1e4f",
-      "auctionRationale": "72 task fit · 80 verified success over 19 prior jobs · free route, no spend · 1 candidate excluded by policy",
-      "contextTokens": 838,
-      "finishedAt": "2026-09-03T02:31:38.306Z"
-    },
-    {
-      "id": "wr_aa4a95cf",
-      "missionId": "LVR-c3770b4b",
+      "id": "wr_b9e07cd2",
+      "missionId": "LVR-f8f72d56",
       "taskId": "split",
       "modelKey": "pool:auto/best-free",
       "providerId": "pool",
@@ -154,15 +175,15 @@
       "role": "Backend Engineer",
       "costClass": "free",
       "status": "passed",
-      "startedAt": "2026-09-03T02:31:42.190Z",
+      "startedAt": "2026-09-03T03:25:57.992Z",
       "actualCostUsd": 0,
-      "auctionRationale": "72 task fit · 81 verified success over 20 prior jobs · free route, no spend",
-      "contextTokens": 1950,
-      "finishedAt": "2026-09-03T02:32:08.493Z"
+      "auctionRationale": "72 task fit · 70 verified success over 31 prior jobs · free route, no spend",
+      "contextTokens": 1120,
+      "finishedAt": "2026-09-03T03:26:31.742Z"
     },
     {
-      "id": "wr_48b6d11b",
-      "missionId": "LVR-c3770b4b",
+      "id": "wr_c64c8afd",
+      "missionId": "LVR-f8f72d56",
       "taskId": "index",
       "modelKey": "ollama:kodro-tutor:latest",
       "providerId": "ollama",
@@ -170,41 +191,51 @@
       "role": "Integrator",
       "costClass": "local",
       "status": "passed",
-      "startedAt": "2026-09-03T02:32:08.520Z",
+      "startedAt": "2026-09-03T03:26:31.764Z",
       "actualCostUsd": 0,
-      "auctionRationale": "100 task fit · 81 verified success over 4 prior jobs · local runtime, no spend",
-      "contextTokens": 552,
-      "promptTokens": 927,
-      "completionTokens": 215,
-      "finishedAt": "2026-09-03T02:32:19.263Z"
+      "auctionRationale": "100 task fit · 85 verified success over 6 prior jobs · local runtime, no spend",
+      "contextTokens": 553,
+      "promptTokens": 926,
+      "completionTokens": 216,
+      "finishedAt": "2026-09-03T03:26:37.470Z"
     }
   ],
   "checkpoints": [
     {
-      "id": "cp_bf0c2bd4a287",
-      "taskId": "validate",
+      "id": "cp_e79faf1d95be",
+      "taskId": "money",
       "fromModelKey": "pool:auto/best-free",
       "reason": "RATE_LIMIT",
-      "originalContextTokens": 421,
-      "checkpointTokens": 197,
-      "reductionPct": 53,
+      "originalContextTokens": 453,
+      "checkpointTokens": 196,
+      "reductionPct": 57,
       "remainingWork": []
     },
     {
-      "id": "cp_b269132c1e4f",
+      "id": "cp_f749a1d987f6",
       "taskId": "validate",
       "fromModelKey": "ollama:kodro-tutor:latest",
       "reason": "TEST_FAILURE",
-      "originalContextTokens": 432,
+      "originalContextTokens": 421,
       "checkpointTokens": 220,
-      "reductionPct": 49,
+      "reductionPct": 48,
+      "remainingWork": []
+    },
+    {
+      "id": "cp_9e28829ad996",
+      "taskId": "money",
+      "fromModelKey": "ollama:kodro-tutor:latest",
+      "reason": "TEST_FAILURE",
+      "originalContextTokens": 464,
+      "checkpointTokens": 327,
+      "reductionPct": 30,
       "remainingWork": []
     }
   ],
   "proofs": [
     {
-      "id": "pf_c41cc148",
-      "missionId": "LVR-c3770b4b",
+      "id": "pf_c528be79",
+      "missionId": "LVR-f8f72d56",
       "taskId": "money",
       "status": "verified",
       "worker": {
@@ -213,11 +244,9 @@
         "displayName": "Pool · best-free"
       },
       "filesChanged": [
-        "src/money.js",
-        "src/money.js",
         "src/money.js"
       ],
-      "patchHash": "e13da33a75b958b2",
+      "patchHash": "ec9da01f9245d775",
       "checks": [
         {
           "id": "exists-0",
@@ -225,20 +254,19 @@
           "weight": 1,
           "status": "pass",
           "detail": "src/money.js exists",
-          "durationMs": 1
+          "durationMs": 0
         },
         {
           "id": "suite",
           "label": "test/money.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "ℹ duration_ms 174.7145",
-          "durationMs": 334
+          "detail": "ℹ duration_ms 77.5878",
+          "durationMs": 137
         }
       ],
       "unresolved": [
-        "none — covers all cases in test/money.test.js### FILE: src/money.js",
-        "none — covers all cases in test/money.test.js"
+        "none — toCents, formatCents, and allocate match the tests as specified"
       ],
       "qualityScore": {
         "total": 100,
@@ -252,14 +280,14 @@
         }
       },
       "metrics": {
-        "durationMs": 18837,
+        "durationMs": 52583,
         "actualCostUsd": 0
       },
-      "createdAt": "2026-09-03T02:30:35.629Z"
+      "createdAt": "2026-09-03T03:25:32.708Z"
     },
     {
-      "id": "pf_ded70c02",
-      "missionId": "LVR-c3770b4b",
+      "id": "pf_9e3af828",
+      "missionId": "LVR-f8f72d56",
       "taskId": "validate",
       "status": "verified",
       "worker": {
@@ -270,7 +298,7 @@
       "filesChanged": [
         "src/validate.js"
       ],
-      "patchHash": "185d784e4a7615d4",
+      "patchHash": "12645093e7bf534e",
       "checks": [
         {
           "id": "exists-0",
@@ -285,11 +313,13 @@
           "label": "test/validate.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "ℹ duration_ms 87.3974",
-          "durationMs": 160
+          "detail": "ℹ duration_ms 79.7916",
+          "durationMs": 144
         }
       ],
-      "unresolved": [],
+      "unresolved": [
+        "none — tests cover well-formed receipts, missing total, empty people, duplicates, and trimming"
+      ],
       "qualityScore": {
         "total": 100,
         "acceptance": 100,
@@ -302,14 +332,14 @@
         }
       },
       "metrics": {
-        "durationMs": 50974,
+        "durationMs": 78111,
         "actualCostUsd": 0
       },
-      "createdAt": "2026-09-03T02:31:38.306Z"
+      "createdAt": "2026-09-03T03:25:51.578Z"
     },
     {
-      "id": "pf_eef2b65d",
-      "missionId": "LVR-c3770b4b",
+      "id": "pf_c7a34078",
+      "missionId": "LVR-f8f72d56",
       "taskId": "split",
       "status": "verified",
       "worker": {
@@ -320,7 +350,7 @@
       "filesChanged": [
         "src/split.js"
       ],
-      "patchHash": "407b8726be6c35e4",
+      "patchHash": "ad295b5247c26997",
       "checks": [
         {
           "id": "exists-0",
@@ -328,18 +358,20 @@
           "weight": 1,
           "status": "pass",
           "detail": "src/split.js exists",
-          "durationMs": 0
+          "durationMs": 1
         },
         {
           "id": "suite",
           "label": "test/split.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "ℹ duration_ms 87.7897",
-          "durationMs": 161
+          "detail": "ℹ duration_ms 77.8751",
+          "durationMs": 146
         }
       ],
-      "unresolved": [],
+      "unresolved": [
+        "none — node --test test/split.test.js should exit 0"
+      ],
       "qualityScore": {
         "total": 100,
         "acceptance": 100,
@@ -352,14 +384,14 @@
         }
       },
       "metrics": {
-        "durationMs": 26303,
+        "durationMs": 33750,
         "actualCostUsd": 0
       },
-      "createdAt": "2026-09-03T02:32:08.493Z"
+      "createdAt": "2026-09-03T03:26:31.742Z"
     },
     {
-      "id": "pf_2b9a7c1e",
-      "missionId": "LVR-c3770b4b",
+      "id": "pf_a4eb5767",
+      "missionId": "LVR-f8f72d56",
       "taskId": "index",
       "status": "verified",
       "worker": {
@@ -370,7 +402,7 @@
       "filesChanged": [
         "src/index.js"
       ],
-      "patchHash": "92e14a7487486bd3",
+      "patchHash": "7aad1dfa77ef1c75",
       "checks": [
         {
           "id": "exists-0",
@@ -385,8 +417,8 @@
           "label": "test/index.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "ℹ duration_ms 104.8885",
-          "durationMs": 191
+          "detail": "ℹ duration_ms 84.1398",
+          "durationMs": 148
         }
       ],
       "unresolved": [],
@@ -402,17 +434,17 @@
         }
       },
       "metrics": {
-        "durationMs": 10743,
-        "promptTokens": 927,
-        "completionTokens": 215,
+        "durationMs": 5706,
+        "promptTokens": 926,
+        "completionTokens": 216,
         "actualCostUsd": 0
       },
-      "createdAt": "2026-09-03T02:32:19.263Z"
+      "createdAt": "2026-09-03T03:26:37.470Z"
     }
   ],
   "auctions": [
     {
-      "taskId": "validate",
+      "taskId": "money",
       "candidates": [
         {
           "modelKey": "pool:auto/best-free",
@@ -420,17 +452,17 @@
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
-          "utility": 0.692839455513351,
+          "utility": 0.6597343601287825,
           "breakdown": {
             "taskFit": 0.7166666666666668,
-            "reputation": 0.8323809523809524,
+            "reputation": 0.7025,
             "contextFit": 1,
             "availability": 1,
-            "speed": 0.06589568712727752,
+            "speed": 0.07696155770192789,
             "costPenalty": 0.02,
             "quotaRisk": 0.25
           },
-          "sampleCount": 17,
+          "sampleCount": 28,
           "estimatedCostUsd": 0
         },
         {
@@ -439,17 +471,17 @@
           "providerId": "ollama",
           "costClass": "local",
           "eligible": true,
-          "utility": 0.6563138063307078,
+          "utility": 0.6585986047858978,
           "breakdown": {
             "taskFit": 1,
-            "reputation": 0.28,
+            "reputation": 0.28842105263157897,
             "contextFit": 1,
             "availability": 1,
-            "speed": 0.05856343884512898,
+            "speed": 0.06015218502812114,
             "costPenalty": 0,
             "quotaRisk": 0
           },
-          "sampleCount": 12,
+          "sampleCount": 15,
           "estimatedCostUsd": 0
         },
         {
@@ -486,25 +518,6 @@
             "speed": 0.5675368898978433,
             "costPenalty": 0,
             "quotaRisk": 0
-          },
-          "sampleCount": 3,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool · best-coding",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.6330571428571429,
-          "breakdown": {
-            "taskFit": 0.8,
-            "reputation": 0.49714285714285716,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
           },
           "sampleCount": 3,
           "estimatedCostUsd": 0
@@ -605,41 +618,41 @@
           "estimatedCostUsd": 0
         },
         {
+          "modelKey": "pool:auto/best-coding",
+          "displayName": "Pool · best-coding",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6053093447312328,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.38666666666666666,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06626685663165567,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 5,
+          "estimatedCostUsd": 0
+        },
+        {
           "modelKey": "pool:ghm/deepseek/deepseek-v3-0324",
           "displayName": "DeepSeek V3",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
-          "utility": 0.6071268901410244,
+          "utility": 0.5981606911056334,
           "breakdown": {
             "taskFit": 1,
-            "reputation": 0.10333333333333333,
+            "reputation": 0.08857142857142856,
             "contextFit": 1,
             "availability": 1,
-            "speed": 0.19100372457262915,
+            "speed": 0.1055353279510316,
             "costPenalty": 0.02,
             "quotaRisk": 0.25
           },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool · best-fast",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.5890427836010668,
-          "breakdown": {
-            "taskFit": 0.4666666666666667,
-            "reputation": 0.7466666666666667,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.12404639335111331,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
+          "sampleCount": 3,
           "estimatedCostUsd": 0
         },
         {
@@ -678,6 +691,25 @@
             "quotaRisk": 0
           },
           "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-fast",
+          "displayName": "Pool · best-fast",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5603612274719922,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.64,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.108242680088759,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
           "estimatedCostUsd": 0
         },
         {
@@ -839,20 +871,1351 @@
         "providerId": "pool",
         "costClass": "free",
         "eligible": true,
-        "utility": 0.692839455513351,
+        "utility": 0.6597343601287825,
         "breakdown": {
           "taskFit": 0.7166666666666668,
-          "reputation": 0.8323809523809524,
+          "reputation": 0.7025,
           "contextFit": 1,
           "availability": 1,
-          "speed": 0.06589568712727752,
+          "speed": 0.07696155770192789,
           "costPenalty": 0.02,
           "quotaRisk": 0.25
         },
-        "sampleCount": 17,
+        "sampleCount": 28,
         "estimatedCostUsd": 0
       },
-      "rationale": "72 task fit · 83 verified success over 17 prior jobs · free route, no spend"
+      "rationale": "72 task fit · 70 verified success over 28 prior jobs · free route, no spend"
+    },
+    {
+      "taskId": "validate",
+      "candidates": [
+        {
+          "modelKey": "ollama:kodro-tutor:latest",
+          "displayName": "kodro-tutor",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6585986047858978,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.28842105263157897,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06015218502812114,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 15,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-free",
+          "displayName": "Pool · best-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6542565357509651,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.6812121212121213,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.07791195948578106,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 29,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen2.5-coder:3b",
+          "displayName": "qwen2.5-coder:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6498046664558963,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.232,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.15807777426493835,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 11,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-fast:latest",
+          "displayName": "kodro-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.637080784822442,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5675368898978433,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-coder:latest",
+          "displayName": "kodro-coder",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6145803619561032,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19252984212552945,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b-instruct",
+          "displayName": "qwen3:4b-instruct",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3.5:4b",
+          "displayName": "qwen3.5:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b",
+          "displayName": "qwen3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:8b",
+          "displayName": "qwen3:8b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-coding",
+          "displayName": "Pool · best-coding",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6053093447312328,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.38666666666666666,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06626685663165567,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 5,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/deepseek/deepseek-v3-0324",
+          "displayName": "DeepSeek V3",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5981606911056334,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1055353279510316,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-v0.1:latest",
+          "displayName": "samantha-v0.1",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5654087663657803,
+          "breakdown": {
+            "taskFit": 0.3,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4879238838741156,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-core:latest",
+          "displayName": "samantha-core",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5653588569572983,
+          "breakdown": {
+            "taskFit": 0.3,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4870920603994155,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-fast",
+          "displayName": "Pool · best-fast",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5603612274719922,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.64,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.108242680088759,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/coding:free",
+          "displayName": "Pool · coding-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5492532829645619,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.3597769382982551,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-reasoning",
+          "displayName": "Pool · best-reasoning",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5322633681509987,
+          "breakdown": {
+            "taskFit": 0.3,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.12216724696108974,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:llama3.2:3b",
+          "displayName": "llama3.2:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5135333333333334,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/meta/llama-3.3-70b-instruct",
+          "displayName": "Llama 3.3 70B",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5107142134547294,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1896813353566009,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:4b",
+          "displayName": "gemma3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.49022827942767827,
+          "breakdown": {
+            "taskFit": 0.25,
+            "reputation": 0.58,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.24047132379463748,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/mistral-ai/codestral-2501",
+          "displayName": "Codestral 2501",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.42606468537165576,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19552253397204028,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:robolearn-fast:latest",
+          "displayName": "robolearn-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.405462021735894,
+          "breakdown": {
+            "taskFit": 0.25,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.8932559178204557,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:1b",
+          "displayName": "gemma3:1b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.37978662944004965,
+          "breakdown": {
+            "taskFit": 0.25,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4653327128897161,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "displayName": "kodro-tutor",
+        "providerId": "ollama",
+        "costClass": "local",
+        "eligible": true,
+        "utility": 0.6585986047858978,
+        "breakdown": {
+          "taskFit": 1,
+          "reputation": 0.28842105263157897,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.06015218502812114,
+          "costPenalty": 0,
+          "quotaRisk": 0
+        },
+        "sampleCount": 15,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "100 task fit · 29 verified success over 15 prior jobs · local runtime, no spend"
+    },
+    {
+      "taskId": "money",
+      "candidates": [
+        {
+          "modelKey": "ollama:kodro-tutor:latest",
+          "displayName": "kodro-tutor",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6585986047858978,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.28842105263157897,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06015218502812114,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 15,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen2.5-coder:3b",
+          "displayName": "qwen2.5-coder:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6498046664558963,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.232,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.15807777426493835,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 11,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-fast:latest",
+          "displayName": "kodro-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.637080784822442,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5675368898978433,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-coder:latest",
+          "displayName": "kodro-coder",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6145803619561032,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19252984212552945,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b-instruct",
+          "displayName": "qwen3:4b-instruct",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3.5:4b",
+          "displayName": "qwen3.5:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b",
+          "displayName": "qwen3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:8b",
+          "displayName": "qwen3:8b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-coding",
+          "displayName": "Pool · best-coding",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6053093447312328,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.38666666666666666,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06626685663165567,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 5,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/deepseek/deepseek-v3-0324",
+          "displayName": "DeepSeek V3",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5981606911056334,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1055353279510316,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-v0.1:latest",
+          "displayName": "samantha-v0.1",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5654087663657803,
+          "breakdown": {
+            "taskFit": 0.3,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4879238838741156,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-core:latest",
+          "displayName": "samantha-core",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5653588569572983,
+          "breakdown": {
+            "taskFit": 0.3,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4870920603994155,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-fast",
+          "displayName": "Pool · best-fast",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5603612274719922,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.64,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.108242680088759,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/coding:free",
+          "displayName": "Pool · coding-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5492532829645619,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.3597769382982551,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-reasoning",
+          "displayName": "Pool · best-reasoning",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5322633681509987,
+          "breakdown": {
+            "taskFit": 0.3,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.12216724696108974,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:llama3.2:3b",
+          "displayName": "llama3.2:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5135333333333334,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/meta/llama-3.3-70b-instruct",
+          "displayName": "Llama 3.3 70B",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5107142134547294,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1896813353566009,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:4b",
+          "displayName": "gemma3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.49022827942767827,
+          "breakdown": {
+            "taskFit": 0.25,
+            "reputation": 0.58,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.24047132379463748,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/mistral-ai/codestral-2501",
+          "displayName": "Codestral 2501",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.42606468537165576,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19552253397204028,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:robolearn-fast:latest",
+          "displayName": "robolearn-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.405462021735894,
+          "breakdown": {
+            "taskFit": 0.25,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.8932559178204557,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:1b",
+          "displayName": "gemma3:1b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.37978662944004965,
+          "breakdown": {
+            "taskFit": 0.25,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4653327128897161,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-free",
+          "displayName": "Pool · best-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": false,
+          "ineligibleReason": "Already attempted and failed on this task",
+          "utility": 0,
+          "breakdown": {
+            "taskFit": 0,
+            "reputation": 0,
+            "contextFit": 0,
+            "availability": 0,
+            "speed": 0,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 29,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "displayName": "kodro-tutor",
+        "providerId": "ollama",
+        "costClass": "local",
+        "eligible": true,
+        "utility": 0.6585986047858978,
+        "breakdown": {
+          "taskFit": 1,
+          "reputation": 0.28842105263157897,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.06015218502812114,
+          "costPenalty": 0,
+          "quotaRisk": 0
+        },
+        "sampleCount": 15,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "100 task fit · 29 verified success over 15 prior jobs · local runtime, no spend · 1 candidate excluded by policy"
+    },
+    {
+      "taskId": "validate",
+      "candidates": [
+        {
+          "modelKey": "pool:auto/best-free",
+          "displayName": "Pool · best-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6542565357509651,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.6812121212121213,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.07791195948578106,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 29,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen2.5-coder:3b",
+          "displayName": "qwen2.5-coder:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6498046664558963,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.232,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.15807777426493835,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 11,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-fast:latest",
+          "displayName": "kodro-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.637080784822442,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5675368898978433,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-coder:latest",
+          "displayName": "kodro-coder",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6145803619561032,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19252984212552945,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b-instruct",
+          "displayName": "qwen3:4b-instruct",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3.5:4b",
+          "displayName": "qwen3.5:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b",
+          "displayName": "qwen3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:8b",
+          "displayName": "qwen3:8b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-coding",
+          "displayName": "Pool · best-coding",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6053093447312328,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.38666666666666666,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06626685663165567,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 5,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/deepseek/deepseek-v3-0324",
+          "displayName": "DeepSeek V3",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5981606911056334,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1055353279510316,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-v0.1:latest",
+          "displayName": "samantha-v0.1",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5654087663657803,
+          "breakdown": {
+            "taskFit": 0.3,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4879238838741156,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-core:latest",
+          "displayName": "samantha-core",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5653588569572983,
+          "breakdown": {
+            "taskFit": 0.3,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4870920603994155,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-fast",
+          "displayName": "Pool · best-fast",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5603612274719922,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.64,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.108242680088759,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/coding:free",
+          "displayName": "Pool · coding-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5492532829645619,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.3597769382982551,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-reasoning",
+          "displayName": "Pool · best-reasoning",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5322633681509987,
+          "breakdown": {
+            "taskFit": 0.3,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.12216724696108974,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:llama3.2:3b",
+          "displayName": "llama3.2:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5135333333333334,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/meta/llama-3.3-70b-instruct",
+          "displayName": "Llama 3.3 70B",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5107142134547294,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1896813353566009,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:4b",
+          "displayName": "gemma3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.49022827942767827,
+          "breakdown": {
+            "taskFit": 0.25,
+            "reputation": 0.58,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.24047132379463748,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/mistral-ai/codestral-2501",
+          "displayName": "Codestral 2501",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.42606468537165576,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19552253397204028,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:robolearn-fast:latest",
+          "displayName": "robolearn-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.405462021735894,
+          "breakdown": {
+            "taskFit": 0.25,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.8932559178204557,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:1b",
+          "displayName": "gemma3:1b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.37978662944004965,
+          "breakdown": {
+            "taskFit": 0.25,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4653327128897161,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-tutor:latest",
+          "displayName": "kodro-tutor",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": false,
+          "ineligibleReason": "Already attempted and failed on this task",
+          "utility": 0,
+          "breakdown": {
+            "taskFit": 0,
+            "reputation": 0,
+            "contextFit": 0,
+            "availability": 0,
+            "speed": 0,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 16,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "pool:auto/best-free",
+        "displayName": "Pool · best-free",
+        "providerId": "pool",
+        "costClass": "free",
+        "eligible": true,
+        "utility": 0.6542565357509651,
+        "breakdown": {
+          "taskFit": 0.7166666666666668,
+          "reputation": 0.6812121212121213,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.07791195948578106,
+          "costPenalty": 0.02,
+          "quotaRisk": 0.25
+        },
+        "sampleCount": 29,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "72 task fit · 68 verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "taskId": "money",
@@ -863,36 +2226,17 @@
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
-          "utility": 0.683083725954141,
+          "utility": 0.6542565357509651,
           "breakdown": {
             "taskFit": 0.7166666666666668,
-            "reputation": 0.7945454545454546,
+            "reputation": 0.6812121212121213,
             "contextFit": 1,
             "availability": 1,
-            "speed": 0.06725401842760105,
+            "speed": 0.07791195948578106,
             "costPenalty": 0.02,
             "quotaRisk": 0.25
           },
-          "sampleCount": 18,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:kodro-tutor:latest",
-          "displayName": "kodro-tutor",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.6563138063307078,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.28,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05856343884512898,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 12,
+          "sampleCount": 29,
           "estimatedCostUsd": 0
         },
         {
@@ -929,25 +2273,6 @@
             "speed": 0.5675368898978433,
             "costPenalty": 0,
             "quotaRisk": 0
-          },
-          "sampleCount": 3,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool · best-coding",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.6330571428571429,
-          "breakdown": {
-            "taskFit": 0.8,
-            "reputation": 0.49714285714285716,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
           },
           "sampleCount": 3,
           "estimatedCostUsd": 0
@@ -1048,427 +2373,22 @@
           "estimatedCostUsd": 0
         },
         {
-          "modelKey": "pool:ghm/deepseek/deepseek-v3-0324",
-          "displayName": "DeepSeek V3",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.6071268901410244,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.19100372457262915,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool · best-fast",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.5890427836010668,
-          "breakdown": {
-            "taskFit": 0.4666666666666667,
-            "reputation": 0.7466666666666667,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.12404639335111331,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:samantha-v0.1:latest",
-          "displayName": "samantha-v0.1",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.5654087663657803,
-          "breakdown": {
-            "taskFit": 0.3,
-            "reputation": 0.7466666666666667,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.4879238838741156,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:samantha-core:latest",
-          "displayName": "samantha-core",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.5653588569572983,
-          "breakdown": {
-            "taskFit": 0.3,
-            "reputation": 0.7466666666666667,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.4870920603994155,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:auto/coding:free",
-          "displayName": "Pool · coding-free",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.5492532829645619,
-          "breakdown": {
-            "taskFit": 0.8,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.3597769382982551,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:auto/best-reasoning",
-          "displayName": "Pool · best-reasoning",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.5322633681509987,
-          "breakdown": {
-            "taskFit": 0.3,
-            "reputation": 0.7466666666666667,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.12216724696108974,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:llama3.2:3b",
-          "displayName": "llama3.2:3b",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.5135333333333334,
-          "breakdown": {
-            "taskFit": 0.7166666666666668,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:ghm/meta/llama-3.3-70b-instruct",
-          "displayName": "Llama 3.3 70B",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.5107142134547294,
-          "breakdown": {
-            "taskFit": 0.7166666666666668,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.1896813353566009,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:gemma3:4b",
-          "displayName": "gemma3:4b",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.49022827942767827,
-          "breakdown": {
-            "taskFit": 0.25,
-            "reputation": 0.58,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.24047132379463748,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:ghm/mistral-ai/codestral-2501",
-          "displayName": "Codestral 2501",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.42606468537165576,
-          "breakdown": {
-            "taskFit": 0.4666666666666667,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.19552253397204028,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:robolearn-fast:latest",
-          "displayName": "robolearn-fast",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.405462021735894,
-          "breakdown": {
-            "taskFit": 0.25,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.8932559178204557,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:gemma3:1b",
-          "displayName": "gemma3:1b",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.37978662944004965,
-          "breakdown": {
-            "taskFit": 0.25,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.4653327128897161,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        }
-      ],
-      "winner": {
-        "modelKey": "pool:auto/best-free",
-        "displayName": "Pool · best-free",
-        "providerId": "pool",
-        "costClass": "free",
-        "eligible": true,
-        "utility": 0.683083725954141,
-        "breakdown": {
-          "taskFit": 0.7166666666666668,
-          "reputation": 0.7945454545454546,
-          "contextFit": 1,
-          "availability": 1,
-          "speed": 0.06725401842760105,
-          "costPenalty": 0.02,
-          "quotaRisk": 0.25
-        },
-        "sampleCount": 18,
-        "estimatedCostUsd": 0
-      },
-      "rationale": "72 task fit · 79 verified success over 18 prior jobs · free route, no spend"
-    },
-    {
-      "taskId": "validate",
-      "candidates": [
-        {
-          "modelKey": "ollama:kodro-tutor:latest",
-          "displayName": "kodro-tutor",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.6563138063307078,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.28,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05856343884512898,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 12,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:qwen2.5-coder:3b",
-          "displayName": "qwen2.5-coder:3b",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.6498046664558963,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.232,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.15807777426493835,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 11,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:kodro-fast:latest",
-          "displayName": "kodro-fast",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.637080784822442,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.08857142857142856,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.5675368898978433,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 3,
-          "estimatedCostUsd": 0
-        },
-        {
           "modelKey": "pool:auto/best-coding",
           "displayName": "Pool · best-coding",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
-          "utility": 0.6330571428571429,
+          "utility": 0.6053093447312328,
           "breakdown": {
             "taskFit": 0.8,
-            "reputation": 0.49714285714285716,
+            "reputation": 0.38666666666666666,
             "contextFit": 1,
             "availability": 1,
-            "speed": 0.05,
+            "speed": 0.06626685663165567,
             "costPenalty": 0.02,
             "quotaRisk": 0.25
           },
-          "sampleCount": 3,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:kodro-coder:latest",
-          "displayName": "kodro-coder",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.6145803619561032,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.08857142857142856,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.19252984212552945,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 3,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:qwen3:4b-instruct",
-          "displayName": "qwen3:4b-instruct",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.6098666666666667,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:qwen3.5:4b",
-          "displayName": "qwen3.5:4b",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.6098666666666667,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:qwen3:4b",
-          "displayName": "qwen3:4b",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.6098666666666667,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:qwen3:8b",
-          "displayName": "qwen3:8b",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.6098666666666667,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
+          "sampleCount": 5,
           "estimatedCostUsd": 0
         },
         {
@@ -1477,36 +2397,17 @@
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
-          "utility": 0.6071268901410244,
+          "utility": 0.5981606911056334,
           "breakdown": {
             "taskFit": 1,
-            "reputation": 0.10333333333333333,
+            "reputation": 0.08857142857142856,
             "contextFit": 1,
             "availability": 1,
-            "speed": 0.19100372457262915,
+            "speed": 0.1055353279510316,
             "costPenalty": 0.02,
             "quotaRisk": 0.25
           },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool · best-fast",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.5890427836010668,
-          "breakdown": {
-            "taskFit": 0.4666666666666667,
-            "reputation": 0.7466666666666667,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.12404639335111331,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
+          "sampleCount": 3,
           "estimatedCostUsd": 0
         },
         {
@@ -1548,447 +2449,22 @@
           "estimatedCostUsd": 0
         },
         {
-          "modelKey": "pool:auto/coding:free",
-          "displayName": "Pool · coding-free",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.5492532829645619,
-          "breakdown": {
-            "taskFit": 0.8,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.3597769382982551,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:auto/best-reasoning",
-          "displayName": "Pool · best-reasoning",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.5322633681509987,
-          "breakdown": {
-            "taskFit": 0.3,
-            "reputation": 0.7466666666666667,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.12216724696108974,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:llama3.2:3b",
-          "displayName": "llama3.2:3b",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.5135333333333334,
-          "breakdown": {
-            "taskFit": 0.7166666666666668,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:ghm/meta/llama-3.3-70b-instruct",
-          "displayName": "Llama 3.3 70B",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.5107142134547294,
-          "breakdown": {
-            "taskFit": 0.7166666666666668,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.1896813353566009,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:gemma3:4b",
-          "displayName": "gemma3:4b",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.49022827942767827,
-          "breakdown": {
-            "taskFit": 0.25,
-            "reputation": 0.58,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.24047132379463748,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:ghm/mistral-ai/codestral-2501",
-          "displayName": "Codestral 2501",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.42606468537165576,
-          "breakdown": {
-            "taskFit": 0.4666666666666667,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.19552253397204028,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:robolearn-fast:latest",
-          "displayName": "robolearn-fast",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.405462021735894,
-          "breakdown": {
-            "taskFit": 0.25,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.8932559178204557,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:gemma3:1b",
-          "displayName": "gemma3:1b",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.37978662944004965,
-          "breakdown": {
-            "taskFit": 0.25,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.4653327128897161,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:auto/best-free",
-          "displayName": "Pool · best-free",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": false,
-          "ineligibleReason": "Already attempted and failed on this task",
-          "utility": 0,
-          "breakdown": {
-            "taskFit": 0,
-            "reputation": 0,
-            "contextFit": 0,
-            "availability": 0,
-            "speed": 0,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 18,
-          "estimatedCostUsd": 0
-        }
-      ],
-      "winner": {
-        "modelKey": "ollama:kodro-tutor:latest",
-        "displayName": "kodro-tutor",
-        "providerId": "ollama",
-        "costClass": "local",
-        "eligible": true,
-        "utility": 0.6563138063307078,
-        "breakdown": {
-          "taskFit": 1,
-          "reputation": 0.28,
-          "contextFit": 1,
-          "availability": 1,
-          "speed": 0.05856343884512898,
-          "costPenalty": 0,
-          "quotaRisk": 0
-        },
-        "sampleCount": 12,
-        "estimatedCostUsd": 0
-      },
-      "rationale": "100 task fit · 28 verified success over 12 prior jobs · local runtime, no spend · 1 candidate excluded by policy"
-    },
-    {
-      "taskId": "validate",
-      "candidates": [
-        {
-          "modelKey": "pool:auto/best-free",
-          "displayName": "Pool · best-free",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.6854911861665735,
-          "breakdown": {
-            "taskFit": 0.7166666666666668,
-            "reputation": 0.8034782608695652,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.06866952789699571,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 19,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:qwen2.5-coder:3b",
-          "displayName": "qwen2.5-coder:3b",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.6498046664558963,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.232,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.15807777426493835,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 11,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:kodro-fast:latest",
-          "displayName": "kodro-fast",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.637080784822442,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.08857142857142856,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.5675368898978433,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 3,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool · best-coding",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.6330571428571429,
-          "breakdown": {
-            "taskFit": 0.8,
-            "reputation": 0.49714285714285716,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 3,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:kodro-coder:latest",
-          "displayName": "kodro-coder",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.6145803619561032,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.08857142857142856,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.19252984212552945,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 3,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:qwen3:4b-instruct",
-          "displayName": "qwen3:4b-instruct",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.6098666666666667,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:qwen3.5:4b",
-          "displayName": "qwen3.5:4b",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.6098666666666667,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:qwen3:4b",
-          "displayName": "qwen3:4b",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.6098666666666667,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:qwen3:8b",
-          "displayName": "qwen3:8b",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.6098666666666667,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:ghm/deepseek/deepseek-v3-0324",
-          "displayName": "DeepSeek V3",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.6071268901410244,
-          "breakdown": {
-            "taskFit": 1,
-            "reputation": 0.10333333333333333,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.19100372457262915,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
           "modelKey": "pool:auto/best-fast",
           "displayName": "Pool · best-fast",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
-          "utility": 0.5890427836010668,
+          "utility": 0.5603612274719922,
           "breakdown": {
             "taskFit": 0.4666666666666667,
-            "reputation": 0.7466666666666667,
+            "reputation": 0.64,
             "contextFit": 1,
             "availability": 1,
-            "speed": 0.12404639335111331,
+            "speed": 0.108242680088759,
             "costPenalty": 0.02,
             "quotaRisk": 0.25
           },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:samantha-v0.1:latest",
-          "displayName": "samantha-v0.1",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.5654087663657803,
-          "breakdown": {
-            "taskFit": 0.3,
-            "reputation": 0.7466666666666667,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.4879238838741156,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "ollama:samantha-core:latest",
-          "displayName": "samantha-core",
-          "providerId": "ollama",
-          "costClass": "local",
-          "eligible": true,
-          "utility": 0.5653588569572983,
-          "breakdown": {
-            "taskFit": 0.3,
-            "reputation": 0.7466666666666667,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.4870920603994155,
-            "costPenalty": 0,
-            "quotaRisk": 0
-          },
-          "sampleCount": 2,
+          "sampleCount": 3,
           "estimatedCostUsd": 0
         },
         {
@@ -2160,7 +2636,7 @@
             "costPenalty": 0,
             "quotaRisk": 0
           },
-          "sampleCount": 13,
+          "sampleCount": 17,
           "estimatedCostUsd": 0
         }
       ],
@@ -2170,20 +2646,20 @@
         "providerId": "pool",
         "costClass": "free",
         "eligible": true,
-        "utility": 0.6854911861665735,
+        "utility": 0.6542565357509651,
         "breakdown": {
           "taskFit": 0.7166666666666668,
-          "reputation": 0.8034782608695652,
+          "reputation": 0.6812121212121213,
           "contextFit": 1,
           "availability": 1,
-          "speed": 0.06866952789699571,
+          "speed": 0.07791195948578106,
           "costPenalty": 0.02,
           "quotaRisk": 0.25
         },
-        "sampleCount": 19,
+        "sampleCount": 29,
         "estimatedCostUsd": 0
       },
-      "rationale": "72 task fit · 80 verified success over 19 prior jobs · free route, no spend · 1 candidate excluded by policy"
+      "rationale": "72 task fit · 68 verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "taskId": "split",
@@ -2194,17 +2670,17 @@
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
-          "utility": 0.6875352411056561,
+          "utility": 0.6588803124756728,
           "breakdown": {
             "taskFit": 0.7166666666666668,
-            "reputation": 0.8116666666666666,
+            "reputation": 0.6994285714285714,
             "contextFit": 1,
             "availability": 1,
-            "speed": 0.06725401842760105,
+            "speed": 0.07603695395962437,
             "costPenalty": 0.02,
             "quotaRisk": 0.25
           },
-          "sampleCount": 20,
+          "sampleCount": 31,
           "estimatedCostUsd": 0
         },
         {
@@ -2213,17 +2689,17 @@
           "providerId": "ollama",
           "costClass": "local",
           "eligible": true,
-          "utility": 0.6521267781605108,
+          "utility": 0.6514883957466483,
           "breakdown": {
             "taskFit": 1,
-            "reputation": 0.2635294117647059,
+            "reputation": 0.260952380952381,
             "contextFit": 1,
             "availability": 1,
-            "speed": 0.06015218502812114,
+            "speed": 0.06067961165048544,
             "costPenalty": 0,
             "quotaRisk": 0
           },
-          "sampleCount": 13,
+          "sampleCount": 17,
           "estimatedCostUsd": 0
         },
         {
@@ -2260,25 +2736,6 @@
             "speed": 0.5675368898978433,
             "costPenalty": 0,
             "quotaRisk": 0
-          },
-          "sampleCount": 3,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool · best-coding",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.6330571428571429,
-          "breakdown": {
-            "taskFit": 0.8,
-            "reputation": 0.49714285714285716,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.05,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
           },
           "sampleCount": 3,
           "estimatedCostUsd": 0
@@ -2379,41 +2836,41 @@
           "estimatedCostUsd": 0
         },
         {
+          "modelKey": "pool:auto/best-coding",
+          "displayName": "Pool · best-coding",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6053093447312328,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.38666666666666666,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06626685663165567,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 5,
+          "estimatedCostUsd": 0
+        },
+        {
           "modelKey": "pool:ghm/deepseek/deepseek-v3-0324",
           "displayName": "DeepSeek V3",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
-          "utility": 0.6071268901410244,
+          "utility": 0.5981606911056334,
           "breakdown": {
             "taskFit": 1,
-            "reputation": 0.10333333333333333,
+            "reputation": 0.08857142857142856,
             "contextFit": 1,
             "availability": 1,
-            "speed": 0.19100372457262915,
+            "speed": 0.1055353279510316,
             "costPenalty": 0.02,
             "quotaRisk": 0.25
           },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool · best-fast",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.5890427836010668,
-          "breakdown": {
-            "taskFit": 0.4666666666666667,
-            "reputation": 0.7466666666666667,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.12404639335111331,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
+          "sampleCount": 3,
           "estimatedCostUsd": 0
         },
         {
@@ -2452,6 +2909,25 @@
             "quotaRisk": 0
           },
           "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-fast",
+          "displayName": "Pool · best-fast",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5603612274719922,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.64,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.108242680088759,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
           "estimatedCostUsd": 0
         },
         {
@@ -2613,20 +3089,20 @@
         "providerId": "pool",
         "costClass": "free",
         "eligible": true,
-        "utility": 0.6875352411056561,
+        "utility": 0.6588803124756728,
         "breakdown": {
           "taskFit": 0.7166666666666668,
-          "reputation": 0.8116666666666666,
+          "reputation": 0.6994285714285714,
           "contextFit": 1,
           "availability": 1,
-          "speed": 0.06725401842760105,
+          "speed": 0.07603695395962437,
           "costPenalty": 0.02,
           "quotaRisk": 0.25
         },
-        "sampleCount": 20,
+        "sampleCount": 31,
         "estimatedCostUsd": 0
       },
-      "rationale": "72 task fit · 81 verified success over 20 prior jobs · free route, no spend"
+      "rationale": "72 task fit · 70 verified success over 31 prior jobs · free route, no spend"
     },
     {
       "taskId": "index",
@@ -2637,36 +3113,17 @@
           "providerId": "ollama",
           "costClass": "local",
           "eligible": true,
-          "utility": 0.8017090538789113,
+          "utility": 0.8115094117647059,
           "breakdown": {
             "taskFit": 1,
-            "reputation": 0.81,
+            "reputation": 0.8480000000000001,
             "contextFit": 1,
             "availability": 1,
-            "speed": 0.18515089798185522,
+            "speed": 0.1838235294117647,
             "costPenalty": 0,
             "quotaRisk": 0
           },
-          "sampleCount": 4,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:auto/best-free",
-          "displayName": "Pool · best-free",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.6838733283486886,
-          "breakdown": {
-            "taskFit": 0.7166666666666668,
-            "reputation": 0.7955555555555556,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.07603695395962437,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 23,
+          "sampleCount": 6,
           "estimatedCostUsd": 0
         },
         {
@@ -2689,22 +3146,22 @@
           "estimatedCostUsd": 0
         },
         {
-          "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool · best-coding",
+          "modelKey": "pool:auto/best-free",
+          "displayName": "Pool · best-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
-          "utility": 0.6494000000000001,
+          "utility": 0.6582633074972035,
           "breakdown": {
-            "taskFit": 0.8,
-            "reputation": 0.56,
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.6968421052631579,
             "contextFit": 1,
             "availability": 1,
-            "speed": 0.05,
+            "speed": 0.07696155770192789,
             "costPenalty": 0.02,
             "quotaRisk": 0.25
           },
-          "sampleCount": 4,
+          "sampleCount": 34,
           "estimatedCostUsd": 0
         },
         {
@@ -2724,6 +3181,25 @@
             "quotaRisk": 0
           },
           "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-coding",
+          "displayName": "Pool · best-coding",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.620487269811573,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.44800000000000006,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05345449685954831,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 6,
           "estimatedCostUsd": 0
         },
         {
@@ -2827,36 +3303,17 @@
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
-          "utility": 0.6071268901410244,
+          "utility": 0.5970619448387751,
           "breakdown": {
             "taskFit": 1,
-            "reputation": 0.10333333333333333,
+            "reputation": 0.0775,
             "contextFit": 1,
             "availability": 1,
-            "speed": 0.19100372457262915,
+            "speed": 0.1351990806462516,
             "costPenalty": 0.02,
             "quotaRisk": 0.25
           },
-          "sampleCount": 2,
-          "estimatedCostUsd": 0
-        },
-        {
-          "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool · best-fast",
-          "providerId": "pool",
-          "costClass": "free",
-          "eligible": true,
-          "utility": 0.5890427836010668,
-          "breakdown": {
-            "taskFit": 0.4666666666666667,
-            "reputation": 0.7466666666666667,
-            "contextFit": 1,
-            "availability": 1,
-            "speed": 0.12404639335111331,
-            "costPenalty": 0.02,
-            "quotaRisk": 0.25
-          },
-          "sampleCount": 2,
+          "sampleCount": 4,
           "estimatedCostUsd": 0
         },
         {
@@ -2895,6 +3352,25 @@
             "quotaRisk": 0
           },
           "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-fast",
+          "displayName": "Pool · best-fast",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5603612274719922,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.64,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.108242680088759,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
           "estimatedCostUsd": 0
         },
         {
@@ -3056,39 +3532,39 @@
         "providerId": "ollama",
         "costClass": "local",
         "eligible": true,
-        "utility": 0.8017090538789113,
+        "utility": 0.8115094117647059,
         "breakdown": {
           "taskFit": 1,
-          "reputation": 0.81,
+          "reputation": 0.8480000000000001,
           "contextFit": 1,
           "availability": 1,
-          "speed": 0.18515089798185522,
+          "speed": 0.1838235294117647,
           "costPenalty": 0,
           "quotaRisk": 0
         },
-        "sampleCount": 4,
+        "sampleCount": 6,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit · 81 verified success over 4 prior jobs · local runtime, no spend"
+      "rationale": "100 task fit · 85 verified success over 6 prior jobs · local runtime, no spend"
     }
   ],
   "usage": {
     "paidSpendUsd": 0,
     "budgetMaxUsd": 0,
     "budgetHard": true,
-    "localCalls": 2,
+    "localCalls": 3,
     "freeCalls": 3,
     "paidCalls": 0,
     "blockedPaidAttempts": 0,
-    "estimatedFrontierEquivalentUsd": 0.0551
+    "estimatedFrontierEquivalentUsd": 0.0467
   },
   "events": [
     {
       "seq": 1,
-      "id": "LVR-c3770b4b-1",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-1",
+      "missionId": "LVR-f8f72d56",
       "type": "mission.created",
-      "at": "2026-09-03T02:30:15.340Z",
+      "at": "2026-09-03T03:24:07.867Z",
       "elapsedMs": 0,
       "message": "Mission created: Finish the forge-app receipt splitting library so the whole existing test suite passes. Do not modify any file under test/. Budget: $0. Quality: production.",
       "data": {
@@ -3100,11 +3576,11 @@
     },
     {
       "seq": 2,
-      "id": "LVR-c3770b4b-2",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-2",
+      "missionId": "LVR-f8f72d56",
       "type": "mission.compiled",
-      "at": "2026-09-03T02:30:15.340Z",
-      "elapsedMs": 0,
+      "at": "2026-09-03T03:24:07.868Z",
+      "elapsedMs": 1,
       "message": "Compiled into 4 tasks",
       "data": {
         "tasks": [
@@ -3138,10 +3614,10 @@
     },
     {
       "seq": 3,
-      "id": "LVR-c3770b4b-3",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-3",
+      "missionId": "LVR-f8f72d56",
       "type": "task.created",
-      "at": "2026-09-03T02:30:15.341Z",
+      "at": "2026-09-03T03:24:07.868Z",
       "elapsedMs": 1,
       "taskId": "money",
       "message": "Task: Implement money helpers",
@@ -3155,10 +3631,10 @@
     },
     {
       "seq": 4,
-      "id": "LVR-c3770b4b-4",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-4",
+      "missionId": "LVR-f8f72d56",
       "type": "task.created",
-      "at": "2026-09-03T02:30:15.341Z",
+      "at": "2026-09-03T03:24:07.868Z",
       "elapsedMs": 1,
       "taskId": "validate",
       "message": "Task: Implement receipt validation",
@@ -3172,10 +3648,10 @@
     },
     {
       "seq": 5,
-      "id": "LVR-c3770b4b-5",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-5",
+      "missionId": "LVR-f8f72d56",
       "type": "task.created",
-      "at": "2026-09-03T02:30:15.341Z",
+      "at": "2026-09-03T03:24:07.868Z",
       "elapsedMs": 1,
       "taskId": "split",
       "message": "Task: Implement the split calculation",
@@ -3192,10 +3668,10 @@
     },
     {
       "seq": 6,
-      "id": "LVR-c3770b4b-6",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-6",
+      "missionId": "LVR-f8f72d56",
       "type": "task.created",
-      "at": "2026-09-03T02:30:15.341Z",
+      "at": "2026-09-03T03:24:07.868Z",
       "elapsedMs": 1,
       "taskId": "index",
       "message": "Task: Implement the request handler",
@@ -3211,11 +3687,11 @@
     },
     {
       "seq": 7,
-      "id": "LVR-c3770b4b-7",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-7",
+      "missionId": "LVR-f8f72d56",
       "type": "mission.started",
-      "at": "2026-09-03T02:30:16.540Z",
-      "elapsedMs": 1200,
+      "at": "2026-09-03T03:24:09.713Z",
+      "elapsedMs": 1846,
       "message": "Mission started: Finish the forge-app receipt splitting library so the whole existing test suite passes. Do not modify any file under tes",
       "data": {
         "tasks": 4,
@@ -3227,253 +3703,31 @@
     },
     {
       "seq": 8,
-      "id": "LVR-c3770b4b-8",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-8",
+      "missionId": "LVR-f8f72d56",
       "type": "task.ready",
-      "at": "2026-09-03T02:30:16.784Z",
-      "elapsedMs": 1444,
+      "at": "2026-09-03T03:24:09.743Z",
+      "elapsedMs": 1876,
       "taskId": "money",
       "message": "Task ready: Implement money helpers"
     },
     {
       "seq": 9,
-      "id": "LVR-c3770b4b-9",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-9",
+      "missionId": "LVR-f8f72d56",
       "type": "task.ready",
-      "at": "2026-09-03T02:30:16.784Z",
-      "elapsedMs": 1444,
+      "at": "2026-09-03T03:24:09.743Z",
+      "elapsedMs": 1876,
       "taskId": "validate",
       "message": "Task ready: Implement receipt validation"
     },
     {
       "seq": 10,
-      "id": "LVR-c3770b4b-10",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-10",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.started",
-      "at": "2026-09-03T02:30:16.788Z",
-      "elapsedMs": 1448,
-      "taskId": "validate",
-      "message": "Auction opened for \"Implement receipt validation\"",
-      "data": {
-        "requires": [
-          "code",
-          "backend",
-          "reasoning"
-        ],
-        "contextTokens": "[redacted]"
-      }
-    },
-    {
-      "seq": 11,
-      "id": "LVR-c3770b4b-11",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.789Z",
-      "elapsedMs": 1449,
-      "taskId": "validate",
-      "message": "Pool · best-free: utility 0.693 (17 prior jobs)",
-      "data": {
-        "modelKey": "pool:auto/best-free",
-        "eligible": true,
-        "utility": 0.692839455513351
-      }
-    },
-    {
-      "seq": 12,
-      "id": "LVR-c3770b4b-12",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.789Z",
-      "elapsedMs": 1449,
-      "taskId": "validate",
-      "message": "kodro-tutor: utility 0.656 (12 prior jobs)",
-      "data": {
-        "modelKey": "ollama:kodro-tutor:latest",
-        "eligible": true,
-        "utility": 0.6563138063307078
-      }
-    },
-    {
-      "seq": 13,
-      "id": "LVR-c3770b4b-13",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.789Z",
-      "elapsedMs": 1449,
-      "taskId": "validate",
-      "message": "qwen2.5-coder:3b: utility 0.650 (11 prior jobs)",
-      "data": {
-        "modelKey": "ollama:qwen2.5-coder:3b",
-        "eligible": true,
-        "utility": 0.6498046664558963
-      }
-    },
-    {
-      "seq": 14,
-      "id": "LVR-c3770b4b-14",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.789Z",
-      "elapsedMs": 1449,
-      "taskId": "validate",
-      "message": "kodro-fast: utility 0.637 (3 prior jobs)",
-      "data": {
-        "modelKey": "ollama:kodro-fast:latest",
-        "eligible": true,
-        "utility": 0.637080784822442
-      }
-    },
-    {
-      "seq": 15,
-      "id": "LVR-c3770b4b-15",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.789Z",
-      "elapsedMs": 1449,
-      "taskId": "validate",
-      "message": "Pool · best-coding: utility 0.633 (3 prior jobs)",
-      "data": {
-        "modelKey": "pool:auto/best-coding",
-        "eligible": true,
-        "utility": 0.6330571428571429
-      }
-    },
-    {
-      "seq": 16,
-      "id": "LVR-c3770b4b-16",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.789Z",
-      "elapsedMs": 1449,
-      "taskId": "validate",
-      "message": "kodro-coder: utility 0.615 (3 prior jobs)",
-      "data": {
-        "modelKey": "ollama:kodro-coder:latest",
-        "eligible": true,
-        "utility": 0.6145803619561032
-      }
-    },
-    {
-      "seq": 17,
-      "id": "LVR-c3770b4b-17",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.completed",
-      "at": "2026-09-03T02:30:16.790Z",
-      "elapsedMs": 1450,
-      "taskId": "validate",
-      "message": "Winner: Pool · best-free — 72 task fit · 83 verified success over 17 prior jobs · free route, no spend"
-    },
-    {
-      "seq": 18,
-      "id": "LVR-c3770b4b-18",
-      "missionId": "LVR-c3770b4b",
-      "type": "worker.hired",
-      "at": "2026-09-03T02:30:16.790Z",
-      "elapsedMs": 1450,
-      "taskId": "validate",
-      "workerRunId": "wr_823e109c",
-      "message": "Hired Pool · best-free as Backend Engineer",
-      "data": {
-        "modelKey": "pool:auto/best-free",
-        "costClass": "free"
-      }
-    },
-    {
-      "seq": 19,
-      "id": "LVR-c3770b4b-19",
-      "missionId": "LVR-c3770b4b",
-      "type": "worker.started",
-      "at": "2026-09-03T02:30:16.790Z",
-      "elapsedMs": 1450,
-      "taskId": "validate",
-      "workerRunId": "wr_823e109c",
-      "message": "Pool · best-free started work",
-      "data": {
-        "contextTokens": "[redacted]",
-        "availableRepoTokens": "[redacted]",
-        "contextReductionPct": 70,
-        "via": "rocketride-pipeline"
-      }
-    },
-    {
-      "seq": 20,
-      "id": "LVR-c3770b4b-20",
-      "missionId": "LVR-c3770b4b",
-      "type": "provider.rate_limit",
-      "at": "2026-09-03T02:30:16.790Z",
-      "elapsedMs": 1450,
-      "taskId": "validate",
-      "workerRunId": "wr_823e109c",
-      "message": "Pool · best-free: INJECTED 429 rate limit (deterministic fault injection, not a real provider error)",
-      "data": {
-        "injected": true
-      }
-    },
-    {
-      "seq": 21,
-      "id": "LVR-c3770b4b-21",
-      "missionId": "LVR-c3770b4b",
-      "type": "worker.failed",
-      "at": "2026-09-03T02:30:16.791Z",
-      "elapsedMs": 1451,
-      "taskId": "validate",
-      "workerRunId": "wr_823e109c",
-      "message": "Pool · best-free failed: RATE_LIMIT — INJECTED 429 rate limit (deterministic fault injection, not a real provider error)",
-      "data": {
-        "failureType": "RATE_LIMIT"
-      }
-    },
-    {
-      "seq": 22,
-      "id": "LVR-c3770b4b-22",
-      "missionId": "LVR-c3770b4b",
-      "type": "checkpoint.created",
-      "at": "2026-09-03T02:30:16.791Z",
-      "elapsedMs": 1451,
-      "taskId": "validate",
-      "workerRunId": "wr_823e109c",
-      "message": "Checkpoint cp_bf0c2bd4a287: 197 tokens captured from 421 of context (53% smaller)",
-      "data": {
-        "checkpointId": "cp_bf0c2bd4a287",
-        "reason": "RATE_LIMIT",
-        "originalContextTokens": "[redacted]",
-        "checkpointTokens": "[redacted]"
-      }
-    },
-    {
-      "seq": 23,
-      "id": "LVR-c3770b4b-23",
-      "missionId": "LVR-c3770b4b",
-      "type": "worker.released",
-      "at": "2026-09-03T02:30:16.791Z",
-      "elapsedMs": 1451,
-      "taskId": "validate",
-      "workerRunId": "wr_823e109c",
-      "message": "Pool · best-free released"
-    },
-    {
-      "seq": 24,
-      "id": "LVR-c3770b4b-24",
-      "missionId": "LVR-c3770b4b",
-      "type": "handoff.started",
-      "at": "2026-09-03T02:30:16.791Z",
-      "elapsedMs": 1451,
-      "taskId": "validate",
-      "message": "Handing task to a replacement worker with checkpoint cp_bf0c2bd4a287",
-      "data": {
-        "checkpointId": "cp_bf0c2bd4a287",
-        "originalContextTokens": "[redacted]",
-        "checkpointTokens": "[redacted]",
-        "contextReductionPct": 53
-      }
-    },
-    {
-      "seq": 25,
-      "id": "LVR-c3770b4b-25",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.started",
-      "at": "2026-09-03T02:30:16.791Z",
-      "elapsedMs": 1451,
+      "at": "2026-09-03T03:24:09.749Z",
+      "elapsedMs": 1882,
       "taskId": "money",
       "message": "Auction opened for \"Implement money helpers\"",
       "data": {
@@ -3486,42 +3740,42 @@
       }
     },
     {
-      "seq": 26,
-      "id": "LVR-c3770b4b-26",
-      "missionId": "LVR-c3770b4b",
+      "seq": 11,
+      "id": "LVR-f8f72d56-11",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.791Z",
-      "elapsedMs": 1451,
+      "at": "2026-09-03T03:24:09.751Z",
+      "elapsedMs": 1884,
       "taskId": "money",
-      "message": "Pool · best-free: utility 0.683 (18 prior jobs)",
+      "message": "Pool · best-free: utility 0.660 (28 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
-        "utility": 0.683083725954141
+        "utility": 0.6597343601287825
       }
     },
     {
-      "seq": 27,
-      "id": "LVR-c3770b4b-27",
-      "missionId": "LVR-c3770b4b",
+      "seq": 12,
+      "id": "LVR-f8f72d56-12",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.791Z",
-      "elapsedMs": 1451,
+      "at": "2026-09-03T03:24:09.751Z",
+      "elapsedMs": 1884,
       "taskId": "money",
-      "message": "kodro-tutor: utility 0.656 (12 prior jobs)",
+      "message": "kodro-tutor: utility 0.659 (15 prior jobs)",
       "data": {
         "modelKey": "ollama:kodro-tutor:latest",
         "eligible": true,
-        "utility": 0.6563138063307078
+        "utility": 0.6585986047858978
       }
     },
     {
-      "seq": 28,
-      "id": "LVR-c3770b4b-28",
-      "missionId": "LVR-c3770b4b",
+      "seq": 13,
+      "id": "LVR-f8f72d56-13",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.791Z",
-      "elapsedMs": 1451,
+      "at": "2026-09-03T03:24:09.751Z",
+      "elapsedMs": 1884,
       "taskId": "money",
       "message": "qwen2.5-coder:3b: utility 0.650 (11 prior jobs)",
       "data": {
@@ -3531,12 +3785,12 @@
       }
     },
     {
-      "seq": 29,
-      "id": "LVR-c3770b4b-29",
-      "missionId": "LVR-c3770b4b",
+      "seq": 14,
+      "id": "LVR-f8f72d56-14",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.791Z",
-      "elapsedMs": 1451,
+      "at": "2026-09-03T03:24:09.751Z",
+      "elapsedMs": 1884,
       "taskId": "money",
       "message": "kodro-fast: utility 0.637 (3 prior jobs)",
       "data": {
@@ -3546,27 +3800,12 @@
       }
     },
     {
-      "seq": 30,
-      "id": "LVR-c3770b4b-30",
-      "missionId": "LVR-c3770b4b",
+      "seq": 15,
+      "id": "LVR-f8f72d56-15",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.791Z",
-      "elapsedMs": 1451,
-      "taskId": "money",
-      "message": "Pool · best-coding: utility 0.633 (3 prior jobs)",
-      "data": {
-        "modelKey": "pool:auto/best-coding",
-        "eligible": true,
-        "utility": 0.6330571428571429
-      }
-    },
-    {
-      "seq": 31,
-      "id": "LVR-c3770b4b-31",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.791Z",
-      "elapsedMs": 1451,
+      "at": "2026-09-03T03:24:09.751Z",
+      "elapsedMs": 1884,
       "taskId": "money",
       "message": "kodro-coder: utility 0.615 (3 prior jobs)",
       "data": {
@@ -3576,24 +3815,39 @@
       }
     },
     {
-      "seq": 32,
-      "id": "LVR-c3770b4b-32",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.completed",
-      "at": "2026-09-03T02:30:16.791Z",
-      "elapsedMs": 1451,
+      "seq": 16,
+      "id": "LVR-f8f72d56-16",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:09.751Z",
+      "elapsedMs": 1884,
       "taskId": "money",
-      "message": "Winner: Pool · best-free — 72 task fit · 79 verified success over 18 prior jobs · free route, no spend"
+      "message": "qwen3:4b-instruct: utility 0.610 (2 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen3:4b-instruct",
+        "eligible": true,
+        "utility": 0.6098666666666667
+      }
     },
     {
-      "seq": 33,
-      "id": "LVR-c3770b4b-33",
-      "missionId": "LVR-c3770b4b",
-      "type": "worker.hired",
-      "at": "2026-09-03T02:30:16.791Z",
-      "elapsedMs": 1451,
+      "seq": 17,
+      "id": "LVR-f8f72d56-17",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.completed",
+      "at": "2026-09-03T03:24:09.751Z",
+      "elapsedMs": 1884,
       "taskId": "money",
-      "workerRunId": "wr_3d2931d0",
+      "message": "Winner: Pool · best-free — 72 task fit · 70 verified success over 28 prior jobs · free route, no spend"
+    },
+    {
+      "seq": 18,
+      "id": "LVR-f8f72d56-18",
+      "missionId": "LVR-f8f72d56",
+      "type": "worker.hired",
+      "at": "2026-09-03T03:24:09.751Z",
+      "elapsedMs": 1884,
+      "taskId": "money",
+      "workerRunId": "wr_8e7162b8",
       "message": "Hired Pool · best-free as Backend Engineer",
       "data": {
         "modelKey": "pool:auto/best-free",
@@ -3601,14 +3855,14 @@
       }
     },
     {
-      "seq": 34,
-      "id": "LVR-c3770b4b-34",
-      "missionId": "LVR-c3770b4b",
+      "seq": 19,
+      "id": "LVR-f8f72d56-19",
+      "missionId": "LVR-f8f72d56",
       "type": "worker.started",
-      "at": "2026-09-03T02:30:16.791Z",
-      "elapsedMs": 1451,
+      "at": "2026-09-03T03:24:09.752Z",
+      "elapsedMs": 1885,
       "taskId": "money",
-      "workerRunId": "wr_3d2931d0",
+      "workerRunId": "wr_8e7162b8",
       "message": "Pool · best-free started work",
       "data": {
         "contextTokens": "[redacted]",
@@ -3618,14 +3872,236 @@
       }
     },
     {
-      "seq": 35,
-      "id": "LVR-c3770b4b-35",
-      "missionId": "LVR-c3770b4b",
+      "seq": 20,
+      "id": "LVR-f8f72d56-20",
+      "missionId": "LVR-f8f72d56",
+      "type": "provider.rate_limit",
+      "at": "2026-09-03T03:24:09.752Z",
+      "elapsedMs": 1885,
+      "taskId": "money",
+      "workerRunId": "wr_8e7162b8",
+      "message": "Pool · best-free: INJECTED 429 rate limit (deterministic fault injection, not a real provider error)",
+      "data": {
+        "injected": true
+      }
+    },
+    {
+      "seq": 21,
+      "id": "LVR-f8f72d56-21",
+      "missionId": "LVR-f8f72d56",
+      "type": "worker.failed",
+      "at": "2026-09-03T03:24:09.752Z",
+      "elapsedMs": 1885,
+      "taskId": "money",
+      "workerRunId": "wr_8e7162b8",
+      "message": "Pool · best-free failed: RATE_LIMIT — INJECTED 429 rate limit (deterministic fault injection, not a real provider error)",
+      "data": {
+        "failureType": "RATE_LIMIT"
+      }
+    },
+    {
+      "seq": 22,
+      "id": "LVR-f8f72d56-22",
+      "missionId": "LVR-f8f72d56",
+      "type": "checkpoint.created",
+      "at": "2026-09-03T03:24:09.753Z",
+      "elapsedMs": 1886,
+      "taskId": "money",
+      "workerRunId": "wr_8e7162b8",
+      "message": "Checkpoint cp_e79faf1d95be: 196 tokens captured from 453 of context (57% smaller)",
+      "data": {
+        "checkpointId": "cp_e79faf1d95be",
+        "reason": "RATE_LIMIT",
+        "originalContextTokens": "[redacted]",
+        "checkpointTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 23,
+      "id": "LVR-f8f72d56-23",
+      "missionId": "LVR-f8f72d56",
+      "type": "worker.released",
+      "at": "2026-09-03T03:24:09.753Z",
+      "elapsedMs": 1886,
+      "taskId": "money",
+      "workerRunId": "wr_8e7162b8",
+      "message": "Pool · best-free released"
+    },
+    {
+      "seq": 24,
+      "id": "LVR-f8f72d56-24",
+      "missionId": "LVR-f8f72d56",
+      "type": "handoff.started",
+      "at": "2026-09-03T03:24:09.753Z",
+      "elapsedMs": 1886,
+      "taskId": "money",
+      "message": "Handing task to a replacement worker with checkpoint cp_e79faf1d95be",
+      "data": {
+        "checkpointId": "cp_e79faf1d95be",
+        "originalContextTokens": "[redacted]",
+        "checkpointTokens": "[redacted]",
+        "contextReductionPct": 57
+      }
+    },
+    {
+      "seq": 25,
+      "id": "LVR-f8f72d56-25",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.started",
-      "at": "2026-09-03T02:30:16.794Z",
-      "elapsedMs": 1454,
+      "at": "2026-09-03T03:24:09.753Z",
+      "elapsedMs": 1886,
       "taskId": "validate",
       "message": "Auction opened for \"Implement receipt validation\"",
+      "data": {
+        "requires": [
+          "code",
+          "backend",
+          "reasoning"
+        ],
+        "contextTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 26,
+      "id": "LVR-f8f72d56-26",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:09.754Z",
+      "elapsedMs": 1887,
+      "taskId": "validate",
+      "message": "kodro-tutor: utility 0.659 (15 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "eligible": true,
+        "utility": 0.6585986047858978
+      }
+    },
+    {
+      "seq": 27,
+      "id": "LVR-f8f72d56-27",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:09.754Z",
+      "elapsedMs": 1887,
+      "taskId": "validate",
+      "message": "Pool · best-free: utility 0.654 (29 prior jobs)",
+      "data": {
+        "modelKey": "pool:auto/best-free",
+        "eligible": true,
+        "utility": 0.6542565357509651
+      }
+    },
+    {
+      "seq": 28,
+      "id": "LVR-f8f72d56-28",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:09.754Z",
+      "elapsedMs": 1887,
+      "taskId": "validate",
+      "message": "qwen2.5-coder:3b: utility 0.650 (11 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen2.5-coder:3b",
+        "eligible": true,
+        "utility": 0.6498046664558963
+      }
+    },
+    {
+      "seq": 29,
+      "id": "LVR-f8f72d56-29",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:09.754Z",
+      "elapsedMs": 1887,
+      "taskId": "validate",
+      "message": "kodro-fast: utility 0.637 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-fast:latest",
+        "eligible": true,
+        "utility": 0.637080784822442
+      }
+    },
+    {
+      "seq": 30,
+      "id": "LVR-f8f72d56-30",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:09.754Z",
+      "elapsedMs": 1887,
+      "taskId": "validate",
+      "message": "kodro-coder: utility 0.615 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-coder:latest",
+        "eligible": true,
+        "utility": 0.6145803619561032
+      }
+    },
+    {
+      "seq": 31,
+      "id": "LVR-f8f72d56-31",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:09.754Z",
+      "elapsedMs": 1887,
+      "taskId": "validate",
+      "message": "qwen3:4b-instruct: utility 0.610 (2 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen3:4b-instruct",
+        "eligible": true,
+        "utility": 0.6098666666666667
+      }
+    },
+    {
+      "seq": 32,
+      "id": "LVR-f8f72d56-32",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.completed",
+      "at": "2026-09-03T03:24:09.754Z",
+      "elapsedMs": 1887,
+      "taskId": "validate",
+      "message": "Winner: kodro-tutor — 100 task fit · 29 verified success over 15 prior jobs · local runtime, no spend"
+    },
+    {
+      "seq": 33,
+      "id": "LVR-f8f72d56-33",
+      "missionId": "LVR-f8f72d56",
+      "type": "worker.hired",
+      "at": "2026-09-03T03:24:09.754Z",
+      "elapsedMs": 1887,
+      "taskId": "validate",
+      "workerRunId": "wr_57fb59db",
+      "message": "Hired kodro-tutor as Backend Engineer",
+      "data": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "costClass": "local"
+      }
+    },
+    {
+      "seq": 34,
+      "id": "LVR-f8f72d56-34",
+      "missionId": "LVR-f8f72d56",
+      "type": "worker.started",
+      "at": "2026-09-03T03:24:09.754Z",
+      "elapsedMs": 1887,
+      "taskId": "validate",
+      "workerRunId": "wr_57fb59db",
+      "message": "kodro-tutor started work",
+      "data": {
+        "contextTokens": "[redacted]",
+        "availableRepoTokens": "[redacted]",
+        "contextReductionPct": 70,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 35,
+      "id": "LVR-f8f72d56-35",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.started",
+      "at": "2026-09-03T03:24:09.761Z",
+      "elapsedMs": 1894,
+      "taskId": "money",
+      "message": "Auction opened for \"Implement money helpers\"",
       "data": {
         "requires": [
           "code",
@@ -3637,27 +4113,27 @@
     },
     {
       "seq": 36,
-      "id": "LVR-c3770b4b-36",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-36",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.794Z",
-      "elapsedMs": 1454,
-      "taskId": "validate",
-      "message": "kodro-tutor: utility 0.656 (12 prior jobs)",
+      "at": "2026-09-03T03:24:09.762Z",
+      "elapsedMs": 1895,
+      "taskId": "money",
+      "message": "kodro-tutor: utility 0.659 (15 prior jobs)",
       "data": {
         "modelKey": "ollama:kodro-tutor:latest",
         "eligible": true,
-        "utility": 0.6563138063307078
+        "utility": 0.6585986047858978
       }
     },
     {
       "seq": 37,
-      "id": "LVR-c3770b4b-37",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-37",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.794Z",
-      "elapsedMs": 1454,
-      "taskId": "validate",
+      "at": "2026-09-03T03:24:09.762Z",
+      "elapsedMs": 1895,
+      "taskId": "money",
       "message": "qwen2.5-coder:3b: utility 0.650 (11 prior jobs)",
       "data": {
         "modelKey": "ollama:qwen2.5-coder:3b",
@@ -3667,12 +4143,12 @@
     },
     {
       "seq": 38,
-      "id": "LVR-c3770b4b-38",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-38",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.794Z",
-      "elapsedMs": 1454,
-      "taskId": "validate",
+      "at": "2026-09-03T03:24:09.762Z",
+      "elapsedMs": 1895,
+      "taskId": "money",
       "message": "kodro-fast: utility 0.637 (3 prior jobs)",
       "data": {
         "modelKey": "ollama:kodro-fast:latest",
@@ -3682,27 +4158,12 @@
     },
     {
       "seq": 39,
-      "id": "LVR-c3770b4b-39",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-39",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.794Z",
-      "elapsedMs": 1454,
-      "taskId": "validate",
-      "message": "Pool · best-coding: utility 0.633 (3 prior jobs)",
-      "data": {
-        "modelKey": "pool:auto/best-coding",
-        "eligible": true,
-        "utility": 0.6330571428571429
-      }
-    },
-    {
-      "seq": 40,
-      "id": "LVR-c3770b4b-40",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.794Z",
-      "elapsedMs": 1454,
-      "taskId": "validate",
+      "at": "2026-09-03T03:24:09.762Z",
+      "elapsedMs": 1895,
+      "taskId": "money",
       "message": "kodro-coder: utility 0.615 (3 prior jobs)",
       "data": {
         "modelKey": "ollama:kodro-coder:latest",
@@ -3711,13 +4172,13 @@
       }
     },
     {
-      "seq": 41,
-      "id": "LVR-c3770b4b-41",
-      "missionId": "LVR-c3770b4b",
+      "seq": 40,
+      "id": "LVR-f8f72d56-40",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:16.794Z",
-      "elapsedMs": 1454,
-      "taskId": "validate",
+      "at": "2026-09-03T03:24:09.762Z",
+      "elapsedMs": 1895,
+      "taskId": "money",
       "message": "qwen3:4b-instruct: utility 0.610 (2 prior jobs)",
       "data": {
         "modelKey": "ollama:qwen3:4b-instruct",
@@ -3726,25 +4187,40 @@
       }
     },
     {
+      "seq": 41,
+      "id": "LVR-f8f72d56-41",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:09.762Z",
+      "elapsedMs": 1895,
+      "taskId": "money",
+      "message": "qwen3.5:4b: utility 0.610 (2 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen3.5:4b",
+        "eligible": true,
+        "utility": 0.6098666666666667
+      }
+    },
+    {
       "seq": 42,
-      "id": "LVR-c3770b4b-42",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-42",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.completed",
-      "at": "2026-09-03T02:30:16.794Z",
-      "elapsedMs": 1454,
-      "taskId": "validate",
-      "message": "Winner: kodro-tutor — 100 task fit · 28 verified success over 12 prior jobs · local runtime, no spend · 1 candidate excluded by policy"
+      "at": "2026-09-03T03:24:09.762Z",
+      "elapsedMs": 1895,
+      "taskId": "money",
+      "message": "Winner: kodro-tutor — 100 task fit · 29 verified success over 15 prior jobs · local runtime, no spend · 1 candidate excluded by policy"
     },
     {
       "seq": 43,
-      "id": "LVR-c3770b4b-43",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-43",
+      "missionId": "LVR-f8f72d56",
       "type": "worker.hired",
-      "at": "2026-09-03T02:30:16.794Z",
-      "elapsedMs": 1454,
-      "taskId": "validate",
-      "workerRunId": "wr_b23df57d",
-      "message": "Hired kodro-tutor as Backend Engineer (resuming from cp_bf0c2bd4a287)",
+      "at": "2026-09-03T03:24:09.762Z",
+      "elapsedMs": 1895,
+      "taskId": "money",
+      "workerRunId": "wr_4fa9467b",
+      "message": "Hired kodro-tutor as Backend Engineer (resuming from cp_e79faf1d95be)",
       "data": {
         "modelKey": "ollama:kodro-tutor:latest",
         "costClass": "local"
@@ -3752,115 +4228,30 @@
     },
     {
       "seq": 44,
-      "id": "LVR-c3770b4b-44",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-44",
+      "missionId": "LVR-f8f72d56",
       "type": "worker.started",
-      "at": "2026-09-03T02:30:16.794Z",
-      "elapsedMs": 1454,
-      "taskId": "validate",
-      "workerRunId": "wr_b23df57d",
+      "at": "2026-09-03T03:24:09.762Z",
+      "elapsedMs": 1895,
+      "taskId": "money",
+      "workerRunId": "wr_4fa9467b",
       "message": "kodro-tutor started work",
       "data": {
         "contextTokens": "[redacted]",
         "availableRepoTokens": "[redacted]",
-        "contextReductionPct": 70,
+        "contextReductionPct": 67,
         "via": "rocketride-pipeline"
       }
     },
     {
       "seq": 45,
-      "id": "LVR-c3770b4b-45",
-      "missionId": "LVR-c3770b4b",
+      "id": "LVR-f8f72d56-45",
+      "missionId": "LVR-f8f72d56",
       "type": "worker.progress",
-      "at": "2026-09-03T02:30:35.293Z",
-      "elapsedMs": 19953,
-      "taskId": "money",
-      "workerRunId": "wr_3d2931d0",
-      "message": "Pool · best-free wrote 3 file(s)",
-      "data": {
-        "files": [
-          "src/money.js",
-          "src/money.js",
-          "src/money.js"
-        ]
-      }
-    },
-    {
-      "seq": 46,
-      "id": "LVR-c3770b4b-46",
-      "missionId": "LVR-c3770b4b",
-      "type": "verification.started",
-      "at": "2026-09-03T02:30:35.293Z",
-      "elapsedMs": 19953,
-      "taskId": "money",
-      "workerRunId": "wr_3d2931d0",
-      "message": "Verifying \"Implement money helpers\""
-    },
-    {
-      "seq": 47,
-      "id": "LVR-c3770b4b-47",
-      "missionId": "LVR-c3770b4b",
-      "type": "proof.check",
-      "at": "2026-09-03T02:30:35.628Z",
-      "elapsedMs": 20288,
-      "taskId": "money",
-      "workerRunId": "wr_3d2931d0",
-      "message": "src/money.js exists: PASS — src/money.js exists",
-      "data": {
-        "checkId": "exists-0",
-        "status": "pass"
-      }
-    },
-    {
-      "seq": 48,
-      "id": "LVR-c3770b4b-48",
-      "missionId": "LVR-c3770b4b",
-      "type": "proof.check",
-      "at": "2026-09-03T02:30:35.628Z",
-      "elapsedMs": 20288,
-      "taskId": "money",
-      "workerRunId": "wr_3d2931d0",
-      "message": "test/money.test.js: PASS — ℹ duration_ms 174.7145",
-      "data": {
-        "checkId": "suite",
-        "status": "pass"
-      }
-    },
-    {
-      "seq": 49,
-      "id": "LVR-c3770b4b-49",
-      "missionId": "LVR-c3770b4b",
-      "type": "verification.passed",
-      "at": "2026-09-03T02:30:35.629Z",
-      "elapsedMs": 20289,
-      "taskId": "money",
-      "workerRunId": "wr_3d2931d0",
-      "message": "\"Implement money helpers\" verified — quality 100",
-      "data": {
-        "proofId": "pf_c41cc148",
-        "quality": 100
-      }
-    },
-    {
-      "seq": 50,
-      "id": "LVR-c3770b4b-50",
-      "missionId": "LVR-c3770b4b",
-      "type": "task.completed",
-      "at": "2026-09-03T02:30:35.629Z",
-      "elapsedMs": 20289,
-      "taskId": "money",
-      "workerRunId": "wr_3d2931d0",
-      "message": "Task completed: Implement money helpers"
-    },
-    {
-      "seq": 51,
-      "id": "LVR-c3770b4b-51",
-      "missionId": "LVR-c3770b4b",
-      "type": "worker.progress",
-      "at": "2026-09-03T02:30:47.125Z",
-      "elapsedMs": 31785,
+      "at": "2026-09-03T03:24:32.533Z",
+      "elapsedMs": 24666,
       "taskId": "validate",
-      "workerRunId": "wr_b23df57d",
+      "workerRunId": "wr_57fb59db",
       "message": "kodro-tutor wrote 1 file(s)",
       "data": {
         "files": [
@@ -3869,25 +4260,25 @@
       }
     },
     {
-      "seq": 52,
-      "id": "LVR-c3770b4b-52",
-      "missionId": "LVR-c3770b4b",
+      "seq": 46,
+      "id": "LVR-f8f72d56-46",
+      "missionId": "LVR-f8f72d56",
       "type": "verification.started",
-      "at": "2026-09-03T02:30:47.125Z",
-      "elapsedMs": 31785,
+      "at": "2026-09-03T03:24:32.534Z",
+      "elapsedMs": 24667,
       "taskId": "validate",
-      "workerRunId": "wr_b23df57d",
+      "workerRunId": "wr_57fb59db",
       "message": "Verifying \"Implement receipt validation\""
     },
     {
-      "seq": 53,
-      "id": "LVR-c3770b4b-53",
-      "missionId": "LVR-c3770b4b",
+      "seq": 47,
+      "id": "LVR-f8f72d56-47",
+      "missionId": "LVR-f8f72d56",
       "type": "proof.check",
-      "at": "2026-09-03T02:30:47.314Z",
-      "elapsedMs": 31974,
+      "at": "2026-09-03T03:24:33.459Z",
+      "elapsedMs": 25592,
       "taskId": "validate",
-      "workerRunId": "wr_b23df57d",
+      "workerRunId": "wr_57fb59db",
       "message": "src/validate.js exists: PASS — src/validate.js exists",
       "data": {
         "checkId": "exists-0",
@@ -3895,14 +4286,14 @@
       }
     },
     {
-      "seq": 54,
-      "id": "LVR-c3770b4b-54",
-      "missionId": "LVR-c3770b4b",
+      "seq": 48,
+      "id": "LVR-f8f72d56-48",
+      "missionId": "LVR-f8f72d56",
       "type": "proof.check",
-      "at": "2026-09-03T02:30:47.314Z",
-      "elapsedMs": 31974,
+      "at": "2026-09-03T03:24:33.459Z",
+      "elapsedMs": 25592,
       "taskId": "validate",
-      "workerRunId": "wr_b23df57d",
+      "workerRunId": "wr_57fb59db",
       "message": "test/validate.test.js: FAIL — exit 1:   'test failed'",
       "data": {
         "checkId": "suite",
@@ -3910,81 +4301,81 @@
       }
     },
     {
-      "seq": 55,
-      "id": "LVR-c3770b4b-55",
-      "missionId": "LVR-c3770b4b",
+      "seq": 49,
+      "id": "LVR-f8f72d56-49",
+      "missionId": "LVR-f8f72d56",
       "type": "verification.failed",
-      "at": "2026-09-03T02:30:47.314Z",
-      "elapsedMs": 31974,
+      "at": "2026-09-03T03:24:33.459Z",
+      "elapsedMs": 25592,
       "taskId": "validate",
-      "workerRunId": "wr_b23df57d",
+      "workerRunId": "wr_57fb59db",
       "message": "Verification failed for \"Implement receipt validation\""
     },
     {
-      "seq": 56,
-      "id": "LVR-c3770b4b-56",
-      "missionId": "LVR-c3770b4b",
+      "seq": 50,
+      "id": "LVR-f8f72d56-50",
+      "missionId": "LVR-f8f72d56",
       "type": "worker.failed",
-      "at": "2026-09-03T02:30:47.314Z",
-      "elapsedMs": 31974,
+      "at": "2026-09-03T03:24:33.459Z",
+      "elapsedMs": 25592,
       "taskId": "validate",
-      "workerRunId": "wr_b23df57d",
+      "workerRunId": "wr_57fb59db",
       "message": "kodro-tutor failed: TEST_FAILURE — test/validate.test.js: exit 1:   'test failed'",
       "data": {
         "failureType": "TEST_FAILURE"
       }
     },
     {
-      "seq": 57,
-      "id": "LVR-c3770b4b-57",
-      "missionId": "LVR-c3770b4b",
+      "seq": 51,
+      "id": "LVR-f8f72d56-51",
+      "missionId": "LVR-f8f72d56",
       "type": "checkpoint.created",
-      "at": "2026-09-03T02:30:47.314Z",
-      "elapsedMs": 31974,
+      "at": "2026-09-03T03:24:33.459Z",
+      "elapsedMs": 25592,
       "taskId": "validate",
-      "workerRunId": "wr_b23df57d",
-      "message": "Checkpoint cp_b269132c1e4f: 220 tokens captured from 432 of context (49% smaller)",
+      "workerRunId": "wr_57fb59db",
+      "message": "Checkpoint cp_f749a1d987f6: 220 tokens captured from 421 of context (48% smaller)",
       "data": {
-        "checkpointId": "cp_b269132c1e4f",
+        "checkpointId": "cp_f749a1d987f6",
         "reason": "TEST_FAILURE",
         "originalContextTokens": "[redacted]",
         "checkpointTokens": "[redacted]"
       }
     },
     {
-      "seq": 58,
-      "id": "LVR-c3770b4b-58",
-      "missionId": "LVR-c3770b4b",
+      "seq": 52,
+      "id": "LVR-f8f72d56-52",
+      "missionId": "LVR-f8f72d56",
       "type": "worker.released",
-      "at": "2026-09-03T02:30:47.314Z",
-      "elapsedMs": 31974,
+      "at": "2026-09-03T03:24:33.460Z",
+      "elapsedMs": 25593,
       "taskId": "validate",
-      "workerRunId": "wr_b23df57d",
+      "workerRunId": "wr_57fb59db",
       "message": "kodro-tutor released"
     },
     {
-      "seq": 59,
-      "id": "LVR-c3770b4b-59",
-      "missionId": "LVR-c3770b4b",
+      "seq": 53,
+      "id": "LVR-f8f72d56-53",
+      "missionId": "LVR-f8f72d56",
       "type": "handoff.started",
-      "at": "2026-09-03T02:30:47.314Z",
-      "elapsedMs": 31974,
+      "at": "2026-09-03T03:24:33.460Z",
+      "elapsedMs": 25593,
       "taskId": "validate",
-      "message": "Handing task to a replacement worker with checkpoint cp_b269132c1e4f",
+      "message": "Handing task to a replacement worker with checkpoint cp_f749a1d987f6",
       "data": {
-        "checkpointId": "cp_b269132c1e4f",
+        "checkpointId": "cp_f749a1d987f6",
         "originalContextTokens": "[redacted]",
         "checkpointTokens": "[redacted]",
-        "contextReductionPct": 49
+        "contextReductionPct": 48
       }
     },
     {
-      "seq": 60,
-      "id": "LVR-c3770b4b-60",
-      "missionId": "LVR-c3770b4b",
+      "seq": 54,
+      "id": "LVR-f8f72d56-54",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.started",
-      "at": "2026-09-03T02:30:47.316Z",
-      "elapsedMs": 31976,
+      "at": "2026-09-03T03:24:33.466Z",
+      "elapsedMs": 25599,
       "taskId": "validate",
       "message": "Auction opened for \"Implement receipt validation\"",
       "data": {
@@ -3997,27 +4388,27 @@
       }
     },
     {
-      "seq": 61,
-      "id": "LVR-c3770b4b-61",
-      "missionId": "LVR-c3770b4b",
+      "seq": 55,
+      "id": "LVR-f8f72d56-55",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:47.332Z",
-      "elapsedMs": 31992,
+      "at": "2026-09-03T03:24:33.466Z",
+      "elapsedMs": 25599,
       "taskId": "validate",
-      "message": "Pool · best-free: utility 0.685 (19 prior jobs)",
+      "message": "Pool · best-free: utility 0.654 (29 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
-        "utility": 0.6854911861665735
+        "utility": 0.6542565357509651
       }
     },
     {
-      "seq": 62,
-      "id": "LVR-c3770b4b-62",
-      "missionId": "LVR-c3770b4b",
+      "seq": 56,
+      "id": "LVR-f8f72d56-56",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:47.332Z",
-      "elapsedMs": 31992,
+      "at": "2026-09-03T03:24:33.466Z",
+      "elapsedMs": 25599,
       "taskId": "validate",
       "message": "qwen2.5-coder:3b: utility 0.650 (11 prior jobs)",
       "data": {
@@ -4027,12 +4418,12 @@
       }
     },
     {
-      "seq": 63,
-      "id": "LVR-c3770b4b-63",
-      "missionId": "LVR-c3770b4b",
+      "seq": 57,
+      "id": "LVR-f8f72d56-57",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:47.332Z",
-      "elapsedMs": 31992,
+      "at": "2026-09-03T03:24:33.466Z",
+      "elapsedMs": 25599,
       "taskId": "validate",
       "message": "kodro-fast: utility 0.637 (3 prior jobs)",
       "data": {
@@ -4042,27 +4433,12 @@
       }
     },
     {
-      "seq": 64,
-      "id": "LVR-c3770b4b-64",
-      "missionId": "LVR-c3770b4b",
+      "seq": 58,
+      "id": "LVR-f8f72d56-58",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:47.332Z",
-      "elapsedMs": 31992,
-      "taskId": "validate",
-      "message": "Pool · best-coding: utility 0.633 (3 prior jobs)",
-      "data": {
-        "modelKey": "pool:auto/best-coding",
-        "eligible": true,
-        "utility": 0.6330571428571429
-      }
-    },
-    {
-      "seq": 65,
-      "id": "LVR-c3770b4b-65",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.candidate",
-      "at": "2026-09-03T02:30:47.332Z",
-      "elapsedMs": 31992,
+      "at": "2026-09-03T03:24:33.467Z",
+      "elapsedMs": 25600,
       "taskId": "validate",
       "message": "kodro-coder: utility 0.615 (3 prior jobs)",
       "data": {
@@ -4072,12 +4448,12 @@
       }
     },
     {
-      "seq": 66,
-      "id": "LVR-c3770b4b-66",
-      "missionId": "LVR-c3770b4b",
+      "seq": 59,
+      "id": "LVR-f8f72d56-59",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:30:47.332Z",
-      "elapsedMs": 31992,
+      "at": "2026-09-03T03:24:33.467Z",
+      "elapsedMs": 25600,
       "taskId": "validate",
       "message": "qwen3:4b-instruct: utility 0.610 (2 prior jobs)",
       "data": {
@@ -4087,56 +4463,430 @@
       }
     },
     {
-      "seq": 67,
-      "id": "LVR-c3770b4b-67",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.completed",
-      "at": "2026-09-03T02:30:47.332Z",
-      "elapsedMs": 31992,
+      "seq": 60,
+      "id": "LVR-f8f72d56-60",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:33.467Z",
+      "elapsedMs": 25600,
       "taskId": "validate",
-      "message": "Winner: Pool · best-free — 72 task fit · 80 verified success over 19 prior jobs · free route, no spend · 1 candidate excluded by policy"
+      "message": "qwen3.5:4b: utility 0.610 (2 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen3.5:4b",
+        "eligible": true,
+        "utility": 0.6098666666666667
+      }
     },
     {
-      "seq": 68,
-      "id": "LVR-c3770b4b-68",
-      "missionId": "LVR-c3770b4b",
-      "type": "worker.hired",
-      "at": "2026-09-03T02:30:47.332Z",
-      "elapsedMs": 31992,
+      "seq": 61,
+      "id": "LVR-f8f72d56-61",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.completed",
+      "at": "2026-09-03T03:24:33.467Z",
+      "elapsedMs": 25600,
       "taskId": "validate",
-      "workerRunId": "wr_318b7993",
-      "message": "Hired Pool · best-free as Backend Engineer (resuming from cp_b269132c1e4f)",
+      "message": "Winner: Pool · best-free — 72 task fit · 68 verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy"
+    },
+    {
+      "seq": 62,
+      "id": "LVR-f8f72d56-62",
+      "missionId": "LVR-f8f72d56",
+      "type": "worker.hired",
+      "at": "2026-09-03T03:24:33.467Z",
+      "elapsedMs": 25600,
+      "taskId": "validate",
+      "workerRunId": "wr_e432ff20",
+      "message": "Hired Pool · best-free as Backend Engineer (resuming from cp_f749a1d987f6)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "costClass": "free"
       }
     },
     {
-      "seq": 69,
-      "id": "LVR-c3770b4b-69",
-      "missionId": "LVR-c3770b4b",
+      "seq": 63,
+      "id": "LVR-f8f72d56-63",
+      "missionId": "LVR-f8f72d56",
       "type": "worker.started",
-      "at": "2026-09-03T02:30:47.332Z",
-      "elapsedMs": 31992,
+      "at": "2026-09-03T03:24:33.467Z",
+      "elapsedMs": 25600,
       "taskId": "validate",
-      "workerRunId": "wr_318b7993",
+      "workerRunId": "wr_e432ff20",
       "message": "Pool · best-free started work",
       "data": {
         "contextTokens": "[redacted]",
         "availableRepoTokens": "[redacted]",
-        "contextReductionPct": 61,
+        "contextReductionPct": 54,
         "via": "rocketride-pipeline"
       }
     },
     {
-      "seq": 70,
-      "id": "LVR-c3770b4b-70",
-      "missionId": "LVR-c3770b4b",
+      "seq": 64,
+      "id": "LVR-f8f72d56-64",
+      "missionId": "LVR-f8f72d56",
       "type": "worker.progress",
-      "at": "2026-09-03T02:31:38.146Z",
-      "elapsedMs": 82806,
+      "at": "2026-09-03T03:24:39.492Z",
+      "elapsedMs": 31625,
+      "taskId": "money",
+      "workerRunId": "wr_4fa9467b",
+      "message": "kodro-tutor wrote 1 file(s)",
+      "data": {
+        "files": [
+          "src/money.js"
+        ]
+      }
+    },
+    {
+      "seq": 65,
+      "id": "LVR-f8f72d56-65",
+      "missionId": "LVR-f8f72d56",
+      "type": "verification.started",
+      "at": "2026-09-03T03:24:39.492Z",
+      "elapsedMs": 31625,
+      "taskId": "money",
+      "workerRunId": "wr_4fa9467b",
+      "message": "Verifying \"Implement money helpers\""
+    },
+    {
+      "seq": 66,
+      "id": "LVR-f8f72d56-66",
+      "missionId": "LVR-f8f72d56",
+      "type": "proof.check",
+      "at": "2026-09-03T03:24:39.993Z",
+      "elapsedMs": 32126,
+      "taskId": "money",
+      "workerRunId": "wr_4fa9467b",
+      "message": "src/money.js exists: PASS — src/money.js exists",
+      "data": {
+        "checkId": "exists-0",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 67,
+      "id": "LVR-f8f72d56-67",
+      "missionId": "LVR-f8f72d56",
+      "type": "proof.check",
+      "at": "2026-09-03T03:24:39.993Z",
+      "elapsedMs": 32126,
+      "taskId": "money",
+      "workerRunId": "wr_4fa9467b",
+      "message": "test/money.test.js: FAIL — exit 1:   }",
+      "data": {
+        "checkId": "suite",
+        "status": "fail"
+      }
+    },
+    {
+      "seq": 68,
+      "id": "LVR-f8f72d56-68",
+      "missionId": "LVR-f8f72d56",
+      "type": "verification.failed",
+      "at": "2026-09-03T03:24:39.994Z",
+      "elapsedMs": 32127,
+      "taskId": "money",
+      "workerRunId": "wr_4fa9467b",
+      "message": "Verification failed for \"Implement money helpers\""
+    },
+    {
+      "seq": 69,
+      "id": "LVR-f8f72d56-69",
+      "missionId": "LVR-f8f72d56",
+      "type": "worker.failed",
+      "at": "2026-09-03T03:24:39.994Z",
+      "elapsedMs": 32127,
+      "taskId": "money",
+      "workerRunId": "wr_4fa9467b",
+      "message": "kodro-tutor failed: TEST_FAILURE — test/money.test.js: exit 1:   }",
+      "data": {
+        "failureType": "TEST_FAILURE"
+      }
+    },
+    {
+      "seq": 70,
+      "id": "LVR-f8f72d56-70",
+      "missionId": "LVR-f8f72d56",
+      "type": "checkpoint.created",
+      "at": "2026-09-03T03:24:39.994Z",
+      "elapsedMs": 32127,
+      "taskId": "money",
+      "workerRunId": "wr_4fa9467b",
+      "message": "Checkpoint cp_9e28829ad996: 327 tokens captured from 464 of context (30% smaller)",
+      "data": {
+        "checkpointId": "cp_9e28829ad996",
+        "reason": "TEST_FAILURE",
+        "originalContextTokens": "[redacted]",
+        "checkpointTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 71,
+      "id": "LVR-f8f72d56-71",
+      "missionId": "LVR-f8f72d56",
+      "type": "worker.released",
+      "at": "2026-09-03T03:24:39.994Z",
+      "elapsedMs": 32127,
+      "taskId": "money",
+      "workerRunId": "wr_4fa9467b",
+      "message": "kodro-tutor released"
+    },
+    {
+      "seq": 72,
+      "id": "LVR-f8f72d56-72",
+      "missionId": "LVR-f8f72d56",
+      "type": "handoff.started",
+      "at": "2026-09-03T03:24:39.994Z",
+      "elapsedMs": 32127,
+      "taskId": "money",
+      "message": "Handing task to a replacement worker with checkpoint cp_9e28829ad996",
+      "data": {
+        "checkpointId": "cp_9e28829ad996",
+        "originalContextTokens": "[redacted]",
+        "checkpointTokens": "[redacted]",
+        "contextReductionPct": 30
+      }
+    },
+    {
+      "seq": 73,
+      "id": "LVR-f8f72d56-73",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.started",
+      "at": "2026-09-03T03:24:40.000Z",
+      "elapsedMs": 32133,
+      "taskId": "money",
+      "message": "Auction opened for \"Implement money helpers\"",
+      "data": {
+        "requires": [
+          "code",
+          "backend",
+          "reasoning"
+        ],
+        "contextTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 74,
+      "id": "LVR-f8f72d56-74",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:40.124Z",
+      "elapsedMs": 32257,
+      "taskId": "money",
+      "message": "Pool · best-free: utility 0.654 (29 prior jobs)",
+      "data": {
+        "modelKey": "pool:auto/best-free",
+        "eligible": true,
+        "utility": 0.6542565357509651
+      }
+    },
+    {
+      "seq": 75,
+      "id": "LVR-f8f72d56-75",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:40.124Z",
+      "elapsedMs": 32257,
+      "taskId": "money",
+      "message": "qwen2.5-coder:3b: utility 0.650 (11 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen2.5-coder:3b",
+        "eligible": true,
+        "utility": 0.6498046664558963
+      }
+    },
+    {
+      "seq": 76,
+      "id": "LVR-f8f72d56-76",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:40.124Z",
+      "elapsedMs": 32257,
+      "taskId": "money",
+      "message": "kodro-fast: utility 0.637 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-fast:latest",
+        "eligible": true,
+        "utility": 0.637080784822442
+      }
+    },
+    {
+      "seq": 77,
+      "id": "LVR-f8f72d56-77",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:40.125Z",
+      "elapsedMs": 32258,
+      "taskId": "money",
+      "message": "kodro-coder: utility 0.615 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-coder:latest",
+        "eligible": true,
+        "utility": 0.6145803619561032
+      }
+    },
+    {
+      "seq": 78,
+      "id": "LVR-f8f72d56-78",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:40.125Z",
+      "elapsedMs": 32258,
+      "taskId": "money",
+      "message": "qwen3:4b-instruct: utility 0.610 (2 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen3:4b-instruct",
+        "eligible": true,
+        "utility": 0.6098666666666667
+      }
+    },
+    {
+      "seq": 79,
+      "id": "LVR-f8f72d56-79",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:24:40.125Z",
+      "elapsedMs": 32258,
+      "taskId": "money",
+      "message": "qwen3.5:4b: utility 0.610 (2 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen3.5:4b",
+        "eligible": true,
+        "utility": 0.6098666666666667
+      }
+    },
+    {
+      "seq": 80,
+      "id": "LVR-f8f72d56-80",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.completed",
+      "at": "2026-09-03T03:24:40.125Z",
+      "elapsedMs": 32258,
+      "taskId": "money",
+      "message": "Winner: Pool · best-free — 72 task fit · 68 verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy"
+    },
+    {
+      "seq": 81,
+      "id": "LVR-f8f72d56-81",
+      "missionId": "LVR-f8f72d56",
+      "type": "worker.hired",
+      "at": "2026-09-03T03:24:40.125Z",
+      "elapsedMs": 32258,
+      "taskId": "money",
+      "workerRunId": "wr_27e5e820",
+      "message": "Hired Pool · best-free as Backend Engineer (resuming from cp_9e28829ad996)",
+      "data": {
+        "modelKey": "pool:auto/best-free",
+        "costClass": "free"
+      }
+    },
+    {
+      "seq": 82,
+      "id": "LVR-f8f72d56-82",
+      "missionId": "LVR-f8f72d56",
+      "type": "worker.started",
+      "at": "2026-09-03T03:24:40.125Z",
+      "elapsedMs": 32258,
+      "taskId": "money",
+      "workerRunId": "wr_27e5e820",
+      "message": "Pool · best-free started work",
+      "data": {
+        "contextTokens": "[redacted]",
+        "availableRepoTokens": "[redacted]",
+        "contextReductionPct": 69,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 83,
+      "id": "LVR-f8f72d56-83",
+      "missionId": "LVR-f8f72d56",
+      "type": "worker.progress",
+      "at": "2026-09-03T03:25:32.571Z",
+      "elapsedMs": 84704,
+      "taskId": "money",
+      "workerRunId": "wr_27e5e820",
+      "message": "Pool · best-free wrote 1 file(s)",
+      "data": {
+        "files": [
+          "src/money.js"
+        ]
+      }
+    },
+    {
+      "seq": 84,
+      "id": "LVR-f8f72d56-84",
+      "missionId": "LVR-f8f72d56",
+      "type": "verification.started",
+      "at": "2026-09-03T03:25:32.571Z",
+      "elapsedMs": 84704,
+      "taskId": "money",
+      "workerRunId": "wr_27e5e820",
+      "message": "Verifying \"Implement money helpers\""
+    },
+    {
+      "seq": 85,
+      "id": "LVR-f8f72d56-85",
+      "missionId": "LVR-f8f72d56",
+      "type": "proof.check",
+      "at": "2026-09-03T03:25:32.708Z",
+      "elapsedMs": 84841,
+      "taskId": "money",
+      "workerRunId": "wr_27e5e820",
+      "message": "src/money.js exists: PASS — src/money.js exists",
+      "data": {
+        "checkId": "exists-0",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 86,
+      "id": "LVR-f8f72d56-86",
+      "missionId": "LVR-f8f72d56",
+      "type": "proof.check",
+      "at": "2026-09-03T03:25:32.708Z",
+      "elapsedMs": 84841,
+      "taskId": "money",
+      "workerRunId": "wr_27e5e820",
+      "message": "test/money.test.js: PASS — ℹ duration_ms 77.5878",
+      "data": {
+        "checkId": "suite",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 87,
+      "id": "LVR-f8f72d56-87",
+      "missionId": "LVR-f8f72d56",
+      "type": "verification.passed",
+      "at": "2026-09-03T03:25:32.708Z",
+      "elapsedMs": 84841,
+      "taskId": "money",
+      "workerRunId": "wr_27e5e820",
+      "message": "\"Implement money helpers\" verified — quality 100",
+      "data": {
+        "proofId": "pf_c528be79",
+        "quality": 100
+      }
+    },
+    {
+      "seq": 88,
+      "id": "LVR-f8f72d56-88",
+      "missionId": "LVR-f8f72d56",
+      "type": "task.completed",
+      "at": "2026-09-03T03:25:32.708Z",
+      "elapsedMs": 84841,
+      "taskId": "money",
+      "workerRunId": "wr_27e5e820",
+      "message": "Task completed: Implement money helpers"
+    },
+    {
+      "seq": 89,
+      "id": "LVR-f8f72d56-89",
+      "missionId": "LVR-f8f72d56",
+      "type": "worker.progress",
+      "at": "2026-09-03T03:25:51.433Z",
+      "elapsedMs": 103566,
       "taskId": "validate",
-      "workerRunId": "wr_318b7993",
+      "workerRunId": "wr_e432ff20",
       "message": "Pool · best-free wrote 1 file(s)",
       "data": {
         "files": [
@@ -4145,25 +4895,25 @@
       }
     },
     {
-      "seq": 71,
-      "id": "LVR-c3770b4b-71",
-      "missionId": "LVR-c3770b4b",
+      "seq": 90,
+      "id": "LVR-f8f72d56-90",
+      "missionId": "LVR-f8f72d56",
       "type": "verification.started",
-      "at": "2026-09-03T02:31:38.146Z",
-      "elapsedMs": 82806,
+      "at": "2026-09-03T03:25:51.434Z",
+      "elapsedMs": 103567,
       "taskId": "validate",
-      "workerRunId": "wr_318b7993",
+      "workerRunId": "wr_e432ff20",
       "message": "Verifying \"Implement receipt validation\""
     },
     {
-      "seq": 72,
-      "id": "LVR-c3770b4b-72",
-      "missionId": "LVR-c3770b4b",
+      "seq": 91,
+      "id": "LVR-f8f72d56-91",
+      "missionId": "LVR-f8f72d56",
       "type": "proof.check",
-      "at": "2026-09-03T02:31:38.306Z",
-      "elapsedMs": 82966,
+      "at": "2026-09-03T03:25:51.578Z",
+      "elapsedMs": 103711,
       "taskId": "validate",
-      "workerRunId": "wr_318b7993",
+      "workerRunId": "wr_e432ff20",
       "message": "src/validate.js exists: PASS — src/validate.js exists",
       "data": {
         "checkId": "exists-0",
@@ -4171,63 +4921,63 @@
       }
     },
     {
-      "seq": 73,
-      "id": "LVR-c3770b4b-73",
-      "missionId": "LVR-c3770b4b",
+      "seq": 92,
+      "id": "LVR-f8f72d56-92",
+      "missionId": "LVR-f8f72d56",
       "type": "proof.check",
-      "at": "2026-09-03T02:31:38.306Z",
-      "elapsedMs": 82966,
+      "at": "2026-09-03T03:25:51.578Z",
+      "elapsedMs": 103711,
       "taskId": "validate",
-      "workerRunId": "wr_318b7993",
-      "message": "test/validate.test.js: PASS — ℹ duration_ms 87.3974",
+      "workerRunId": "wr_e432ff20",
+      "message": "test/validate.test.js: PASS — ℹ duration_ms 79.7916",
       "data": {
         "checkId": "suite",
         "status": "pass"
       }
     },
     {
-      "seq": 74,
-      "id": "LVR-c3770b4b-74",
-      "missionId": "LVR-c3770b4b",
+      "seq": 93,
+      "id": "LVR-f8f72d56-93",
+      "missionId": "LVR-f8f72d56",
       "type": "verification.passed",
-      "at": "2026-09-03T02:31:38.306Z",
-      "elapsedMs": 82966,
+      "at": "2026-09-03T03:25:51.578Z",
+      "elapsedMs": 103711,
       "taskId": "validate",
-      "workerRunId": "wr_318b7993",
+      "workerRunId": "wr_e432ff20",
       "message": "\"Implement receipt validation\" verified — quality 100",
       "data": {
-        "proofId": "pf_ded70c02",
+        "proofId": "pf_9e3af828",
         "quality": 100
       }
     },
     {
-      "seq": 75,
-      "id": "LVR-c3770b4b-75",
-      "missionId": "LVR-c3770b4b",
+      "seq": 94,
+      "id": "LVR-f8f72d56-94",
+      "missionId": "LVR-f8f72d56",
       "type": "task.completed",
-      "at": "2026-09-03T02:31:38.306Z",
-      "elapsedMs": 82966,
+      "at": "2026-09-03T03:25:51.578Z",
+      "elapsedMs": 103711,
       "taskId": "validate",
-      "workerRunId": "wr_318b7993",
+      "workerRunId": "wr_e432ff20",
       "message": "Task completed: Implement receipt validation"
     },
     {
-      "seq": 76,
-      "id": "LVR-c3770b4b-76",
-      "missionId": "LVR-c3770b4b",
+      "seq": 95,
+      "id": "LVR-f8f72d56-95",
+      "missionId": "LVR-f8f72d56",
       "type": "task.ready",
-      "at": "2026-09-03T02:31:38.306Z",
-      "elapsedMs": 82966,
+      "at": "2026-09-03T03:25:51.578Z",
+      "elapsedMs": 103711,
       "taskId": "split",
       "message": "Task ready: Implement the split calculation"
     },
     {
-      "seq": 77,
-      "id": "LVR-c3770b4b-77",
-      "missionId": "LVR-c3770b4b",
+      "seq": 96,
+      "id": "LVR-f8f72d56-96",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.started",
-      "at": "2026-09-03T02:31:38.311Z",
-      "elapsedMs": 82971,
+      "at": "2026-09-03T03:25:51.585Z",
+      "elapsedMs": 103718,
       "taskId": "split",
       "message": "Auction opened for \"Implement the split calculation\"",
       "data": {
@@ -4240,42 +4990,42 @@
       }
     },
     {
-      "seq": 78,
-      "id": "LVR-c3770b4b-78",
-      "missionId": "LVR-c3770b4b",
+      "seq": 97,
+      "id": "LVR-f8f72d56-97",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:31:42.190Z",
-      "elapsedMs": 86850,
+      "at": "2026-09-03T03:25:57.992Z",
+      "elapsedMs": 110125,
       "taskId": "split",
-      "message": "Pool · best-free: utility 0.688 (20 prior jobs)",
+      "message": "Pool · best-free: utility 0.659 (31 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
-        "utility": 0.6875352411056561
+        "utility": 0.6588803124756728
       }
     },
     {
-      "seq": 79,
-      "id": "LVR-c3770b4b-79",
-      "missionId": "LVR-c3770b4b",
+      "seq": 98,
+      "id": "LVR-f8f72d56-98",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:31:42.190Z",
-      "elapsedMs": 86850,
+      "at": "2026-09-03T03:25:57.992Z",
+      "elapsedMs": 110125,
       "taskId": "split",
-      "message": "kodro-tutor: utility 0.652 (13 prior jobs)",
+      "message": "kodro-tutor: utility 0.651 (17 prior jobs)",
       "data": {
         "modelKey": "ollama:kodro-tutor:latest",
         "eligible": true,
-        "utility": 0.6521267781605108
+        "utility": 0.6514883957466483
       }
     },
     {
-      "seq": 80,
-      "id": "LVR-c3770b4b-80",
-      "missionId": "LVR-c3770b4b",
+      "seq": 99,
+      "id": "LVR-f8f72d56-99",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:31:42.190Z",
-      "elapsedMs": 86850,
+      "at": "2026-09-03T03:25:57.992Z",
+      "elapsedMs": 110125,
       "taskId": "split",
       "message": "qwen2.5-coder:3b: utility 0.650 (11 prior jobs)",
       "data": {
@@ -4285,12 +5035,12 @@
       }
     },
     {
-      "seq": 81,
-      "id": "LVR-c3770b4b-81",
-      "missionId": "LVR-c3770b4b",
+      "seq": 100,
+      "id": "LVR-f8f72d56-100",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:31:42.190Z",
-      "elapsedMs": 86850,
+      "at": "2026-09-03T03:25:57.992Z",
+      "elapsedMs": 110125,
       "taskId": "split",
       "message": "kodro-fast: utility 0.637 (3 prior jobs)",
       "data": {
@@ -4300,27 +5050,12 @@
       }
     },
     {
-      "seq": 82,
-      "id": "LVR-c3770b4b-82",
-      "missionId": "LVR-c3770b4b",
+      "seq": 101,
+      "id": "LVR-f8f72d56-101",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:31:42.190Z",
-      "elapsedMs": 86850,
-      "taskId": "split",
-      "message": "Pool · best-coding: utility 0.633 (3 prior jobs)",
-      "data": {
-        "modelKey": "pool:auto/best-coding",
-        "eligible": true,
-        "utility": 0.6330571428571429
-      }
-    },
-    {
-      "seq": 83,
-      "id": "LVR-c3770b4b-83",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.candidate",
-      "at": "2026-09-03T02:31:42.190Z",
-      "elapsedMs": 86850,
+      "at": "2026-09-03T03:25:57.992Z",
+      "elapsedMs": 110125,
       "taskId": "split",
       "message": "kodro-coder: utility 0.615 (3 prior jobs)",
       "data": {
@@ -4330,24 +5065,39 @@
       }
     },
     {
-      "seq": 84,
-      "id": "LVR-c3770b4b-84",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.completed",
-      "at": "2026-09-03T02:31:42.190Z",
-      "elapsedMs": 86850,
+      "seq": 102,
+      "id": "LVR-f8f72d56-102",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:25:57.992Z",
+      "elapsedMs": 110125,
       "taskId": "split",
-      "message": "Winner: Pool · best-free — 72 task fit · 81 verified success over 20 prior jobs · free route, no spend"
+      "message": "qwen3:4b-instruct: utility 0.610 (2 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen3:4b-instruct",
+        "eligible": true,
+        "utility": 0.6098666666666667
+      }
     },
     {
-      "seq": 85,
-      "id": "LVR-c3770b4b-85",
-      "missionId": "LVR-c3770b4b",
-      "type": "worker.hired",
-      "at": "2026-09-03T02:31:42.190Z",
-      "elapsedMs": 86850,
+      "seq": 103,
+      "id": "LVR-f8f72d56-103",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.completed",
+      "at": "2026-09-03T03:25:57.992Z",
+      "elapsedMs": 110125,
       "taskId": "split",
-      "workerRunId": "wr_aa4a95cf",
+      "message": "Winner: Pool · best-free — 72 task fit · 70 verified success over 31 prior jobs · free route, no spend"
+    },
+    {
+      "seq": 104,
+      "id": "LVR-f8f72d56-104",
+      "missionId": "LVR-f8f72d56",
+      "type": "worker.hired",
+      "at": "2026-09-03T03:25:57.992Z",
+      "elapsedMs": 110125,
+      "taskId": "split",
+      "workerRunId": "wr_b9e07cd2",
       "message": "Hired Pool · best-free as Backend Engineer",
       "data": {
         "modelKey": "pool:auto/best-free",
@@ -4355,31 +5105,31 @@
       }
     },
     {
-      "seq": 86,
-      "id": "LVR-c3770b4b-86",
-      "missionId": "LVR-c3770b4b",
+      "seq": 105,
+      "id": "LVR-f8f72d56-105",
+      "missionId": "LVR-f8f72d56",
       "type": "worker.started",
-      "at": "2026-09-03T02:31:42.190Z",
-      "elapsedMs": 86850,
+      "at": "2026-09-03T03:25:57.992Z",
+      "elapsedMs": 110125,
       "taskId": "split",
-      "workerRunId": "wr_aa4a95cf",
+      "workerRunId": "wr_b9e07cd2",
       "message": "Pool · best-free started work",
       "data": {
         "contextTokens": "[redacted]",
         "availableRepoTokens": "[redacted]",
-        "contextReductionPct": 12,
+        "contextReductionPct": 46,
         "via": "rocketride-pipeline"
       }
     },
     {
-      "seq": 87,
-      "id": "LVR-c3770b4b-87",
-      "missionId": "LVR-c3770b4b",
+      "seq": 106,
+      "id": "LVR-f8f72d56-106",
+      "missionId": "LVR-f8f72d56",
       "type": "worker.progress",
-      "at": "2026-09-03T02:32:08.331Z",
-      "elapsedMs": 112991,
+      "at": "2026-09-03T03:26:31.595Z",
+      "elapsedMs": 143728,
       "taskId": "split",
-      "workerRunId": "wr_aa4a95cf",
+      "workerRunId": "wr_b9e07cd2",
       "message": "Pool · best-free wrote 1 file(s)",
       "data": {
         "files": [
@@ -4388,25 +5138,25 @@
       }
     },
     {
-      "seq": 88,
-      "id": "LVR-c3770b4b-88",
-      "missionId": "LVR-c3770b4b",
+      "seq": 107,
+      "id": "LVR-f8f72d56-107",
+      "missionId": "LVR-f8f72d56",
       "type": "verification.started",
-      "at": "2026-09-03T02:32:08.331Z",
-      "elapsedMs": 112991,
+      "at": "2026-09-03T03:26:31.595Z",
+      "elapsedMs": 143728,
       "taskId": "split",
-      "workerRunId": "wr_aa4a95cf",
+      "workerRunId": "wr_b9e07cd2",
       "message": "Verifying \"Implement the split calculation\""
     },
     {
-      "seq": 89,
-      "id": "LVR-c3770b4b-89",
-      "missionId": "LVR-c3770b4b",
+      "seq": 108,
+      "id": "LVR-f8f72d56-108",
+      "missionId": "LVR-f8f72d56",
       "type": "proof.check",
-      "at": "2026-09-03T02:32:08.493Z",
-      "elapsedMs": 113153,
+      "at": "2026-09-03T03:26:31.742Z",
+      "elapsedMs": 143875,
       "taskId": "split",
-      "workerRunId": "wr_aa4a95cf",
+      "workerRunId": "wr_b9e07cd2",
       "message": "src/split.js exists: PASS — src/split.js exists",
       "data": {
         "checkId": "exists-0",
@@ -4414,63 +5164,63 @@
       }
     },
     {
-      "seq": 90,
-      "id": "LVR-c3770b4b-90",
-      "missionId": "LVR-c3770b4b",
+      "seq": 109,
+      "id": "LVR-f8f72d56-109",
+      "missionId": "LVR-f8f72d56",
       "type": "proof.check",
-      "at": "2026-09-03T02:32:08.493Z",
-      "elapsedMs": 113153,
+      "at": "2026-09-03T03:26:31.742Z",
+      "elapsedMs": 143875,
       "taskId": "split",
-      "workerRunId": "wr_aa4a95cf",
-      "message": "test/split.test.js: PASS — ℹ duration_ms 87.7897",
+      "workerRunId": "wr_b9e07cd2",
+      "message": "test/split.test.js: PASS — ℹ duration_ms 77.8751",
       "data": {
         "checkId": "suite",
         "status": "pass"
       }
     },
     {
-      "seq": 91,
-      "id": "LVR-c3770b4b-91",
-      "missionId": "LVR-c3770b4b",
+      "seq": 110,
+      "id": "LVR-f8f72d56-110",
+      "missionId": "LVR-f8f72d56",
       "type": "verification.passed",
-      "at": "2026-09-03T02:32:08.493Z",
-      "elapsedMs": 113153,
+      "at": "2026-09-03T03:26:31.742Z",
+      "elapsedMs": 143875,
       "taskId": "split",
-      "workerRunId": "wr_aa4a95cf",
+      "workerRunId": "wr_b9e07cd2",
       "message": "\"Implement the split calculation\" verified — quality 100",
       "data": {
-        "proofId": "pf_eef2b65d",
+        "proofId": "pf_c7a34078",
         "quality": 100
       }
     },
     {
-      "seq": 92,
-      "id": "LVR-c3770b4b-92",
-      "missionId": "LVR-c3770b4b",
+      "seq": 111,
+      "id": "LVR-f8f72d56-111",
+      "missionId": "LVR-f8f72d56",
       "type": "task.completed",
-      "at": "2026-09-03T02:32:08.493Z",
-      "elapsedMs": 113153,
+      "at": "2026-09-03T03:26:31.742Z",
+      "elapsedMs": 143875,
       "taskId": "split",
-      "workerRunId": "wr_aa4a95cf",
+      "workerRunId": "wr_b9e07cd2",
       "message": "Task completed: Implement the split calculation"
     },
     {
-      "seq": 93,
-      "id": "LVR-c3770b4b-93",
-      "missionId": "LVR-c3770b4b",
+      "seq": 112,
+      "id": "LVR-f8f72d56-112",
+      "missionId": "LVR-f8f72d56",
       "type": "task.ready",
-      "at": "2026-09-03T02:32:08.493Z",
-      "elapsedMs": 113153,
+      "at": "2026-09-03T03:26:31.742Z",
+      "elapsedMs": 143875,
       "taskId": "index",
       "message": "Task ready: Implement the request handler"
     },
     {
-      "seq": 94,
-      "id": "LVR-c3770b4b-94",
-      "missionId": "LVR-c3770b4b",
+      "seq": 113,
+      "id": "LVR-f8f72d56-113",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.started",
-      "at": "2026-09-03T02:32:08.497Z",
-      "elapsedMs": 113157,
+      "at": "2026-09-03T03:26:31.749Z",
+      "elapsedMs": 143882,
       "taskId": "index",
       "message": "Auction opened for \"Implement the request handler\"",
       "data": {
@@ -4483,42 +5233,27 @@
       }
     },
     {
-      "seq": 95,
-      "id": "LVR-c3770b4b-95",
-      "missionId": "LVR-c3770b4b",
+      "seq": 114,
+      "id": "LVR-f8f72d56-114",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:32:08.520Z",
-      "elapsedMs": 113180,
+      "at": "2026-09-03T03:26:31.764Z",
+      "elapsedMs": 143897,
       "taskId": "index",
-      "message": "kodro-tutor: utility 0.802 (4 prior jobs)",
+      "message": "kodro-tutor: utility 0.812 (6 prior jobs)",
       "data": {
         "modelKey": "ollama:kodro-tutor:latest",
         "eligible": true,
-        "utility": 0.8017090538789113
+        "utility": 0.8115094117647059
       }
     },
     {
-      "seq": 96,
-      "id": "LVR-c3770b4b-96",
-      "missionId": "LVR-c3770b4b",
+      "seq": 115,
+      "id": "LVR-f8f72d56-115",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:32:08.520Z",
-      "elapsedMs": 113180,
-      "taskId": "index",
-      "message": "Pool · best-free: utility 0.684 (23 prior jobs)",
-      "data": {
-        "modelKey": "pool:auto/best-free",
-        "eligible": true,
-        "utility": 0.6838733283486886
-      }
-    },
-    {
-      "seq": 97,
-      "id": "LVR-c3770b4b-97",
-      "missionId": "LVR-c3770b4b",
-      "type": "auction.candidate",
-      "at": "2026-09-03T02:32:08.520Z",
-      "elapsedMs": 113180,
+      "at": "2026-09-03T03:26:31.764Z",
+      "elapsedMs": 143897,
       "taskId": "index",
       "message": "qwen2.5-coder:3b: utility 0.663 (12 prior jobs)",
       "data": {
@@ -4528,27 +5263,27 @@
       }
     },
     {
-      "seq": 98,
-      "id": "LVR-c3770b4b-98",
-      "missionId": "LVR-c3770b4b",
+      "seq": 116,
+      "id": "LVR-f8f72d56-116",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:32:08.520Z",
-      "elapsedMs": 113180,
+      "at": "2026-09-03T03:26:31.764Z",
+      "elapsedMs": 143897,
       "taskId": "index",
-      "message": "Pool · best-coding: utility 0.649 (4 prior jobs)",
+      "message": "Pool · best-free: utility 0.658 (34 prior jobs)",
       "data": {
-        "modelKey": "pool:auto/best-coding",
+        "modelKey": "pool:auto/best-free",
         "eligible": true,
-        "utility": 0.6494000000000001
+        "utility": 0.6582633074972035
       }
     },
     {
-      "seq": 99,
-      "id": "LVR-c3770b4b-99",
-      "missionId": "LVR-c3770b4b",
+      "seq": 117,
+      "id": "LVR-f8f72d56-117",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:32:08.520Z",
-      "elapsedMs": 113180,
+      "at": "2026-09-03T03:26:31.764Z",
+      "elapsedMs": 143897,
       "taskId": "index",
       "message": "kodro-fast: utility 0.637 (3 prior jobs)",
       "data": {
@@ -4558,12 +5293,27 @@
       }
     },
     {
-      "seq": 100,
-      "id": "LVR-c3770b4b-100",
-      "missionId": "LVR-c3770b4b",
+      "seq": 118,
+      "id": "LVR-f8f72d56-118",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.candidate",
-      "at": "2026-09-03T02:32:08.520Z",
-      "elapsedMs": 113180,
+      "at": "2026-09-03T03:26:31.764Z",
+      "elapsedMs": 143897,
+      "taskId": "index",
+      "message": "Pool · best-coding: utility 0.620 (6 prior jobs)",
+      "data": {
+        "modelKey": "pool:auto/best-coding",
+        "eligible": true,
+        "utility": 0.620487269811573
+      }
+    },
+    {
+      "seq": 119,
+      "id": "LVR-f8f72d56-119",
+      "missionId": "LVR-f8f72d56",
+      "type": "auction.candidate",
+      "at": "2026-09-03T03:26:31.764Z",
+      "elapsedMs": 143897,
       "taskId": "index",
       "message": "kodro-coder: utility 0.615 (3 prior jobs)",
       "data": {
@@ -4573,24 +5323,24 @@
       }
     },
     {
-      "seq": 101,
-      "id": "LVR-c3770b4b-101",
-      "missionId": "LVR-c3770b4b",
+      "seq": 120,
+      "id": "LVR-f8f72d56-120",
+      "missionId": "LVR-f8f72d56",
       "type": "auction.completed",
-      "at": "2026-09-03T02:32:08.520Z",
-      "elapsedMs": 113180,
+      "at": "2026-09-03T03:26:31.764Z",
+      "elapsedMs": 143897,
       "taskId": "index",
-      "message": "Winner: kodro-tutor — 100 task fit · 81 verified success over 4 prior jobs · local runtime, no spend"
+      "message": "Winner: kodro-tutor — 100 task fit · 85 verified success over 6 prior jobs · local runtime, no spend"
     },
     {
-      "seq": 102,
-      "id": "LVR-c3770b4b-102",
-      "missionId": "LVR-c3770b4b",
+      "seq": 121,
+      "id": "LVR-f8f72d56-121",
+      "missionId": "LVR-f8f72d56",
       "type": "worker.hired",
-      "at": "2026-09-03T02:32:08.520Z",
-      "elapsedMs": 113180,
+      "at": "2026-09-03T03:26:31.764Z",
+      "elapsedMs": 143897,
       "taskId": "index",
-      "workerRunId": "wr_48b6d11b",
+      "workerRunId": "wr_c64c8afd",
       "message": "Hired kodro-tutor as Integrator",
       "data": {
         "modelKey": "ollama:kodro-tutor:latest",
@@ -4598,31 +5348,31 @@
       }
     },
     {
-      "seq": 103,
-      "id": "LVR-c3770b4b-103",
-      "missionId": "LVR-c3770b4b",
+      "seq": 122,
+      "id": "LVR-f8f72d56-122",
+      "missionId": "LVR-f8f72d56",
       "type": "worker.started",
-      "at": "2026-09-03T02:32:08.520Z",
-      "elapsedMs": 113180,
+      "at": "2026-09-03T03:26:31.764Z",
+      "elapsedMs": 143897,
       "taskId": "index",
-      "workerRunId": "wr_48b6d11b",
+      "workerRunId": "wr_c64c8afd",
       "message": "kodro-tutor started work",
       "data": {
         "contextTokens": "[redacted]",
         "availableRepoTokens": "[redacted]",
-        "contextReductionPct": 76,
+        "contextReductionPct": 74,
         "via": "rocketride-pipeline"
       }
     },
     {
-      "seq": 104,
-      "id": "LVR-c3770b4b-104",
-      "missionId": "LVR-c3770b4b",
+      "seq": 123,
+      "id": "LVR-f8f72d56-123",
+      "missionId": "LVR-f8f72d56",
       "type": "worker.progress",
-      "at": "2026-09-03T02:32:19.072Z",
-      "elapsedMs": 123732,
+      "at": "2026-09-03T03:26:37.321Z",
+      "elapsedMs": 149454,
       "taskId": "index",
-      "workerRunId": "wr_48b6d11b",
+      "workerRunId": "wr_c64c8afd",
       "message": "kodro-tutor wrote 1 file(s)",
       "data": {
         "files": [
@@ -4631,25 +5381,25 @@
       }
     },
     {
-      "seq": 105,
-      "id": "LVR-c3770b4b-105",
-      "missionId": "LVR-c3770b4b",
+      "seq": 124,
+      "id": "LVR-f8f72d56-124",
+      "missionId": "LVR-f8f72d56",
       "type": "verification.started",
-      "at": "2026-09-03T02:32:19.072Z",
-      "elapsedMs": 123732,
+      "at": "2026-09-03T03:26:37.322Z",
+      "elapsedMs": 149455,
       "taskId": "index",
-      "workerRunId": "wr_48b6d11b",
+      "workerRunId": "wr_c64c8afd",
       "message": "Verifying \"Implement the request handler\""
     },
     {
-      "seq": 106,
-      "id": "LVR-c3770b4b-106",
-      "missionId": "LVR-c3770b4b",
+      "seq": 125,
+      "id": "LVR-f8f72d56-125",
+      "missionId": "LVR-f8f72d56",
       "type": "proof.check",
-      "at": "2026-09-03T02:32:19.263Z",
-      "elapsedMs": 123923,
+      "at": "2026-09-03T03:26:37.470Z",
+      "elapsedMs": 149603,
       "taskId": "index",
-      "workerRunId": "wr_48b6d11b",
+      "workerRunId": "wr_c64c8afd",
       "message": "src/index.js exists: PASS — src/index.js exists",
       "data": {
         "checkId": "exists-0",
@@ -4657,53 +5407,53 @@
       }
     },
     {
-      "seq": 107,
-      "id": "LVR-c3770b4b-107",
-      "missionId": "LVR-c3770b4b",
+      "seq": 126,
+      "id": "LVR-f8f72d56-126",
+      "missionId": "LVR-f8f72d56",
       "type": "proof.check",
-      "at": "2026-09-03T02:32:19.263Z",
-      "elapsedMs": 123923,
+      "at": "2026-09-03T03:26:37.470Z",
+      "elapsedMs": 149603,
       "taskId": "index",
-      "workerRunId": "wr_48b6d11b",
-      "message": "test/index.test.js: PASS — ℹ duration_ms 104.8885",
+      "workerRunId": "wr_c64c8afd",
+      "message": "test/index.test.js: PASS — ℹ duration_ms 84.1398",
       "data": {
         "checkId": "suite",
         "status": "pass"
       }
     },
     {
-      "seq": 108,
-      "id": "LVR-c3770b4b-108",
-      "missionId": "LVR-c3770b4b",
+      "seq": 127,
+      "id": "LVR-f8f72d56-127",
+      "missionId": "LVR-f8f72d56",
       "type": "verification.passed",
-      "at": "2026-09-03T02:32:19.263Z",
-      "elapsedMs": 123923,
+      "at": "2026-09-03T03:26:37.470Z",
+      "elapsedMs": 149603,
       "taskId": "index",
-      "workerRunId": "wr_48b6d11b",
+      "workerRunId": "wr_c64c8afd",
       "message": "\"Implement the request handler\" verified — quality 100",
       "data": {
-        "proofId": "pf_2b9a7c1e",
+        "proofId": "pf_a4eb5767",
         "quality": 100
       }
     },
     {
-      "seq": 109,
-      "id": "LVR-c3770b4b-109",
-      "missionId": "LVR-c3770b4b",
+      "seq": 128,
+      "id": "LVR-f8f72d56-128",
+      "missionId": "LVR-f8f72d56",
       "type": "task.completed",
-      "at": "2026-09-03T02:32:19.263Z",
-      "elapsedMs": 123923,
+      "at": "2026-09-03T03:26:37.470Z",
+      "elapsedMs": 149603,
       "taskId": "index",
-      "workerRunId": "wr_48b6d11b",
+      "workerRunId": "wr_c64c8afd",
       "message": "Task completed: Implement the request handler"
     },
     {
-      "seq": 110,
-      "id": "LVR-c3770b4b-110",
-      "missionId": "LVR-c3770b4b",
+      "seq": 129,
+      "id": "LVR-f8f72d56-129",
+      "missionId": "LVR-f8f72d56",
       "type": "mission.completed",
-      "at": "2026-09-03T02:32:19.263Z",
-      "elapsedMs": 123923,
+      "at": "2026-09-03T03:26:37.471Z",
+      "elapsedMs": 149604,
       "message": "Mission verified: 4/4 tasks passed",
       "data": {
         "passed": 4,
@@ -4716,8 +5466,8 @@
           "settledUsd": 0,
           "freeCalls": 3,
           "paidCalls": 0,
-          "localCalls": 2,
-          "estimatedFrontierEquivalentUsd": 0.05508,
+          "localCalls": 3,
+          "estimatedFrontierEquivalentUsd": 0.046749000000000006,
           "blockedAttempts": 0
         }
       }

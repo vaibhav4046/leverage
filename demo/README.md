@@ -16,7 +16,7 @@ demo/
 
 ## The canonical mission
 
-`LVR-c3770b4b`. One record, used by the landing page, Mission Control and the demo film,
+`LVR-f8f72d56`. One record, used by the landing page, Mission Control and the demo film,
 so the three cannot disagree with each other.
 
 ```
@@ -24,12 +24,12 @@ status                   COMPLETED
 tasks                    4 / 4 verified
 proof checks             8 / 8 pass
 full suite               17 / 17, exit 0
-elapsed                  123.9 s
-workers hired            6
-cognitive handoffs       2
-events                   110
+elapsed                  149.6 s
+workers hired            7
+cognitive handoffs       3
+events                   129
 actual paid inference    $0.00
-RocketRide credits       14.60
+RocketRide credits       30.40
 ```
 
 Reproduce:
@@ -59,11 +59,11 @@ A genuine rate limit does appear in the evidence independently:
 `pool:auto/coding:free` returned a real HTTP 429 during the capability probe, recorded in
 `proof/capability-probe.json`.
 
-## The second handoff is not injected
+## The other two handoffs are not injected
 
-The `TEST_FAILURE` handoff is real. A local model wrote `validate.js` that did not satisfy
-`test/validate.test.js`, verification caught it, and the work moved to a stronger worker
-carrying a checkpoint. That is the machinery doing its job on an ordinary failure.
+Both `TEST_FAILURE` handoffs are real. Local models wrote code that did not satisfy the
+committed tests, verification caught it, and the work moved to a stronger worker carrying
+a checkpoint. That is the machinery doing its job on an ordinary failure.
 
 ## Screenshots
 

@@ -11,9 +11,9 @@ State, evidence, test. Anything marked NOT BUILT is genuinely not built — see
 | Hard policy filter | **done** | paid model struck out at `$0` before ranking | `invariants.test.ts` · job market |
 | Budget governor | **done** | `paidSpendUsd: 0` across every run | `invariants.test.ts` · budget governor, incl. concurrency |
 | Zero-Dollar Mode | **done** | `blockedPaidAttempts` counted; paid routes never entered | budget + policy tests |
-| Context compiler | **done** | 53% / 49% measured reductions at handoff | reduction asserted in checkpoint tests |
-| Cognitive checkpoint | **done** | `cp_…` in canonical run with both token counts | `invariants.test.ts` · cognitive handoff |
-| Worker hot-swap | **done** | `resumed from cp_…` in Mission Control | canonical run, 2 handoffs |
+| Context compiler | **done** | 57% / 48% / 30% measured reductions at handoff | reduction asserted in checkpoint tests |
+| Cognitive checkpoint | **done** | 3 in canonical run, with both token counts | `invariants.test.ts` · cognitive handoff |
+| Worker hot-swap | **done** | `resumed from cp_…` in Mission Control | canonical run, 3 handoffs |
 | Failure taxonomy | **done** | RATE_LIMIT vs TEST_FAILURE routed differently | cooldown vs exclusion in scheduler |
 | Fault injection | **done** | `--inject-429`, labelled INJECTED | `invariants.test.ts` · fault injection |
 | Verification engine | **done** | real `node --test` exit codes | 8/8 proof checks, suite exit 0 |

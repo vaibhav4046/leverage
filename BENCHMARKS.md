@@ -33,32 +33,33 @@ npm run mission -- --inject-429 --out=demo/canonical-run.json
 
 ---
 
-## Canonical run — `LVR-c3770b4b`
+## Canonical run — `LVR-f8f72d56`
 
 ```
 mission status            COMPLETED
 tasks verified            4 / 4
 proof checks              8 / 8 pass
 full suite                17 / 17 tests, exit 0
-elapsed                   123.9 s
-workers hired             6
-cognitive handoffs        2
-mission events            110
+elapsed                   149.6 s
+workers hired             7
+cognitive handoffs        3
+mission events            129
 
 actual paid inference     $0.00
 paid calls                0
 blocked paid attempts     0
-local calls               2
+local calls               3
 free cloud calls          3
-RocketRide credits used   14.60
+RocketRide credits used   30.40
 ```
 
-### The two handoffs
+### The three handoffs
 
 | Trigger | Original context | Checkpoint | Reduction |
 |---|---|---|---|
-| `RATE_LIMIT` (injected, labelled) | 421 tokens | 197 tokens | 53% |
-| `TEST_FAILURE` (genuine) | 432 tokens | 220 tokens | 49% |
+| `RATE_LIMIT` (injected, labelled) | 453 tokens | 196 tokens | 57% |
+| `TEST_FAILURE` (genuine) | 421 tokens | 220 tokens | 48% |
+| `TEST_FAILURE` (genuine) | 464 tokens | 327 tokens | 30% |
 
 Both numbers are computed from the same estimator over the same units, so the ratio is
 meaningful even though the absolute token counts are approximations. The estimator is
@@ -119,7 +120,7 @@ The one derived number, and the one most likely to be abused. What it means, pre
 > at published frontier API rates. Report the result.
 
 ```
-observed workload, LVR-c3770b4b   ->   $0.0551
+observed workload, LVR-f8f72d56   ->   $0.0467
 baseline                          Claude Sonnet 4.5 published pricing
                                   $3.00 / 1M input, $15.00 / 1M output
 ```
@@ -152,10 +153,10 @@ Measured from `billing.getCreditBalance`, not estimated:
 |---|---|
 | `webhook -> response` (no model) | 0.4 |
 | `webhook -> llm_openai_api -> response`, one question | 2.0 – 2.5 |
-| Full 4-task benchmark mission | 14.6 |
+| Full 4-task benchmark mission | 14.6 - 30.4 |
 
-At that rate the 5,000-credit hackathon grant is roughly 340 full missions. Total consumed
-across all development and verification for this build: about 200 credits.
+At that rate the 5,000-credit hackathon grant is roughly 160-340 full missions. Total
+consumed across all development and verification for this build: about 240 credits.
 
 ---
 
@@ -169,6 +170,11 @@ across all development and verification for this build: about 200 credits.
   development runs the same mission took 1–4 attempts per task and 0–6 handoffs. The
   canonical run is one recorded instance, not a median, and it is labelled with its
   mission id so it can be checked rather than trusted.
+- **The system fails honestly when its dependencies do.** During final verification the
+  Ollama process exited and the tunnel to the model pool dropped. The next mission
+  reported `0/4 tasks passed`, 8 handoffs and `$0.00` spent, rather than reporting
+  success. With both restored, the same command returned 4/4. A run that cannot reach any
+  capable model is supposed to look exactly like that.
 - **The 429 in the canonical run is injected.** Deterministic, and labelled INJECTED in the
   event stream, the UI, this file and the demo narration. A genuine 429 appears
   independently in the probe data.
