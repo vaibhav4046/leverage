@@ -2,6 +2,10 @@
 
 **One frontier brain. An elastic workforce.**
 
+**Live: https://useleverage.vercel.app** — a read-only public demo, seeded with the
+runs that actually happened. Every mutating route answers `403`; executing a mission
+needs a local repository to write into and a local model pool to hire from.
+
 Leverage gives Claude, Codex and other MCP hosts a dynamic workforce of local, free and
 connected models — then verifies the work and replaces workers that fail.
 

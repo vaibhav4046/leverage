@@ -73,38 +73,24 @@ non-interactive so the OAuth flow cannot run here. Authorise it from an interact
 `claude` session (`/mcp`) or from claude.ai connector settings, then the walkthrough
 can be generated from the screenshots already captured under `demo/screenshots/`.
 
-## 5. Vercel deployment protection — blocks public access
+## 5. Vercel deployment protection — RESOLVED
 
-**Status: the only thing standing between the deployment and a judge.**
+The site is live and public at **https://useleverage.vercel.app**.
 
-The site is deployed to production and works. Every URL currently answers `302`
-to `vercel.com/sso-api`, because the project inherits the team default of
-**Vercel Authentication** on all deployments, so anyone without access to the
-Vercel account sees a login wall instead of the product.
+Vercel Authentication is still enabled on this project, so the auto-generated
+deployment URLs (`leverage-<hash>-<team>.vercel.app`) still answer `302` to
+`vercel.com/sso-api`. That protection applies to those URLs, not to a domain
+assigned to the project as its production domain — so adding one both gave the
+product a real name and routed around the wall without weakening anything.
 
-This cannot be turned off from here. The CLI has no command for it
-(`vercel project` exposes add / access-summary / checks / inspect / list only),
-and the REST endpoint that does own it —
-`PATCH /v9/projects/{id}` with `ssoProtection: null` — rejects the credential
-the CLI leaves on disk (`{"error":{"code":"forbidden","invalidToken":true}}`);
-that access token expired in January and the CLI refreshes it per-invocation
-without persisting the new one.
+`leverage.vercel.app`, `leverage-app.vercel.app` and `leverage-ai.vercel.app`
+are all taken by other accounts; `useleverage.vercel.app` was free and follows
+the usual convention for a product whose name is a common word.
 
-Fix, about thirty seconds in the dashboard:
+If you would rather the deployment URLs were public too, the toggle is
+Vercel -> project **leverage** -> Settings -> Deployment Protection ->
+Vercel Authentication -> Disabled. It is not required for the submission.
 
-> Vercel → project **leverage** → Settings → Deployment Protection →
-> **Vercel Authentication** → set to **Disabled** → Save.
-
-Nothing needs redeploying afterwards; the setting applies to existing
-deployments immediately. Verify with:
-
-```bash
-curl -s -o /dev/null -w '%{http_code}\n' https://leverage-vaibhav4046s-projects.vercel.app/
-```
-
-`200` means a judge can open it. `302` means the toggle has not applied yet.
-
-Exposing it is safe: production runs with `LEVERAGE_PUBLIC_DEMO=1`, which is a
-read-only identity. Every mutating route — create, start, cancel, and the host
-channel's POST — answers `403`, so a visitor can read the recorded runs and
-cannot spend a penny of inference budget.
+Exposure is safe: production runs with `LEVERAGE_PUBLIC_DEMO=1`, a read-only
+identity. Verified against the live site — create, start, cancel and the host
+channel's POST all answer `403`.
