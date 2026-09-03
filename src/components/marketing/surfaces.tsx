@@ -70,7 +70,7 @@ export function ExecutionSurface({ run }: { run: MissionSnapshot | null }) {
               <p className="mt-5 max-w-[32rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
                 Every line to the right is a real event from mission{' '}
                 <span className="mono text-[var(--color-frosted-lilac)]">{run.mission.id}</span>,
-                read from its append-only log. The rate limit is injected and labelled as such —
+                read from its append-only log. The rate limit is injected and labelled as such,
                 what is being demonstrated is the recovery, not the coincidence.
               </p>
 
@@ -197,7 +197,7 @@ export function WorkforceLedger({ models }: { models: ModelRow[] }) {
             It learns which models are actually good.
           </h2>
           <p className="mt-5 max-w-[46rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
-            Not a leaderboard someone else published — this installation&rsquo;s own record of
+            Not a leaderboard someone else published. This installation&rsquo;s own record of
             which models passed verification on real work. Rates are shrunk toward a neutral
             prior and carry their sample count, so nothing here can claim more than it has
             earned.

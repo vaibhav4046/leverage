@@ -27,8 +27,8 @@ interface Source {
 }
 
 const MECHANISM_LABEL: Record<Mechanism, string> = {
-  host: 'No API key — your seat',
-  local: 'No API key — your machine',
+  host: 'No API key. Your seat.',
+  local: 'No API key. Your machine.',
   key: 'Your key, encrypted',
 };
 
@@ -69,7 +69,7 @@ const SOURCES: Source[] = [
   },
   {
     name: 'OpenAI-compatible',
-    detail: 'LM Studio, vLLM, llama.cpp, OpenRouter, a gateway of your own — one base URL.',
+    detail: 'LM Studio, vLLM, llama.cpp, OpenRouter, a gateway of your own. One base URL.',
     mechanism: 'key',
     status: 'supported',
     mark: <MarkGrid />,

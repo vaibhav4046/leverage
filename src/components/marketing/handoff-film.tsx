@@ -65,12 +65,12 @@ export function HandoffFilm() {
         </h2>
         <p className="mt-5 max-w-[46rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
           A rate limit is an infrastructure failure, not a wrong answer. Leverage keeps what the
-          worker understood, hires a different one, and carries on — which is why a 429 costs a
+          worker understood, hires a different one, and carries on. That is why a 429 costs a
           worker rather than the project.
         </p>
 
         <figure className="mt-10">
-          <div className="surface-card relative overflow-hidden">
+          <div className="glass relative overflow-hidden p-1.5">
             <video
               ref={videoRef}
               className="block w-full"

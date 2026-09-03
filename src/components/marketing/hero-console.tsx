@@ -32,7 +32,7 @@ export function HeroConsole({ run }: { run: MissionSnapshot | null }) {
   return (
     <div className="relative min-w-0">
       {/* Panel 1 — mission + policy */}
-      <div className="surface-card relative z-30 min-w-0 p-5 shadow-[0_20px_35px_rgba(0,0,0,0.34),0_4px_13px_rgba(0,0,0,0.25)]">
+      <div className="glass glass-live relative z-30 min-w-0 p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
@@ -57,7 +57,7 @@ export function HeroConsole({ run }: { run: MissionSnapshot | null }) {
       </div>
 
       {/* Panel 2 — workforce */}
-      <div className="surface-card relative z-20 -mt-2 ml-6 min-w-0 p-5 shadow-[0_20px_35px_rgba(0,0,0,0.34)] sm:ml-8">
+      <div className="glass relative z-20 -mt-2 ml-6 min-w-0 p-5 sm:ml-8">
         <div className="mono mb-3 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
           Workforce
         </div>
@@ -79,7 +79,7 @@ export function HeroConsole({ run }: { run: MissionSnapshot | null }) {
       </div>
 
       {/* Panel 3 — live tail */}
-      <div className="surface-highlight relative z-10 -mt-2 ml-12 min-w-0 p-5 shadow-[0_20px_34px_rgba(0,0,0,0.35)] sm:ml-16">
+      <div className="glass relative z-10 -mt-2 ml-12 min-w-0 p-5 sm:ml-16">
         <div className="mono mb-3 text-[11px] uppercase tracking-[0.08em] text-[var(--color-frosted-lilac)]">
           Execution
         </div>

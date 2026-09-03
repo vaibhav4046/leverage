@@ -1,18 +1,29 @@
 import type { Metadata } from 'next';
-import { Figtree, Inter, IBM_Plex_Mono } from 'next/font/google';
+import { Instrument_Serif, Manrope, IBM_Plex_Mono } from 'next/font/google';
 import './globals.css';
 
-const figtree = Figtree({
+/**
+ * Typography.
+ *
+ * A serif headline over a technical console is the point. Inter is the default in
+ * every AI builder and component library, which is exactly why a page set in it
+ * reads as unstyled rather than neutral; the same is true of the geometric sans
+ * that usually replaces it. Instrument Serif carries the editorial weight, Manrope
+ * does the reading, IBM Plex Mono does the machine talking. Three voices, each with
+ * a job.
+ */
+const instrument = Instrument_Serif({
   subsets: ['latin'],
-  weight: ['500', '600'],
-  variable: '--font-figtree',
+  weight: ['400'],
+  style: ['normal', 'italic'],
+  variable: '--font-display-serif',
   display: 'swap',
 });
 
-const inter = Inter({
+const manrope = Manrope({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600'],
-  variable: '--font-inter',
+  variable: '--font-body',
   display: 'swap',
 });
 
@@ -44,7 +55,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${figtree.variable} ${inter.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${instrument.variable} ${manrope.variable} ${plexMono.variable}`}>
       <body>
         <a
           href="#main"

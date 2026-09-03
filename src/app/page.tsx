@@ -23,7 +23,7 @@ export const dynamic = 'force-dynamic';
 /**
  * Landing page.
  *
- * Every number here comes from `demo/canonical-run.json` — a real recorded mission —
+ * Every number here comes from `demo/canonical-run.json`, a real recorded mission,
  * or the panel says it has nothing to show. There is no placeholder metric anywhere.
  * A product whose argument is "check the evidence, don't trust the model" cannot have
  * an invented hero.
@@ -125,7 +125,7 @@ export default async function Home() {
         <section className="aurora relative isolate overflow-hidden border-b border-[var(--color-obsidian-edge)]">
           <AuroraField />
 
-          <div className="relative mx-auto max-w-[1200px] px-6 pb-24 pt-28 lg:pb-32 lg:pt-36">
+          <div className="relative mx-auto max-w-[1200px] px-6 pb-20 pt-20 lg:pb-24 lg:pt-24">
             <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] lg:gap-16">
               <div className="min-w-0">
                 <Reveal y={12}>
@@ -134,7 +134,7 @@ export default async function Home() {
                       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-state-pass)] opacity-60" />
                       <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-state-pass)]" />
                     </span>
-                    Hire your own host seat — no API key
+                    Hire your own host seat. No API key.
                   </div>
                 </Reveal>
 
@@ -142,9 +142,10 @@ export default async function Home() {
                   <h1 className="display text-[clamp(2.75rem,7vw,4.25rem)] text-[var(--color-quartz)]">
                     One frontier brain.
                     <br />
-                    <span className="bg-gradient-to-r from-[var(--color-quartz)] via-[var(--color-quartz)] to-[var(--color-frosted-lilac)] bg-clip-text text-transparent">
-                      An elastic workforce.
-                    </span>
+                    <em className="not-italic">
+                      An <span className="italic text-[var(--color-frosted-lilac)]">elastic</span>{' '}
+                      workforce.
+                    </em>
                   </h1>
                 </Reveal>
 
@@ -271,7 +272,7 @@ export default async function Home() {
                   </h2>
                   <p className="mt-5 max-w-[34rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
                     This is the workforce from mission{' '}
-                    <span className="mono text-[var(--color-frosted-lilac)]">{run?.mission.id}</span> —
+                    <span className="mono text-[var(--color-frosted-lilac)]">{run?.mission.id}</span>,
                     the recorded run in this repository. Green passed verification, amber was
                     replaced mid-task and handed its understanding to a successor.
                   </p>
@@ -303,7 +304,7 @@ export default async function Home() {
         <Section eyebrow="Model job market" title="Hire intelligence task by task." border>
           <p className="max-w-[46rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
             Every task becomes a job posting. Leverage scores each reachable model against the work,
-            your budget, its measured track record, latency and your privacy policy — then hires the
+            your budget, its measured track record, latency and your privacy policy, then hires the
             best eligible worker and shows you why.
           </p>
 
@@ -349,7 +350,7 @@ export default async function Home() {
                   />
                 </ul>
                 <p className="mt-5 border-t border-[var(--color-obsidian-edge)] pt-4 text-[13px] text-[var(--color-ash)]">
-                  Policy runs before scoring. A paid model under a $0 budget is not out-ranked — it is
+                  Policy runs before scoring. A paid model under a $0 budget is not out-ranked. It is
                   never in the pool.
                 </p>
               </div>
@@ -422,8 +423,8 @@ export default async function Home() {
         <Section eyebrow="Cognitive handoff" title="Replace the worker, not the project." border>
           <p className="max-w-[46rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
             When a model hits a quota, times out or cannot solve the job, Leverage captures a compact
-            checkpoint of what it understood — decisions, files touched, checks already passing,
-            what is left — and hands that to a replacement. The work continues instead of restarting.
+            checkpoint of what it understood: decisions, files touched, checks already passing,
+            what is left. It hands that to a replacement. The work continues instead of restarting.
           </p>
 
           {handoff ? (

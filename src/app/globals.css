@@ -41,8 +41,8 @@
   --color-state-fail: #f87171;
   --color-state-warn: #fbbf24;
 
-  --font-display: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-serif), ui-serif, Georgia, serif;
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --radius-card: 12px;
@@ -65,19 +65,31 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Display type. Figtree owns everything at 32px and above. */
+/*
+ * Display type. The serif owns everything at 32px and above.
+ *
+ * Instrument Serif is drawn tight and needs no negative tracking; the usual -0.02em
+ * closes the counters and turns it to mud at hero sizes.
+ */
 .display {
   font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 0.98;
 }
 
 .heading {
   font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 1.13;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+
+/* Editorial emphasis: the italic, not a colour. */
+.heading em,
+.display em {
+  font-style: italic;
+  color: var(--color-frosted-lilac);
 }
 
 .mono {
@@ -91,10 +103,20 @@ body {
  * landing hero, a major page header, and the film's brand frames. Never inside a
  * card, a chart or a control.
  */
+/*
+ * Positioning matters more than opacity here. The original glow was centred at
+ * y = -53%, which put four fifths of it above the fold: the page read as flat black
+ * and the glass panels had nothing behind them to refract, which is the one thing
+ * that makes glass look like glass rather than a grey box.
+ *
+ * The primary glow now sits behind the console, upper right, where the panels
+ * overlap it. The second is a low pink wash that keeps the bottom edge from dying.
+ */
 .aurora {
   background:
-    radial-gradient(79.43% 95.88% at 38.94% -53.46%, rgba(98, 95, 255, 0.38) 0%, rgba(0, 0, 0, 0) 100%),
-    radial-gradient(27.99% 22.08% at 72.13% 103.46%, rgba(255, 125, 218, 0.33) 0%, rgba(0, 0, 0, 0) 100%),
+    radial-gradient(58% 62% at 72% 8%, rgba(98, 95, 255, 0.30) 0%, rgba(0, 0, 0, 0) 68%),
+    radial-gradient(46% 50% at 30% 34%, rgba(48, 95, 189, 0.20) 0%, rgba(0, 0, 0, 0) 70%),
+    radial-gradient(34% 26% at 66% 104%, rgba(255, 125, 218, 0.16) 0%, rgba(0, 0, 0, 0) 62%),
     var(--color-void);
 }
 
@@ -108,6 +130,134 @@ body {
   background: var(--color-cobalt);
   border: 1px solid #1e2b48;
   border-radius: var(--radius-card);
+}
+
+/*
+ * Liquid glass.
+ *
+ * A translucent box with a blur behind it is not glass, it is a tinted window. What
+ * reads as glass is the edge: light collects along the top rim where the surface
+ * curves away from you, drains at the bottom, and the body refracts whatever sits
+ * underneath. Four layers do that here.
+ *
+ *   1. backdrop-filter blur + saturate + brightness. Saturation matters most: the
+ *      aurora behind is the only colour on the page, and a plain blur greys it out.
+ *   2. A shallow top-to-bottom body gradient, so the pane is not a flat wash.
+ *   3. ::before paints the specular rim as a gradient-filled border using a mask,
+ *      which is the only way to get a border that is bright at 12 o'clock and gone
+ *      by 6 without drawing four separate edges.
+ *   4. ::after is a fine grain. Real glass is never optically perfect, and without
+ *      it large panes band visibly on dark backgrounds.
+ *
+ * The whole effect degrades to an opaque card where backdrop-filter is unsupported,
+ * which is checked below rather than assumed.
+ */
+.glass {
+  position: relative;
+  isolation: isolate;
+  border-radius: 16px;
+  background:
+    linear-gradient(
+      168deg,
+      rgba(133, 166, 233, 0.10) 0%,
+      rgba(18, 36, 79, 0.16) 42%,
+      rgba(11, 12, 14, 0.30) 100%
+    );
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.05) inset,
+    0 24px 60px -20px rgba(0, 0, 0, 0.75),
+    0 2px 10px -4px rgba(0, 0, 0, 0.5);
+}
+
+@supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+  .glass {
+    -webkit-backdrop-filter: blur(22px) saturate(165%) brightness(108%);
+    backdrop-filter: blur(22px) saturate(165%) brightness(108%);
+  }
+}
+
+/* The rim. */
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    170deg,
+    rgba(255, 255, 255, 0.44) 0%,
+    rgba(133, 166, 233, 0.20) 26%,
+    rgba(255, 255, 255, 0.04) 55%,
+    rgba(36, 55, 90, 0.5) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* The grain. */
+.glass::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+}
+
+.glass > * {
+  position: relative;
+  z-index: 2;
+}
+
+/*
+ * The moving highlight.
+ *
+ * One slow sweep across the rim, so a static screenshot and a live page do not look
+ * like the same thing. It rides the border only, never the content, because a sheen
+ * crossing text is a distraction rather than a material.
+ */
+.glass-live::before {
+  background: linear-gradient(
+    var(--rim-angle, 170deg),
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(133, 166, 233, 0.22) 26%,
+    rgba(255, 255, 255, 0.04) 55%,
+    rgba(36, 55, 90, 0.5) 100%
+  );
+  animation: rim-drift 14s ease-in-out infinite;
+}
+
+@property --rim-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 170deg;
+}
+
+@keyframes rim-drift {
+  0%,
+  100% {
+    --rim-angle: 150deg;
+  }
+  50% {
+    --rim-angle: 215deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-live::before {
+    animation: none;
+  }
 }
 
 /* Buttons. White is the primary action; nothing else competes with it. */

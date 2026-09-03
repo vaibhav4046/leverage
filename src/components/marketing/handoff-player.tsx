@@ -133,7 +133,7 @@ export function HandoffPlayer({ steps }: { steps: HandoffStep[] }) {
         </h2>
         <p className="mt-5 max-w-[46rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
           Not a recording. This replays the recorded mission&rsquo;s own event log at its real
-          elapsed timings — scrub to any point and you are looking at what the scheduler was
+          elapsed timings. Scrub to any point and you are looking at what the scheduler was
           actually doing at that moment.
         </p>
 
