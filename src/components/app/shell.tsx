@@ -128,7 +128,9 @@ export function Stat({
       >
         {value}
       </div>
-      {sub ? <div className="mono mt-2 text-[11.5px] text-[var(--color-ash)]">{sub}</div> : null}
+      {sub ? (
+        <div className="mono mt-2 break-words text-[11.5px] text-[var(--color-ash)]">{sub}</div>
+      ) : null}
     </div>
   );
 }

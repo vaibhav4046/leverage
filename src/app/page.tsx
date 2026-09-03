@@ -127,7 +127,7 @@ export default async function Home() {
 
           <div className="relative mx-auto max-w-[1200px] px-6 pb-24 pt-28 lg:pb-32 lg:pt-36">
             <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] lg:gap-16">
-              <div>
+              <div className="min-w-0">
                 <Reveal y={12}>
                   <div className="mono mb-7 inline-flex items-center gap-2 rounded-full border border-[var(--color-sapphire-hairline)] bg-[rgba(13,23,43,0.6)] px-3.5 py-1.5 text-[11px] text-[var(--color-frosted-lilac)] backdrop-blur">
                     <span className="relative flex h-1.5 w-1.5">
@@ -180,7 +180,7 @@ export default async function Home() {
                 </Reveal>
               </div>
 
-              <Reveal delay={180} y={26}>
+              <Reveal delay={180} y={26} className="min-w-0">
                 <HeroConsole run={run} />
               </Reveal>
             </div>

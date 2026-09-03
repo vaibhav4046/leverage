@@ -204,8 +204,11 @@ export function WorkforceLedger({ models }: { models: ModelRow[] }) {
           </p>
         </Reveal>
 
-        <Reveal delay={80}>
-          <div className="surface-card mt-10 overflow-x-auto">
+        <Reveal delay={80} className="min-w-0">
+          {/* min-w-0: without it the child keeps its automatic minimum width, the
+              overflow-x-auto never engages, and the table pushes the whole page
+              sideways on a phone. */}
+          <div className="surface-card mt-10 min-w-0 overflow-x-auto">
             <table className="w-full min-w-[680px] border-collapse text-left">
               <caption className="sr-only">Measured model performance for this installation</caption>
               <thead>

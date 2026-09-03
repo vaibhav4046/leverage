@@ -214,7 +214,7 @@ export function HandoffPlayer({ steps }: { steps: HandoffStep[] }) {
             className="h-1 min-w-[180px] flex-1 cursor-pointer appearance-none rounded-full bg-[var(--color-obsidian-edge)] accent-[var(--color-frosted-lilac)]"
           />
 
-          <span className="mono shrink-0 text-[11px] text-[var(--color-slate)]">
+          <span className="mono min-w-0 text-[11px] text-[var(--color-ash)] opacity-75">
             gaps compressed for replay · timestamps are real
           </span>
         </div>

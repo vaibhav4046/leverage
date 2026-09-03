@@ -32,8 +32,8 @@ export default async function ProvidersPage() {
       >
         <div className="grid gap-3.5 md:grid-cols-2 xl:grid-cols-3">
           {registry.list().map((p) => (
-            <article key={p.adapter.providerId} className="surface-card flex flex-col p-5">
-              <div className="flex items-start justify-between gap-3">
+            <article key={p.adapter.providerId} className="surface-card flex min-w-0 flex-col p-5">
+              <div className="flex min-w-0 items-start justify-between gap-3">
                 <div className="flex min-w-0 items-start gap-3">
                   <span
                     className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] border border-[var(--color-sapphire-hairline)] text-[var(--color-frosted-lilac)]"
@@ -42,7 +42,7 @@ export default async function ProvidersPage() {
                     {supplyIcon(p.adapter.providerId, p.adapter.costClass)}
                   </span>
                   <div className="min-w-0">
-                    <div className="text-[15.5px] leading-snug text-[var(--color-quartz)]">
+                    <div className="break-words text-[15.5px] leading-snug text-[var(--color-quartz)]">
                       {p.label}
                     </div>
                     <div className="mono mt-1.5 truncate text-[11px] text-[var(--color-ash)]">
@@ -50,20 +50,22 @@ export default async function ProvidersPage() {
                     </div>
                   </div>
                 </div>
-                <Pill
-                  tone={
-                    p.health.status === 'HEALTHY'
-                      ? 'pass'
-                      : p.health.status === 'DEGRADED'
-                        ? 'warn'
-                        : 'idle'
-                  }
-                >
-                  {p.health.status}
-                </Pill>
+                <span className="shrink-0">
+                  <Pill
+                    tone={
+                      p.health.status === 'HEALTHY'
+                        ? 'pass'
+                        : p.health.status === 'DEGRADED'
+                          ? 'warn'
+                          : 'idle'
+                    }
+                  >
+                    {p.health.status}
+                  </Pill>
+                </span>
               </div>
 
-              <dl className="mono mt-4 space-y-1.5 border-t border-[var(--color-inkline)] pt-3.5 text-[12px]">
+              <dl className="mono mt-4 min-w-0 space-y-1.5 border-t border-[var(--color-inkline)] pt-3.5 text-[12px]">
                 <Field k="models" v={String(p.models.length)} />
                 <Field
                   k="credential"
