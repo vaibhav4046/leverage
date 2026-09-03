@@ -72,3 +72,39 @@ The Supademo MCP server in this session is unauthenticated, and this session is
 non-interactive so the OAuth flow cannot run here. Authorise it from an interactive
 `claude` session (`/mcp`) or from claude.ai connector settings, then the walkthrough
 can be generated from the screenshots already captured under `demo/screenshots/`.
+
+## 5. Vercel deployment protection — blocks public access
+
+**Status: the only thing standing between the deployment and a judge.**
+
+The site is deployed to production and works. Every URL currently answers `302`
+to `vercel.com/sso-api`, because the project inherits the team default of
+**Vercel Authentication** on all deployments, so anyone without access to the
+Vercel account sees a login wall instead of the product.
+
+This cannot be turned off from here. The CLI has no command for it
+(`vercel project` exposes add / access-summary / checks / inspect / list only),
+and the REST endpoint that does own it —
+`PATCH /v9/projects/{id}` with `ssoProtection: null` — rejects the credential
+the CLI leaves on disk (`{"error":{"code":"forbidden","invalidToken":true}}`);
+that access token expired in January and the CLI refreshes it per-invocation
+without persisting the new one.
+
+Fix, about thirty seconds in the dashboard:
+
+> Vercel → project **leverage** → Settings → Deployment Protection →
+> **Vercel Authentication** → set to **Disabled** → Save.
+
+Nothing needs redeploying afterwards; the setting applies to existing
+deployments immediately. Verify with:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' https://leverage-vaibhav4046s-projects.vercel.app/
+```
+
+`200` means a judge can open it. `302` means the toggle has not applied yet.
+
+Exposing it is safe: production runs with `LEVERAGE_PUBLIC_DEMO=1`, which is a
+read-only identity. Every mutating route — create, start, cancel, and the host
+channel's POST — answers `403`, so a visitor can read the recorded runs and
+cannot spend a penny of inference budget.

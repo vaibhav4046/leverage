@@ -37,3 +37,4 @@ motion/node_modules/
 motion/snapshots/
 motion/renders/
 motion/.hyperframes/
+.vercel
