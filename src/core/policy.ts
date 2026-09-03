@@ -59,7 +59,10 @@ export function checkEligibility(input: EligibilityInput): EligibilityVerdict {
   if (mission.privacy.mode === 'local-only' && !isLocal) {
     return {
       eligible: false,
-      reason: `Privacy mode local-only: ${model.providerId} is not a local runtime`,
+      reason:
+        model.costClass === 'host'
+          ? 'Privacy mode local-only: your host seat still sends content to its provider'
+          : `Privacy mode local-only: ${model.providerId} is not a local runtime`,
     };
   }
 

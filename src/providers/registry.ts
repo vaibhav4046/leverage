@@ -6,6 +6,8 @@ import type {
 } from '../core/types';
 import { OllamaAdapter } from './ollama';
 import { PoolAdapter } from './pool';
+import { HostAdapter } from './host';
+import { AgentCliAdapter } from './agent-cli';
 
 /**
  * Capability registry.
@@ -107,7 +109,7 @@ export class ProviderRegistry {
   }
 
   countsByCostClass(): Record<CostClass, number> {
-    const counts: Record<CostClass, number> = { local: 0, free: 0, paid: 0 };
+    const counts: Record<CostClass, number> = { local: 0, host: 0, free: 0, paid: 0 };
     for (const m of this.allModels()) counts[m.costClass] += 1;
     return counts;
   }
@@ -116,6 +118,8 @@ export class ProviderRegistry {
 export interface RegistryConfig {
   ollamaBaseUrl?: string;
   poolBaseUrl?: string;
+  /** Set false to stop probing installed agent CLIs entirely. */
+  agentCli?: boolean;
   poolApiKey?: string;
 }
 
@@ -132,6 +136,15 @@ export function buildRegistry(config: RegistryConfig): ProviderRegistry {
       'Free model pool (OpenAI-compatible)',
     );
   }
+
+  // Both always registered. They report UNAVAILABLE or AUTH_ERROR until wired up,
+  // which is exactly the state the Providers page should show someone who has not
+  // connected them -- with the command that would fix it.
+  registry.register(new HostAdapter(), 'Your MCP host seat (no API key)');
+  registry.register(
+    new AgentCliAdapter(config.agentCli !== false),
+    'Your agent CLI subscription (no API key)',
+  );
 
   return registry;
 }

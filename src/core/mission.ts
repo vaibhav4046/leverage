@@ -131,6 +131,7 @@ export function snapshotMission(state: MissionState) {
       budgetMaxUsd: ledger.maxUsd,
       budgetHard: ledger.hard,
       localCalls: ledger.localCalls,
+      hostCalls: ledger.hostCalls,
       freeCalls: ledger.freeCalls,
       paidCalls: ledger.paidCalls,
       blockedPaidAttempts: ledger.blockedAttempts,

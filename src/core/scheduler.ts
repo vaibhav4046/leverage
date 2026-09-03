@@ -535,7 +535,8 @@ export class MissionScheduler {
     // switch. RocketRide's cloud engine cannot reach a runtime on this machine, so a
     // local model is invoked directly and a cloud-reachable one runs inside a
     // RocketRide pipeline. Both are real execution; only the fabric differs.
-    const viaRocketRide = this.opts.useRocketRide && model.costClass !== 'local';
+    const viaRocketRide =
+      this.opts.useRocketRide && model.costClass !== 'local' && model.costClass !== 'host';
 
     try {
       if (viaRocketRide) {

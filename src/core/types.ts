@@ -11,6 +11,9 @@
 // ---------------------------------------------------------------------------
 
 export type PrivacyMode = 'local-only' | 'prefer-local' | 'cloud-allowed';
+
+/** Cost classes that never touch the paid budget, whatever the mission allows. */
+export const UNPAID_COST_CLASSES = ['local', 'host', 'free'] as const;
 export type ParallelismMode = 'auto' | 'fixed';
 
 export type MissionStatus =
@@ -156,7 +159,16 @@ export interface MissionTask {
 // Providers / models
 // ---------------------------------------------------------------------------
 
-export type CostClass = 'local' | 'free' | 'paid';
+/**
+ * Where a worker's compute comes from, and therefore what it costs.
+ *
+ * `host` is the interesting one: the model belongs to the MCP host the user is
+ * already sitting in, reached through the MCP sampling channel. It costs no API
+ * key and no Leverage-side money because the user's own subscription already paid
+ * for it. It is not `free` -- a free route is someone else's quota, a host route is
+ * the user's own seat -- and conflating them would make the usage panel lie.
+ */
+export type CostClass = 'local' | 'host' | 'free' | 'paid';
 
 export type ProviderHealthStatus =
   | 'HEALTHY'
@@ -473,6 +485,8 @@ export interface BudgetLedger {
   freeCalls: number;
   paidCalls: number;
   localCalls: number;
+  /** Calls served by the user's own MCP host seat. */
+  hostCalls: number;
   /** What the same observed token workload would cost on the baseline model. */
   estimatedFrontierEquivalentUsd: number;
   blockedAttempts: number;

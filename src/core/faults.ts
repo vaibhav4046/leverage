@@ -1,4 +1,4 @@
-import type { FailureType } from './types';
+import type { CostClass, FailureType } from './types';
 
 /**
  * Execution-path fault injection.
@@ -24,7 +24,7 @@ export interface FaultPlan {
   failOnDispatch: number[];
   fault: Fault;
   /** Restrict to workers of this cost class. Omit to apply to any worker. */
-  costClass?: 'local' | 'free' | 'paid';
+  costClass?: CostClass;
 }
 
 export class FaultInjector {
@@ -36,7 +36,7 @@ export class FaultInjector {
    * Called immediately before a worker is dispatched. Returns the fault to raise,
    * or null to proceed normally.
    */
-  check(costClass: 'local' | 'free' | 'paid'): Fault | null {
+  check(costClass: CostClass): Fault | null {
     if (this.plan.costClass && this.plan.costClass !== costClass) return null;
 
     this.dispatches += 1;

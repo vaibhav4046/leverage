@@ -57,12 +57,39 @@ npm run mission                     # run the benchmark mission for real
 npm run dev                         # Mission Control at http://localhost:3000
 ```
 
-You need at least one of:
+You need at least one source of intelligence. In order of "least setup":
 
-- **Ollama** running locally (`ollama pull qwen2.5-coder:3b`) — free, private, no account
-- **any OpenAI-compatible endpoint** — set `OMNIROUTE_BASE_URL`
+| Source | Setup | Key needed |
+|---|---|---|
+| **Your agent CLI** | already installed and logged in (`claude`, `codex`, `gemini`, `opencode`) | none |
+| **Your MCP host seat** | run Leverage as an MCP server inside Claude Code / Codex / Cursor | none |
+| **Ollama** | `ollama pull qwen2.5-coder:3b` | none |
+| **Any OpenAI-compatible endpoint** | set `OMNIROUTE_BASE_URL` | yours |
 
-and a RocketRide staging key for the execution fabric.
+plus a RocketRide staging key for the execution fabric.
+
+## Using the subscription you already pay for
+
+Two routes, neither of which asks for an API key:
+
+**1. Your installed agent CLI.** Claude Code, Codex and friends ship a headless mode
+(`claude -p`, `codex exec`) that authenticates with the login you already performed.
+Leverage detects them on `PATH`, probes whether they are signed in, and hires them as
+workers. Some of them report real token usage and cost back, so the ledger gets measured
+numbers rather than estimates.
+
+**2. MCP sampling.** When Leverage runs as an MCP server inside your agent, it can call
+`sampling/createMessage` back through the protocol and get a completion from the model
+your host is already signed in to.
+
+Both land in the `host` cost class: counted separately from free routes, never charged,
+and eligible inside Zero-Dollar Mode because your subscription already paid.
+
+**What Leverage will not do:** drive a logged-in browser session to borrow a consumer
+subscription. ChatGPT Plus and Claude Pro have no API, and anything that claims to
+"connect" one is automating a web UI against its terms with your credentials. The two
+routes above get you the same model, legitimately, and Leverage never handles a password
+or a token.
 
 ## Use it from your host
 

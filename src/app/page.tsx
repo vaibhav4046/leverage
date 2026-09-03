@@ -3,6 +3,10 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { Wordmark } from '@/components/brand';
 import { HeroConsole } from '@/components/marketing/hero-console';
+import { ConnectSources } from '@/components/marketing/connect-sources';
+import { AuroraField } from '@/components/visual/aurora-field';
+import { WorkforceOrbit, type OrbitNode } from '@/components/visual/workforce-orbit';
+import { Counter, Reveal } from '@/components/visual/motion';
 import type { MissionSnapshot } from '@/core/mission';
 
 export const dynamic = 'force-dynamic';
@@ -10,9 +14,10 @@ export const dynamic = 'force-dynamic';
 /**
  * Landing page.
  *
- * Every number on this page comes from `demo/canonical-run.json` — a real recorded
- * mission — or is not shown at all. There is no placeholder metric anywhere: if the
- * canonical run is missing, the affected panels say so.
+ * Every number here comes from `demo/canonical-run.json` — a real recorded mission —
+ * or the panel says it has nothing to show. There is no placeholder metric anywhere.
+ * A product whose argument is "check the evidence, don't trust the model" cannot have
+ * an invented hero.
  */
 async function loadCanonicalRun(): Promise<MissionSnapshot | null> {
   try {
@@ -29,52 +34,110 @@ export default async function Home() {
   const handoff = run?.checkpoints[0];
   const proofChecks = run?.proofs.flatMap((p) => p.checks) ?? [];
   const passedChecks = proofChecks.filter((c) => c.status === 'pass').length;
+  const passedTasks = run?.tasks.filter((t) => t.state === 'PASSED').length ?? 0;
+
+  // The orbit is the workforce that actually ran, replacements included.
+  const orbitNodes: OrbitNode[] =
+    run?.workers.map((w) => ({
+      label: w.displayName,
+      state:
+        w.status === 'passed'
+          ? 'passed'
+          : w.status === 'replaced' || w.status === 'failed'
+            ? 'replaced'
+            : w.status === 'running' || w.status === 'verifying'
+              ? 'running'
+              : 'idle',
+    })) ?? [];
 
   return (
     <>
       <Nav />
       <main id="main">
         {/* ---------------------------------------------------------------- Hero */}
-        <section className="aurora relative overflow-hidden border-b border-[var(--color-obsidian-edge)]">
-          <div className="mx-auto max-w-[1200px] px-6 pb-24 pt-28 lg:pb-32 lg:pt-36">
+        <section className="aurora relative isolate overflow-hidden border-b border-[var(--color-obsidian-edge)]">
+          <AuroraField />
+
+          <div className="relative mx-auto max-w-[1200px] px-6 pb-24 pt-28 lg:pb-32 lg:pt-36">
             <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,55fr)_minmax(0,45fr)] lg:gap-16">
               <div>
-                <h1 className="display text-[clamp(2.75rem,7vw,4rem)] text-[var(--color-quartz)]">
-                  One frontier brain.
-                  <br />
-                  An elastic workforce.
-                </h1>
+                <Reveal y={12}>
+                  <div className="mono mb-7 inline-flex items-center gap-2 rounded-full border border-[var(--color-sapphire-hairline)] bg-[rgba(13,23,43,0.6)] px-3.5 py-1.5 text-[11px] text-[var(--color-frosted-lilac)] backdrop-blur">
+                    <span className="relative flex h-1.5 w-1.5">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-state-pass)] opacity-60" />
+                      <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--color-state-pass)]" />
+                    </span>
+                    Hire your own host seat — no API key
+                  </div>
+                </Reveal>
 
-                <p className="mt-6 max-w-[34rem] text-[18px] font-light leading-[1.55] text-[var(--color-ash)]">
-                  Keep your best model as the strategist. Leverage recruits local, free and
-                  connected models underneath it, runs independent work in parallel, replaces
-                  workers that fail and verifies every result.
-                </p>
+                <Reveal delay={60}>
+                  <h1 className="display text-[clamp(2.75rem,7vw,4.25rem)] text-[var(--color-quartz)]">
+                    One frontier brain.
+                    <br />
+                    <span className="bg-gradient-to-r from-[var(--color-quartz)] via-[var(--color-quartz)] to-[var(--color-frosted-lilac)] bg-clip-text text-transparent">
+                      An elastic workforce.
+                    </span>
+                  </h1>
+                </Reveal>
 
-                <div className="mt-9 flex flex-wrap items-center gap-3">
-                  <Link href="/app/new" className="btn-primary">
-                    Run your first mission
-                  </Link>
-                  <Link href="/demo" className="btn-ghost">
-                    Watch the proof
-                  </Link>
-                </div>
+                <Reveal delay={130}>
+                  <p className="mt-6 max-w-[34rem] text-[18px] font-light leading-[1.55] text-[var(--color-ash)]">
+                    Keep your best model as the strategist. Leverage recruits local, free and
+                    connected models underneath it, runs independent work in parallel, replaces
+                    workers that fail and verifies every result.
+                  </p>
+                </Reveal>
 
-                <div className="mono mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[12px] text-[var(--color-ash)]">
-                  <span>MCP-native</span>
-                  <Dot />
-                  <span>Local-first</span>
-                  <Dot />
-                  <span>Zero-dollar mode</span>
-                  <Dot />
-                  <span>RocketRide execution</span>
-                </div>
+                <Reveal delay={200}>
+                  <div className="mt-9 flex flex-wrap items-center gap-3">
+                    <Link href="/app/new" className="btn-primary">
+                      Run your first mission
+                    </Link>
+                    <Link href="/demo" className="btn-ghost">
+                      Watch the proof
+                    </Link>
+                  </div>
+                </Reveal>
+
+                <Reveal delay={260}>
+                  <div className="mono mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 text-[12px] text-[var(--color-ash)]">
+                    <span>MCP-native</span>
+                    <Dot />
+                    <span>Local-first</span>
+                    <Dot />
+                    <span>Zero-dollar mode</span>
+                    <Dot />
+                    <span>RocketRide execution</span>
+                  </div>
+                </Reveal>
               </div>
 
-              <HeroConsole run={run} />
+              <Reveal delay={180} y={26}>
+                <HeroConsole run={run} />
+              </Reveal>
             </div>
           </div>
         </section>
+
+        {/* ------------------------------------------------------- Metric ribbon */}
+        {run && (
+          <section className="border-b border-[var(--color-obsidian-edge)] bg-[var(--color-void)]">
+            <div className="mx-auto grid max-w-[1200px] grid-cols-2 gap-px bg-[var(--color-obsidian-edge)] md:grid-cols-4">
+              <Ribbon label="Tasks verified" node={<><Counter value={passedTasks} />/{run.tasks.length}</>} />
+              <Ribbon label="Proof checks" node={<><Counter value={passedChecks} />/{proofChecks.length}</>} />
+              <Ribbon
+                label="Cognitive handoffs"
+                node={<Counter value={run.checkpoints.length} />}
+              />
+              <Ribbon
+                label="Actual paid inference"
+                accent
+                node={<Counter value={run.usage.paidSpendUsd} decimals={2} prefix="$" />}
+              />
+            </div>
+          </section>
+        )}
 
         {/* ------------------------------------------------------------- Problem */}
         <Section eyebrow="The problem" title="Your smartest model is doing work it shouldn't.">
@@ -85,42 +148,84 @@ export default async function Home() {
           </p>
 
           <div className="mt-10 grid gap-4 md:grid-cols-2">
-            <div className="surface-card p-6">
-              <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-frosted-lilac)]">
-                Worth the premium
+            <Reveal>
+              <div className="surface-card h-full p-6">
+                <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-frosted-lilac)]">
+                  Worth the premium
+                </div>
+                <ul className="mt-4 space-y-2.5 text-[15px] text-[var(--color-mist)]">
+                  {['System architecture', 'Difficult trade-offs', 'Security judgement', 'Final review'].map(
+                    (x) => (
+                      <li key={x}>{x}</li>
+                    ),
+                  )}
+                </ul>
               </div>
-              <ul className="mt-4 space-y-2.5 text-[15px] text-[var(--color-mist)]">
-                {['System architecture', 'Difficult trade-offs', 'Security judgement', 'Final review'].map(
-                  (x) => (
+            </Reveal>
+            <Reveal delay={90}>
+              <div className="surface-card h-full p-6">
+                <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
+                  Not worth the premium
+                </div>
+                <ul className="mt-4 space-y-2.5 text-[15px] text-[var(--color-ash)]">
+                  {[
+                    'Searching every file for one symbol',
+                    'Forty boilerplate test cases',
+                    'Mechanical migrations and refactors',
+                    'Retrying a formatter that failed',
+                  ].map((x) => (
                     <li key={x}>{x}</li>
-                  ),
-                )}
-              </ul>
-            </div>
-            <div className="surface-card p-6">
-              <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-                Not worth the premium
+                  ))}
+                </ul>
               </div>
-              <ul className="mt-4 space-y-2.5 text-[15px] text-[var(--color-ash)]">
-                {[
-                  'Searching every file for one symbol',
-                  'Forty boilerplate test cases',
-                  'Mechanical migrations and refactors',
-                  'Retrying a formatter that failed',
-                ].map((x) => (
-                  <li key={x}>{x}</li>
-                ))}
-              </ul>
-            </div>
+            </Reveal>
           </div>
         </Section>
 
+        {/* ------------------------------------------------------------- Orbit */}
+        {orbitNodes.length > 0 && (
+          <section className="relative border-t border-[var(--color-obsidian-edge)] bg-[var(--color-void)]">
+            <div className="mx-auto max-w-[1200px] px-6 py-20">
+              <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+                <Reveal>
+                  <div className="mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
+                    One mission
+                  </div>
+                  <h2 className="heading mt-3 text-[clamp(1.75rem,4vw,2.25rem)] text-[var(--color-quartz)]">
+                    One strategist. {run?.workers.length ?? 0} workers. Nothing paid for.
+                  </h2>
+                  <p className="mt-5 max-w-[34rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
+                    This is the workforce from mission{' '}
+                    <span className="mono text-[var(--color-frosted-lilac)]">{run?.mission.id}</span> —
+                    the recorded run in this repository. Green passed verification, amber was
+                    replaced mid-task and handed its understanding to a successor.
+                  </p>
+                  <dl className="mono mt-8 grid grid-cols-2 gap-5 text-[12px]">
+                    <div>
+                      <dt className="text-[var(--color-ash)]">Local runtime calls</dt>
+                      <dd className="mt-1 text-[20px] text-[var(--color-quartz)]">
+                        <Counter value={run?.usage.localCalls ?? 0} />
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-[var(--color-ash)]">Free cloud calls</dt>
+                      <dd className="mt-1 text-[20px] text-[var(--color-quartz)]">
+                        <Counter value={run?.usage.freeCalls ?? 0} />
+                      </dd>
+                    </div>
+                  </dl>
+                </Reveal>
+
+                <div className="relative aspect-square w-full max-w-[520px] justify-self-center">
+                  <WorkforceOrbit nodes={orbitNodes} />
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* ------------------------------------------------------------ Job market */}
-        <Section
-          eyebrow="Model job market"
-          title="Hire intelligence task by task."
-          border
-        >
+        <Section eyebrow="Model job market" title="Hire intelligence task by task." border>
           <p className="max-w-[46rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
             Every task becomes a job posting. Leverage scores each reachable model against the work,
             your budget, its measured track record, latency and your privacy policy — then hires the
@@ -128,88 +233,104 @@ export default async function Home() {
           </p>
 
           <div className="mt-10 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
-            <div className="surface-card p-6">
-              <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-                Job
+            <Reveal>
+              <div className="surface-card h-full p-6">
+                <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
+                  Job
+                </div>
+                <div className="mt-2 text-[16px] text-[var(--color-quartz)]">
+                  Implement the split calculation
+                </div>
+                <dl className="mono mt-5 space-y-2 text-[12px]">
+                  {[
+                    ['Requires', 'code · backend · reasoning'],
+                    ['Context', '1.4K tokens'],
+                    ['Max cost', '$0.00'],
+                    ['Privacy', 'prefer-local'],
+                  ].map(([k, v]) => (
+                    <div key={k} className="flex justify-between gap-4">
+                      <dt className="text-[var(--color-ash)]">{k}</dt>
+                      <dd className="text-[var(--color-mist)]">{v}</dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
-              <div className="mt-2 text-[16px] text-[var(--color-quartz)]">
-                Implement the split calculation
-              </div>
-              <dl className="mono mt-5 space-y-2 text-[12px]">
-                {[
-                  ['Requires', 'code · backend · reasoning'],
-                  ['Context', '1.4K tokens'],
-                  ['Max cost', '$0.00'],
-                  ['Privacy', 'prefer-local'],
-                ].map(([k, v]) => (
-                  <div key={k} className="flex justify-between gap-4">
-                    <dt className="text-[var(--color-ash)]">{k}</dt>
-                    <dd className="text-[var(--color-mist)]">{v}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
+            </Reveal>
 
-            <div className="surface-card p-6">
-              <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-                Candidates
+            <Reveal delay={90}>
+              <div className="surface-card h-full p-6">
+                <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
+                  Candidates
+                </div>
+                <ul className="mt-4 space-y-3">
+                  <Candidate name="Claude Code (your seat)" utility="0.88" note="host seat · no API key" winner />
+                  <Candidate name="qwen2.5-coder:3b" utility="0.84" note="local runtime · 2 verified probes" />
+                  <Candidate name="Pool · best-coding" utility="0.79" note="free route · quota risk" />
+                  <Candidate
+                    name="Claude API"
+                    utility="—"
+                    note="Hard budget $0.00 blocks all paid routes"
+                    blocked
+                  />
+                </ul>
+                <p className="mt-5 border-t border-[var(--color-obsidian-edge)] pt-4 text-[13px] text-[var(--color-ash)]">
+                  Policy runs before scoring. A paid model under a $0 budget is not out-ranked — it is
+                  never in the pool.
+                </p>
               </div>
-              <ul className="mt-4 space-y-3">
-                <Candidate name="qwen2.5-coder:3b" utility="0.84" note="local runtime · 2 verified probes" winner />
-                <Candidate name="Pool · best-coding" utility="0.79" note="free route · quota risk" />
-                <Candidate name="gemma3:4b" utility="0.71" note="local runtime · 2 verified probes" />
-                <Candidate name="Claude API" utility="—" note="Hard budget $0.00 blocks all paid routes" blocked />
-              </ul>
-              <p className="mt-5 border-t border-[var(--color-obsidian-edge)] pt-4 text-[13px] text-[var(--color-ash)]">
-                Policy runs before scoring. A paid model under a $0 budget is not out-ranked — it is
-                never in the pool.
-              </p>
-            </div>
+            </Reveal>
           </div>
         </Section>
+
+        {/* --------------------------------------------------------- Connect */}
+        <ConnectSources />
 
         {/* --------------------------------------------------------- Zero dollar */}
         <Section eyebrow="Zero-dollar mode" title="When the budget says zero, zero means zero." border>
           <div className="mt-2 grid items-center gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-            <div>
-              <div className="display text-[clamp(3.5rem,9vw,5rem)] tabular-nums text-[var(--color-quartz)]">
-                {run ? `$${run.usage.paidSpendUsd.toFixed(2)}` : '$0.00'}
-              </div>
-              <div className="mono mt-3 text-[11px] uppercase tracking-[0.1em] text-[var(--color-ash)]">
-                {run ? 'Actual paid inference, recorded run' : 'Hard spending limit'}
-              </div>
-            </div>
-
-            <div className="surface-card divide-y divide-[var(--color-obsidian-edge)]">
-              {[
-                ['Paid providers', 'BLOCKED', 'fail'],
-                ['Local runtime', 'READY', 'pass'],
-                ['Free cloud routes', 'READY', 'pass'],
-                ['Automatic failover', 'ON', 'pass'],
-                [
-                  'Blocked paid attempts',
-                  run ? String(run.usage.blockedPaidAttempts) : '—',
-                  'neutral',
-                ],
-              ].map(([label, value, tone]) => (
-                <div key={label} className="flex items-center justify-between px-6 py-3.5">
-                  <span className="text-[15px] text-[var(--color-mist)]">{label}</span>
-                  <span
-                    className="mono text-[12px]"
-                    style={{
-                      color:
-                        tone === 'pass'
-                          ? 'var(--color-state-pass)'
-                          : tone === 'fail'
-                            ? 'var(--color-state-fail)'
-                            : 'var(--color-ash)',
-                    }}
-                  >
-                    {value}
-                  </span>
+            <Reveal>
+              <div>
+                <div className="display text-[clamp(3.5rem,9vw,5rem)] text-[var(--color-quartz)]">
+                  <Counter value={run?.usage.paidSpendUsd ?? 0} decimals={2} prefix="$" />
                 </div>
-              ))}
-            </div>
+                <div className="mono mt-3 text-[11px] uppercase tracking-[0.1em] text-[var(--color-ash)]">
+                  {run ? 'Actual paid inference, recorded run' : 'Hard spending limit'}
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={90}>
+              <div className="surface-card divide-y divide-[var(--color-obsidian-edge)]">
+                {[
+                  ['Paid providers', 'BLOCKED', 'fail'],
+                  ['Your host seat', 'READY', 'pass'],
+                  ['Local runtime', 'READY', 'pass'],
+                  ['Free cloud routes', 'READY', 'pass'],
+                  [
+                    'Blocked paid attempts',
+                    run ? String(run.usage.blockedPaidAttempts) : '—',
+                    'neutral',
+                  ],
+                ].map(([label, value, tone]) => (
+                  <div key={label} className="flex items-center justify-between px-6 py-3.5">
+                    <span className="text-[15px] text-[var(--color-mist)]">{label}</span>
+                    <span
+                      className="mono text-[12px]"
+                      style={{
+                        color:
+                          tone === 'pass'
+                            ? 'var(--color-state-pass)'
+                            : tone === 'fail'
+                              ? 'var(--color-state-fail)'
+                              : 'var(--color-ash)',
+                      }}
+                    >
+                      {value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
           </div>
         </Section>
 
@@ -222,26 +343,28 @@ export default async function Home() {
           </p>
 
           {handoff ? (
-            <div className="surface-card mt-10 overflow-hidden">
-              <div className="grid divide-y divide-[var(--color-obsidian-edge)] md:grid-cols-3 md:divide-x md:divide-y-0">
-                <HandoffCell
-                  label="Worker released"
-                  value={handoff.fromModelKey.split(':').slice(1).join(':')}
-                  detail={`stopped with ${handoff.reason}`}
-                />
-                <HandoffCell
-                  label="Checkpoint"
-                  value={`${handoff.checkpointTokens} tokens`}
-                  detail={`from ${handoff.originalContextTokens} of context`}
-                  accent
-                />
-                <HandoffCell
-                  label="Context reduction"
-                  value={`${handoff.reductionPct}%`}
-                  detail="measured, not estimated"
-                />
+            <Reveal>
+              <div className="surface-card mt-10 overflow-hidden">
+                <div className="grid divide-y divide-[var(--color-obsidian-edge)] md:grid-cols-3 md:divide-x md:divide-y-0">
+                  <HandoffCell
+                    label="Worker released"
+                    value={handoff.fromModelKey.split(':').slice(1).join(':')}
+                    detail={`stopped with ${handoff.reason}`}
+                  />
+                  <HandoffCell
+                    label="Checkpoint"
+                    value={`${handoff.checkpointTokens} tokens`}
+                    detail={`from ${handoff.originalContextTokens} of context`}
+                    accent
+                  />
+                  <HandoffCell
+                    label="Context reduction"
+                    value={`${handoff.reductionPct}%`}
+                    detail="measured, not estimated"
+                  />
+                </div>
               </div>
-            </div>
+            </Reveal>
           ) : (
             <EmptyEvidence what="handoff" />
           )}
@@ -256,67 +379,72 @@ export default async function Home() {
           </p>
 
           {run && proofChecks.length > 0 ? (
-            <div className="surface-card mt-10 p-6">
-              <div className="mono mb-4 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-                ProofPack · mission {run.mission.id}
-              </div>
-              <ul className="mono space-y-2 text-[13px]">
-                {proofChecks.slice(0, 8).map((c, i) => (
-                  <li key={`${c.id}-${i}`} className="flex items-center justify-between gap-4">
-                    <span className="truncate text-[var(--color-mist)]">{c.label}</span>
-                    <span
-                      style={{
-                        color:
-                          c.status === 'pass'
-                            ? 'var(--color-state-pass)'
-                            : 'var(--color-state-fail)',
-                      }}
-                    >
-                      {c.status.toUpperCase()}
+            <Reveal>
+              <div className="surface-card mt-10 p-6">
+                <div className="mono mb-4 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
+                  ProofPack · mission {run.mission.id}
+                </div>
+                <ul className="mono space-y-2 text-[13px]">
+                  {proofChecks.slice(0, 8).map((c, i) => (
+                    <li key={`${c.id}-${i}`} className="flex items-center justify-between gap-4">
+                      <span className="truncate text-[var(--color-mist)]">{c.label}</span>
+                      <span
+                        style={{
+                          color:
+                            c.status === 'pass'
+                              ? 'var(--color-state-pass)'
+                              : 'var(--color-state-fail)',
+                        }}
+                      >
+                        {c.status.toUpperCase()}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mono mt-5 flex flex-wrap gap-x-8 gap-y-2 border-t border-[var(--color-obsidian-edge)] pt-4 text-[12px] text-[var(--color-ash)]">
+                  <span>
+                    checks{' '}
+                    <span className="text-[var(--color-quartz)]">
+                      {passedChecks}/{proofChecks.length}
                     </span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mono mt-5 flex flex-wrap gap-x-8 gap-y-2 border-t border-[var(--color-obsidian-edge)] pt-4 text-[12px] text-[var(--color-ash)]">
-                <span>
-                  checks{' '}
-                  <span className="text-[var(--color-quartz)]">
-                    {passedChecks}/{proofChecks.length}
                   </span>
-                </span>
-                <span>
-                  paid spend{' '}
-                  <span className="text-[var(--color-quartz)]">
-                    ${run.usage.paidSpendUsd.toFixed(2)}
+                  <span>
+                    paid spend{' '}
+                    <span className="text-[var(--color-quartz)]">
+                      ${run.usage.paidSpendUsd.toFixed(2)}
+                    </span>
                   </span>
-                </span>
-                <span>
-                  elapsed{' '}
-                  <span className="text-[var(--color-quartz)]">
-                    {(run.mission.elapsedMs / 1000).toFixed(1)}s
+                  <span>
+                    elapsed{' '}
+                    <span className="text-[var(--color-quartz)]">
+                      {(run.mission.elapsedMs / 1000).toFixed(1)}s
+                    </span>
                   </span>
-                </span>
+                </div>
               </div>
-            </div>
+            </Reveal>
           ) : (
             <EmptyEvidence what="ProofPack" />
           )}
         </Section>
 
         {/* ----------------------------------------------------------- Final CTA */}
-        <section className="aurora border-t border-[var(--color-obsidian-edge)]">
-          <div className="mx-auto max-w-[1200px] px-6 py-24 text-center">
-            <h2 className="display text-[clamp(2.25rem,5vw,3rem)] text-[var(--color-quartz)]">
-              Give your best model a workforce.
-            </h2>
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <Link href="/app/new" className="btn-primary">
-                Run your first mission
-              </Link>
-              <Link href="/docs/mcp" className="btn-ghost">
-                Install the MCP server
-              </Link>
-            </div>
+        <section className="aurora relative isolate overflow-hidden border-t border-[var(--color-obsidian-edge)]">
+          <AuroraField />
+          <div className="relative mx-auto max-w-[1200px] px-6 py-28 text-center">
+            <Reveal>
+              <h2 className="display text-[clamp(2.25rem,5.5vw,3.25rem)] text-[var(--color-quartz)]">
+                Give your best model a workforce.
+              </h2>
+              <div className="mt-9 flex flex-wrap justify-center gap-3">
+                <Link href="/app/new" className="btn-primary">
+                  Run your first mission
+                </Link>
+                <Link href="/docs/mcp" className="btn-ghost">
+                  Install the MCP server
+                </Link>
+              </div>
+            </Reveal>
           </div>
         </section>
       </main>
@@ -329,7 +457,7 @@ export default async function Home() {
 
 function Nav() {
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--color-obsidian-edge)] bg-[rgba(11,12,14,0.88)] backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-[var(--color-obsidian-edge)] bg-[rgba(11,12,14,0.82)] backdrop-blur-xl">
       <nav
         aria-label="Main"
         className="mx-auto flex h-14 max-w-[1200px] items-center justify-between gap-6 px-6"
@@ -338,18 +466,25 @@ function Nav() {
           <Wordmark />
         </Link>
         <div className="hidden items-center gap-7 text-[14px] text-[var(--color-ash)] md:flex">
-          <Link href="/how-it-works" className="hover:text-[var(--color-quartz)]">
-            How it works
-          </Link>
-          <Link href="/benchmarks" className="hover:text-[var(--color-quartz)]">
-            Benchmarks
-          </Link>
-          <Link href="/docs" className="hover:text-[var(--color-quartz)]">
-            Docs
-          </Link>
+          {[
+            ['/how-it-works', 'How it works'],
+            ['/benchmarks', 'Benchmarks'],
+            ['/docs', 'Docs'],
+          ].map(([href, label]) => (
+            <Link
+              key={href}
+              href={href}
+              className="transition-colors duration-150 hover:text-[var(--color-quartz)]"
+            >
+              {label}
+            </Link>
+          ))}
         </div>
         <div className="flex items-center gap-3">
-          <Link href="/app" className="hidden text-[14px] text-[var(--color-ash)] hover:text-[var(--color-quartz)] sm:block">
+          <Link
+            href="/app"
+            className="hidden text-[14px] text-[var(--color-ash)] transition-colors hover:text-[var(--color-quartz)] sm:block"
+          >
             Sign in
           </Link>
           <Link href="/app/new" className="btn-primary !py-2 !text-[14px]">
@@ -358,6 +493,26 @@ function Nav() {
         </div>
       </nav>
     </header>
+  );
+}
+
+function Ribbon({ label, node, accent }: { label: string; node: React.ReactNode; accent?: boolean }) {
+  return (
+    <div className="bg-[var(--color-void)] px-6 py-6">
+      <div className="mono text-[10px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
+        {label}
+      </div>
+      <div
+        className="mt-1.5 text-[28px]"
+        style={{
+          fontFamily: 'var(--font-display)',
+          fontWeight: 500,
+          color: accent ? 'var(--color-state-pass)' : 'var(--color-quartz)',
+        }}
+      >
+        {node}
+      </div>
+    </div>
   );
 }
 
@@ -377,12 +532,14 @@ function Section({
       className={`bg-[var(--color-abyss)] ${border ? 'border-t border-[var(--color-obsidian-edge)]' : ''}`}
     >
       <div className="mx-auto max-w-[1200px] px-6 py-20">
-        <div className="mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-          {eyebrow}
-        </div>
-        <h2 className="heading mt-3 max-w-[42rem] text-[clamp(1.75rem,4vw,2.25rem)] text-[var(--color-quartz)]">
-          {title}
-        </h2>
+        <Reveal>
+          <div className="mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
+            {eyebrow}
+          </div>
+          <h2 className="heading mt-3 max-w-[42rem] text-[clamp(1.75rem,4vw,2.25rem)] text-[var(--color-quartz)]">
+            {title}
+          </h2>
+        </Reveal>
         <div className="mt-6">{children}</div>
       </div>
     </section>
@@ -464,7 +621,7 @@ function EmptyEvidence({ what }: { what: string }) {
         This panel renders a real mission from{' '}
         <code className="mono text-[var(--color-frosted-lilac)]">demo/canonical-run.json</code>. Run{' '}
         <code className="mono text-[var(--color-frosted-lilac)]">
-          npx tsx scripts/run-mission.ts --inject-429 --out=demo/canonical-run.json
+          npm run mission -- --inject-429 --out=demo/canonical-run.json
         </code>{' '}
         to populate it. It will not show invented numbers in the meantime.
       </p>
@@ -482,15 +639,15 @@ function Footer() {
       <div className="mx-auto flex max-w-[1200px] flex-col gap-4 px-6 py-10 sm:flex-row sm:items-center sm:justify-between">
         <Wordmark />
         <div className="flex flex-wrap gap-6 text-[13px] text-[var(--color-ash)]">
-          <Link href="/docs" className="hover:text-[var(--color-quartz)]">
-            Docs
-          </Link>
-          <Link href="/benchmarks" className="hover:text-[var(--color-quartz)]">
-            Benchmarks
-          </Link>
-          <Link href="/demo" className="hover:text-[var(--color-quartz)]">
-            Demo
-          </Link>
+          {[
+            ['/docs', 'Docs'],
+            ['/benchmarks', 'Benchmarks'],
+            ['/demo', 'Demo'],
+          ].map(([href, label]) => (
+            <Link key={href} href={href} className="hover:text-[var(--color-quartz)]">
+              {label}
+            </Link>
+          ))}
         </div>
       </div>
     </footer>

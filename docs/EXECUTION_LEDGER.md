@@ -24,6 +24,10 @@ State, evidence, test. Anything marked NOT BUILT is genuinely not built — see
 | RocketRide execution | **done** | every cloud worker is a pipeline run; credits consumed | `npm run verify:rocketride` |
 | RocketRide credit meter | **done** | real `billing.getCreditBalance`, `unavailable` when absent | `/api/v1/health` |
 | MCP server | **done** | 5 tools over stdio | `mcp/server.ts` |
+| Host seat via MCP sampling | **done** | queue + bridge; UNAVAILABLE until a host connects | `src/providers/host.ts` |
+| Host seat via agent CLI | **done** | detected `opencode` signed in, excluded `claude` (OAuth revoked) | `src/providers/agent-cli.ts` |
+| 3D hero (WebGL) | **done** | hand-written shader, reduced-motion + no-WebGL fallbacks | `src/components/visual/aurora-field.tsx` |
+| Workforce orbit | **done** | perspective projection fed by the canonical run | `src/components/visual/workforce-orbit.tsx` |
 | REST API | **done** | missions, start, cancel, events, models, providers, health | live via curl |
 | SSE event stream | **done** | resumable by `Last-Event-ID` | Mission Control live view |
 | Mission Control | **done** | every value from backend state | `demo/screenshots/02` |
@@ -85,5 +89,12 @@ Recorded because each one changed the design, not just the code.
 9. **`spawn EINVAL` on Windows.** `npm` is a `.cmd` shim that `CreateProcess` cannot run.
    Routed through the command interpreter with arguments still passed as an array.
 
-10. **The fixture's own test script was wrong.** `node --test test/` resolves as a module
+10. **Scroll-reveal shipped the page invisible.** The first motion primitive rendered
+    `opacity: 0` from the server and revealed on intersect, so the entire landing page was
+    blank until hydration — and would have stayed blank forever if the observer never
+    fired, which is exactly what happened. Rewritten to render visible and only hide
+    below-the-fold elements client-side, with a failsafe timer. Invisible content is never
+    an acceptable resting state.
+
+11. **The fixture's own test script was wrong.** `node --test test/` resolves as a module
     path on Node 24, so the suite reported a failure while every individual file passed.

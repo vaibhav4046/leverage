@@ -164,6 +164,10 @@ function scoreSpeed(observedLatencyMs?: number): number {
 
 function scoreCostPenalty(model: ModelDescriptor, estimate: UsageEstimate): number {
   if (model.costClass === 'local') return 0;
+  // The host seat costs Leverage nothing, but it is the user's own rate limit and
+  // their interactive session -- a small penalty keeps it as the capable fallback
+  // rather than the default that saturates their subscription.
+  if (model.costClass === 'host') return 0.15;
   if (model.costClass === 'free') return 0.02; // free routes still cost quota
   // Paid: penalty grows with spend, saturating so an expensive model is not
   // infinitely bad — just clearly worse when a capable free option exists.
@@ -172,6 +176,7 @@ function scoreCostPenalty(model: ModelDescriptor, estimate: UsageEstimate): numb
 
 function scoreQuotaRisk(model: ModelDescriptor, health: ProviderHealth): number {
   if (model.costClass === 'local') return 0;
+  if (model.costClass === 'host') return 0.2;
   if (health.status === 'RATE_LIMITED') return 1;
   if (health.status === 'DEGRADED') return 0.5;
   return model.costClass === 'free' ? 0.25 : 0.1;
@@ -299,9 +304,11 @@ function explain(winner: CandidateScore, all: CandidateScore[]): string {
   parts.push(
     winner.costClass === 'local'
       ? 'local runtime, no spend'
-      : winner.costClass === 'free'
-        ? 'free route, no spend'
-        : `$${winner.estimatedCostUsd.toFixed(4)} estimated`,
+      : winner.costClass === 'host'
+        ? 'your own host seat, no API key'
+        : winner.costClass === 'free'
+          ? 'free route, no spend'
+          : `$${winner.estimatedCostUsd.toFixed(4)} estimated`,
   );
 
   const blocked = all.filter((c) => !c.eligible).length;

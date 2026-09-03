@@ -59,6 +59,7 @@ export class BudgetGovernor {
       freeCalls: 0,
       paidCalls: 0,
       localCalls: 0,
+      hostCalls: 0,
       estimatedFrontierEquivalentUsd: 0,
       blockedAttempts: 0,
     };
@@ -126,6 +127,10 @@ export class BudgetGovernor {
       this.ledger.paidCalls += 1;
     } else if (costClass === 'local') {
       this.ledger.localCalls += 1;
+    } else if (costClass === 'host') {
+      // Real inference the user already paid for through their own subscription.
+      // Counted, never charged.
+      this.ledger.hostCalls += 1;
     } else {
       this.ledger.freeCalls += 1;
     }
