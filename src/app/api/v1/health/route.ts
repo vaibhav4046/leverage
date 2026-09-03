@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getExecutor, getRegistry } from '@/server/missions';
 import { authConfigured, authMode } from '@/auth/identity';
+import { getRepository } from '@/db';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,6 +31,7 @@ export async function GET() {
       providers,
       models: registry.allModels().length,
       auth: authConfigured() ? 'configured' : authMode(),
+      persistence: getRepository().kind,
     },
     // Real value or nothing. A guessed credit balance is worse than no balance.
     rocketrideCredits: credits ?? 'unavailable',

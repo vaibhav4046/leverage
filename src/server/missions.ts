@@ -11,38 +11,26 @@ import { RocketRideExecutor } from '../rocketride/executor';
 import type { MissionTask } from '../core/types';
 import { buildFixturePlan } from './fixture-plan';
 import { DEMO_WORKSPACE_ID } from '../auth/identity';
+import { getRepository } from '../db';
 
 /**
  * Server-side mission registry.
  *
- * Process-local, with a JSON snapshot on disk so a completed mission survives a
- * restart and can still be opened, shared and used as demo evidence. It is behind
- * this module boundary on purpose: `src/db/supabase.ts` implements the same shape
- * and swapping it changes nothing above this file.
+ * Live missions are process-local; completed ones are written through a
+ * `MissionRepository` (`src/db/`) so a finished run survives a restart and can still
+ * be opened, shared and used as evidence. Which repository is a configuration
+ * choice: the filesystem one by default, Postgres when Supabase is configured.
+ * Nothing in this file knows the difference.
  *
- * Durable multi-instance persistence is a genuine gap and is recorded in
+ * Durable multi-instance persistence for *in-flight* missions is still a genuine gap
+ * — the live scheduler state lives in this process — and is recorded in
  * BLOCKERS_REQUIRING_HUMAN.md rather than papered over.
  */
 
 const STATE_DIR = path.resolve('.leverage-state');
 const RUNS_DIR = path.join(STATE_DIR, 'runs');
 
-/**
- * Persisted runs are stored one directory per workspace.
- *
- * The snapshot returned to clients carries no workspace id, so a flat directory
- * gave the read path nothing to check tenancy against — it read any completed
- * mission by id for any caller, which made the id an enumeration oracle for other
- * tenants' work. Scoping by directory makes the check structural: a caller can only
- * name a path inside its own workspace, so there is no check for a future route to
- * forget.
- */
-const SAFE_SEGMENT = /^[A-Za-z0-9_-]{1,64}$/;
 
-function runsDirFor(workspaceId: string): string | null {
-  if (!SAFE_SEGMENT.test(workspaceId)) return null;
-  return path.join(RUNS_DIR, workspaceId);
-}
 
 interface Entry {
   state: MissionState;
@@ -193,15 +181,7 @@ export async function getMissionSnapshot(
     return seeded.find((r) => r.mission.id === missionId) ?? null;
   }
 
-  if (!/^LVR-[A-Za-z0-9-]{1,40}$/.test(missionId)) return null;
-  const dir = runsDirFor(workspaceId);
-  if (!dir) return null;
-  try {
-    const raw = await fs.readFile(path.join(dir, `${missionId}.json`), 'utf8');
-    return JSON.parse(raw) as MissionSnapshot;
-  } catch {
-    return null;
-  }
+  return getRepository().get(workspaceId, missionId);
 }
 
 export function getMission(missionId: string, workspaceId: string): MissionState | null {
@@ -285,17 +265,7 @@ export function cancelMission(missionId: string, workspaceId: string): boolean {
 }
 
 async function persist(state: MissionState): Promise<void> {
-  try {
-    const dir = runsDirFor(state.spec.workspaceId);
-    if (!dir) return;
-    await fs.mkdir(dir, { recursive: true });
-    await fs.writeFile(
-      path.join(dir, `${state.spec.id}.json`),
-      JSON.stringify(snapshotMission(state), null, 2),
-    );
-  } catch {
-    // Persistence is for convenience here; losing it must not fail a mission.
-  }
+  await getRepository().save(state.spec.workspaceId, snapshotMission(state));
 }
 
 async function persistReputation(): Promise<void> {
@@ -311,21 +281,8 @@ async function persistReputation(): Promise<void> {
   }
 }
 
-/** Completed runs written to disk by a previous process, for one workspace. */
+/** Completed runs from a previous process, for one workspace. */
 export async function loadPersistedRuns(workspaceId: string): Promise<MissionSnapshot[]> {
   if (workspaceId === DEMO_WORKSPACE_ID) return loadDemoRuns();
-
-  const dir = runsDirFor(workspaceId);
-  if (!dir) return [];
-  try {
-    const files = await fs.readdir(dir);
-    const runs = await Promise.all(
-      files
-        .filter((f) => f.endsWith('.json'))
-        .map(async (f) => JSON.parse(await fs.readFile(path.join(dir, f), 'utf8'))),
-    );
-    return runs as MissionSnapshot[];
-  } catch {
-    return [];
-  }
+  return getRepository().list(workspaceId);
 }

@@ -160,8 +160,11 @@ npm run verify
 - **No baseline comparison is claimed.** Running the same mission on one frontier model
   would need a paid key this build does not have, so BENCHMARKS.md reports Leverage's own
   numbers and no speedup multiple.
-- **Privy and Supabase are not wired.** Auth runs in a dev identity that *refuses to start
-  in production*; persistence is a JSON snapshot behind a repository interface. Both are in
+- **Privy and Supabase have no credentials here.** Auth runs in a dev identity that
+  *refuses to start in production*, or — on the deployed instance — an explicit read-only
+  public demo. Persistence goes through `MissionRepository` (`src/db/`): the filesystem
+  implementation is what produced every recorded run, and the Postgres one matches the
+  committed migrations but **has never been executed against a live database**. Both are in
   [BLOCKERS_REQUIRING_HUMAN.md](BLOCKERS_REQUIRING_HUMAN.md) with what is needed.
 - **Small local models fail often.** That is visible in the run rather than hidden: the
   capability probe found 5 of 14 local models usable, and the failures are what the handoff

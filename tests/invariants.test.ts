@@ -12,6 +12,11 @@ import { computeQualityScore } from '../src/core/verify';
 import { safeJoin } from '../src/core/context';
 import { FaultInjector, INJECTED_RATE_LIMIT } from '../src/core/faults';
 import { requireWritable, AuthError, type Identity } from '../src/auth/policy';
+import { FileMissionRepository } from '../src/db/memory';
+import { isSafeWorkspaceId, isSafeMissionId } from '../src/db/types';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
 import type {
   ContextBundle,
   MissionSpec,
@@ -603,5 +608,66 @@ describe('read-only identity', () => {
 
   it('permits a mutation from a writable identity', () => {
     expect(() => requireWritable({ ...readOnly, readOnly: false })).not.toThrow();
+  });
+});
+
+// ----------------------------------------------------------------- repository
+
+describe('mission repository', () => {
+  const snapshot = (id: string, startedAt: string) =>
+    ({
+      mission: { id, goal: 'g', status: 'COMPLETED', startedAt },
+      tasks: [],
+      workers: [],
+      checkpoints: [],
+      proofs: [],
+      auctions: [],
+      usage: {},
+      events: [],
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    }) as any;
+
+  async function repo() {
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'lvr-repo-'));
+    return new FileMissionRepository(dir);
+  }
+
+  it('round-trips a snapshot within its workspace', async () => {
+    const r = await repo();
+    await r.save('ws_a', snapshot('LVR-aaa', '2026-01-01T00:00:00.000Z'));
+    expect((await r.get('ws_a', 'LVR-aaa'))?.mission.id).toBe('LVR-aaa');
+  });
+
+  it('never returns another workspace mission, even with the right id', async () => {
+    // The snapshot carries no workspace id, so this is the check that stops a
+    // mission id being an enumeration oracle across tenants.
+    const r = await repo();
+    await r.save('ws_a', snapshot('LVR-aaa', '2026-01-01T00:00:00.000Z'));
+    expect(await r.get('ws_b', 'LVR-aaa')).toBeNull();
+    expect(await r.list('ws_b')).toEqual([]);
+  });
+
+  it('refuses ids that could escape their directory', async () => {
+    const r = await repo();
+    expect(await r.get('../../etc', 'LVR-aaa')).toBeNull();
+    expect(await r.get('ws_a', '../../../etc/passwd')).toBeNull();
+    expect(isSafeWorkspaceId('../etc')).toBe(false);
+    expect(isSafeMissionId('../../x')).toBe(false);
+    expect(isSafeMissionId('LVR-f8f72d56')).toBe(true);
+  });
+
+  it('lists newest first', async () => {
+    const r = await repo();
+    await r.save('ws_a', snapshot('LVR-old', '2026-01-01T00:00:00.000Z'));
+    await r.save('ws_a', snapshot('LVR-new', '2026-06-01T00:00:00.000Z'));
+    expect((await r.list('ws_a')).map((m) => m.mission.id)).toEqual(['LVR-new', 'LVR-old']);
+  });
+
+  it('survives a corrupt file instead of losing the whole workspace', async () => {
+    const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'lvr-repo-'));
+    const r = new FileMissionRepository(dir);
+    await r.save('ws_a', snapshot('LVR-good', '2026-01-01T00:00:00.000Z'));
+    await fs.writeFile(path.join(dir, 'ws_a', 'LVR-bad.json'), '{ not json');
+    expect((await r.list('ws_a')).map((m) => m.mission.id)).toEqual(['LVR-good']);
   });
 });
