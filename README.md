@@ -27,18 +27,18 @@ and hands it to a replacement.
 
 ## The run this repository ships with
 
-A real recorded mission, not a mock. `demo/canonical-run.json`:
+A real recorded mission, not a mock — `LVR-f8f72d56`, in `demo/canonical-run.json`:
 
 | | |
 |---|---|
 | Tasks | 4 / 4 verified |
 | Proof checks | 8 / 8 pass |
 | Full suite | 17 / 17 tests, `exit 0` |
-| Workers hired | 6 |
-| Cognitive handoffs | 2 (one injected 429, one genuine test failure) |
-| Context reduction at handoff | 53% and 49%, measured |
+| Workers hired | 7 |
+| Cognitive handoffs | 3 (one injected 429, two genuine test failures) |
+| Context reduction at handoff | 57%, 48%, 30% — measured |
 | **Actual paid inference** | **$0.00** |
-| RocketRide credits consumed | 14.60 |
+| RocketRide credits consumed | 30.40 |
 
 Reproduce it:
 
