@@ -28,18 +28,17 @@ export const metadata: Metadata = {
   title: 'Leverage — Give your best model a workforce',
   description:
     'Leverage gives Claude, Codex and other MCP hosts a dynamic workforce of local, free and connected models, then verifies the work and replaces workers that fail.',
+  icons: { icon: '/icon.svg' },
   openGraph: {
     title: 'Leverage — One frontier brain. An elastic workforce.',
     description:
       'Keep your best model as the strategist. Leverage recruits cheaper models underneath it, runs work in parallel, replaces workers that fail and verifies every result.',
     type: 'website',
-    images: ['/og.png'],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Leverage — One frontier brain. An elastic workforce.',
     description: 'An intelligence resource manager for MCP hosts. Zero-dollar mode means zero.',
-    images: ['/og.png'],
   },
 };
 
