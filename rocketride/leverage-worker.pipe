@@ -1,0 +1,33 @@
+{
+  "name": "leverage-worker",
+  "description": "Executes one Leverage task. The control plane chooses the model and injects it as base_url + model at deploy time; this pipeline is the execution fabric, not the decision maker.",
+  "source": "in",
+  "components": [
+    {
+      "id": "in",
+      "provider": "webhook",
+      "config": {},
+      "name": "Task intake"
+    },
+    {
+      "id": "worker",
+      "provider": "llm_openai_api",
+      "name": "Hired worker",
+      "config": {
+        "model": "auto/best-free",
+        "base_url": "${LEVERAGE_POOL_URL}",
+        "apikey": "${LEVERAGE_POOL_KEY}",
+        "modelTotalTokens": 32768,
+        "openai_api.profile": "custom"
+      },
+      "input": [{ "lane": "questions", "from": "in" }]
+    },
+    {
+      "id": "out",
+      "provider": "response",
+      "name": "Worker output",
+      "config": { "laneName": "answers" },
+      "input": [{ "lane": "answers", "from": "worker" }]
+    }
+  ]
+}

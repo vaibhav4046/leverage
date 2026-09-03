@@ -1,0 +1,160 @@
+{
+  "at": "2026-09-03T02:05:58.015Z",
+  "probes": 2,
+  "results": [
+    {
+      "model": "ollama:samantha-v0.1:latest",
+      "passed": 2,
+      "total": 2,
+      "ms": 7148,
+      "note": ""
+    },
+    {
+      "model": "ollama:samantha-core:latest",
+      "passed": 2,
+      "total": 2,
+      "ms": 8183,
+      "note": ""
+    },
+    {
+      "model": "ollama:qwen3:4b-instruct",
+      "passed": 0,
+      "total": 2,
+      "ms": 55462,
+      "note": "The operation was aborted due to timeout"
+    },
+    {
+      "model": "ollama:qwen3.5:4b",
+      "passed": 0,
+      "total": 2,
+      "ms": 50024,
+      "note": "The operation was aborted due to timeout"
+    },
+    {
+      "model": "ollama:qwen3:4b",
+      "passed": 0,
+      "total": 2,
+      "ms": 50019,
+      "note": "The operation was aborted due to timeout"
+    },
+    {
+      "model": "ollama:qwen3:8b",
+      "passed": 0,
+      "total": 2,
+      "ms": 50019,
+      "note": "The operation was aborted due to timeout"
+    },
+    {
+      "model": "ollama:qwen2.5-coder:3b",
+      "passed": 2,
+      "total": 2,
+      "ms": 8814,
+      "note": ""
+    },
+    {
+      "model": "ollama:kodro-fast:latest",
+      "passed": 0,
+      "total": 2,
+      "ms": 4976,
+      "note": "worker answer was not valid JSON: Expected property name or "
+    },
+    {
+      "model": "ollama:kodro-coder:latest",
+      "passed": 0,
+      "total": 2,
+      "ms": 12157,
+      "note": "no JSON object found in worker answer"
+    },
+    {
+      "model": "ollama:kodro-tutor:latest",
+      "passed": 1,
+      "total": 2,
+      "ms": 36416,
+      "note": "The operation was aborted due to timeout"
+    },
+    {
+      "model": "ollama:robolearn-fast:latest",
+      "passed": 0,
+      "total": 2,
+      "ms": 6018,
+      "note": "worker answer was not valid JSON: Expected double-quoted pro"
+    },
+    {
+      "model": "ollama:gemma3:1b",
+      "passed": 0,
+      "total": 2,
+      "ms": 8756,
+      "note": "worker answer was not valid JSON: Expected double-quoted pro"
+    },
+    {
+      "model": "ollama:gemma3:4b",
+      "passed": 2,
+      "total": 2,
+      "ms": 13639,
+      "note": ""
+    },
+    {
+      "model": "ollama:llama3.2:3b",
+      "passed": 0,
+      "total": 2,
+      "ms": 50008,
+      "note": "The operation was aborted due to timeout"
+    },
+    {
+      "model": "pool:auto/best-coding",
+      "passed": 2,
+      "total": 2,
+      "ms": 35375,
+      "note": ""
+    },
+    {
+      "model": "pool:auto/best-reasoning",
+      "passed": 2,
+      "total": 2,
+      "ms": 30212,
+      "note": ""
+    },
+    {
+      "model": "pool:auto/best-fast",
+      "passed": 2,
+      "total": 2,
+      "ms": 23319,
+      "note": ""
+    },
+    {
+      "model": "pool:auto/coding:free",
+      "passed": 0,
+      "total": 2,
+      "ms": 4979,
+      "note": "provider returned HTTP 429: {\"error\":{\"message\":\"[429]: Felo"
+    },
+    {
+      "model": "pool:auto/best-free",
+      "passed": 2,
+      "total": 2,
+      "ms": 30619,
+      "note": ""
+    },
+    {
+      "model": "pool:ghm/deepseek/deepseek-v3-0324",
+      "passed": 0,
+      "total": 2,
+      "ms": 20953,
+      "note": "provider returned HTTP 410: {\"error\":{\"message\":\"[github-mod"
+    },
+    {
+      "model": "pool:ghm/meta/llama-3.3-70b-instruct",
+      "passed": 0,
+      "total": 2,
+      "ms": 20628,
+      "note": "provider returned HTTP 410: {\"error\":{\"message\":\"[github-mod"
+    },
+    {
+      "model": "pool:ghm/mistral-ai/codestral-2501",
+      "passed": 0,
+      "total": 2,
+      "ms": 27570,
+      "note": "provider returned HTTP 410: {\"error\":{\"message\":\"[github-mod"
+    }
+  ]
+}

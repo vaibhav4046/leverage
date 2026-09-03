@@ -1,0 +1,10 @@
+{
+  "name": "forge-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic Leverage benchmark fixture: a receipt-splitting library whose tests exist and whose implementation does not.",
+  "scripts": {
+    "test": "node --test test/money.test.js test/validate.test.js test/split.test.js test/index.test.js"
+  }
+}

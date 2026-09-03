@@ -1,0 +1,187 @@
+/**
+ * Run a real Leverage mission from the command line.
+ *
+ * This is the vertical slice the whole product rests on:
+ *
+ *   mission -> compile -> DAG -> auction -> hire -> RocketRide pipeline
+ *           -> real model -> patch -> verify -> ProofPack
+ *
+ * Nothing here is simulated. Every worker is a real inference through a real
+ * RocketRide pipeline, every check is a real process exit code, and the numbers it
+ * prints are the numbers that happened.
+ *
+ *   npx tsx scripts/run-mission.ts --fixture --inject-429
+ */
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
+dotenv.config();
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { compileMissionSpec } from '../src/core/compiler';
+import { createMissionState, snapshotMission } from '../src/core/mission';
+import { MissionScheduler } from '../src/core/scheduler';
+import { ReputationStore } from '../src/core/reputation';
+import { buildRegistry } from '../src/providers/registry';
+import { FaultInjector, INJECTED_RATE_LIMIT } from '../src/core/faults';
+import { RocketRideExecutor } from '../src/rocketride/executor';
+import { formatElapsed } from '../src/core/events';
+import { buildFixturePlan } from '../src/server/fixture-plan';
+
+const args = new Set(process.argv.slice(2));
+const INJECT = args.has('--inject-429');
+const DIRECT = args.has('--direct');
+const OUT = process.argv.find((a) => a.startsWith('--out='))?.slice(6);
+
+const REPO = path.resolve('benchmark/forge-app');
+const STATE_DIR = path.resolve('.leverage-state');
+
+async function main() {
+  const poolUrl = process.env.LEVERAGE_POOL_URL ?? process.env.OMNIROUTE_BASE_URL;
+  if (!poolUrl) throw new Error('Set LEVERAGE_POOL_URL (public) or OMNIROUTE_BASE_URL (local)');
+
+  // ---- Providers ---------------------------------------------------------
+  const registry = buildRegistry({
+    ollamaBaseUrl: process.env.OLLAMA_BASE_URL,
+    poolBaseUrl: process.env.OMNIROUTE_BASE_URL,
+    poolApiKey: process.env.OMNIROUTE_API_KEY ?? 'sk-leverage-pool',
+  });
+  await registry.sweep(true);
+
+  console.log('\nPROVIDERS');
+  for (const p of registry.list()) {
+    console.log(
+      `  ${p.adapter.providerId.padEnd(8)} ${p.health.status.padEnd(12)} ${p.models.length} models  ${p.label}`,
+    );
+  }
+  const models = registry.allModels();
+  if (models.length === 0) throw new Error('No models discovered — nothing can be hired');
+
+  // ---- Failure injection -------------------------------------------------
+  // Deterministic, announced, and applied at dispatch so it lands on whichever
+  // worker the auction actually hires. See demo/README.md.
+  const faults = INJECT
+    ? new FaultInjector({ failOnDispatch: [1], fault: INJECTED_RATE_LIMIT })
+    : undefined;
+  if (faults) {
+    console.log('  Failure injection armed: dispatch #1 will raise an INJECTED 429');
+  }
+
+  // ---- Compile -----------------------------------------------------------
+  const spec = compileMissionSpec({
+    goal:
+      'Finish the forge-app receipt splitting library so the whole existing test suite passes. ' +
+      'Do not modify any file under test/. Budget: $0. Quality: production.',
+    workspaceId: 'ws_local',
+    createdBy: 'cli',
+    repositoryRoot: REPO,
+    repositoryLabel: 'forge-app',
+  });
+
+  console.log('\nMISSION', spec.id);
+  console.log('  budget    ', `$${spec.budget.maxUsd.toFixed(2)}`, spec.budget.hard ? '(HARD)' : '(soft)');
+  console.log('  quality   ', spec.quality.target);
+  console.log('  privacy   ', spec.privacy.mode);
+  console.log('  constraints', spec.constraints.length ? spec.constraints.join(' | ') : '(none)');
+
+  const tasks = buildFixturePlan(spec.id);
+  console.log(`  plan       ${tasks.length} tasks`);
+
+  const reputation = await loadReputation();
+  const state = createMissionState(spec, tasks);
+
+  // ---- Execute -----------------------------------------------------------
+  const executor = new RocketRideExecutor({
+    apiKey: process.env.ROCKETRIDE_APIKEY ?? '',
+    uri: process.env.ROCKETRIDE_URI ?? 'https://staging.rocketride.ai',
+    poolBaseUrl: poolUrl,
+    poolApiKey: process.env.OMNIROUTE_API_KEY ?? 'sk-leverage-pool',
+  });
+
+  const creditsBefore = await executor.credits();
+  if (creditsBefore) {
+    console.log(`  rocketride credits ${creditsBefore.balance} / ${creditsBefore.granted}`);
+  }
+
+  state.events.subscribe((e) => {
+    const tag = e.taskId ? ` [${e.taskId}]` : '';
+    console.log(`${formatElapsed(e.elapsedMs)}  ${e.type.padEnd(22)}${tag} ${e.message}`);
+  });
+
+  const scheduler = new MissionScheduler(
+    state,
+    { registry, executor, reputation, faults },
+    { useRocketRide: !DIRECT, maxConcurrency: 2 },
+  );
+
+  process.on('SIGINT', () => {
+    console.log('\nCancelling...');
+    scheduler.cancel();
+  });
+
+  await scheduler.run();
+  const creditsAfter = await executor.credits();
+  await executor.close();
+
+  // ---- Report ------------------------------------------------------------
+  const snapshot = snapshotMission(state);
+  const passed = state.tasks.filter((t) => t.state === 'PASSED').length;
+
+  console.log('\n' + '='.repeat(72));
+  console.log(`MISSION ${state.status}`);
+  console.log('='.repeat(72));
+  console.log(`  tasks passed        ${passed}/${state.tasks.length}`);
+  console.log(`  workers hired       ${state.workers.length}`);
+  console.log(`  handoffs            ${state.checkpoints.length}`);
+  console.log(`  actual paid spend   $${snapshot.usage.paidSpendUsd.toFixed(2)}`);
+  console.log(`  local / free calls  ${snapshot.usage.localCalls} / ${snapshot.usage.freeCalls}`);
+  console.log(`  blocked paid tries  ${snapshot.usage.blockedPaidAttempts}`);
+  console.log(
+    `  est. frontier-equiv $${snapshot.usage.estimatedFrontierEquivalentUsd.toFixed(4)} (estimate, see BENCHMARKS.md)`,
+  );
+  if (creditsBefore && creditsAfter) {
+    console.log(
+      `  rocketride credits  ${creditsBefore.balance} -> ${creditsAfter.balance} (used ${(creditsBefore.balance - creditsAfter.balance).toFixed(2)})`,
+    );
+  }
+
+  console.log('\n  FINAL SUITE');
+  const { execArgv } = await import('../src/core/verify');
+  const suite = await execArgv(['npm', 'test'], REPO, 120_000);
+  const summary = suite.stdout.match(/# (pass|fail) \d+/g) ?? [];
+  console.log(`  exit ${suite.code}  ${summary.join('  ')}`);
+
+  await fs.mkdir(STATE_DIR, { recursive: true });
+  await saveReputation(reputation);
+  if (OUT) {
+    await fs.mkdir(path.dirname(path.resolve(OUT)), { recursive: true });
+    await fs.writeFile(
+      path.resolve(OUT),
+      JSON.stringify({ ...snapshot, finalSuiteExitCode: suite.code }, null, 2),
+    );
+    console.log(`\n  canonical run written to ${OUT}`);
+  }
+
+  process.exit(state.status === 'COMPLETED' && suite.code === 0 ? 0 : 1);
+}
+
+
+async function loadReputation(): Promise<ReputationStore> {
+  try {
+    const raw = await fs.readFile(path.join(STATE_DIR, 'reputation.json'), 'utf8');
+    return ReputationStore.fromJSON(JSON.parse(raw));
+  } catch {
+    return new ReputationStore();
+  }
+}
+
+async function saveReputation(store: ReputationStore): Promise<void> {
+  await fs.writeFile(
+    path.join(STATE_DIR, 'reputation.json'),
+    JSON.stringify(store.toJSON(), null, 2),
+  );
+}
+
+main().catch((err) => {
+  console.error('\nMISSION ABORTED:', err?.message ?? err);
+  process.exit(1);
+});

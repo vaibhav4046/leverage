@@ -1,0 +1,182 @@
+@import 'tailwindcss';
+
+/*
+ * Leverage design tokens.
+ *
+ * One source of truth. Components reference these variables and never a raw hex,
+ * so the site, Mission Control, the OG image and the demo film cannot drift apart.
+ *
+ * Derived from the AgentQL / Refero "aurora glow over a midnight terminal" language:
+ * an overwhelmingly achromatic dark stack, hairline navy borders, colour reserved
+ * for state and for two rare atmospheric glows.
+ */
+
+@theme {
+  /* Surfaces, in elevation order */
+  --color-void: #0b0c0e;
+  --color-abyss: #0e111b;
+  --color-deep-sea: #0d172b;
+  --color-cobalt: #12244f;
+
+  /* Chromatic accents. Sparingly. */
+  --color-frosted-lilac: #85a6e9;
+  --color-signal-blue: #2862d7;
+  --color-pulse-violet: #305fbd;
+  --color-aurora-purple: #625fff;
+  --color-plasma-pink: #ff7dda;
+
+  /* Type */
+  --color-quartz: #ffffff;
+  --color-ash: #abaebb;
+  --color-mist: #c7c9d1;
+  --color-slate: #3c3f44;
+
+  /* Borders */
+  --color-obsidian-edge: #172540;
+  --color-inkline: #151e32;
+  --color-sapphire-hairline: #24375a;
+
+  /* Semantic state. Muted on purpose: this is a console, not a traffic light. */
+  --color-state-pass: #4ade80;
+  --color-state-fail: #f87171;
+  --color-state-warn: #fbbf24;
+
+  --font-display: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-card: 12px;
+  --radius-input: 8px;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: var(--color-void);
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-quartz);
+  font-family: var(--font-sans);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Display type. Figtree owns everything at 32px and above. */
+.display {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.heading {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.13;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/*
+ * The aurora. Two radial glows, and they appear in exactly three places: the
+ * landing hero, a major page header, and the film's brand frames. Never inside a
+ * card, a chart or a control.
+ */
+.aurora {
+  background:
+    radial-gradient(79.43% 95.88% at 38.94% -53.46%, rgba(98, 95, 255, 0.38) 0%, rgba(0, 0, 0, 0) 100%),
+    radial-gradient(27.99% 22.08% at 72.13% 103.46%, rgba(255, 125, 218, 0.33) 0%, rgba(0, 0, 0, 0) 100%),
+    var(--color-void);
+}
+
+.surface-card {
+  background: var(--color-deep-sea);
+  border: 1px solid var(--color-obsidian-edge);
+  border-radius: var(--radius-card);
+}
+
+.surface-highlight {
+  background: var(--color-cobalt);
+  border: 1px solid #1e2b48;
+  border-radius: var(--radius-card);
+}
+
+/* Buttons. White is the primary action; nothing else competes with it. */
+.btn-primary {
+  background: var(--color-quartz);
+  color: #050606;
+  border-radius: 9999px;
+  padding: 10px 20px;
+  font-weight: 500;
+  font-size: 15px;
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+.btn-primary:hover {
+  opacity: 0.9;
+}
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-quartz);
+  border: 1px solid #777a88;
+  border-radius: 9999px;
+  padding: 10px 20px;
+  font-weight: 500;
+  font-size: 15px;
+  transition: border-color 180ms ease, background 180ms ease;
+}
+.btn-ghost:hover {
+  border-color: var(--color-quartz);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.hairline {
+  border-color: var(--color-obsidian-edge);
+}
+
+/* Focus. Visible, keyboard-only, and never removed. */
+:focus-visible {
+  outline: 2px solid var(--color-frosted-lilac);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Scrollbars, so panels do not sprout a bright OS-default bar mid-console. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-obsidian-edge) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--color-obsidian-edge);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
