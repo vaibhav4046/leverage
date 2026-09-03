@@ -1,6 +1,15 @@
 import { getRegistry, getReputation } from '@/server/missions';
+import { Page, PageHead, Table, Row, Cell, Pill, Stat } from '@/components/app/shell';
+import { IconModels, IconLocal, IconCloud, IconBudget } from '@/components/icons';
 
 export const dynamic = 'force-dynamic';
+
+const COST_TONE = {
+  local: 'pass',
+  free: 'pass',
+  host: 'live',
+  paid: 'warn',
+} as const;
 
 /** The hireable workforce, with whatever record each model has actually earned. */
 export default async function ModelsPage() {
@@ -14,84 +23,71 @@ export default async function ModelsPage() {
     health: registry.healthFor(m.providerId).status,
   }));
 
-  const headers = [
-    'Model',
-    'Provider',
-    'Cost',
-    'Context',
-    'Health',
-    'Jobs',
-    'Verified',
-    'Median',
-    'Confidence',
-  ];
+  const counts = registry.countsByCostClass();
+  const measured = rows.filter((r) => (r.rep?.samples ?? 0) > 0).length;
 
   return (
-    <div className="p-6">
-      <h1 className="heading text-[28px] text-[var(--color-quartz)]">Models</h1>
-      <p className="mt-2 max-w-[46rem] text-[15px] text-[var(--color-ash)]">
-        Every model Leverage can currently reach. Success rates are shrunk toward a neutral prior
-        and shipped with a sample count, so a model that went one-for-one does not read as a
-        hundred-percent model.
-      </p>
+    <Page>
+      <PageHead
+        eyebrow="Workforce"
+        title="Models"
+        lede="Every model Leverage can currently reach. Success rates are shrunk toward a neutral prior and shipped with a sample count, so a model that went one-for-one does not read as a hundred-percent model."
+      />
 
-      <div className="mt-6 overflow-x-auto">
-        <table className="w-full min-w-[820px] border-collapse text-left">
-          <caption className="sr-only">Reachable models and their measured performance</caption>
-          <thead>
-            <tr className="border-b border-[var(--color-obsidian-edge)]">
-              {headers.map((h) => (
-                <th
-                  key={h}
-                  scope="col"
-                  className="mono px-3 py-2.5 text-[10px] uppercase tracking-[0.08em] text-[var(--color-ash)]"
-                >
-                  {h}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map(({ model, rep, health }) => (
-              <tr key={model.key} className="border-b border-[var(--color-inkline)]">
-                <td className="mono px-3 py-3 text-[13px] text-[var(--color-quartz)]">
-                  {model.displayName}
-                </td>
-                <td className="px-3 py-3 text-[13px] text-[var(--color-mist)]">
-                  {model.providerId}
-                </td>
-                <td
-                  className="mono px-3 py-3 text-[12px]"
-                  style={{
-                    color:
-                      model.costClass === 'paid'
-                        ? 'var(--color-state-warn)'
-                        : 'var(--color-state-pass)',
-                  }}
-                >
-                  {model.costClass}
-                </td>
-                <td className="mono px-3 py-3 text-[12px] tabular-nums text-[var(--color-ash)]">
-                  {(model.contextTokens / 1000).toFixed(0)}K
-                </td>
-                <td className="mono px-3 py-3 text-[12px] text-[var(--color-mist)]">{health}</td>
-                <td className="mono px-3 py-3 text-[12px] tabular-nums text-[var(--color-mist)]">
-                  {rep?.samples ?? 0}
-                </td>
-                <td className="mono px-3 py-3 text-[12px] tabular-nums text-[var(--color-mist)]">
-                  {rep ? `${rep.verifiedSuccesses}/${rep.samples}` : '—'}
-                </td>
-                <td className="mono px-3 py-3 text-[12px] tabular-nums text-[var(--color-ash)]">
-                  {rep?.medianLatencyMs ? `${(rep.medianLatencyMs / 1000).toFixed(1)}s` : '—'}
-                </td>
-                <td className="mono px-3 py-3 text-[12px] text-[var(--color-ash)]">
-                  {rep?.confidence ?? 'none'}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="mt-8 grid gap-3.5 sm:grid-cols-2 xl:grid-cols-4">
+        <Stat
+          label="Reachable"
+          value={String(rows.length)}
+          sub={`${measured} with a measured record`}
+          icon={<IconModels size={17} />}
+          tone="accent"
+        />
+        <Stat label="Local" value={String(counts.local)} sub="on this machine" icon={<IconLocal size={17} />} />
+        <Stat label="Free routes" value={String(counts.free)} sub="billed at zero" icon={<IconCloud size={17} />} />
+        <Stat
+          label="Paid"
+          value={String(counts.paid)}
+          sub={counts.paid === 0 ? 'none reachable' : 'ineligible under a $0 budget'}
+          icon={<IconBudget size={17} />}
+          tone={counts.paid === 0 ? 'pass' : 'neutral'}
+        />
       </div>
-    </div>
+
+      <div className="mt-8">
+        <Table
+          head={['Model', 'Provider', 'Cost', 'Context', 'Health', 'Jobs', 'Verified', 'Median', 'Confidence']}
+        >
+          {rows.map(({ model, rep, health }) => (
+            <Row key={model.key}>
+              <Cell mono>
+                <span className="text-[var(--color-quartz)]">{model.displayName}</span>
+              </Cell>
+              <Cell muted>{model.providerId}</Cell>
+              <Cell>
+                <Pill tone={COST_TONE[model.costClass as keyof typeof COST_TONE] ?? 'idle'}>
+                  {model.costClass}
+                </Pill>
+              </Cell>
+              <Cell mono muted>
+                {(model.contextTokens / 1000).toFixed(0)}K
+              </Cell>
+              <Cell>
+                <Pill tone={health === 'HEALTHY' ? 'pass' : health === 'DEGRADED' ? 'warn' : 'idle'}>
+                  {health}
+                </Pill>
+              </Cell>
+              <Cell mono>{rep?.samples ?? 0}</Cell>
+              <Cell mono>{rep ? `${rep.verifiedSuccesses}/${rep.samples}` : '—'}</Cell>
+              <Cell mono muted>
+                {rep?.medianLatencyMs ? `${(rep.medianLatencyMs / 1000).toFixed(1)}s` : '—'}
+              </Cell>
+              <Cell mono muted>
+                {rep?.confidence ?? 'none'}
+              </Cell>
+            </Row>
+          ))}
+        </Table>
+      </div>
+    </Page>
   );
 }
