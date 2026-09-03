@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     // The benchmark fixture's src/ is written by workers at run time. Linting it
     // would be linting the output of the thing under test.
     "benchmark/forge-app/src/**",
+    "benchmark/arcade/src/**",
+    "public/arcade/**",
     ".leverage-state/**",
     "demo/**",
   ]),

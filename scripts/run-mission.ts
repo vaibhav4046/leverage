@@ -26,13 +26,15 @@ import { FaultInjector, INJECTED_RATE_LIMIT } from '../src/core/faults';
 import { RocketRideExecutor } from '../src/rocketride/executor';
 import { formatElapsed } from '../src/core/events';
 import { buildFixturePlan } from '../src/server/fixture-plan';
+import { buildArcadePlan } from '../src/server/arcade-plan';
 
 const args = new Set(process.argv.slice(2));
 const INJECT = args.has('--inject-429');
 const DIRECT = args.has('--direct');
 const OUT = process.argv.find((a) => a.startsWith('--out='))?.slice(6);
 
-const REPO = path.resolve('benchmark/forge-app');
+const ARCADE = args.has('--arcade');
+const REPO = path.resolve(ARCADE ? 'benchmark/arcade' : 'benchmark/forge-app');
 const STATE_DIR = path.resolve('.leverage-state');
 
 async function main() {
@@ -69,12 +71,15 @@ async function main() {
   // ---- Compile -----------------------------------------------------------
   const spec = compileMissionSpec({
     goal:
-      'Finish the forge-app receipt splitting library so the whole existing test suite passes. ' +
-      'Do not modify any file under test/. Budget: $0. Quality: production.',
+      ARCADE
+        ? 'Finish the arcade gravity-arena prototype so the whole existing test suite passes. ' +
+          'Do not modify any file under test/. Budget: $0. Quality: production.'
+        : 'Finish the forge-app receipt splitting library so the whole existing test suite passes. ' +
+          'Do not modify any file under test/. Budget: $0. Quality: production.',
     workspaceId: 'ws_local',
     createdBy: 'cli',
     repositoryRoot: REPO,
-    repositoryLabel: 'forge-app',
+    repositoryLabel: ARCADE ? 'arcade' : 'forge-app',
   });
 
   console.log('\nMISSION', spec.id);
@@ -83,7 +88,7 @@ async function main() {
   console.log('  privacy   ', spec.privacy.mode);
   console.log('  constraints', spec.constraints.length ? spec.constraints.join(' | ') : '(none)');
 
-  const tasks = buildFixturePlan(spec.id);
+  const tasks = ARCADE ? buildArcadePlan(spec.id) : buildFixturePlan(spec.id);
   console.log(`  plan       ${tasks.length} tasks`);
 
   const reputation = await loadReputation();

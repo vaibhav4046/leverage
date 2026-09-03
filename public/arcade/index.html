@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Arcade — built by Leverage</title>
+    <style>
+      /*
+       * Render shell only.
+       *
+       * Everything in src/ — the vector maths, the gravity integration, the seeded
+       * spawner and the whole game state machine — was written by Leverage workers
+       * under a $0 budget and had to pass the committed tests before it was accepted.
+       * This file draws that state and reads input. It is given, exactly like the
+       * tests are given, so the fixture measures the workers and not the shell.
+       */
+      :root {
+        color-scheme: dark;
+        --void: #0b0c0e;
+        --abyss: #0e111b;
+        --edge: #172540;
+        --ash: #abaebb;
+        --mist: #c7c9d1;
+        --lilac: #85a6e9;
+        --pass: #4ade80;
+      }
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        height: 100%;
+        background: var(--void);
+        color: #fff;
+        font-family: ui-sans-serif, system-ui, sans-serif;
+        overflow: hidden;
+      }
+      #stage { position: relative; width: 100%; height: 100%; }
+      canvas { display: block; width: 100%; height: 100%; }
+      .hud {
+        position: absolute;
+        top: 14px;
+        left: 16px;
+        display: flex;
+        gap: 22px;
+        font: 400 12px ui-monospace, SFMono-Regular, Menlo, monospace;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ash);
+        pointer-events: none;
+      }
+      .hud b { display: block; margin-top: 3px; font: 500 20px ui-sans-serif, system-ui; color: #fff; letter-spacing: -0.01em; }
+      .badge {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+        border: 1px solid var(--edge);
+        border-radius: 9999px;
+        padding: 6px 12px;
+        font: 400 11px ui-monospace, monospace;
+        color: var(--lilac);
+        background: rgba(13, 23, 43, 0.7);
+        backdrop-filter: blur(8px);
+        pointer-events: none;
+      }
+      .hint {
+        position: absolute;
+        bottom: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+        font: 400 12px ui-monospace, monospace;
+        color: var(--ash);
+        pointer-events: none;
+        transition: opacity 400ms ease;
+      }
+      .fault {
+        position: absolute;
+        inset: 0;
+        display: grid;
+        place-content: center;
+        gap: 10px;
+        padding: 32px;
+        text-align: center;
+        background: var(--abyss);
+      }
+      .fault code { font: 400 12px ui-monospace, monospace; color: var(--lilac); }
+      .fault p { max-width: 34rem; color: var(--ash); font-size: 14px; line-height: 1.6; }
+    </style>
+  </head>
+  <body>
+    <div id="stage">
+      <canvas id="c"></canvas>
+      <div class="hud">
+        <div>Score<b id="score">0</b></div>
+        <div>Wave<b id="wave">1</b></div>
+      </div>
+      <div class="badge">logic written by Leverage · $0.00</div>
+      <div class="hint" id="hint">← → rotate · ↑ thrust · space fire</div>
+    </div>
+
+    <script type="module">
+      const stage = document.getElementById('stage');
+
+      /*
+       * The whole point of this fixture is that src/ might not exist yet. When it
+       * does not, say so plainly with the command that builds it, rather than
+       * showing a blank canvas and letting the reader guess.
+       */
+      let game, step, fire, createGame;
+      try {
+        const mod = await import('./src/game.js');
+        ({ createGame, step, fire } = mod);
+        if (typeof createGame !== 'function') throw new Error('game.js has no createGame export');
+      } catch (err) {
+        stage.innerHTML =
+          '<div class="fault">' +
+          '<div style="font-size:20px">The prototype has not been built yet.</div>' +
+          '<p>This shell renders <code>src/game.js</code>, which Leverage workers write. ' +
+          'Run the mission to produce it:</p>' +
+          '<code>npm run mission -- --arcade</code>' +
+          '<p style="opacity:.6">' + String(err.message).slice(0, 160) + '</p>' +
+          '</div>';
+        throw err;
+      }
+
+      const canvas = document.getElementById('c');
+      const ctx = canvas.getContext('2d');
+      const scoreEl = document.getElementById('score');
+      const waveEl = document.getElementById('wave');
+      const hintEl = document.getElementById('hint');
+
+      const W = 900;
+      const H = 620;
+
+      function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      game = createGame(W, H, 42);
+
+      const keys = new Set();
+      let interacted = false;
+      addEventListener('keydown', (e) => {
+        if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'Space'].includes(e.code)) e.preventDefault();
+        if (e.code === 'Space' && !e.repeat) game = fire(game);
+        keys.add(e.code);
+        if (!interacted) {
+          interacted = true;
+          hintEl.style.opacity = '0';
+        }
+      });
+      addEventListener('keyup', (e) => keys.delete(e.code));
+
+      // Trails are a render concern, not game state, so they live here.
+      const trails = [];
+
+      function draw(g) {
+        ctx.fillStyle = 'rgba(11, 12, 14, 0.32)'; // motion blur rather than a hard clear
+        ctx.fillRect(0, 0, W, H);
+
+        // Gravity well at the centre.
+        const well = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, 190);
+        well.addColorStop(0, 'rgba(98, 95, 255, 0.30)');
+        well.addColorStop(0.5, 'rgba(48, 95, 189, 0.10)');
+        well.addColorStop(1, 'rgba(98, 95, 255, 0)');
+        ctx.fillStyle = well;
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.strokeStyle = 'rgba(36, 55, 90, 0.55)';
+        ctx.lineWidth = 1;
+        for (let r = 60; r <= 240; r += 60) {
+          ctx.beginPath();
+          ctx.arc(W / 2, H / 2, r, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        for (const t of trails) {
+          ctx.fillStyle = `rgba(133, 166, 233, ${t.life * 0.4})`;
+          ctx.beginPath();
+          ctx.arc(t.x, t.y, 1.6, 0, Math.PI * 2);
+          ctx.fill();
+          t.life -= 0.03;
+        }
+        while (trails.length && trails[0].life <= 0) trails.shift();
+
+        for (const e of g.enemies ?? []) {
+          const glow = ctx.createRadialGradient(e.pos.x, e.pos.y, 0, e.pos.x, e.pos.y, (e.radius ?? 8) * 3);
+          glow.addColorStop(0, 'rgba(255, 125, 218, 0.34)');
+          glow.addColorStop(1, 'rgba(255, 125, 218, 0)');
+          ctx.fillStyle = glow;
+          ctx.beginPath();
+          ctx.arc(e.pos.x, e.pos.y, (e.radius ?? 8) * 3, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.strokeStyle = 'rgba(255, 125, 218, 0.85)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.arc(e.pos.x, e.pos.y, e.radius ?? 8, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        for (const b of g.bullets ?? []) {
+          ctx.fillStyle = 'rgba(255,255,255,0.95)';
+          ctx.beginPath();
+          ctx.arc(b.pos.x, b.pos.y, 2.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        const ship = g.ship;
+        if (ship?.pos) {
+          trails.push({ x: ship.pos.x, y: ship.pos.y, life: 1 });
+          const a = ship.angle ?? 0;
+          ctx.save();
+          ctx.translate(ship.pos.x, ship.pos.y);
+          ctx.rotate(a);
+          ctx.strokeStyle = '#fff';
+          ctx.lineWidth = 1.6;
+          ctx.beginPath();
+          ctx.moveTo(11, 0);
+          ctx.lineTo(-7, 6.5);
+          ctx.lineTo(-4, 0);
+          ctx.lineTo(-7, -6.5);
+          ctx.closePath();
+          ctx.stroke();
+          if (keys.has('ArrowUp')) {
+            ctx.strokeStyle = 'rgba(133,166,233,0.9)';
+            ctx.beginPath();
+            ctx.moveTo(-5, 0);
+            ctx.lineTo(-13 - Math.random() * 5, 0);
+            ctx.stroke();
+          }
+          ctx.restore();
+        }
+
+        scoreEl.textContent = String(Math.round(g.score ?? 0));
+        waveEl.textContent = String(g.wave ?? 1);
+      }
+
+      let last = performance.now();
+      function loop(now) {
+        const dt = Math.min((now - last) / 1000, 1 / 30);
+        last = now;
+
+        const input = {
+          thrust: keys.has('ArrowUp') ? 1 : 0,
+          turn: (keys.has('ArrowRight') ? 1 : 0) - (keys.has('ArrowLeft') ? 1 : 0),
+        };
+
+        try {
+          game = step(game, input, dt);
+        } catch (err) {
+          console.error('step threw', err);
+        }
+        draw(game);
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+    </script>
+  </body>
+</html>

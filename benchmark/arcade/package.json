@@ -1,0 +1,10 @@
+{
+  "name": "arcade",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Leverage showcase fixture: a playable gravity-arena prototype whose logic tests exist and whose implementation does not.",
+  "scripts": {
+    "test": "node --test test/vector.test.js test/physics.test.js test/spawner.test.js test/game.test.js"
+  }
+}

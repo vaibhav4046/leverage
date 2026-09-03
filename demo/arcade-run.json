@@ -1,0 +1,4810 @@
+{
+  "mission": {
+    "id": "LVR-5d6aff86",
+    "goal": "Finish the arcade gravity-arena prototype so the whole existing test suite passes. Do not modify any file under test/. Budget: $0. Quality: production.",
+    "status": "COMPLETED",
+    "budget": {
+      "maxUsd": 0,
+      "hard": true
+    },
+    "quality": {
+      "target": 0.95
+    },
+    "privacy": {
+      "mode": "prefer-local"
+    },
+    "startedAt": "2026-09-03T04:06:16.429Z",
+    "completedAt": "2026-09-03T04:13:19.404Z",
+    "elapsedMs": 422975
+  },
+  "tasks": [
+    {
+      "id": "vector",
+      "title": "Implement 2D vector maths",
+      "category": "backend",
+      "state": "PASSED",
+      "dependencies": [],
+      "attemptCount": 2,
+      "workerRunId": "wr_4e96515c",
+      "checkpointId": "cp_70f8ec2896de",
+      "fileScope": [
+        "src/vector.js"
+      ]
+    },
+    {
+      "id": "physics",
+      "title": "Implement gravity and collision",
+      "category": "backend",
+      "state": "PASSED",
+      "dependencies": [
+        "vector"
+      ],
+      "attemptCount": 2,
+      "workerRunId": "wr_f15794fa",
+      "checkpointId": "cp_bc1d9e84b68f",
+      "fileScope": [
+        "src/physics.js"
+      ]
+    },
+    {
+      "id": "spawner",
+      "title": "Implement deterministic wave spawning",
+      "category": "backend",
+      "state": "PASSED",
+      "dependencies": [],
+      "attemptCount": 1,
+      "workerRunId": "wr_bc5cea63",
+      "fileScope": [
+        "src/spawner.js"
+      ]
+    },
+    {
+      "id": "game",
+      "title": "Implement the game state machine",
+      "category": "integration",
+      "state": "PASSED",
+      "dependencies": [
+        "vector",
+        "physics",
+        "spawner"
+      ],
+      "attemptCount": 1,
+      "workerRunId": "wr_f15c995d",
+      "fileScope": [
+        "src/game.js"
+      ]
+    }
+  ],
+  "workers": [
+    {
+      "id": "wr_bc5cea63",
+      "missionId": "LVR-5d6aff86",
+      "taskId": "spawner",
+      "modelKey": "agent-cli:opencode",
+      "providerId": "agent-cli",
+      "displayName": "OpenCode (your subscription)",
+      "role": "Backend Engineer",
+      "costClass": "host",
+      "status": "passed",
+      "startedAt": "2026-09-03T04:06:17.791Z",
+      "actualCostUsd": 0,
+      "auctionRationale": "100 task fit · no prior jobs — scored on the neutral prior · your own host seat, no API key",
+      "contextTokens": 556,
+      "finishedAt": "2026-09-03T04:07:06.158Z"
+    },
+    {
+      "id": "wr_bd70178d",
+      "missionId": "LVR-5d6aff86",
+      "taskId": "vector",
+      "modelKey": "agent-cli:opencode",
+      "providerId": "agent-cli",
+      "displayName": "OpenCode (your subscription)",
+      "role": "Backend Engineer",
+      "costClass": "host",
+      "status": "replaced",
+      "startedAt": "2026-09-03T04:06:17.800Z",
+      "actualCostUsd": 0,
+      "auctionRationale": "100 task fit · no prior jobs — scored on the neutral prior · your own host seat, no API key",
+      "contextTokens": 467,
+      "failureType": "INVALID_OUTPUT",
+      "finishedAt": "2026-09-03T04:06:53.245Z"
+    },
+    {
+      "id": "wr_4e96515c",
+      "missionId": "LVR-5d6aff86",
+      "taskId": "vector",
+      "modelKey": "pool:auto/best-free",
+      "providerId": "pool",
+      "displayName": "Pool · best-free",
+      "role": "Backend Engineer",
+      "costClass": "free",
+      "status": "passed",
+      "startedAt": "2026-09-03T04:06:53.264Z",
+      "actualCostUsd": 0,
+      "resumedFromCheckpointId": "cp_70f8ec2896de",
+      "auctionRationale": "78 task fit · 67 verified success over 34 prior jobs · free route, no spend · 1 candidate excluded by policy",
+      "contextTokens": 483,
+      "finishedAt": "2026-09-03T04:07:11.739Z"
+    },
+    {
+      "id": "wr_52365523",
+      "missionId": "LVR-5d6aff86",
+      "taskId": "physics",
+      "modelKey": "agent-cli:opencode",
+      "providerId": "agent-cli",
+      "displayName": "OpenCode (your subscription)",
+      "role": "Backend Engineer",
+      "costClass": "host",
+      "status": "replaced",
+      "startedAt": "2026-09-03T04:07:11.743Z",
+      "actualCostUsd": 0,
+      "auctionRationale": "100 task fit · 58 verified success over 2 prior jobs · your own host seat, no API key",
+      "contextTokens": 1050,
+      "failureType": "PROVIDER_5XX",
+      "finishedAt": "2026-09-03T04:10:11.751Z"
+    },
+    {
+      "id": "wr_f15794fa",
+      "missionId": "LVR-5d6aff86",
+      "taskId": "physics",
+      "modelKey": "pool:auto/best-free",
+      "providerId": "pool",
+      "displayName": "Pool · best-free",
+      "role": "Backend Engineer",
+      "costClass": "free",
+      "status": "passed",
+      "startedAt": "2026-09-03T04:11:06.284Z",
+      "actualCostUsd": 0,
+      "resumedFromCheckpointId": "cp_bc1d9e84b68f",
+      "auctionRationale": "78 task fit · 68 verified success over 35 prior jobs · free route, no spend · 1 candidate excluded by policy",
+      "contextTokens": 1065,
+      "finishedAt": "2026-09-03T04:12:07.416Z"
+    },
+    {
+      "id": "wr_f15c995d",
+      "missionId": "LVR-5d6aff86",
+      "taskId": "game",
+      "modelKey": "ollama:kodro-tutor:latest",
+      "providerId": "ollama",
+      "displayName": "kodro-tutor",
+      "role": "Integrator",
+      "costClass": "local",
+      "status": "passed",
+      "startedAt": "2026-09-03T04:12:12.656Z",
+      "actualCostUsd": 0,
+      "auctionRationale": "100 task fit · 86 verified success over 7 prior jobs · local runtime, no spend",
+      "contextTokens": 2741,
+      "promptTokens": 3988,
+      "completionTokens": 2792,
+      "finishedAt": "2026-09-03T04:13:19.404Z"
+    }
+  ],
+  "checkpoints": [
+    {
+      "id": "cp_70f8ec2896de",
+      "taskId": "vector",
+      "fromModelKey": "agent-cli:opencode",
+      "reason": "INVALID_OUTPUT",
+      "originalContextTokens": 467,
+      "checkpointTokens": 176,
+      "reductionPct": 62,
+      "remainingWork": []
+    },
+    {
+      "id": "cp_bc1d9e84b68f",
+      "taskId": "physics",
+      "fromModelKey": "agent-cli:opencode",
+      "reason": "PROVIDER_5XX",
+      "originalContextTokens": 1050,
+      "checkpointTokens": 165,
+      "reductionPct": 84,
+      "remainingWork": []
+    }
+  ],
+  "proofs": [
+    {
+      "id": "pf_586c1aa1",
+      "missionId": "LVR-5d6aff86",
+      "taskId": "spawner",
+      "status": "verified",
+      "worker": {
+        "modelKey": "agent-cli:opencode",
+        "providerId": "agent-cli",
+        "displayName": "OpenCode (your subscription)"
+      },
+      "filesChanged": [
+        "src/spawner.js"
+      ],
+      "patchHash": "003e394009770580",
+      "checks": [
+        {
+          "id": "exists-0",
+          "label": "src/spawner.js exists",
+          "weight": 1,
+          "status": "pass",
+          "detail": "src/spawner.js exists",
+          "durationMs": 0
+        },
+        {
+          "id": "suite",
+          "label": "test/spawner.test.js",
+          "weight": 4,
+          "status": "pass",
+          "detail": "ℹ duration_ms 78.2645",
+          "durationMs": 151
+        }
+      ],
+      "unresolved": [
+        "none — `node --test test/spawner.test.js` should pass"
+      ],
+      "qualityScore": {
+        "total": 100,
+        "acceptance": 100,
+        "automated": 100,
+        "staticChecks": 100,
+        "weights": {
+          "acceptance": 0.4444444444444445,
+          "automated": 0.38888888888888884,
+          "staticChecks": 0.16666666666666666
+        }
+      },
+      "metrics": {
+        "durationMs": 48366,
+        "actualCostUsd": 0
+      },
+      "createdAt": "2026-09-03T04:07:06.158Z"
+    },
+    {
+      "id": "pf_a9ce9dfc",
+      "missionId": "LVR-5d6aff86",
+      "taskId": "vector",
+      "status": "verified",
+      "worker": {
+        "modelKey": "pool:auto/best-free",
+        "providerId": "pool",
+        "displayName": "Pool · best-free"
+      },
+      "filesChanged": [
+        "src/vector.js",
+        "src/vector.js"
+      ],
+      "patchHash": "43f26f0c0b85ef29",
+      "checks": [
+        {
+          "id": "exists-0",
+          "label": "src/vector.js exists",
+          "weight": 1,
+          "status": "pass",
+          "detail": "src/vector.js exists",
+          "durationMs": 0
+        },
+        {
+          "id": "suite",
+          "label": "test/vector.test.js",
+          "weight": 4,
+          "status": "pass",
+          "detail": "ℹ duration_ms 76.4946",
+          "durationMs": 141
+        }
+      ],
+      "unresolved": [
+        "none### FILE: src/vector.js"
+      ],
+      "qualityScore": {
+        "total": 100,
+        "acceptance": 100,
+        "automated": 100,
+        "staticChecks": 100,
+        "weights": {
+          "acceptance": 0.4444444444444445,
+          "automated": 0.38888888888888884,
+          "staticChecks": 0.16666666666666666
+        }
+      },
+      "metrics": {
+        "durationMs": 18475,
+        "actualCostUsd": 0
+      },
+      "createdAt": "2026-09-03T04:07:11.739Z"
+    },
+    {
+      "id": "pf_3c1d6642",
+      "missionId": "LVR-5d6aff86",
+      "taskId": "physics",
+      "status": "verified",
+      "worker": {
+        "modelKey": "pool:auto/best-free",
+        "providerId": "pool",
+        "displayName": "Pool · best-free"
+      },
+      "filesChanged": [
+        "src/physics.js"
+      ],
+      "patchHash": "6219775b69fe5d57",
+      "checks": [
+        {
+          "id": "exists-0",
+          "label": "src/physics.js exists",
+          "weight": 1,
+          "status": "pass",
+          "detail": "src/physics.js exists",
+          "durationMs": 1
+        },
+        {
+          "id": "suite",
+          "label": "test/physics.test.js",
+          "weight": 4,
+          "status": "pass",
+          "detail": "ℹ duration_ms 79.7921",
+          "durationMs": 145
+        }
+      ],
+      "unresolved": [
+        "none — node --test test/physics.test.js should exit 0"
+      ],
+      "qualityScore": {
+        "total": 100,
+        "acceptance": 100,
+        "automated": 100,
+        "staticChecks": 100,
+        "weights": {
+          "acceptance": 0.4444444444444445,
+          "automated": 0.38888888888888884,
+          "staticChecks": 0.16666666666666666
+        }
+      },
+      "metrics": {
+        "durationMs": 61132,
+        "actualCostUsd": 0
+      },
+      "createdAt": "2026-09-03T04:12:07.416Z"
+    },
+    {
+      "id": "pf_99a30e47",
+      "missionId": "LVR-5d6aff86",
+      "taskId": "game",
+      "status": "verified",
+      "worker": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "providerId": "ollama",
+        "displayName": "kodro-tutor"
+      },
+      "filesChanged": [
+        "src/game.js"
+      ],
+      "patchHash": "1420a73466c8bdaa",
+      "checks": [
+        {
+          "id": "exists-0",
+          "label": "src/game.js exists",
+          "weight": 1,
+          "status": "pass",
+          "detail": "src/game.js exists",
+          "durationMs": 1
+        },
+        {
+          "id": "suite",
+          "label": "test/game.test.js",
+          "weight": 4,
+          "status": "pass",
+          "detail": "ℹ duration_ms 84.534",
+          "durationMs": 160
+        }
+      ],
+      "unresolved": [
+        "- Add more detailed comments to explain the code."
+      ],
+      "qualityScore": {
+        "total": 100,
+        "acceptance": 100,
+        "automated": 100,
+        "staticChecks": 100,
+        "weights": {
+          "acceptance": 0.4444444444444445,
+          "automated": 0.38888888888888884,
+          "staticChecks": 0.16666666666666666
+        }
+      },
+      "metrics": {
+        "durationMs": 66748,
+        "promptTokens": 3988,
+        "completionTokens": 2792,
+        "actualCostUsd": 0
+      },
+      "createdAt": "2026-09-03T04:13:19.404Z"
+    }
+  ],
+  "auctions": [
+    {
+      "taskId": "spawner",
+      "candidates": [
+        {
+          "modelKey": "agent-cli:opencode",
+          "displayName": "OpenCode (your subscription)",
+          "providerId": "agent-cli",
+          "costClass": "host",
+          "eligible": true,
+          "utility": 0.7542000000000001,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.15,
+            "quotaRisk": 0.2
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-free",
+          "displayName": "Pool · best-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6732160740289174,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.6705263157894737,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.07696155770192789,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 34,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-tutor:latest",
+          "displayName": "kodro-tutor",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6514883957466483,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.260952380952381,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06067961165048544,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 17,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen2.5-coder:3b",
+          "displayName": "qwen2.5-coder:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6498046664558963,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.232,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.15807777426493835,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 11,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-fast:latest",
+          "displayName": "kodro-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.637080784822442,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5675368898978433,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-coder:latest",
+          "displayName": "kodro-coder",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6145803619561032,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19252984212552945,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b-instruct",
+          "displayName": "qwen3:4b-instruct",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3.5:4b",
+          "displayName": "qwen3.5:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b",
+          "displayName": "qwen3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:8b",
+          "displayName": "qwen3:8b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/deepseek/deepseek-v3-0324",
+          "displayName": "DeepSeek V3",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5981606911056334,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1055353279510316,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-v0.1:latest",
+          "displayName": "samantha-v0.1",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.598101074058088,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4879238838741156,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-core:latest",
+          "displayName": "samantha-core",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.598051164649606,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4870920603994155,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-coding",
+          "displayName": "Pool · best-coding",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5726170370389251,
+          "breakdown": {
+            "taskFit": 0.703846153846154,
+            "reputation": 0.38666666666666666,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06626685663165567,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 5,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-reasoning",
+          "displayName": "Pool · best-reasoning",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5649556758433064,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.12216724696108974,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-fast",
+          "displayName": "Pool · best-fast",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5494637915745563,
+          "breakdown": {
+            "taskFit": 0.4346153846153847,
+            "reputation": 0.64,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.108242680088759,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:llama3.2:3b",
+          "displayName": "llama3.2:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5353282051282052,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/meta/llama-3.3-70b-instruct",
+          "displayName": "Llama 3.3 70B",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5325090852496013,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1896813353566009,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:4b",
+          "displayName": "gemma3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5229205871199859,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.58,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.24047132379463748,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/coding:free",
+          "displayName": "Pool · coding-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5165609752722543,
+          "breakdown": {
+            "taskFit": 0.703846153846154,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.3597769382982551,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:robolearn-fast:latest",
+          "displayName": "robolearn-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.4381543294282017,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.8932559178204557,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/mistral-ai/codestral-2501",
+          "displayName": "Codestral 2501",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.4151672494742199,
+          "breakdown": {
+            "taskFit": 0.4346153846153847,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19552253397204028,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:1b",
+          "displayName": "gemma3:1b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.41247893713235734,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4653327128897161,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "agent-cli:opencode",
+        "displayName": "OpenCode (your subscription)",
+        "providerId": "agent-cli",
+        "costClass": "host",
+        "eligible": true,
+        "utility": 0.7542000000000001,
+        "breakdown": {
+          "taskFit": 1,
+          "reputation": 0.62,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.5,
+          "costPenalty": 0.15,
+          "quotaRisk": 0.2
+        },
+        "sampleCount": 0,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "100 task fit · no prior jobs — scored on the neutral prior · your own host seat, no API key"
+    },
+    {
+      "taskId": "vector",
+      "candidates": [
+        {
+          "modelKey": "agent-cli:opencode",
+          "displayName": "OpenCode (your subscription)",
+          "providerId": "agent-cli",
+          "costClass": "host",
+          "eligible": true,
+          "utility": 0.7542000000000001,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.15,
+            "quotaRisk": 0.2
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-free",
+          "displayName": "Pool · best-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6732160740289174,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.6705263157894737,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.07696155770192789,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 34,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-tutor:latest",
+          "displayName": "kodro-tutor",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6514883957466483,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.260952380952381,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06067961165048544,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 17,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen2.5-coder:3b",
+          "displayName": "qwen2.5-coder:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6498046664558963,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.232,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.15807777426493835,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 11,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-fast:latest",
+          "displayName": "kodro-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.637080784822442,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5675368898978433,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-coder:latest",
+          "displayName": "kodro-coder",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6145803619561032,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19252984212552945,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b-instruct",
+          "displayName": "qwen3:4b-instruct",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3.5:4b",
+          "displayName": "qwen3.5:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b",
+          "displayName": "qwen3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:8b",
+          "displayName": "qwen3:8b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/deepseek/deepseek-v3-0324",
+          "displayName": "DeepSeek V3",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5981606911056334,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1055353279510316,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-v0.1:latest",
+          "displayName": "samantha-v0.1",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.598101074058088,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4879238838741156,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-core:latest",
+          "displayName": "samantha-core",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.598051164649606,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4870920603994155,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-coding",
+          "displayName": "Pool · best-coding",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5726170370389251,
+          "breakdown": {
+            "taskFit": 0.703846153846154,
+            "reputation": 0.38666666666666666,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06626685663165567,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 5,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-reasoning",
+          "displayName": "Pool · best-reasoning",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5649556758433064,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.12216724696108974,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-fast",
+          "displayName": "Pool · best-fast",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5494637915745563,
+          "breakdown": {
+            "taskFit": 0.4346153846153847,
+            "reputation": 0.64,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.108242680088759,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:llama3.2:3b",
+          "displayName": "llama3.2:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5353282051282052,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/meta/llama-3.3-70b-instruct",
+          "displayName": "Llama 3.3 70B",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5325090852496013,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1896813353566009,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:4b",
+          "displayName": "gemma3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5229205871199859,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.58,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.24047132379463748,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/coding:free",
+          "displayName": "Pool · coding-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5165609752722543,
+          "breakdown": {
+            "taskFit": 0.703846153846154,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.3597769382982551,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:robolearn-fast:latest",
+          "displayName": "robolearn-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.4381543294282017,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.8932559178204557,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/mistral-ai/codestral-2501",
+          "displayName": "Codestral 2501",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.4151672494742199,
+          "breakdown": {
+            "taskFit": 0.4346153846153847,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19552253397204028,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:1b",
+          "displayName": "gemma3:1b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.41247893713235734,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4653327128897161,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "agent-cli:opencode",
+        "displayName": "OpenCode (your subscription)",
+        "providerId": "agent-cli",
+        "costClass": "host",
+        "eligible": true,
+        "utility": 0.7542000000000001,
+        "breakdown": {
+          "taskFit": 1,
+          "reputation": 0.62,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.5,
+          "costPenalty": 0.15,
+          "quotaRisk": 0.2
+        },
+        "sampleCount": 0,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "100 task fit · no prior jobs — scored on the neutral prior · your own host seat, no API key"
+    },
+    {
+      "taskId": "vector",
+      "candidates": [
+        {
+          "modelKey": "pool:auto/best-free",
+          "displayName": "Pool · best-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6732160740289174,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.6705263157894737,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.07696155770192789,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 34,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-tutor:latest",
+          "displayName": "kodro-tutor",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6514883957466483,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.260952380952381,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06067961165048544,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 17,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen2.5-coder:3b",
+          "displayName": "qwen2.5-coder:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6498046664558963,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.232,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.15807777426493835,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 11,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-fast:latest",
+          "displayName": "kodro-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.637080784822442,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5675368898978433,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-coder:latest",
+          "displayName": "kodro-coder",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6145803619561032,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19252984212552945,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b-instruct",
+          "displayName": "qwen3:4b-instruct",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3.5:4b",
+          "displayName": "qwen3.5:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b",
+          "displayName": "qwen3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:8b",
+          "displayName": "qwen3:8b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/deepseek/deepseek-v3-0324",
+          "displayName": "DeepSeek V3",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5981606911056334,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1055353279510316,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-v0.1:latest",
+          "displayName": "samantha-v0.1",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.598101074058088,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4879238838741156,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-core:latest",
+          "displayName": "samantha-core",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.598051164649606,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4870920603994155,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-coding",
+          "displayName": "Pool · best-coding",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5726170370389251,
+          "breakdown": {
+            "taskFit": 0.703846153846154,
+            "reputation": 0.38666666666666666,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06626685663165567,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 5,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-reasoning",
+          "displayName": "Pool · best-reasoning",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5649556758433064,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.12216724696108974,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-fast",
+          "displayName": "Pool · best-fast",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5494637915745563,
+          "breakdown": {
+            "taskFit": 0.4346153846153847,
+            "reputation": 0.64,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.108242680088759,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:llama3.2:3b",
+          "displayName": "llama3.2:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5353282051282052,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/meta/llama-3.3-70b-instruct",
+          "displayName": "Llama 3.3 70B",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5325090852496013,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1896813353566009,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:4b",
+          "displayName": "gemma3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5229205871199859,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.58,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.24047132379463748,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/coding:free",
+          "displayName": "Pool · coding-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5165609752722543,
+          "breakdown": {
+            "taskFit": 0.703846153846154,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.3597769382982551,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:robolearn-fast:latest",
+          "displayName": "robolearn-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.4381543294282017,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.8932559178204557,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/mistral-ai/codestral-2501",
+          "displayName": "Codestral 2501",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.4151672494742199,
+          "breakdown": {
+            "taskFit": 0.4346153846153847,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19552253397204028,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:1b",
+          "displayName": "gemma3:1b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.41247893713235734,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4653327128897161,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "agent-cli:opencode",
+          "displayName": "OpenCode (your subscription)",
+          "providerId": "agent-cli",
+          "costClass": "host",
+          "eligible": false,
+          "ineligibleReason": "Already attempted and failed on this task",
+          "utility": 0,
+          "breakdown": {
+            "taskFit": 0,
+            "reputation": 0,
+            "contextFit": 0,
+            "availability": 0,
+            "speed": 0,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 1,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "pool:auto/best-free",
+        "displayName": "Pool · best-free",
+        "providerId": "pool",
+        "costClass": "free",
+        "eligible": true,
+        "utility": 0.6732160740289174,
+        "breakdown": {
+          "taskFit": 0.7807692307692309,
+          "reputation": 0.6705263157894737,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.07696155770192789,
+          "costPenalty": 0.02,
+          "quotaRisk": 0.25
+        },
+        "sampleCount": 34,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "78 task fit · 67 verified success over 34 prior jobs · free route, no spend · 1 candidate excluded by policy"
+    },
+    {
+      "taskId": "physics",
+      "candidates": [
+        {
+          "modelKey": "agent-cli:opencode",
+          "displayName": "OpenCode (your subscription)",
+          "providerId": "agent-cli",
+          "costClass": "host",
+          "eligible": true,
+          "utility": 0.7168,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.58,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0.15,
+            "quotaRisk": 0.2
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-free",
+          "displayName": "Pool · best-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6754695893640187,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.678974358974359,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.07791195948578106,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 35,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-tutor:latest",
+          "displayName": "kodro-tutor",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6514883957466483,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.260952380952381,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06067961165048544,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 17,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen2.5-coder:3b",
+          "displayName": "qwen2.5-coder:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6498046664558963,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.232,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.15807777426493835,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 11,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-fast:latest",
+          "displayName": "kodro-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.637080784822442,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5675368898978433,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-coder:latest",
+          "displayName": "kodro-coder",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6145803619561032,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19252984212552945,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b-instruct",
+          "displayName": "qwen3:4b-instruct",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3.5:4b",
+          "displayName": "qwen3.5:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b",
+          "displayName": "qwen3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:8b",
+          "displayName": "qwen3:8b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/deepseek/deepseek-v3-0324",
+          "displayName": "DeepSeek V3",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5981606911056334,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1055353279510316,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-v0.1:latest",
+          "displayName": "samantha-v0.1",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.598101074058088,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4879238838741156,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-core:latest",
+          "displayName": "samantha-core",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.598051164649606,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4870920603994155,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-coding",
+          "displayName": "Pool · best-coding",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5726170370389251,
+          "breakdown": {
+            "taskFit": 0.703846153846154,
+            "reputation": 0.38666666666666666,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06626685663165567,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 5,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-reasoning",
+          "displayName": "Pool · best-reasoning",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5649556758433064,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.12216724696108974,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-fast",
+          "displayName": "Pool · best-fast",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5494637915745563,
+          "breakdown": {
+            "taskFit": 0.4346153846153847,
+            "reputation": 0.64,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.108242680088759,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:llama3.2:3b",
+          "displayName": "llama3.2:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5353282051282052,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/meta/llama-3.3-70b-instruct",
+          "displayName": "Llama 3.3 70B",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5325090852496013,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1896813353566009,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:4b",
+          "displayName": "gemma3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5229205871199859,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.58,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.24047132379463748,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/coding:free",
+          "displayName": "Pool · coding-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5165609752722543,
+          "breakdown": {
+            "taskFit": 0.703846153846154,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.3597769382982551,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:robolearn-fast:latest",
+          "displayName": "robolearn-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.4381543294282017,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.8932559178204557,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/mistral-ai/codestral-2501",
+          "displayName": "Codestral 2501",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.4151672494742199,
+          "breakdown": {
+            "taskFit": 0.4346153846153847,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19552253397204028,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:1b",
+          "displayName": "gemma3:1b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.41247893713235734,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4653327128897161,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "agent-cli:opencode",
+        "displayName": "OpenCode (your subscription)",
+        "providerId": "agent-cli",
+        "costClass": "host",
+        "eligible": true,
+        "utility": 0.7168,
+        "breakdown": {
+          "taskFit": 1,
+          "reputation": 0.58,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.05,
+          "costPenalty": 0.15,
+          "quotaRisk": 0.2
+        },
+        "sampleCount": 2,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "100 task fit · 58 verified success over 2 prior jobs · your own host seat, no API key"
+    },
+    {
+      "taskId": "physics",
+      "candidates": [
+        {
+          "modelKey": "pool:auto/best-free",
+          "displayName": "Pool · best-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6754695893640187,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.678974358974359,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.07791195948578106,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 35,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-tutor:latest",
+          "displayName": "kodro-tutor",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6514883957466483,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.260952380952381,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06067961165048544,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 17,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen2.5-coder:3b",
+          "displayName": "qwen2.5-coder:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6498046664558963,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.232,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.15807777426493835,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 11,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-fast:latest",
+          "displayName": "kodro-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.637080784822442,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5675368898978433,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-coder:latest",
+          "displayName": "kodro-coder",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6145803619561032,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19252984212552945,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b-instruct",
+          "displayName": "qwen3:4b-instruct",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3.5:4b",
+          "displayName": "qwen3.5:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b",
+          "displayName": "qwen3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:8b",
+          "displayName": "qwen3:8b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/deepseek/deepseek-v3-0324",
+          "displayName": "DeepSeek V3",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5981606911056334,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1055353279510316,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-v0.1:latest",
+          "displayName": "samantha-v0.1",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.598101074058088,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4879238838741156,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-core:latest",
+          "displayName": "samantha-core",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.598051164649606,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4870920603994155,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-coding",
+          "displayName": "Pool · best-coding",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5726170370389251,
+          "breakdown": {
+            "taskFit": 0.703846153846154,
+            "reputation": 0.38666666666666666,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06626685663165567,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 5,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-reasoning",
+          "displayName": "Pool · best-reasoning",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5649556758433064,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.12216724696108974,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-fast",
+          "displayName": "Pool · best-fast",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5494637915745563,
+          "breakdown": {
+            "taskFit": 0.4346153846153847,
+            "reputation": 0.64,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.108242680088759,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:llama3.2:3b",
+          "displayName": "llama3.2:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5353282051282052,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/meta/llama-3.3-70b-instruct",
+          "displayName": "Llama 3.3 70B",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5325090852496013,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1896813353566009,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:4b",
+          "displayName": "gemma3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5229205871199859,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.58,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.24047132379463748,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/coding:free",
+          "displayName": "Pool · coding-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5165609752722543,
+          "breakdown": {
+            "taskFit": 0.703846153846154,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.3597769382982551,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:robolearn-fast:latest",
+          "displayName": "robolearn-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.4381543294282017,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.8932559178204557,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/mistral-ai/codestral-2501",
+          "displayName": "Codestral 2501",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.4151672494742199,
+          "breakdown": {
+            "taskFit": 0.4346153846153847,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19552253397204028,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:1b",
+          "displayName": "gemma3:1b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.41247893713235734,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4653327128897161,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "agent-cli:opencode",
+          "displayName": "OpenCode (your subscription)",
+          "providerId": "agent-cli",
+          "costClass": "host",
+          "eligible": false,
+          "ineligibleReason": "Already attempted and failed on this task",
+          "utility": 0,
+          "breakdown": {
+            "taskFit": 0,
+            "reputation": 0,
+            "contextFit": 0,
+            "availability": 0,
+            "speed": 0,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "pool:auto/best-free",
+        "displayName": "Pool · best-free",
+        "providerId": "pool",
+        "costClass": "free",
+        "eligible": true,
+        "utility": 0.6754695893640187,
+        "breakdown": {
+          "taskFit": 0.7807692307692309,
+          "reputation": 0.678974358974359,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.07791195948578106,
+          "costPenalty": 0.02,
+          "quotaRisk": 0.25
+        },
+        "sampleCount": 35,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "78 task fit · 68 verified success over 35 prior jobs · free route, no spend · 1 candidate excluded by policy"
+    },
+    {
+      "taskId": "game",
+      "candidates": [
+        {
+          "modelKey": "ollama:kodro-tutor:latest",
+          "displayName": "kodro-tutor",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.7972427915005965,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.8618181818181818,
+            "contextFit": 0.85,
+            "availability": 1,
+            "speed": 0.18616773713115517,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 7,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "agent-cli:opencode",
+          "displayName": "OpenCode (your subscription)",
+          "providerId": "agent-cli",
+          "costClass": "host",
+          "eligible": true,
+          "utility": 0.6952571428571429,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.49714285714285716,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0.15,
+            "quotaRisk": 0.2
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-free",
+          "displayName": "Pool · best-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6756428719882651,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.6780952380952381,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.08460952703274388,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 38,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen2.5-coder:3b",
+          "displayName": "qwen2.5-coder:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.662712440112341,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.28,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.16520733520568315,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 12,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-fast:latest",
+          "displayName": "kodro-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.637080784822442,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5675368898978433,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-coder:latest",
+          "displayName": "kodro-coder",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6145803619561032,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19252984212552945,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b-instruct",
+          "displayName": "qwen3:4b-instruct",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3.5:4b",
+          "displayName": "qwen3.5:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b",
+          "displayName": "qwen3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:8b",
+          "displayName": "qwen3:8b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-v0.1:latest",
+          "displayName": "samantha-v0.1",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.598101074058088,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4879238838741156,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-core:latest",
+          "displayName": "samantha-core",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.598051164649606,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4870920603994155,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/deepseek/deepseek-v3-0324",
+          "displayName": "DeepSeek V3",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5970619448387751,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.0775,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1351990806462516,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 4,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-coding",
+          "displayName": "Pool · best-coding",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5877949621192653,
+          "breakdown": {
+            "taskFit": 0.703846153846154,
+            "reputation": 0.44800000000000006,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05345449685954831,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 6,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-reasoning",
+          "displayName": "Pool · best-reasoning",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5649556758433064,
+          "breakdown": {
+            "taskFit": 0.3961538461538462,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.12216724696108974,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/best-fast",
+          "displayName": "Pool · best-fast",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5494637915745563,
+          "breakdown": {
+            "taskFit": 0.4346153846153847,
+            "reputation": 0.64,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.108242680088759,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:llama3.2:3b",
+          "displayName": "llama3.2:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5353282051282052,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/meta/llama-3.3-70b-instruct",
+          "displayName": "Llama 3.3 70B",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5325090852496013,
+          "breakdown": {
+            "taskFit": 0.7807692307692309,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.1896813353566009,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:auto/coding:free",
+          "displayName": "Pool · coding-free",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5165609752722543,
+          "breakdown": {
+            "taskFit": 0.703846153846154,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.3597769382982551,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:4b",
+          "displayName": "gemma3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.5049205871199859,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.58,
+            "contextFit": 0.85,
+            "availability": 1,
+            "speed": 0.24047132379463748,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:robolearn-fast:latest",
+          "displayName": "robolearn-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.42015432942820174,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.10333333333333333,
+            "contextFit": 0.85,
+            "availability": 1,
+            "speed": 0.8932559178204557,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:ghm/mistral-ai/codestral-2501",
+          "displayName": "Codestral 2501",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.4151672494742199,
+          "breakdown": {
+            "taskFit": 0.4346153846153847,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19552253397204028,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:1b",
+          "displayName": "gemma3:1b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.3944789371323574,
+          "breakdown": {
+            "taskFit": 0.3461538461538462,
+            "reputation": 0.10333333333333333,
+            "contextFit": 0.85,
+            "availability": 1,
+            "speed": 0.4653327128897161,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "displayName": "kodro-tutor",
+        "providerId": "ollama",
+        "costClass": "local",
+        "eligible": true,
+        "utility": 0.7972427915005965,
+        "breakdown": {
+          "taskFit": 1,
+          "reputation": 0.8618181818181818,
+          "contextFit": 0.85,
+          "availability": 1,
+          "speed": 0.18616773713115517,
+          "costPenalty": 0,
+          "quotaRisk": 0
+        },
+        "sampleCount": 7,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "100 task fit · 86 verified success over 7 prior jobs · local runtime, no spend"
+    }
+  ],
+  "usage": {
+    "paidSpendUsd": 0,
+    "budgetMaxUsd": 0,
+    "budgetHard": true,
+    "localCalls": 1,
+    "hostCalls": 2,
+    "freeCalls": 2,
+    "paidCalls": 0,
+    "blockedPaidAttempts": 0,
+    "estimatedFrontierEquivalentUsd": 0.0837
+  },
+  "events": [
+    {
+      "seq": 1,
+      "id": "LVR-5d6aff86-1",
+      "missionId": "LVR-5d6aff86",
+      "type": "mission.created",
+      "at": "2026-09-03T04:06:16.430Z",
+      "elapsedMs": 1,
+      "message": "Mission created: Finish the arcade gravity-arena prototype so the whole existing test suite passes. Do not modify any file under test/. Budget: $0. Quality: production.",
+      "data": {
+        "budgetUsd": 0,
+        "budgetHard": true,
+        "privacy": "prefer-local",
+        "qualityTarget": 0.95
+      }
+    },
+    {
+      "seq": 2,
+      "id": "LVR-5d6aff86-2",
+      "missionId": "LVR-5d6aff86",
+      "type": "mission.compiled",
+      "at": "2026-09-03T04:06:16.430Z",
+      "elapsedMs": 1,
+      "message": "Compiled into 4 tasks",
+      "data": {
+        "tasks": [
+          {
+            "id": "vector",
+            "title": "Implement 2D vector maths",
+            "dependsOn": []
+          },
+          {
+            "id": "physics",
+            "title": "Implement gravity and collision",
+            "dependsOn": [
+              "vector"
+            ]
+          },
+          {
+            "id": "spawner",
+            "title": "Implement deterministic wave spawning",
+            "dependsOn": []
+          },
+          {
+            "id": "game",
+            "title": "Implement the game state machine",
+            "dependsOn": [
+              "vector",
+              "physics",
+              "spawner"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "seq": 3,
+      "id": "LVR-5d6aff86-3",
+      "missionId": "LVR-5d6aff86",
+      "type": "task.created",
+      "at": "2026-09-03T04:06:16.430Z",
+      "elapsedMs": 1,
+      "taskId": "vector",
+      "message": "Task: Implement 2D vector maths",
+      "data": {
+        "category": "backend",
+        "dependencies": [],
+        "fileScope": [
+          "src/vector.js"
+        ]
+      }
+    },
+    {
+      "seq": 4,
+      "id": "LVR-5d6aff86-4",
+      "missionId": "LVR-5d6aff86",
+      "type": "task.created",
+      "at": "2026-09-03T04:06:16.431Z",
+      "elapsedMs": 2,
+      "taskId": "physics",
+      "message": "Task: Implement gravity and collision",
+      "data": {
+        "category": "backend",
+        "dependencies": [
+          "vector"
+        ],
+        "fileScope": [
+          "src/physics.js"
+        ]
+      }
+    },
+    {
+      "seq": 5,
+      "id": "LVR-5d6aff86-5",
+      "missionId": "LVR-5d6aff86",
+      "type": "task.created",
+      "at": "2026-09-03T04:06:16.431Z",
+      "elapsedMs": 2,
+      "taskId": "spawner",
+      "message": "Task: Implement deterministic wave spawning",
+      "data": {
+        "category": "backend",
+        "dependencies": [],
+        "fileScope": [
+          "src/spawner.js"
+        ]
+      }
+    },
+    {
+      "seq": 6,
+      "id": "LVR-5d6aff86-6",
+      "missionId": "LVR-5d6aff86",
+      "type": "task.created",
+      "at": "2026-09-03T04:06:16.431Z",
+      "elapsedMs": 2,
+      "taskId": "game",
+      "message": "Task: Implement the game state machine",
+      "data": {
+        "category": "integration",
+        "dependencies": [
+          "vector",
+          "physics",
+          "spawner"
+        ],
+        "fileScope": [
+          "src/game.js"
+        ]
+      }
+    },
+    {
+      "seq": 7,
+      "id": "LVR-5d6aff86-7",
+      "missionId": "LVR-5d6aff86",
+      "type": "mission.started",
+      "at": "2026-09-03T04:06:17.749Z",
+      "elapsedMs": 1320,
+      "message": "Mission started: Finish the arcade gravity-arena prototype so the whole existing test suite passes. Do not modify any file under test/. B",
+      "data": {
+        "tasks": 4,
+        "budgetUsd": 0,
+        "budgetHard": true,
+        "privacy": "prefer-local",
+        "qualityTarget": 0.95
+      }
+    },
+    {
+      "seq": 8,
+      "id": "LVR-5d6aff86-8",
+      "missionId": "LVR-5d6aff86",
+      "type": "task.ready",
+      "at": "2026-09-03T04:06:17.780Z",
+      "elapsedMs": 1351,
+      "taskId": "vector",
+      "message": "Task ready: Implement 2D vector maths"
+    },
+    {
+      "seq": 9,
+      "id": "LVR-5d6aff86-9",
+      "missionId": "LVR-5d6aff86",
+      "type": "task.ready",
+      "at": "2026-09-03T04:06:17.781Z",
+      "elapsedMs": 1352,
+      "taskId": "spawner",
+      "message": "Task ready: Implement deterministic wave spawning"
+    },
+    {
+      "seq": 10,
+      "id": "LVR-5d6aff86-10",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.started",
+      "at": "2026-09-03T04:06:17.786Z",
+      "elapsedMs": 1357,
+      "taskId": "spawner",
+      "message": "Auction opened for \"Implement deterministic wave spawning\"",
+      "data": {
+        "requires": [
+          "code",
+          "reasoning",
+          "backend"
+        ],
+        "contextTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 11,
+      "id": "LVR-5d6aff86-11",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:17.790Z",
+      "elapsedMs": 1361,
+      "taskId": "spawner",
+      "message": "OpenCode (your subscription): utility 0.754 (0 prior jobs)",
+      "data": {
+        "modelKey": "agent-cli:opencode",
+        "eligible": true,
+        "utility": 0.7542000000000001
+      }
+    },
+    {
+      "seq": 12,
+      "id": "LVR-5d6aff86-12",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:17.790Z",
+      "elapsedMs": 1361,
+      "taskId": "spawner",
+      "message": "Pool · best-free: utility 0.673 (34 prior jobs)",
+      "data": {
+        "modelKey": "pool:auto/best-free",
+        "eligible": true,
+        "utility": 0.6732160740289174
+      }
+    },
+    {
+      "seq": 13,
+      "id": "LVR-5d6aff86-13",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:17.790Z",
+      "elapsedMs": 1361,
+      "taskId": "spawner",
+      "message": "kodro-tutor: utility 0.651 (17 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "eligible": true,
+        "utility": 0.6514883957466483
+      }
+    },
+    {
+      "seq": 14,
+      "id": "LVR-5d6aff86-14",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:17.790Z",
+      "elapsedMs": 1361,
+      "taskId": "spawner",
+      "message": "qwen2.5-coder:3b: utility 0.650 (11 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen2.5-coder:3b",
+        "eligible": true,
+        "utility": 0.6498046664558963
+      }
+    },
+    {
+      "seq": 15,
+      "id": "LVR-5d6aff86-15",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:17.790Z",
+      "elapsedMs": 1361,
+      "taskId": "spawner",
+      "message": "kodro-fast: utility 0.637 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-fast:latest",
+        "eligible": true,
+        "utility": 0.637080784822442
+      }
+    },
+    {
+      "seq": 16,
+      "id": "LVR-5d6aff86-16",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:17.790Z",
+      "elapsedMs": 1361,
+      "taskId": "spawner",
+      "message": "kodro-coder: utility 0.615 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-coder:latest",
+        "eligible": true,
+        "utility": 0.6145803619561032
+      }
+    },
+    {
+      "seq": 17,
+      "id": "LVR-5d6aff86-17",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.completed",
+      "at": "2026-09-03T04:06:17.790Z",
+      "elapsedMs": 1361,
+      "taskId": "spawner",
+      "message": "Winner: OpenCode (your subscription) — 100 task fit · no prior jobs — scored on the neutral prior · your own host seat, no API key"
+    },
+    {
+      "seq": 18,
+      "id": "LVR-5d6aff86-18",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.hired",
+      "at": "2026-09-03T04:06:17.791Z",
+      "elapsedMs": 1362,
+      "taskId": "spawner",
+      "workerRunId": "wr_bc5cea63",
+      "message": "Hired OpenCode (your subscription) as Backend Engineer",
+      "data": {
+        "modelKey": "agent-cli:opencode",
+        "costClass": "host"
+      }
+    },
+    {
+      "seq": 19,
+      "id": "LVR-5d6aff86-19",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.started",
+      "at": "2026-09-03T04:06:17.792Z",
+      "elapsedMs": 1363,
+      "taskId": "spawner",
+      "workerRunId": "wr_bc5cea63",
+      "message": "OpenCode (your subscription) started work",
+      "data": {
+        "contextTokens": "[redacted]",
+        "availableRepoTokens": "[redacted]",
+        "contextReductionPct": 78,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 20,
+      "id": "LVR-5d6aff86-20",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.started",
+      "at": "2026-09-03T04:06:17.799Z",
+      "elapsedMs": 1370,
+      "taskId": "vector",
+      "message": "Auction opened for \"Implement 2D vector maths\"",
+      "data": {
+        "requires": [
+          "code",
+          "reasoning",
+          "backend"
+        ],
+        "contextTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 21,
+      "id": "LVR-5d6aff86-21",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:17.800Z",
+      "elapsedMs": 1371,
+      "taskId": "vector",
+      "message": "OpenCode (your subscription): utility 0.754 (0 prior jobs)",
+      "data": {
+        "modelKey": "agent-cli:opencode",
+        "eligible": true,
+        "utility": 0.7542000000000001
+      }
+    },
+    {
+      "seq": 22,
+      "id": "LVR-5d6aff86-22",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:17.800Z",
+      "elapsedMs": 1371,
+      "taskId": "vector",
+      "message": "Pool · best-free: utility 0.673 (34 prior jobs)",
+      "data": {
+        "modelKey": "pool:auto/best-free",
+        "eligible": true,
+        "utility": 0.6732160740289174
+      }
+    },
+    {
+      "seq": 23,
+      "id": "LVR-5d6aff86-23",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:17.800Z",
+      "elapsedMs": 1371,
+      "taskId": "vector",
+      "message": "kodro-tutor: utility 0.651 (17 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "eligible": true,
+        "utility": 0.6514883957466483
+      }
+    },
+    {
+      "seq": 24,
+      "id": "LVR-5d6aff86-24",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:17.800Z",
+      "elapsedMs": 1371,
+      "taskId": "vector",
+      "message": "qwen2.5-coder:3b: utility 0.650 (11 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen2.5-coder:3b",
+        "eligible": true,
+        "utility": 0.6498046664558963
+      }
+    },
+    {
+      "seq": 25,
+      "id": "LVR-5d6aff86-25",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:17.800Z",
+      "elapsedMs": 1371,
+      "taskId": "vector",
+      "message": "kodro-fast: utility 0.637 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-fast:latest",
+        "eligible": true,
+        "utility": 0.637080784822442
+      }
+    },
+    {
+      "seq": 26,
+      "id": "LVR-5d6aff86-26",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:17.800Z",
+      "elapsedMs": 1371,
+      "taskId": "vector",
+      "message": "kodro-coder: utility 0.615 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-coder:latest",
+        "eligible": true,
+        "utility": 0.6145803619561032
+      }
+    },
+    {
+      "seq": 27,
+      "id": "LVR-5d6aff86-27",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.completed",
+      "at": "2026-09-03T04:06:17.800Z",
+      "elapsedMs": 1371,
+      "taskId": "vector",
+      "message": "Winner: OpenCode (your subscription) — 100 task fit · no prior jobs — scored on the neutral prior · your own host seat, no API key"
+    },
+    {
+      "seq": 28,
+      "id": "LVR-5d6aff86-28",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.hired",
+      "at": "2026-09-03T04:06:17.800Z",
+      "elapsedMs": 1371,
+      "taskId": "vector",
+      "workerRunId": "wr_bd70178d",
+      "message": "Hired OpenCode (your subscription) as Backend Engineer",
+      "data": {
+        "modelKey": "agent-cli:opencode",
+        "costClass": "host"
+      }
+    },
+    {
+      "seq": 29,
+      "id": "LVR-5d6aff86-29",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.started",
+      "at": "2026-09-03T04:06:17.800Z",
+      "elapsedMs": 1371,
+      "taskId": "vector",
+      "workerRunId": "wr_bd70178d",
+      "message": "OpenCode (your subscription) started work",
+      "data": {
+        "contextTokens": "[redacted]",
+        "availableRepoTokens": "[redacted]",
+        "contextReductionPct": 82,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 30,
+      "id": "LVR-5d6aff86-30",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.failed",
+      "at": "2026-09-03T04:06:53.245Z",
+      "elapsedMs": 36816,
+      "taskId": "vector",
+      "workerRunId": "wr_bd70178d",
+      "message": "OpenCode (your subscription) failed: INVALID_OUTPUT — no FILE block and no parseable JSON object in worker answer",
+      "data": {
+        "failureType": "INVALID_OUTPUT"
+      }
+    },
+    {
+      "seq": 31,
+      "id": "LVR-5d6aff86-31",
+      "missionId": "LVR-5d6aff86",
+      "type": "checkpoint.created",
+      "at": "2026-09-03T04:06:53.245Z",
+      "elapsedMs": 36816,
+      "taskId": "vector",
+      "workerRunId": "wr_bd70178d",
+      "message": "Checkpoint cp_70f8ec2896de: 176 tokens captured from 467 of context (62% smaller)",
+      "data": {
+        "checkpointId": "cp_70f8ec2896de",
+        "reason": "INVALID_OUTPUT",
+        "originalContextTokens": "[redacted]",
+        "checkpointTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 32,
+      "id": "LVR-5d6aff86-32",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.released",
+      "at": "2026-09-03T04:06:53.245Z",
+      "elapsedMs": 36816,
+      "taskId": "vector",
+      "workerRunId": "wr_bd70178d",
+      "message": "OpenCode (your subscription) released"
+    },
+    {
+      "seq": 33,
+      "id": "LVR-5d6aff86-33",
+      "missionId": "LVR-5d6aff86",
+      "type": "handoff.started",
+      "at": "2026-09-03T04:06:53.245Z",
+      "elapsedMs": 36816,
+      "taskId": "vector",
+      "message": "Handing task to a replacement worker with checkpoint cp_70f8ec2896de",
+      "data": {
+        "checkpointId": "cp_70f8ec2896de",
+        "originalContextTokens": "[redacted]",
+        "checkpointTokens": "[redacted]",
+        "contextReductionPct": 62
+      }
+    },
+    {
+      "seq": 34,
+      "id": "LVR-5d6aff86-34",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.started",
+      "at": "2026-09-03T04:06:53.248Z",
+      "elapsedMs": 36819,
+      "taskId": "vector",
+      "message": "Auction opened for \"Implement 2D vector maths\"",
+      "data": {
+        "requires": [
+          "code",
+          "reasoning",
+          "backend"
+        ],
+        "contextTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 35,
+      "id": "LVR-5d6aff86-35",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:53.264Z",
+      "elapsedMs": 36835,
+      "taskId": "vector",
+      "message": "Pool · best-free: utility 0.673 (34 prior jobs)",
+      "data": {
+        "modelKey": "pool:auto/best-free",
+        "eligible": true,
+        "utility": 0.6732160740289174
+      }
+    },
+    {
+      "seq": 36,
+      "id": "LVR-5d6aff86-36",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:53.264Z",
+      "elapsedMs": 36835,
+      "taskId": "vector",
+      "message": "kodro-tutor: utility 0.651 (17 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "eligible": true,
+        "utility": 0.6514883957466483
+      }
+    },
+    {
+      "seq": 37,
+      "id": "LVR-5d6aff86-37",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:53.264Z",
+      "elapsedMs": 36835,
+      "taskId": "vector",
+      "message": "qwen2.5-coder:3b: utility 0.650 (11 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen2.5-coder:3b",
+        "eligible": true,
+        "utility": 0.6498046664558963
+      }
+    },
+    {
+      "seq": 38,
+      "id": "LVR-5d6aff86-38",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:53.264Z",
+      "elapsedMs": 36835,
+      "taskId": "vector",
+      "message": "kodro-fast: utility 0.637 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-fast:latest",
+        "eligible": true,
+        "utility": 0.637080784822442
+      }
+    },
+    {
+      "seq": 39,
+      "id": "LVR-5d6aff86-39",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:53.264Z",
+      "elapsedMs": 36835,
+      "taskId": "vector",
+      "message": "kodro-coder: utility 0.615 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-coder:latest",
+        "eligible": true,
+        "utility": 0.6145803619561032
+      }
+    },
+    {
+      "seq": 40,
+      "id": "LVR-5d6aff86-40",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:06:53.264Z",
+      "elapsedMs": 36835,
+      "taskId": "vector",
+      "message": "qwen3:4b-instruct: utility 0.610 (2 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen3:4b-instruct",
+        "eligible": true,
+        "utility": 0.6098666666666667
+      }
+    },
+    {
+      "seq": 41,
+      "id": "LVR-5d6aff86-41",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.completed",
+      "at": "2026-09-03T04:06:53.264Z",
+      "elapsedMs": 36835,
+      "taskId": "vector",
+      "message": "Winner: Pool · best-free — 78 task fit · 67 verified success over 34 prior jobs · free route, no spend · 1 candidate excluded by policy"
+    },
+    {
+      "seq": 42,
+      "id": "LVR-5d6aff86-42",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.hired",
+      "at": "2026-09-03T04:06:53.264Z",
+      "elapsedMs": 36835,
+      "taskId": "vector",
+      "workerRunId": "wr_4e96515c",
+      "message": "Hired Pool · best-free as Backend Engineer (resuming from cp_70f8ec2896de)",
+      "data": {
+        "modelKey": "pool:auto/best-free",
+        "costClass": "free"
+      }
+    },
+    {
+      "seq": 43,
+      "id": "LVR-5d6aff86-43",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.started",
+      "at": "2026-09-03T04:06:53.264Z",
+      "elapsedMs": 36835,
+      "taskId": "vector",
+      "workerRunId": "wr_4e96515c",
+      "message": "Pool · best-free started work",
+      "data": {
+        "contextTokens": "[redacted]",
+        "availableRepoTokens": "[redacted]",
+        "contextReductionPct": 81,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 44,
+      "id": "LVR-5d6aff86-44",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.progress",
+      "at": "2026-09-03T04:07:06.006Z",
+      "elapsedMs": 49577,
+      "taskId": "spawner",
+      "workerRunId": "wr_bc5cea63",
+      "message": "OpenCode (your subscription) wrote 1 file(s)",
+      "data": {
+        "files": [
+          "src/spawner.js"
+        ]
+      }
+    },
+    {
+      "seq": 45,
+      "id": "LVR-5d6aff86-45",
+      "missionId": "LVR-5d6aff86",
+      "type": "verification.started",
+      "at": "2026-09-03T04:07:06.006Z",
+      "elapsedMs": 49577,
+      "taskId": "spawner",
+      "workerRunId": "wr_bc5cea63",
+      "message": "Verifying \"Implement deterministic wave spawning\""
+    },
+    {
+      "seq": 46,
+      "id": "LVR-5d6aff86-46",
+      "missionId": "LVR-5d6aff86",
+      "type": "proof.check",
+      "at": "2026-09-03T04:07:06.157Z",
+      "elapsedMs": 49728,
+      "taskId": "spawner",
+      "workerRunId": "wr_bc5cea63",
+      "message": "src/spawner.js exists: PASS — src/spawner.js exists",
+      "data": {
+        "checkId": "exists-0",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 47,
+      "id": "LVR-5d6aff86-47",
+      "missionId": "LVR-5d6aff86",
+      "type": "proof.check",
+      "at": "2026-09-03T04:07:06.158Z",
+      "elapsedMs": 49729,
+      "taskId": "spawner",
+      "workerRunId": "wr_bc5cea63",
+      "message": "test/spawner.test.js: PASS — ℹ duration_ms 78.2645",
+      "data": {
+        "checkId": "suite",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 48,
+      "id": "LVR-5d6aff86-48",
+      "missionId": "LVR-5d6aff86",
+      "type": "verification.passed",
+      "at": "2026-09-03T04:07:06.158Z",
+      "elapsedMs": 49729,
+      "taskId": "spawner",
+      "workerRunId": "wr_bc5cea63",
+      "message": "\"Implement deterministic wave spawning\" verified — quality 100",
+      "data": {
+        "proofId": "pf_586c1aa1",
+        "quality": 100
+      }
+    },
+    {
+      "seq": 49,
+      "id": "LVR-5d6aff86-49",
+      "missionId": "LVR-5d6aff86",
+      "type": "task.completed",
+      "at": "2026-09-03T04:07:06.158Z",
+      "elapsedMs": 49729,
+      "taskId": "spawner",
+      "workerRunId": "wr_bc5cea63",
+      "message": "Task completed: Implement deterministic wave spawning"
+    },
+    {
+      "seq": 50,
+      "id": "LVR-5d6aff86-50",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.progress",
+      "at": "2026-09-03T04:07:11.597Z",
+      "elapsedMs": 55168,
+      "taskId": "vector",
+      "workerRunId": "wr_4e96515c",
+      "message": "Pool · best-free wrote 2 file(s)",
+      "data": {
+        "files": [
+          "src/vector.js",
+          "src/vector.js"
+        ]
+      }
+    },
+    {
+      "seq": 51,
+      "id": "LVR-5d6aff86-51",
+      "missionId": "LVR-5d6aff86",
+      "type": "verification.started",
+      "at": "2026-09-03T04:07:11.598Z",
+      "elapsedMs": 55169,
+      "taskId": "vector",
+      "workerRunId": "wr_4e96515c",
+      "message": "Verifying \"Implement 2D vector maths\""
+    },
+    {
+      "seq": 52,
+      "id": "LVR-5d6aff86-52",
+      "missionId": "LVR-5d6aff86",
+      "type": "proof.check",
+      "at": "2026-09-03T04:07:11.739Z",
+      "elapsedMs": 55310,
+      "taskId": "vector",
+      "workerRunId": "wr_4e96515c",
+      "message": "src/vector.js exists: PASS — src/vector.js exists",
+      "data": {
+        "checkId": "exists-0",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 53,
+      "id": "LVR-5d6aff86-53",
+      "missionId": "LVR-5d6aff86",
+      "type": "proof.check",
+      "at": "2026-09-03T04:07:11.739Z",
+      "elapsedMs": 55310,
+      "taskId": "vector",
+      "workerRunId": "wr_4e96515c",
+      "message": "test/vector.test.js: PASS — ℹ duration_ms 76.4946",
+      "data": {
+        "checkId": "suite",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 54,
+      "id": "LVR-5d6aff86-54",
+      "missionId": "LVR-5d6aff86",
+      "type": "verification.passed",
+      "at": "2026-09-03T04:07:11.739Z",
+      "elapsedMs": 55310,
+      "taskId": "vector",
+      "workerRunId": "wr_4e96515c",
+      "message": "\"Implement 2D vector maths\" verified — quality 100",
+      "data": {
+        "proofId": "pf_a9ce9dfc",
+        "quality": 100
+      }
+    },
+    {
+      "seq": 55,
+      "id": "LVR-5d6aff86-55",
+      "missionId": "LVR-5d6aff86",
+      "type": "task.completed",
+      "at": "2026-09-03T04:07:11.739Z",
+      "elapsedMs": 55310,
+      "taskId": "vector",
+      "workerRunId": "wr_4e96515c",
+      "message": "Task completed: Implement 2D vector maths"
+    },
+    {
+      "seq": 56,
+      "id": "LVR-5d6aff86-56",
+      "missionId": "LVR-5d6aff86",
+      "type": "task.ready",
+      "at": "2026-09-03T04:07:11.739Z",
+      "elapsedMs": 55310,
+      "taskId": "physics",
+      "message": "Task ready: Implement gravity and collision"
+    },
+    {
+      "seq": 57,
+      "id": "LVR-5d6aff86-57",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.started",
+      "at": "2026-09-03T04:07:11.743Z",
+      "elapsedMs": 55314,
+      "taskId": "physics",
+      "message": "Auction opened for \"Implement gravity and collision\"",
+      "data": {
+        "requires": [
+          "code",
+          "reasoning",
+          "backend"
+        ],
+        "contextTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 58,
+      "id": "LVR-5d6aff86-58",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:07:11.743Z",
+      "elapsedMs": 55314,
+      "taskId": "physics",
+      "message": "OpenCode (your subscription): utility 0.717 (2 prior jobs)",
+      "data": {
+        "modelKey": "agent-cli:opencode",
+        "eligible": true,
+        "utility": 0.7168
+      }
+    },
+    {
+      "seq": 59,
+      "id": "LVR-5d6aff86-59",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:07:11.743Z",
+      "elapsedMs": 55314,
+      "taskId": "physics",
+      "message": "Pool · best-free: utility 0.675 (35 prior jobs)",
+      "data": {
+        "modelKey": "pool:auto/best-free",
+        "eligible": true,
+        "utility": 0.6754695893640187
+      }
+    },
+    {
+      "seq": 60,
+      "id": "LVR-5d6aff86-60",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:07:11.743Z",
+      "elapsedMs": 55314,
+      "taskId": "physics",
+      "message": "kodro-tutor: utility 0.651 (17 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "eligible": true,
+        "utility": 0.6514883957466483
+      }
+    },
+    {
+      "seq": 61,
+      "id": "LVR-5d6aff86-61",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:07:11.743Z",
+      "elapsedMs": 55314,
+      "taskId": "physics",
+      "message": "qwen2.5-coder:3b: utility 0.650 (11 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen2.5-coder:3b",
+        "eligible": true,
+        "utility": 0.6498046664558963
+      }
+    },
+    {
+      "seq": 62,
+      "id": "LVR-5d6aff86-62",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:07:11.743Z",
+      "elapsedMs": 55314,
+      "taskId": "physics",
+      "message": "kodro-fast: utility 0.637 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-fast:latest",
+        "eligible": true,
+        "utility": 0.637080784822442
+      }
+    },
+    {
+      "seq": 63,
+      "id": "LVR-5d6aff86-63",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:07:11.743Z",
+      "elapsedMs": 55314,
+      "taskId": "physics",
+      "message": "kodro-coder: utility 0.615 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-coder:latest",
+        "eligible": true,
+        "utility": 0.6145803619561032
+      }
+    },
+    {
+      "seq": 64,
+      "id": "LVR-5d6aff86-64",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.completed",
+      "at": "2026-09-03T04:07:11.743Z",
+      "elapsedMs": 55314,
+      "taskId": "physics",
+      "message": "Winner: OpenCode (your subscription) — 100 task fit · 58 verified success over 2 prior jobs · your own host seat, no API key"
+    },
+    {
+      "seq": 65,
+      "id": "LVR-5d6aff86-65",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.hired",
+      "at": "2026-09-03T04:07:11.743Z",
+      "elapsedMs": 55314,
+      "taskId": "physics",
+      "workerRunId": "wr_52365523",
+      "message": "Hired OpenCode (your subscription) as Backend Engineer",
+      "data": {
+        "modelKey": "agent-cli:opencode",
+        "costClass": "host"
+      }
+    },
+    {
+      "seq": 66,
+      "id": "LVR-5d6aff86-66",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.started",
+      "at": "2026-09-03T04:07:11.743Z",
+      "elapsedMs": 55314,
+      "taskId": "physics",
+      "workerRunId": "wr_52365523",
+      "message": "OpenCode (your subscription) started work",
+      "data": {
+        "contextTokens": "[redacted]",
+        "availableRepoTokens": "[redacted]",
+        "contextReductionPct": 68,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 67,
+      "id": "LVR-5d6aff86-67",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.failed",
+      "at": "2026-09-03T04:10:11.751Z",
+      "elapsedMs": 235322,
+      "taskId": "physics",
+      "workerRunId": "wr_52365523",
+      "message": "OpenCode (your subscription) failed: PROVIDER_5XX — provider returned HTTP 502: \u001b[0m",
+      "data": {
+        "failureType": "PROVIDER_5XX"
+      }
+    },
+    {
+      "seq": 68,
+      "id": "LVR-5d6aff86-68",
+      "missionId": "LVR-5d6aff86",
+      "type": "checkpoint.created",
+      "at": "2026-09-03T04:10:11.751Z",
+      "elapsedMs": 235322,
+      "taskId": "physics",
+      "workerRunId": "wr_52365523",
+      "message": "Checkpoint cp_bc1d9e84b68f: 165 tokens captured from 1050 of context (84% smaller)",
+      "data": {
+        "checkpointId": "cp_bc1d9e84b68f",
+        "reason": "PROVIDER_5XX",
+        "originalContextTokens": "[redacted]",
+        "checkpointTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 69,
+      "id": "LVR-5d6aff86-69",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.released",
+      "at": "2026-09-03T04:10:11.751Z",
+      "elapsedMs": 235322,
+      "taskId": "physics",
+      "workerRunId": "wr_52365523",
+      "message": "OpenCode (your subscription) released"
+    },
+    {
+      "seq": 70,
+      "id": "LVR-5d6aff86-70",
+      "missionId": "LVR-5d6aff86",
+      "type": "handoff.started",
+      "at": "2026-09-03T04:10:11.751Z",
+      "elapsedMs": 235322,
+      "taskId": "physics",
+      "message": "Handing task to a replacement worker with checkpoint cp_bc1d9e84b68f",
+      "data": {
+        "checkpointId": "cp_bc1d9e84b68f",
+        "originalContextTokens": "[redacted]",
+        "checkpointTokens": "[redacted]",
+        "contextReductionPct": 84
+      }
+    },
+    {
+      "seq": 71,
+      "id": "LVR-5d6aff86-71",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.started",
+      "at": "2026-09-03T04:10:11.758Z",
+      "elapsedMs": 235329,
+      "taskId": "physics",
+      "message": "Auction opened for \"Implement gravity and collision\"",
+      "data": {
+        "requires": [
+          "code",
+          "reasoning",
+          "backend"
+        ],
+        "contextTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 72,
+      "id": "LVR-5d6aff86-72",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:11:06.283Z",
+      "elapsedMs": 289854,
+      "taskId": "physics",
+      "message": "Pool · best-free: utility 0.675 (35 prior jobs)",
+      "data": {
+        "modelKey": "pool:auto/best-free",
+        "eligible": true,
+        "utility": 0.6754695893640187
+      }
+    },
+    {
+      "seq": 73,
+      "id": "LVR-5d6aff86-73",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:11:06.284Z",
+      "elapsedMs": 289855,
+      "taskId": "physics",
+      "message": "kodro-tutor: utility 0.651 (17 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "eligible": true,
+        "utility": 0.6514883957466483
+      }
+    },
+    {
+      "seq": 74,
+      "id": "LVR-5d6aff86-74",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:11:06.284Z",
+      "elapsedMs": 289855,
+      "taskId": "physics",
+      "message": "qwen2.5-coder:3b: utility 0.650 (11 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen2.5-coder:3b",
+        "eligible": true,
+        "utility": 0.6498046664558963
+      }
+    },
+    {
+      "seq": 75,
+      "id": "LVR-5d6aff86-75",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:11:06.284Z",
+      "elapsedMs": 289855,
+      "taskId": "physics",
+      "message": "kodro-fast: utility 0.637 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-fast:latest",
+        "eligible": true,
+        "utility": 0.637080784822442
+      }
+    },
+    {
+      "seq": 76,
+      "id": "LVR-5d6aff86-76",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:11:06.284Z",
+      "elapsedMs": 289855,
+      "taskId": "physics",
+      "message": "kodro-coder: utility 0.615 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-coder:latest",
+        "eligible": true,
+        "utility": 0.6145803619561032
+      }
+    },
+    {
+      "seq": 77,
+      "id": "LVR-5d6aff86-77",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:11:06.284Z",
+      "elapsedMs": 289855,
+      "taskId": "physics",
+      "message": "qwen3:4b-instruct: utility 0.610 (2 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen3:4b-instruct",
+        "eligible": true,
+        "utility": 0.6098666666666667
+      }
+    },
+    {
+      "seq": 78,
+      "id": "LVR-5d6aff86-78",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.completed",
+      "at": "2026-09-03T04:11:06.284Z",
+      "elapsedMs": 289855,
+      "taskId": "physics",
+      "message": "Winner: Pool · best-free — 78 task fit · 68 verified success over 35 prior jobs · free route, no spend · 1 candidate excluded by policy"
+    },
+    {
+      "seq": 79,
+      "id": "LVR-5d6aff86-79",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.hired",
+      "at": "2026-09-03T04:11:06.284Z",
+      "elapsedMs": 289855,
+      "taskId": "physics",
+      "workerRunId": "wr_f15794fa",
+      "message": "Hired Pool · best-free as Backend Engineer (resuming from cp_bc1d9e84b68f)",
+      "data": {
+        "modelKey": "pool:auto/best-free",
+        "costClass": "free"
+      }
+    },
+    {
+      "seq": 80,
+      "id": "LVR-5d6aff86-80",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.started",
+      "at": "2026-09-03T04:11:06.284Z",
+      "elapsedMs": 289855,
+      "taskId": "physics",
+      "workerRunId": "wr_f15794fa",
+      "message": "Pool · best-free started work",
+      "data": {
+        "contextTokens": "[redacted]",
+        "availableRepoTokens": "[redacted]",
+        "contextReductionPct": 67,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 81,
+      "id": "LVR-5d6aff86-81",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.progress",
+      "at": "2026-09-03T04:12:07.269Z",
+      "elapsedMs": 350840,
+      "taskId": "physics",
+      "workerRunId": "wr_f15794fa",
+      "message": "Pool · best-free wrote 1 file(s)",
+      "data": {
+        "files": [
+          "src/physics.js"
+        ]
+      }
+    },
+    {
+      "seq": 82,
+      "id": "LVR-5d6aff86-82",
+      "missionId": "LVR-5d6aff86",
+      "type": "verification.started",
+      "at": "2026-09-03T04:12:07.269Z",
+      "elapsedMs": 350840,
+      "taskId": "physics",
+      "workerRunId": "wr_f15794fa",
+      "message": "Verifying \"Implement gravity and collision\""
+    },
+    {
+      "seq": 83,
+      "id": "LVR-5d6aff86-83",
+      "missionId": "LVR-5d6aff86",
+      "type": "proof.check",
+      "at": "2026-09-03T04:12:07.415Z",
+      "elapsedMs": 350986,
+      "taskId": "physics",
+      "workerRunId": "wr_f15794fa",
+      "message": "src/physics.js exists: PASS — src/physics.js exists",
+      "data": {
+        "checkId": "exists-0",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 84,
+      "id": "LVR-5d6aff86-84",
+      "missionId": "LVR-5d6aff86",
+      "type": "proof.check",
+      "at": "2026-09-03T04:12:07.416Z",
+      "elapsedMs": 350987,
+      "taskId": "physics",
+      "workerRunId": "wr_f15794fa",
+      "message": "test/physics.test.js: PASS — ℹ duration_ms 79.7921",
+      "data": {
+        "checkId": "suite",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 85,
+      "id": "LVR-5d6aff86-85",
+      "missionId": "LVR-5d6aff86",
+      "type": "verification.passed",
+      "at": "2026-09-03T04:12:07.416Z",
+      "elapsedMs": 350987,
+      "taskId": "physics",
+      "workerRunId": "wr_f15794fa",
+      "message": "\"Implement gravity and collision\" verified — quality 100",
+      "data": {
+        "proofId": "pf_3c1d6642",
+        "quality": 100
+      }
+    },
+    {
+      "seq": 86,
+      "id": "LVR-5d6aff86-86",
+      "missionId": "LVR-5d6aff86",
+      "type": "task.completed",
+      "at": "2026-09-03T04:12:07.416Z",
+      "elapsedMs": 350987,
+      "taskId": "physics",
+      "workerRunId": "wr_f15794fa",
+      "message": "Task completed: Implement gravity and collision"
+    },
+    {
+      "seq": 87,
+      "id": "LVR-5d6aff86-87",
+      "missionId": "LVR-5d6aff86",
+      "type": "task.ready",
+      "at": "2026-09-03T04:12:07.416Z",
+      "elapsedMs": 350987,
+      "taskId": "game",
+      "message": "Task ready: Implement the game state machine"
+    },
+    {
+      "seq": 88,
+      "id": "LVR-5d6aff86-88",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.started",
+      "at": "2026-09-03T04:12:07.422Z",
+      "elapsedMs": 350993,
+      "taskId": "game",
+      "message": "Auction opened for \"Implement the game state machine\"",
+      "data": {
+        "requires": [
+          "code",
+          "reasoning",
+          "backend"
+        ],
+        "contextTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 89,
+      "id": "LVR-5d6aff86-89",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:12:12.656Z",
+      "elapsedMs": 356227,
+      "taskId": "game",
+      "message": "kodro-tutor: utility 0.797 (7 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "eligible": true,
+        "utility": 0.7972427915005965
+      }
+    },
+    {
+      "seq": 90,
+      "id": "LVR-5d6aff86-90",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:12:12.656Z",
+      "elapsedMs": 356227,
+      "taskId": "game",
+      "message": "OpenCode (your subscription): utility 0.695 (3 prior jobs)",
+      "data": {
+        "modelKey": "agent-cli:opencode",
+        "eligible": true,
+        "utility": 0.6952571428571429
+      }
+    },
+    {
+      "seq": 91,
+      "id": "LVR-5d6aff86-91",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:12:12.656Z",
+      "elapsedMs": 356227,
+      "taskId": "game",
+      "message": "Pool · best-free: utility 0.676 (38 prior jobs)",
+      "data": {
+        "modelKey": "pool:auto/best-free",
+        "eligible": true,
+        "utility": 0.6756428719882651
+      }
+    },
+    {
+      "seq": 92,
+      "id": "LVR-5d6aff86-92",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:12:12.656Z",
+      "elapsedMs": 356227,
+      "taskId": "game",
+      "message": "qwen2.5-coder:3b: utility 0.663 (12 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen2.5-coder:3b",
+        "eligible": true,
+        "utility": 0.662712440112341
+      }
+    },
+    {
+      "seq": 93,
+      "id": "LVR-5d6aff86-93",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:12:12.656Z",
+      "elapsedMs": 356227,
+      "taskId": "game",
+      "message": "kodro-fast: utility 0.637 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-fast:latest",
+        "eligible": true,
+        "utility": 0.637080784822442
+      }
+    },
+    {
+      "seq": 94,
+      "id": "LVR-5d6aff86-94",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.candidate",
+      "at": "2026-09-03T04:12:12.656Z",
+      "elapsedMs": 356227,
+      "taskId": "game",
+      "message": "kodro-coder: utility 0.615 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-coder:latest",
+        "eligible": true,
+        "utility": 0.6145803619561032
+      }
+    },
+    {
+      "seq": 95,
+      "id": "LVR-5d6aff86-95",
+      "missionId": "LVR-5d6aff86",
+      "type": "auction.completed",
+      "at": "2026-09-03T04:12:12.656Z",
+      "elapsedMs": 356227,
+      "taskId": "game",
+      "message": "Winner: kodro-tutor — 100 task fit · 86 verified success over 7 prior jobs · local runtime, no spend"
+    },
+    {
+      "seq": 96,
+      "id": "LVR-5d6aff86-96",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.hired",
+      "at": "2026-09-03T04:12:12.656Z",
+      "elapsedMs": 356227,
+      "taskId": "game",
+      "workerRunId": "wr_f15c995d",
+      "message": "Hired kodro-tutor as Integrator",
+      "data": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "costClass": "local"
+      }
+    },
+    {
+      "seq": 97,
+      "id": "LVR-5d6aff86-97",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.started",
+      "at": "2026-09-03T04:12:12.656Z",
+      "elapsedMs": 356227,
+      "taskId": "game",
+      "workerRunId": "wr_f15c995d",
+      "message": "kodro-tutor started work",
+      "data": {
+        "contextTokens": "[redacted]",
+        "availableRepoTokens": "[redacted]",
+        "contextReductionPct": 53,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 98,
+      "id": "LVR-5d6aff86-98",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.progress",
+      "at": "2026-09-03T04:13:19.242Z",
+      "elapsedMs": 422813,
+      "taskId": "game",
+      "workerRunId": "wr_f15c995d",
+      "message": "Refused out-of-scope write to src/vector.js"
+    },
+    {
+      "seq": 99,
+      "id": "LVR-5d6aff86-99",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.progress",
+      "at": "2026-09-03T04:13:19.242Z",
+      "elapsedMs": 422813,
+      "taskId": "game",
+      "workerRunId": "wr_f15c995d",
+      "message": "Refused out-of-scope write to src/vector.js"
+    },
+    {
+      "seq": 100,
+      "id": "LVR-5d6aff86-100",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.progress",
+      "at": "2026-09-03T04:13:19.242Z",
+      "elapsedMs": 422813,
+      "taskId": "game",
+      "workerRunId": "wr_f15c995d",
+      "message": "Refused out-of-scope write to src/physics.js"
+    },
+    {
+      "seq": 101,
+      "id": "LVR-5d6aff86-101",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.progress",
+      "at": "2026-09-03T04:13:19.242Z",
+      "elapsedMs": 422813,
+      "taskId": "game",
+      "workerRunId": "wr_f15c995d",
+      "message": "Refused out-of-scope write to src/spawner.js"
+    },
+    {
+      "seq": 102,
+      "id": "LVR-5d6aff86-102",
+      "missionId": "LVR-5d6aff86",
+      "type": "worker.progress",
+      "at": "2026-09-03T04:13:19.242Z",
+      "elapsedMs": 422813,
+      "taskId": "game",
+      "workerRunId": "wr_f15c995d",
+      "message": "kodro-tutor wrote 1 file(s)",
+      "data": {
+        "files": [
+          "src/game.js"
+        ]
+      }
+    },
+    {
+      "seq": 103,
+      "id": "LVR-5d6aff86-103",
+      "missionId": "LVR-5d6aff86",
+      "type": "verification.started",
+      "at": "2026-09-03T04:13:19.242Z",
+      "elapsedMs": 422813,
+      "taskId": "game",
+      "workerRunId": "wr_f15c995d",
+      "message": "Verifying \"Implement the game state machine\""
+    },
+    {
+      "seq": 104,
+      "id": "LVR-5d6aff86-104",
+      "missionId": "LVR-5d6aff86",
+      "type": "proof.check",
+      "at": "2026-09-03T04:13:19.403Z",
+      "elapsedMs": 422974,
+      "taskId": "game",
+      "workerRunId": "wr_f15c995d",
+      "message": "src/game.js exists: PASS — src/game.js exists",
+      "data": {
+        "checkId": "exists-0",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 105,
+      "id": "LVR-5d6aff86-105",
+      "missionId": "LVR-5d6aff86",
+      "type": "proof.check",
+      "at": "2026-09-03T04:13:19.404Z",
+      "elapsedMs": 422975,
+      "taskId": "game",
+      "workerRunId": "wr_f15c995d",
+      "message": "test/game.test.js: PASS — ℹ duration_ms 84.534",
+      "data": {
+        "checkId": "suite",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 106,
+      "id": "LVR-5d6aff86-106",
+      "missionId": "LVR-5d6aff86",
+      "type": "verification.passed",
+      "at": "2026-09-03T04:13:19.404Z",
+      "elapsedMs": 422975,
+      "taskId": "game",
+      "workerRunId": "wr_f15c995d",
+      "message": "\"Implement the game state machine\" verified — quality 100",
+      "data": {
+        "proofId": "pf_99a30e47",
+        "quality": 100
+      }
+    },
+    {
+      "seq": 107,
+      "id": "LVR-5d6aff86-107",
+      "missionId": "LVR-5d6aff86",
+      "type": "task.completed",
+      "at": "2026-09-03T04:13:19.404Z",
+      "elapsedMs": 422975,
+      "taskId": "game",
+      "workerRunId": "wr_f15c995d",
+      "message": "Task completed: Implement the game state machine"
+    },
+    {
+      "seq": 108,
+      "id": "LVR-5d6aff86-108",
+      "missionId": "LVR-5d6aff86",
+      "type": "mission.completed",
+      "at": "2026-09-03T04:13:19.404Z",
+      "elapsedMs": 422975,
+      "message": "Mission verified: 4/4 tasks passed",
+      "data": {
+        "passed": 4,
+        "failed": 0,
+        "paidSpendUsd": 0,
+        "ledger": {
+          "maxUsd": 0,
+          "hard": true,
+          "reservedUsd": 0,
+          "settledUsd": 0,
+          "freeCalls": 2,
+          "paidCalls": 0,
+          "localCalls": 1,
+          "hostCalls": 2,
+          "estimatedFrontierEquivalentUsd": 0.08369700000000001,
+          "blockedAttempts": 0
+        }
+      }
+    }
+  ],
+  "finalSuiteExitCode": 0
+}

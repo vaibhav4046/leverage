@@ -112,6 +112,34 @@ as such; it seeds reputation, it does not replace what a model earns on real wor
 
 ---
 
+## Showcase run — `LVR-5d6aff86` (arcade)
+
+A second fixture with the same honest split, chosen because its output is visible.
+
+```
+mission status            COMPLETED
+tasks verified            4 / 4
+proof checks              8 / 8 pass
+logic suite               22 / 22, exit 0
+workers hired             6
+cost classes used         host · free · local
+cognitive handoffs        2  (62% and 84% context reduction)
+actual paid inference     $0.00
+RocketRide credits used   13.60
+```
+
+Files written by workers: `src/vector.js`, `src/physics.js`, `src/spawner.js`,
+`src/game.js`. Given, not written: every file under `test/`, and `index.html`.
+
+Worth stating precisely, because "an AI built a game" invites more credit than is due:
+the workers wrote four small, tightly specified logic modules against tests that already
+existed. They did not design the game, choose the mechanic or write the renderer. What
+the run demonstrates is that free and subscription-backed models, coordinated and
+verified, can produce working code that passes tests they cannot edit — not that they
+produced a title.
+
+---
+
 ## Estimated frontier-equivalent cost
 
 The one derived number, and the one most likely to be abused. What it means, precisely:

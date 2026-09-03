@@ -25,6 +25,28 @@ the job, executes it as a RocketRide pipeline, and refuses to call the task done
 compiler or a test runner says so. When a worker dies it keeps the worker's understanding
 and hands it to a replacement.
 
+## See it produce something
+
+`/demo` embeds a playable gravity-arena prototype whose entire logic — vector maths,
+physics integration, seeded spawner, game state machine — was written by Leverage
+workers under a hard `$0` budget. The tests and the render shell are given; the workers
+could read the tests they had to satisfy and could not edit them.
+
+| Arcade run `LVR-5d6aff86` | |
+|---|---|
+| Tasks verified | 4 / 4 |
+| Proof checks | 8 / 8 |
+| Logic suite | 22 / 22, `exit 0` |
+| Workers | 6, across host · free · local |
+| Cognitive handoffs | 2 (62% and 84% context reduction) |
+| **Actual paid inference** | **$0.00** |
+
+```bash
+npm run fixture:reset:arcade
+npm run mission -- --arcade
+cd benchmark/arcade && npm test
+```
+
 ## The run this repository ships with
 
 A real recorded mission, not a mock — `LVR-f8f72d56`, in `demo/canonical-run.json`:

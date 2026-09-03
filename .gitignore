@@ -26,3 +26,8 @@ benchmark/forge-app/src/*.js
 
 # Local editor/harness config
 .claude/
+
+# The arcade fixture must also fail on a clean checkout. Its src/ is written by
+# workers; the *published* build under public/arcade is committed instead, as the
+# recorded artefact of a real run.
+benchmark/arcade/src/*.js
