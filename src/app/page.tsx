@@ -11,6 +11,7 @@ import {
   type ModelRow,
 } from '@/components/marketing/surfaces';
 import { ReputationStore } from '@/core/reputation';
+import { HandoffPlayer, type HandoffStep } from '@/components/marketing/handoff-player';
 import { AuroraField } from '@/components/visual/aurora-field';
 import { WorkforceOrbit, type OrbitNode } from '@/components/visual/workforce-orbit';
 import { Counter, Reveal } from '@/components/visual/motion';
@@ -71,6 +72,35 @@ export default async function Home() {
   const proofChecks = run?.proofs.flatMap((p) => p.checks) ?? [];
   const passedChecks = proofChecks.filter((c) => c.status === 'pass').length;
   const passedTasks = run?.tasks.filter((t) => t.state === 'PASSED').length ?? 0;
+
+  /**
+   * The replay window: the real events around the first failure, which is the only
+   * part worth watching. A green stretch proves nothing.
+   */
+  const REPLAY_TYPES = new Set([
+    'worker.hired',
+    'worker.started',
+    'provider.rate_limit',
+    'worker.failed',
+    'checkpoint.created',
+    'worker.released',
+    'handoff.started',
+    'verification.passed',
+    'task.completed',
+  ]);
+  const replayAll = (run?.events ?? []).filter((e) => REPLAY_TYPES.has(e.type));
+  const failAt = replayAll.findIndex(
+    (e) => e.type === 'provider.rate_limit' || e.type === 'worker.failed',
+  );
+  const replaySteps: HandoffStep[] = replayAll
+    .slice(Math.max(0, failAt - 2), Math.max(0, failAt - 2) + 10)
+    .map((e) => ({
+      seq: e.seq,
+      type: e.type,
+      message: e.message,
+      elapsedMs: e.elapsedMs,
+      worker: run?.workers.find((w) => w.id === e.workerRunId)?.displayName,
+    }));
 
   // The orbit is the workforce that actually ran, replacements included.
   const orbitNodes: OrbitNode[] =
@@ -221,6 +251,8 @@ export default async function Home() {
         </Section>
 
         <ExecutionSurface run={run} />
+
+        {replaySteps.length > 3 && <HandoffPlayer steps={replaySteps} />}
 
         {/* ------------------------------------------------------------- Orbit */}
         {orbitNodes.length > 0 && (
