@@ -131,6 +131,9 @@ export function HandoffFilm() {
                   onPlay={() => setPlaying(true)}
                   onPause={() => setPlaying(false)}
                 >
+                  {/* VP9 first: 468 kB against the MP4's 1.5 MB for the same nine
+                      seconds. Safari takes the MP4. */}
+                  {armed && <source src="/motion/handoff.webm" type="video/webm" />}
                   {armed && <source src="/motion/handoff.mp4" type="video/mp4" />}
                 </video>
               )}
