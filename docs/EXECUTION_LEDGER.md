@@ -42,6 +42,11 @@ State, evidence, test. Anything marked NOT BUILT is genuinely not built — see
 | Benchmark fixture | **done** | 17 assertions, all failing on clean checkout | `benchmark/forge-app` |
 | Showcase fixture | **done** | playable prototype, 22 assertions, 4/4 built by workers | `benchmark/arcade` |
 | Demo page | **done** | prototype embedded beside the ProofPack that produced it | `/demo` |
+| Execution surface | **done** | real event log sliced around the failure | `surfaces.tsx` |
+| Workforce ledger | **done** | measured reputation, shrunk, with sample counts | `surfaces.tsx` |
+| Stats band | **done** | aggregate across every recorded run | `surfaces.tsx` |
+| Responsive | **done** | no overflow at 390 / 768 / 1024 / 1440 | `scripts/shot.cjs` |
+| Screenshot harness | **done** | full-page capture over CDP, no Playwright needed | `scripts/shot.cjs` |
 | Production build | **done** | 16 routes | `npm run build` |
 | Supabase schema | **written, not applied** | migration + RLS committed | — |
 | Privy auth | **NOT BUILT** | verification path written; no credentials | dev identity refuses production |
@@ -98,5 +103,12 @@ Recorded because each one changed the design, not just the code.
     below-the-fold elements client-side, with a failsafe timer. Invisible content is never
     an acceptable resting state.
 
-11. **The fixture's own test script was wrong.** `node --test test/` resolves as a module
+11. **Grid children refused to shrink, overflowing the page.** The execution surface
+    sat in a grid whose children default to `min-width: auto`, so the card could not
+    go below its content's intrinsic width and pushed the document to 1331px at every
+    breakpoint below 1024. Caught by measuring `scrollWidth` against `clientWidth`
+    rather than by looking at a screenshot, which is exactly the kind of bug a
+    screenshot hides.
+
+12. **The fixture's own test script was wrong.** `node --test test/` resolves as a module
     path on Node 24, so the suite reported a failure while every individual file passed.

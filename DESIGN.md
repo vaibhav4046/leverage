@@ -169,6 +169,35 @@ it harder to read, not more premium. Table rows are 44–48px; panels use 20px p
 
 ---
 
+## What "premium" actually turned out to mean
+
+Studied Linear and Claude directly rather than guessing. Three things separate them
+from a dark template, and none of them is the gradient.
+
+**1. Real output, embedded.** Claude's product page does not describe debugging — it
+shows a debugging session with the actual code changes and test results in it.
+Linear does not describe a backlog — it shows one with real issue ids, timestamps and
+assignees. The persuasion comes from specificity.
+
+Leverage has better raw material than either, because its artefacts are genuinely
+real: an append-only event log from a mission that ran. The landing page was wasting
+it on a single hero panel. It now renders the execution log itself, sliced around the
+moment a worker fails, which is the only part anyone should care about — a green run
+proves nothing.
+
+**2. Multiple distinct surfaces, not one screenshot repeated.** Linear shows a
+backlog, a timeline, an agent conversation, a code diff and a changelog. Each is a
+different shape, so the page reads as a product with depth rather than one view shot
+from five angles. Leverage now shows a mission console, an execution log, a workforce
+ring, an auction, a model ledger and a ProofPack.
+
+**3. Density of true detail.** Issue numbers, elapsed times, status badges, sample
+counts. This is where a dishonest site collapses, because inventing that density means
+inventing facts. Every figure on these surfaces is read from a committed run.
+
+The corollary is the rule below, and it is why that rule is load-bearing rather than
+decorative.
+
 ## The last rule is the important one
 
 No placeholder metrics, anywhere, ever. Every number on the landing page comes from

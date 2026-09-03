@@ -4,6 +4,13 @@ import path from 'node:path';
 import { Wordmark } from '@/components/brand';
 import { HeroConsole } from '@/components/marketing/hero-console';
 import { ConnectSources } from '@/components/marketing/connect-sources';
+import {
+  ExecutionSurface,
+  StatsBand,
+  WorkforceLedger,
+  type ModelRow,
+} from '@/components/marketing/surfaces';
+import { ReputationStore } from '@/core/reputation';
 import { AuroraField } from '@/components/visual/aurora-field';
 import { WorkforceOrbit, type OrbitNode } from '@/components/visual/workforce-orbit';
 import { Counter, Reveal } from '@/components/visual/motion';
@@ -19,17 +26,46 @@ export const dynamic = 'force-dynamic';
  * A product whose argument is "check the evidence, don't trust the model" cannot have
  * an invented hero.
  */
-async function loadCanonicalRun(): Promise<MissionSnapshot | null> {
+async function loadRun(file: string): Promise<MissionSnapshot | null> {
   try {
-    const raw = await fs.readFile(path.resolve('demo/canonical-run.json'), 'utf8');
-    return JSON.parse(raw) as MissionSnapshot;
+    return JSON.parse(await fs.readFile(path.resolve('demo', file), 'utf8')) as MissionSnapshot;
   } catch {
     return null;
   }
 }
 
+/**
+ * The workforce ledger is this installation's own record, so it is read from the
+ * committed observations rather than from a table anyone typed by hand.
+ */
+async function loadLedger(): Promise<ModelRow[]> {
+  try {
+    const raw = await fs.readFile(path.resolve('demo/proof/model-observations.json'), 'utf8');
+    const store = ReputationStore.fromJSON(JSON.parse(raw));
+    return store
+      .leaderboard()
+      .filter((r) => r.samples >= 2)
+      .map((r) => ({
+        displayName: r.modelKey.split(':').slice(1).join(':') || r.modelKey,
+        costClass: r.modelKey.startsWith('ollama') ? 'local' : r.modelKey.startsWith('agent-cli') || r.modelKey.startsWith('host') ? 'host' : 'free',
+        samples: r.samples,
+        verified: r.verifiedSuccesses,
+        successRate: r.successRate,
+        medianLatencyMs: r.medianLatencyMs,
+        confidence: r.confidence,
+      }));
+  } catch {
+    return [];
+  }
+}
+
 export default async function Home() {
-  const run = await loadCanonicalRun();
+  const [run, arcade, ledger] = await Promise.all([
+    loadRun('canonical-run.json'),
+    loadRun('arcade-run.json'),
+    loadLedger(),
+  ]);
+  const allRuns = [run, arcade].filter((r): r is MissionSnapshot => r !== null);
 
   const handoff = run?.checkpoints[0];
   const proofChecks = run?.proofs.flatMap((p) => p.checks) ?? [];
@@ -139,6 +175,8 @@ export default async function Home() {
           </section>
         )}
 
+        <StatsBand runs={allRuns} />
+
         {/* ------------------------------------------------------------- Problem */}
         <Section eyebrow="The problem" title="Your smartest model is doing work it shouldn't.">
           <p className="max-w-[46rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
@@ -148,7 +186,7 @@ export default async function Home() {
           </p>
 
           <div className="mt-10 grid gap-4 md:grid-cols-2">
-            <Reveal>
+            <Reveal className="min-w-0">
               <div className="surface-card h-full p-6">
                 <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-frosted-lilac)]">
                   Worth the premium
@@ -162,7 +200,7 @@ export default async function Home() {
                 </ul>
               </div>
             </Reveal>
-            <Reveal delay={90}>
+            <Reveal delay={90} className="min-w-0">
               <div className="surface-card h-full p-6">
                 <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
                   Not worth the premium
@@ -182,12 +220,14 @@ export default async function Home() {
           </div>
         </Section>
 
+        <ExecutionSurface run={run} />
+
         {/* ------------------------------------------------------------- Orbit */}
         {orbitNodes.length > 0 && (
           <section className="relative border-t border-[var(--color-obsidian-edge)] bg-[var(--color-void)]">
             <div className="mx-auto max-w-[1200px] px-6 py-20">
               <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-                <Reveal>
+                <Reveal className="min-w-0">
                   <div className="mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
                     One mission
                   </div>
@@ -233,7 +273,7 @@ export default async function Home() {
           </p>
 
           <div className="mt-10 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
-            <Reveal>
+            <Reveal className="min-w-0">
               <div className="surface-card h-full p-6">
                 <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
                   Job
@@ -257,7 +297,7 @@ export default async function Home() {
               </div>
             </Reveal>
 
-            <Reveal delay={90}>
+            <Reveal delay={90} className="min-w-0">
               <div className="surface-card h-full p-6">
                 <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
                   Candidates
@@ -282,8 +322,17 @@ export default async function Home() {
           </div>
         </Section>
 
+        <WorkforceLedger models={ledger} />
+
         {/* --------------------------------------------------------- Connect */}
         <ConnectSources />
+
+        <MidCta
+          heading="See it build something you can play."
+          body="A gravity-arena prototype whose entire logic was written by free and subscription-backed models under a hard $0 budget, shipped beside the ProofPack that produced it."
+          href="/demo"
+          label="Open the demo"
+        />
 
         {/* --------------------------------------------------------- Zero dollar */}
         <Section eyebrow="Zero-dollar mode" title="When the budget says zero, zero means zero." border>
@@ -493,6 +542,40 @@ function Nav() {
         </div>
       </nav>
     </header>
+  );
+}
+
+function MidCta({
+  heading,
+  body,
+  href,
+  label,
+}: {
+  heading: string;
+  body: string;
+  href: string;
+  label: string;
+}) {
+  return (
+    <section className="border-t border-[var(--color-obsidian-edge)] bg-[var(--color-void)]">
+      <div className="mx-auto max-w-[1200px] px-6 py-16">
+        <Reveal>
+          <div className="surface-highlight flex flex-col gap-6 p-8 md:flex-row md:items-center md:justify-between md:p-10">
+            <div className="max-w-[42rem]">
+              <h2 className="heading text-[clamp(1.375rem,2.6vw,1.75rem)] text-[var(--color-quartz)]">
+                {heading}
+              </h2>
+              <p className="mt-3 text-[15px] font-light leading-relaxed text-[var(--color-mist)]">
+                {body}
+              </p>
+            </div>
+            <Link href={href} className="btn-primary shrink-0 self-start md:self-auto">
+              {label}
+            </Link>
+          </div>
+        </Reveal>
+      </div>
+    </section>
   );
 }
 

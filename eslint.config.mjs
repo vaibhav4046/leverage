@@ -16,6 +16,8 @@ const eslintConfig = defineConfig([
     "benchmark/forge-app/src/**",
     "benchmark/arcade/src/**",
     "public/arcade/**",
+    // CommonJS by design: a .cjs tool script, not app source.
+    "scripts/*.cjs",
     ".leverage-state/**",
     "demo/**",
   ]),
