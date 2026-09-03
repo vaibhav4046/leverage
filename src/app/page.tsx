@@ -12,6 +12,7 @@ import {
 } from '@/components/marketing/surfaces';
 import { ReputationStore } from '@/core/reputation';
 import { HandoffPlayer, type HandoffStep } from '@/components/marketing/handoff-player';
+import { HandoffFilm } from '@/components/marketing/handoff-film';
 import { AuroraField } from '@/components/visual/aurora-field';
 import { WorkforceOrbit, type OrbitNode } from '@/components/visual/workforce-orbit';
 import { Counter, Reveal } from '@/components/visual/motion';
@@ -204,6 +205,8 @@ export default async function Home() {
             </div>
           </section>
         )}
+
+        <HandoffFilm />
 
         <StatsBand runs={allRuns} />
 

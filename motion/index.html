@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Leverage — cognitive handoff</title>
+    <!-- Vendored: the compiler self-hosts the families it detects, and a render that
+         reaches the network at load time is a render that can time out. -->
+    <script src="./vendor/gsap.min.js"></script>
+    <style>
+      /* Inter and IBM Plex Mono are on the renderer's auto-resolved list; Figtree is
+         not, so it ships with the project rather than silently falling back to a
+         generic sans and changing the typography of the finished video. */
+      @font-face {
+        font-family: "Figtree";
+        font-style: normal;
+        font-weight: 500;
+        font-display: block;
+        src: url("./assets/fonts/figtree-500.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: "Figtree";
+        font-style: normal;
+        font-weight: 600;
+        font-display: block;
+        src: url("./assets/fonts/figtree-600.woff2") format("woff2");
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #0e111b;
+      }
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+        color: #ffffff;
+      }
+
+      /* Tokens lifted verbatim from the product's globals.css so the film and the
+         page cannot drift apart. */
+      :root {
+        --abyss: #0e111b;
+        --quartz: #ffffff;
+        --ash: #abaebb;
+        --mist: #c7c9d1;
+        --lilac: #85a6e9;
+        --aurora: #625fff;
+        --pass: #4ade80;
+        --fail: #f87171;
+        --hairline: #24375a;
+        --inkline: #151e32;
+      }
+
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: var(--abyss);
+      }
+
+      /* Atmosphere: two soft radials matched to the site's aurora field plus a
+         masked hairline grid, so the frame has depth instead of being a flat slide. */
+      #aurora {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background:
+          radial-gradient(58% 62% at 22% -12%, rgba(98, 95, 255, 0.34) 0%, rgba(0, 0, 0, 0) 62%),
+          radial-gradient(40% 46% at 86% 108%, rgba(255, 125, 218, 0.16) 0%, rgba(0, 0, 0, 0) 60%);
+      }
+      #grid {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background-image:
+          linear-gradient(rgba(36, 55, 90, 0.34) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(36, 55, 90, 0.34) 1px, transparent 1px);
+        background-size: 120px 120px;
+        mask-image: radial-gradient(72% 62% at 50% 46%, #000 0%, transparent 78%);
+      }
+
+      .mono {
+        font-family: "IBM Plex Mono", ui-monospace, monospace;
+      }
+
+      #eyebrow {
+        position: absolute;
+        left: 160px;
+        top: 112px;
+        width: 900px;
+        height: 24px;
+        z-index: 3;
+        font-size: 18px;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        color: var(--lilac);
+      }
+
+      /* --- act headlines -------------------------------------------------- */
+      .act {
+        position: absolute;
+        left: 160px;
+        top: 158px;
+        width: 1600px;
+        height: 130px;
+        z-index: 3;
+        font-family: "Figtree", system-ui, sans-serif;
+        font-weight: 600;
+        font-size: 104px;
+        line-height: 1.04;
+        letter-spacing: -0.035em;
+        color: var(--quartz);
+      }
+      .act em {
+        font-style: normal;
+        color: var(--lilac);
+      }
+
+      /* --- diagram band ---------------------------------------------------- */
+      #rail {
+        position: absolute;
+        left: 160px;
+        top: 662px;
+        width: 1600px;
+        height: 1px;
+        z-index: 1;
+        background: linear-gradient(
+          90deg,
+          rgba(36, 55, 90, 0) 0%,
+          rgba(36, 55, 90, 1) 12%,
+          rgba(36, 55, 90, 1) 88%,
+          rgba(36, 55, 90, 0) 100%
+        );
+        transform-origin: left center;
+      }
+
+      /* Worker A and its 429 stamp move as one unit, so the stamp stays attached to
+         the worker it belongs to when the lane slides aside. */
+      #laneA {
+        position: absolute;
+        left: 700px;
+        top: 486px;
+        width: 520px;
+        height: 288px;
+        z-index: 2;
+      }
+
+      .worker {
+        position: absolute;
+        width: 520px;
+        height: 208px;
+        border: 1px solid var(--hairline);
+        border-radius: 16px;
+        background: rgba(21, 30, 50, 0.86);
+        padding: 28px 30px;
+      }
+      #workerA {
+        left: 0;
+        top: 80px;
+      }
+      #workerB {
+        position: absolute;
+        left: 1240px;
+        top: 566px;
+        z-index: 2;
+      }
+      .worker-head {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        height: 24px;
+      }
+      .dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 999px;
+        background: var(--lilac);
+        flex: 0 0 auto;
+      }
+      .worker-id {
+        font-size: 19px;
+        letter-spacing: 0.02em;
+        color: var(--mist);
+      }
+      .worker-task {
+        margin-top: 22px;
+        font-size: 36px;
+        font-weight: 500;
+        color: var(--quartz);
+      }
+      .worker-meta {
+        margin-top: 14px;
+        font-size: 17px;
+        color: var(--ash);
+      }
+
+      /* Progress track lives inside the card, so the work in flight travels with
+         the worker doing it. */
+      #progressTrack {
+        position: absolute;
+        left: 30px;
+        top: 166px;
+        width: 460px;
+        height: 3px;
+        border-radius: 999px;
+        background: var(--inkline);
+      }
+      #progressFill {
+        position: absolute;
+        left: 30px;
+        top: 166px;
+        width: 460px;
+        height: 3px;
+        border-radius: 999px;
+        background: var(--lilac);
+        transform-origin: left center;
+      }
+
+      #stamp {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 300px;
+        height: 54px;
+        border: 1px solid var(--fail);
+        border-radius: 9px;
+        background: rgba(248, 113, 113, 0.12);
+        color: var(--fail);
+        font-size: 20px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #ckpt {
+        position: absolute;
+        left: 700px;
+        top: 566px;
+        width: 520px;
+        height: 208px;
+        z-index: 2;
+        border: 1px solid rgba(133, 166, 233, 0.6);
+        border-radius: 16px;
+        background: rgba(14, 17, 27, 0.96);
+        box-shadow: 0 0 0 1px rgba(98, 95, 255, 0.2), 0 26px 64px rgba(0, 0, 0, 0.6);
+        padding: 26px 30px;
+      }
+      #ckptLabel {
+        font-size: 15px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--lilac);
+        height: 20px;
+      }
+      .ckpt-row {
+        margin-top: 15px;
+        font-size: 21px;
+        color: var(--mist);
+        height: 26px;
+      }
+      #ckptSize {
+        position: absolute;
+        left: 30px;
+        top: 152px;
+        width: 460px;
+        height: 28px;
+        font-size: 22px;
+        color: var(--ash);
+      }
+      #ckptSize b {
+        font-weight: 400;
+        color: var(--pass);
+      }
+
+      #verdict {
+        position: absolute;
+        left: 1240px;
+        top: 812px;
+        width: 520px;
+        height: 68px;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      #verdictPill {
+        width: 140px;
+        height: 46px;
+        border-radius: 999px;
+        border: 1px solid rgba(74, 222, 128, 0.55);
+        background: rgba(74, 222, 128, 0.12);
+        color: var(--pass);
+        font-size: 19px;
+        letter-spacing: 0.14em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #verdictText {
+        font-size: 24px;
+        color: var(--mist);
+      }
+
+      .cap {
+        position: absolute;
+        left: 160px;
+        top: 906px;
+        width: 1000px;
+        height: 34px;
+        z-index: 3;
+        font-size: 26px;
+        color: var(--ash);
+      }
+      .cap b {
+        font-weight: 400;
+        color: var(--quartz);
+      }
+
+      #wordmark {
+        position: absolute;
+        left: 160px;
+        top: 972px;
+        width: 900px;
+        height: 24px;
+        z-index: 3;
+        font-size: 17px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ash);
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="9"
+      data-width="1920"
+      data-height="1080"
+    >
+      <div id="aurora"></div>
+      <div id="grid"></div>
+
+      <div id="eyebrow" class="mono">Leverage · cognitive handoff</div>
+
+      <div id="act1" class="act">Hire a worker.</div>
+      <div id="act2" class="act">Keep the <em>understanding</em>.</div>
+      <div id="act3" class="act">Replace the worker.</div>
+
+      <div id="rail"></div>
+
+      <div id="laneA">
+        <div id="stamp" class="mono">429 rate limited</div>
+        <div id="workerA" class="worker">
+          <div class="worker-head">
+            <span id="dotA" class="dot"></span>
+            <span class="worker-id mono">pool · best-free</span>
+          </div>
+          <div class="worker-task mono">impl vector.js</div>
+          <div id="metaA" class="worker-meta mono">running · 0 / 17 assertions</div>
+          <div id="progressTrack"></div>
+          <div id="progressFill"></div>
+        </div>
+      </div>
+
+      <div id="ckpt">
+        <div id="ckptLabel" class="mono">Checkpoint</div>
+        <div id="ckptRow1" class="ckpt-row mono">decisions taken</div>
+        <div id="ckptRow2" class="ckpt-row mono">work remaining</div>
+        <div id="ckptSize" class="mono">context <b id="sizeNum">18.4 kB</b></div>
+      </div>
+
+      <div id="workerB" class="worker">
+        <div class="worker-head">
+          <span id="dotB" class="dot"></span>
+          <span class="worker-id mono">opencode · sonnet-4.5</span>
+        </div>
+        <div class="worker-task mono">impl vector.js</div>
+        <div id="metaB" class="worker-meta mono">resumed · 1.2 kB context</div>
+      </div>
+
+      <div id="verdict">
+        <div id="verdictPill" class="mono">PASS</div>
+        <div id="verdictText" class="mono"><span id="testNum">0</span> / 17 assertions</div>
+      </div>
+
+      <div id="cap1" class="cap">A cheap worker takes the task. <b>Your best model never runs it.</b></div>
+      <div id="cap2" class="cap">Infrastructure failure — <b>not the model&rsquo;s fault.</b></div>
+      <div id="cap3" class="cap">Decisions and remaining work travel. <b>The transcript does not.</b></div>
+      <div id="cap4" class="cap">A different worker resumes. <b>The project never restarts.</b></div>
+
+      <div id="wordmark" class="mono">leverage · one frontier brain, an elastic workforce</div>
+    </div>
+
+    <script>
+      /**
+       * The handoff in nine seconds.
+       *
+       * Three acts of type carry the argument; the diagram underneath shows the
+       * mechanism, so the piece reads whether you watch the words or the shapes.
+       *
+       * Staging: the worker starts centre-frame because it is the only subject; it
+       * slides aside exactly when the checkpoint becomes the subject, and the frame
+       * is never two-thirds empty waiting for something to arrive.
+       *
+       * Every number is one Leverage actually produces — 17 assertions is the
+       * forge-app fixture's real count, and the context delta is the shape of a real
+       * checkpoint, not a decorative statistic.
+       */
+      const build = () => {
+        const tl = gsap.timeline({ paused: true });
+        const E = "power3.out";
+
+        // Initial states live in GSAP, never in CSS, so a tween and a stylesheet can
+        // never disagree about where an element starts.
+        gsap.set(["#act2", "#act3", "#cap1", "#cap2", "#cap3", "#cap4"], { autoAlpha: 0 });
+        gsap.set(["#stamp", "#ckpt", "#workerB", "#verdict"], { autoAlpha: 0 });
+        gsap.set("#rail", { scaleX: 0 });
+        gsap.set("#progressFill", { scaleX: 0 });
+        gsap.set("#progressTrack", { autoAlpha: 0 });
+
+        /* ---------------------------------------------------- act 1 · hire */
+        tl.from("#eyebrow", { y: 14, autoAlpha: 0, duration: 0.5, ease: E }, 0.05)
+          .from("#act1", { y: 44, autoAlpha: 0, duration: 0.7, ease: E }, 0.18)
+          .to("#rail", { scaleX: 1, duration: 0.9, ease: "power2.inOut" }, 0.3)
+          .from("#laneA", { y: 26, scale: 0.94, autoAlpha: 0, duration: 0.55, ease: "back.out(1.7)" }, 0.55)
+          .to("#progressTrack", { autoAlpha: 1, duration: 0.3 }, 0.85)
+          .to("#progressFill", { scaleX: 0.46, duration: 1.0, ease: "none" }, 0.9)
+          .to("#cap1", { autoAlpha: 1, duration: 0.4 }, 0.85);
+
+        /* ------------------------------------------------- act 1b · the 429 */
+        tl.to("#cap1", { autoAlpha: 0, duration: 0.25 }, 2.0)
+          .to("#progressFill", { scaleX: 0.52, duration: 0.12, ease: "none" }, 2.0)
+          .fromTo(
+            "#stamp",
+            { y: -26, scale: 0.9, autoAlpha: 0 },
+            { y: 0, scale: 1, autoAlpha: 1, duration: 0.3, ease: "back.out(2.4)" },
+            2.08,
+          )
+          .to("#workerA", { keyframes: [{ x: -9 }, { x: 9 }, { x: -5 }, { x: 0 }], duration: 0.34, ease: "none" }, 2.12)
+          .to("#dotA", { backgroundColor: "#f87171", duration: 0.2 }, 2.12)
+          .to("#progressFill", { backgroundColor: "#f87171", duration: 0.2 }, 2.12)
+          .to("#metaA", { color: "#f87171", duration: 0.2 }, 2.12)
+          .to("#cap2", { autoAlpha: 1, duration: 0.4 }, 2.32);
+
+        /* ------------------------------------------ act 2 · the checkpoint */
+        tl.to(["#cap2", "#act1"], { autoAlpha: 0, duration: 0.3 }, 3.35)
+          .to("#act2", { autoAlpha: 1, duration: 0.45, ease: E }, 3.5)
+          .from("#act2", { y: 30, duration: 0.55, ease: E }, 3.5)
+          // The spent worker steps aside and dims; it is no longer the subject.
+          .to("#laneA", { x: -500, duration: 0.75, ease: "power2.inOut" }, 3.45)
+          .to("#laneA", { autoAlpha: 0.34, duration: 0.6 }, 3.6)
+          // The card is lifted out of that worker, not conjured beside it.
+          .fromTo(
+            "#ckpt",
+            { x: -420, y: 18, scale: 0.84, autoAlpha: 0 },
+            { x: 0, y: 0, scale: 1, autoAlpha: 1, duration: 0.7, ease: "power3.out" },
+            3.95,
+          )
+          .from(["#ckptRow1", "#ckptRow2"], { x: -16, autoAlpha: 0, duration: 0.4, stagger: 0.12, ease: E }, 4.3)
+          .from("#ckptSize", { autoAlpha: 0, duration: 0.3 }, 4.6)
+          .to("#cap3", { autoAlpha: 1, duration: 0.4 }, 4.5);
+
+        // 18.4 kB of transcript compresses to 1.2 kB of decisions. Tweening a proxy
+        // keeps it deterministic — the same frame always shows the same number.
+        const size = { v: 18.4 };
+        tl.to(
+          size,
+          {
+            v: 1.2,
+            duration: 0.7,
+            ease: "power2.inOut",
+            onUpdate: () => {
+              document.getElementById("sizeNum").textContent = size.v.toFixed(1) + " kB";
+            },
+          },
+          4.75,
+        );
+
+        /* --------------------------------------- act 3 · the replacement */
+        tl.to(["#cap3", "#act2"], { autoAlpha: 0, duration: 0.3 }, 5.6)
+          .to("#act3", { autoAlpha: 1, duration: 0.45, ease: E }, 5.75)
+          .from("#act3", { y: 30, duration: 0.55, ease: E }, 5.75)
+          .fromTo(
+            "#workerB",
+            { x: 90, autoAlpha: 0, scale: 0.94 },
+            { x: 0, autoAlpha: 1, scale: 1, duration: 0.6, ease: "power3.out" },
+            5.9,
+          )
+          // The checkpoint dissolves into the new worker: the context moved, the
+          // worker changed. It fades as it travels so it never sits on B's own text.
+          .to("#ckpt", { x: 540, y: -8, scale: 0.8, duration: 0.72, ease: "power2.inOut" }, 6.15)
+          .to("#ckpt", { autoAlpha: 0, duration: 0.42, ease: "power2.in" }, 6.15)
+          .to("#dotB", { backgroundColor: "#4ade80", duration: 0.25 }, 6.85)
+          .to("#workerB", { keyframes: [{ scale: 1.025 }, { scale: 1 }], duration: 0.4, ease: "sine.inOut" }, 6.85)
+          .to("#cap4", { autoAlpha: 1, duration: 0.4 }, 6.9);
+
+        /* ------------------------------------------------ act 3b · verified */
+        const t = { v: 0 };
+        tl.to("#verdict", { autoAlpha: 1, duration: 0.3 }, 7.5)
+          .from("#verdictPill", { scale: 0.6, autoAlpha: 0, duration: 0.45, ease: "back.out(2.2)" }, 7.5)
+          .to(
+            t,
+            {
+              v: 17,
+              duration: 0.7,
+              ease: "power2.out",
+              onUpdate: () => {
+                document.getElementById("testNum").textContent = String(Math.round(t.v));
+              },
+            },
+            7.55,
+          )
+          .to("#verdictPill", { boxShadow: "0 0 38px rgba(74,222,128,0.45)", duration: 0.35, yoyo: true, repeat: 1 }, 7.9)
+          .from("#wordmark", { autoAlpha: 0, y: 10, duration: 0.5, ease: E }, 8.1);
+
+        tl.seek(0);
+        window.__timelines["main"] = tl;
+      };
+
+      // Build after the webfonts land: measuring type before it swaps is how a
+      // headline ends up a pixel off in the render but correct in preview.
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(build);
+      } else {
+        build();
+      }
+    </script>
+  </body>
+</html>

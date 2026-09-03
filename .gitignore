@@ -31,3 +31,9 @@ benchmark/forge-app/src/*.js
 # workers; the *published* build under public/arcade is committed instead, as the
 # recorded artefact of a real run.
 benchmark/arcade/src/*.js
+
+# HyperFrames working files — the rendered MP4 is committed to public/motion instead
+motion/node_modules/
+motion/snapshots/
+motion/renders/
+motion/.hyperframes/
