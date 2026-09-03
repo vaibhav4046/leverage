@@ -265,7 +265,7 @@ function Metric({
     <div className="bg-[var(--color-void)] px-4 py-3.5">
       <div className="mono text-[10px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
         {label}
-        {hint && <span className="ml-1.5 normal-case text-[var(--color-slate)]">({hint})</span>}
+        {hint && <span className="ml-1.5 normal-case text-[var(--color-ash)] opacity-80">({hint})</span>}
       </div>
       <div
         className="mt-1 tabular-nums text-[20px]"
@@ -468,7 +468,7 @@ function EventTimeline({ events }: { events: MissionEvent[] }) {
         <ul className="space-y-1">
           {events.map((e) => (
             <li key={e.id} className="mono flex gap-3 text-[12px] leading-relaxed">
-              <span className="w-[68px] shrink-0 tabular-nums text-[var(--color-slate)]">
+              <span className="w-[68px] shrink-0 tabular-nums text-[var(--color-ash)]">
                 {formatElapsed(e.elapsedMs)}
               </span>
               <span className="w-[150px] shrink-0" style={{ color: eventColor(e.type) }}>

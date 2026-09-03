@@ -56,7 +56,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             href="/docs"
             className="flex items-center gap-3 rounded-[9px] py-2 pl-3.5 pr-3 text-[13.5px] text-[var(--color-ash)] transition-colors hover:bg-[rgba(13,23,43,0.55)] hover:text-[var(--color-mist)]"
           >
-            <IconDocs size={17} className="text-[var(--color-slate)]" />
+            <IconDocs size={17} className="text-[var(--color-ash)] opacity-60" />
             Documentation
           </Link>
         </div>

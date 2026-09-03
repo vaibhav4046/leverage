@@ -81,7 +81,7 @@ export default async function MissionsPage() {
                     <Link
                       href={`/app/missions/${m.mission.id}`}
                       aria-label={`Open mission ${m.mission.id}`}
-                      className="inline-flex text-[var(--color-slate)] transition-colors hover:text-[var(--color-frosted-lilac)]"
+                      className="inline-flex text-[var(--color-ash)] opacity-70 transition-colors hover:text-[var(--color-frosted-lilac)] hover:opacity-100"
                     >
                       <IconArrowRight size={16} />
                     </Link>

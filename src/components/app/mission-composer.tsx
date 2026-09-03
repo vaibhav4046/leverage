@@ -106,7 +106,7 @@ export function MissionComposer({ readOnly }: { readOnly: boolean }) {
               rows={5}
               value={goal}
               onChange={(e) => setGoal(e.target.value)}
-              className="mt-3 w-full resize-y rounded-[9px] border border-[var(--color-obsidian-edge)] bg-[var(--color-void)] p-4 text-[15px] leading-relaxed text-[var(--color-quartz)] outline-none transition-colors placeholder:text-[var(--color-slate)] focus:border-[var(--color-frosted-lilac)]"
+              className="mt-3 w-full resize-y rounded-[9px] border border-[var(--color-obsidian-edge)] bg-[var(--color-void)] p-4 text-[15px] leading-relaxed text-[var(--color-quartz)] outline-none transition-colors placeholder:text-[var(--color-ash)] placeholder:opacity-60 focus:border-[var(--color-frosted-lilac)]"
               placeholder="Finish this application and verify it."
             />
             <p className="mono mt-2.5 text-[11.5px] text-[var(--color-ash)] opacity-75">
@@ -258,7 +258,7 @@ function Field({
   return (
     <div className="surface-card flex flex-col p-5">
       <div className="mono flex items-center gap-2 text-[11px] uppercase tracking-[0.1em] text-[var(--color-ash)]">
-        {icon ? <span className="text-[var(--color-slate)]">{icon}</span> : null}
+        {icon ? <span className="text-[var(--color-ash)] opacity-70">{icon}</span> : null}
         {label}
       </div>
       <div className="mt-3.5">{children}</div>

@@ -64,7 +64,7 @@ export function SidebarNav() {
                   className={
                     active
                       ? 'text-[var(--color-frosted-lilac)]'
-                      : 'text-[var(--color-slate)] transition-colors group-hover:text-[var(--color-ash)]'
+                      : 'text-[var(--color-ash)] opacity-60 transition-colors group-hover:opacity-100'
                   }
                 />
                 {label}

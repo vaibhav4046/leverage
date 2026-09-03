@@ -748,7 +748,7 @@ function EmptyEvidence({ what }: { what: string }) {
 }
 
 function Dot() {
-  return <span className="text-[var(--color-slate)]">·</span>;
+  return <span className="text-[var(--color-ash)] opacity-70">·</span>;
 }
 
 function Footer() {

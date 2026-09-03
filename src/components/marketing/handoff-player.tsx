@@ -166,7 +166,7 @@ export function HandoffPlayer({ steps }: { steps: HandoffStep[] }) {
                   className="flex gap-3 border-b border-[var(--color-inkline)] px-5 py-2.5 last:border-0"
                   style={{ opacity: i === index ? 1 : 0.45 }}
                 >
-                  <span className="mono w-[62px] shrink-0 tabular-nums text-[11px] leading-5 text-[var(--color-slate)]">
+                  <span className="mono w-[62px] shrink-0 tabular-nums text-[11px] leading-5 text-[var(--color-ash)]">
                     {formatElapsed(s.elapsedMs)}
                   </span>
                   <span

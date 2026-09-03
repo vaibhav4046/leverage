@@ -150,7 +150,7 @@ export default async function AppOverview() {
                       </span>
                       <IconArrowRight
                         size={15}
-                        className="text-[var(--color-slate)] transition-colors group-hover:text-[var(--color-frosted-lilac)]"
+                        className="text-[var(--color-ash)] opacity-70 transition-colors group-hover:text-[var(--color-frosted-lilac)] group-hover:opacity-100"
                       />
                     </div>
                   </Link>

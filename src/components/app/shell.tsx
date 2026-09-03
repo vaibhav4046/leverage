@@ -120,7 +120,7 @@ export function Stat({
         <div className="mono text-[10.5px] uppercase tracking-[0.1em] text-[var(--color-ash)]">
           {label}
         </div>
-        {icon ? <span className="shrink-0 text-[var(--color-slate)]">{icon}</span> : null}
+        {icon ? <span className="shrink-0 text-[var(--color-ash)] opacity-70">{icon}</span> : null}
       </div>
       <div
         className="mt-2 text-[30px] leading-none tabular-nums tracking-[-0.02em] text-[var(--color-quartz)]"

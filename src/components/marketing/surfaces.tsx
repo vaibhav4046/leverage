@@ -131,7 +131,7 @@ function EventRow({ event }: { event: MissionEvent }) {
   const tone = eventTone(event.type);
   return (
     <li className="flex gap-3 px-5 py-2.5">
-      <span className="mono w-[64px] shrink-0 tabular-nums text-[11px] leading-5 text-[var(--color-slate)]">
+      <span className="mono w-[64px] shrink-0 tabular-nums text-[11px] leading-5 text-[var(--color-ash)]">
         {formatElapsed(event.elapsedMs)}
       </span>
       <span
@@ -341,7 +341,7 @@ export function StatsBand({ runs }: { runs: MissionSnapshot[] }) {
                   {value}
                 </div>
                 <div className="mt-2 text-[13px] text-[var(--color-mist)]">{label}</div>
-                <div className="mt-0.5 text-[12px] text-[var(--color-slate)]">{note}</div>
+                <div className="mt-0.5 text-[12px] text-[var(--color-ash)] opacity-80">{note}</div>
               </div>
             </Reveal>
           ))}
