@@ -13,7 +13,18 @@ import type { MissionEvent } from '@/core/types';
  * the reason the screen is trustworthy, and it is why there are no optimistic
  * updates anywhere in this file.
  */
-export function MissionControl({ initial }: { initial: MissionSnapshot }) {
+export function MissionControl({
+  initial,
+  readOnly = false,
+}: {
+  initial: MissionSnapshot;
+  /**
+   * A read-only viewer sees the whole run and none of the controls. The buttons are
+   * removed rather than disabled: a disabled Start on a public demo invites the
+   * reading that execution is broken, when in fact it is deliberately withheld.
+   */
+  readOnly?: boolean;
+}) {
   const [snapshot, setSnapshot] = useState(initial);
   const [events, setEvents] = useState<MissionEvent[]>(initial.events);
   const [connected, setConnected] = useState(false);
@@ -74,7 +85,12 @@ export function MissionControl({ initial }: { initial: MissionSnapshot }) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <MissionHeader snapshot={snapshot} connected={connected} onRefresh={refresh} />
+      <MissionHeader
+        snapshot={snapshot}
+        connected={connected}
+        onRefresh={refresh}
+        readOnly={readOnly}
+      />
       <MissionMetrics snapshot={snapshot} />
 
       <div className="grid flex-1 items-start gap-4 p-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
@@ -108,10 +124,12 @@ function MissionHeader({
   snapshot,
   connected,
   onRefresh,
+  readOnly,
 }: {
   snapshot: MissionSnapshot;
   connected: boolean;
   onRefresh: () => void;
+  readOnly: boolean;
 }) {
   const [busy, setBusy] = useState(false);
   const { mission } = snapshot;
@@ -165,7 +183,13 @@ function MissionHeader({
             {mission.status}
           </span>
 
-          {queued && (
+          {readOnly && (
+            <span className="mono rounded-full border border-[var(--color-sapphire-hairline)] px-3 py-1 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
+              read-only demo
+            </span>
+          )}
+
+          {!readOnly && queued && (
             <>
               <button className="btn-primary !py-2 !text-[14px]" disabled={busy} onClick={() => act('start')}>
                 Start mission
@@ -180,7 +204,7 @@ function MissionHeader({
               </button>
             </>
           )}
-          {running && (
+          {!readOnly && running && (
             <button className="btn-ghost !py-2 !text-[14px]" disabled={busy} onClick={() => act('cancel')}>
               Cancel
             </button>

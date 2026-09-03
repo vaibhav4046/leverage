@@ -1,11 +1,15 @@
 import Link from 'next/link';
 import { listMissions, loadPersistedRuns } from '@/server/missions';
+import { getPageIdentity } from '@/auth/identity';
+import { AuthNotice } from '@/components/app/auth-notice';
 
 export const dynamic = 'force-dynamic';
 
 export default async function MissionsPage() {
-  const live = listMissions('ws_local');
-  const persisted = await loadPersistedRuns();
+  const identity = getPageIdentity();
+  if (!identity) return <AuthNotice />;
+  const live = listMissions(identity.workspaceId);
+  const persisted = await loadPersistedRuns(identity.workspaceId);
   const seen = new Set(live.map((m) => m.mission.id));
   const all = [...live, ...persisted.filter((p) => !seen.has(p.mission.id))];
 

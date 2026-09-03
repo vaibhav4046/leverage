@@ -1,10 +1,14 @@
 import Link from 'next/link';
 import { listMissions, getRegistry } from '@/server/missions';
+import { getPageIdentity } from '@/auth/identity';
+import { AuthNotice } from '@/components/app/auth-notice';
 
 export const dynamic = 'force-dynamic';
 
 export default async function AppOverview() {
-  const missions = listMissions('ws_local');
+  const identity = getPageIdentity();
+  if (!identity) return <AuthNotice />;
+  const missions = listMissions(identity.workspaceId);
   const registry = getRegistry();
   await registry.sweep();
   const counts = registry.countsByCostClass();

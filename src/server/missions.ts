@@ -10,6 +10,7 @@ import { FaultInjector, INJECTED_RATE_LIMIT } from '../core/faults';
 import { RocketRideExecutor } from '../rocketride/executor';
 import type { MissionTask } from '../core/types';
 import { buildFixturePlan } from './fixture-plan';
+import { DEMO_WORKSPACE_ID } from '../auth/identity';
 
 /**
  * Server-side mission registry.
@@ -25,6 +26,23 @@ import { buildFixturePlan } from './fixture-plan';
 
 const STATE_DIR = path.resolve('.leverage-state');
 const RUNS_DIR = path.join(STATE_DIR, 'runs');
+
+/**
+ * Persisted runs are stored one directory per workspace.
+ *
+ * The snapshot returned to clients carries no workspace id, so a flat directory
+ * gave the read path nothing to check tenancy against — it read any completed
+ * mission by id for any caller, which made the id an enumeration oracle for other
+ * tenants' work. Scoping by directory makes the check structural: a caller can only
+ * name a path inside its own workspace, so there is no check for a future route to
+ * forget.
+ */
+const SAFE_SEGMENT = /^[A-Za-z0-9_-]{1,64}$/;
+
+function runsDirFor(workspaceId: string): string | null {
+  if (!SAFE_SEGMENT.test(workspaceId)) return null;
+  return path.join(RUNS_DIR, workspaceId);
+}
 
 interface Entry {
   state: MissionState;
@@ -137,6 +155,32 @@ export async function createMission(input: CreateMissionInput): Promise<MissionS
  * otherwise. A finished mission has to stay readable after the process that ran it
  * has gone -- that is the whole point of writing the record.
  */
+/**
+ * The recorded runs the public demo workspace is seeded with.
+ *
+ * A deployed instance cannot execute a mission — that needs a local repository to
+ * write into and a local model pool to hire from — so an empty Mission Control
+ * would be the honest but useless result. Seeding it with the runs that actually
+ * happened lets the deployed app show the real thing it produces, while every
+ * mutation stays refused. These are the same files the evidence pages read, so the
+ * app and the marketing cannot disagree.
+ */
+const DEMO_RUN_FILES = ['canonical-run.json', 'arcade-run.json'];
+
+async function loadDemoRuns(): Promise<MissionSnapshot[]> {
+  const runs = await Promise.all(
+    DEMO_RUN_FILES.map(async (file) => {
+      try {
+        const raw = await fs.readFile(path.resolve('demo', file), 'utf8');
+        return JSON.parse(raw) as MissionSnapshot;
+      } catch {
+        return null;
+      }
+    }),
+  );
+  return runs.filter((r): r is MissionSnapshot => r !== null);
+}
+
 export async function getMissionSnapshot(
   missionId: string,
   workspaceId: string,
@@ -144,9 +188,16 @@ export async function getMissionSnapshot(
   const live = getMission(missionId, workspaceId);
   if (live) return snapshotMission(live);
 
+  if (workspaceId === DEMO_WORKSPACE_ID) {
+    const seeded = await loadDemoRuns();
+    return seeded.find((r) => r.mission.id === missionId) ?? null;
+  }
+
   if (!/^LVR-[A-Za-z0-9-]{1,40}$/.test(missionId)) return null;
+  const dir = runsDirFor(workspaceId);
+  if (!dir) return null;
   try {
-    const raw = await fs.readFile(path.join(RUNS_DIR, `${missionId}.json`), 'utf8');
+    const raw = await fs.readFile(path.join(dir, `${missionId}.json`), 'utf8');
     return JSON.parse(raw) as MissionSnapshot;
   } catch {
     return null;
@@ -235,9 +286,11 @@ export function cancelMission(missionId: string, workspaceId: string): boolean {
 
 async function persist(state: MissionState): Promise<void> {
   try {
-    await fs.mkdir(RUNS_DIR, { recursive: true });
+    const dir = runsDirFor(state.spec.workspaceId);
+    if (!dir) return;
+    await fs.mkdir(dir, { recursive: true });
     await fs.writeFile(
-      path.join(RUNS_DIR, `${state.spec.id}.json`),
+      path.join(dir, `${state.spec.id}.json`),
       JSON.stringify(snapshotMission(state), null, 2),
     );
   } catch {
@@ -258,14 +311,18 @@ async function persistReputation(): Promise<void> {
   }
 }
 
-/** Completed runs written to disk by a previous process — used by /app/proofs. */
-export async function loadPersistedRuns(): Promise<MissionSnapshot[]> {
+/** Completed runs written to disk by a previous process, for one workspace. */
+export async function loadPersistedRuns(workspaceId: string): Promise<MissionSnapshot[]> {
+  if (workspaceId === DEMO_WORKSPACE_ID) return loadDemoRuns();
+
+  const dir = runsDirFor(workspaceId);
+  if (!dir) return [];
   try {
-    const files = await fs.readdir(RUNS_DIR);
+    const files = await fs.readdir(dir);
     const runs = await Promise.all(
       files
         .filter((f) => f.endsWith('.json'))
-        .map(async (f) => JSON.parse(await fs.readFile(path.join(RUNS_DIR, f), 'utf8'))),
+        .map(async (f) => JSON.parse(await fs.readFile(path.join(dir, f), 'utf8'))),
     );
     return runs as MissionSnapshot[];
   } catch {

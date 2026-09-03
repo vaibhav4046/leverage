@@ -16,26 +16,50 @@ import type { NextRequest } from 'next/server';
  * instead of quietly serving everyone the same workspace.
  */
 
-export interface Identity {
-  userId: string;
-  workspaceId: string;
-  displayName: string;
-  /** True when this came from a verified Privy token rather than dev mode. */
-  verified: boolean;
-}
+import { AuthError, type Identity } from './policy';
 
-export class AuthError extends Error {
-  constructor(
-    message: string,
-    readonly status: 401 | 403 | 500 = 401,
-  ) {
-    super(message);
-    this.name = 'AuthError';
-  }
-}
+export { AuthError, requireWritable, type Identity } from './policy';
 
 const isProduction = process.env.NODE_ENV === 'production';
 const devAuthEnabled = process.env.LEVERAGE_DEV_AUTH === '1';
+/**
+ * The public demo identity.
+ *
+ * Distinct from dev auth on purpose. Dev auth is a convenience that must never
+ * reach production, so it stays fatal there. This one is a deliberate deployment
+ * choice: it is opt-in per environment, it is read-only, and it is labelled as
+ * unverified everywhere it surfaces — so it can be permitted in production without
+ * the failure mode dev auth has, which is silently serving everyone one workspace
+ * that they can also write to.
+ */
+const publicDemoEnabled = process.env.LEVERAGE_PUBLIC_DEMO === '1';
+
+export const DEMO_WORKSPACE_ID = 'ws_demo';
+
+const DEMO_IDENTITY: Identity = {
+  userId: 'public-demo',
+  workspaceId: DEMO_WORKSPACE_ID,
+  displayName: 'Public demo',
+  verified: false,
+  readOnly: true,
+};
+
+const DEV_IDENTITY: Identity = {
+  userId: 'dev-user',
+  workspaceId: 'ws_local',
+  displayName: 'Local developer',
+  verified: false,
+  readOnly: false,
+};
+
+export type AuthMode = 'privy' | 'public-demo' | 'dev' | 'unconfigured';
+
+export function authMode(): AuthMode {
+  if (authConfigured()) return 'privy';
+  if (publicDemoEnabled) return 'public-demo';
+  if (!isProduction && devAuthEnabled) return 'dev';
+  return 'unconfigured';
+}
 const privyAppId = process.env.NEXT_PUBLIC_PRIVY_APP_ID;
 const privyAppSecret = process.env.PRIVY_APP_SECRET;
 
@@ -47,6 +71,8 @@ export async function requireIdentity(req: NextRequest): Promise<Identity> {
   if (authConfigured()) {
     return verifyPrivy(req);
   }
+
+  if (publicDemoEnabled) return DEMO_IDENTITY;
 
   if (isProduction) {
     // Deliberately fatal. Shipping dev identity to production would be the single
@@ -61,12 +87,27 @@ export async function requireIdentity(req: NextRequest): Promise<Identity> {
     throw new AuthError('Authentication is not configured and dev auth is disabled', 401);
   }
 
-  return {
-    userId: 'dev-user',
-    workspaceId: 'ws_local',
-    displayName: 'Local developer',
-    verified: false,
-  };
+  return DEV_IDENTITY;
+}
+
+/**
+ * Identity for a server component.
+ *
+ * Pages are reached by document navigation, which carries no Authorization header,
+ * so a page cannot verify a Privy token the way a route handler can. Until a Privy
+ * session cookie exists, a page under Privy is treated as unauthenticated rather
+ * than being handed someone else's workspace — the previous code hardcoded a
+ * workspace id here, which made the tenancy checks below it decorative.
+ */
+export function getPageIdentity(): Identity | null {
+  switch (authMode()) {
+    case 'public-demo':
+      return DEMO_IDENTITY;
+    case 'dev':
+      return DEV_IDENTITY;
+    default:
+      return null;
+  }
 }
 
 /**
@@ -108,5 +149,6 @@ async function verifyPrivy(req: NextRequest): Promise<Identity> {
     workspaceId: `ws_${claims.userId.replace(/[^a-zA-Z0-9]/g, '').slice(0, 24)}`,
     displayName: claims.userId,
     verified: true,
+    readOnly: false,
   };
 }

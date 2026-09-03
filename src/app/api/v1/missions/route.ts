@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { createMission, listMissions } from '@/server/missions';
-import { requireIdentity, AuthError } from '@/auth/identity';
+import { createMission, listMissions, loadPersistedRuns } from '@/server/missions';
+import { requireIdentity, requireWritable, AuthError } from '@/auth/identity';
 
 export const dynamic = 'force-dynamic';
 
@@ -10,7 +10,15 @@ const MAX_GOAL_CHARS = 8000;
 export async function GET(req: NextRequest) {
   try {
     const id = await requireIdentity(req);
-    return NextResponse.json({ missions: listMissions(id.workspaceId) });
+    // Live missions plus completed ones recovered from disk (or, in the public
+    // demo, the recorded runs it is seeded with) — the same union the app page
+    // renders, so the API and the UI cannot disagree about what exists.
+    const live = listMissions(id.workspaceId);
+    const seen = new Set(live.map((m) => m.mission.id));
+    const persisted = (await loadPersistedRuns(id.workspaceId)).filter(
+      (m) => !seen.has(m.mission.id),
+    );
+    return NextResponse.json({ missions: [...live, ...persisted] });
   } catch (err) {
     return authFail(err);
   }
@@ -20,6 +28,7 @@ export async function POST(req: NextRequest) {
   let identity;
   try {
     identity = await requireIdentity(req);
+    requireWritable(identity);
   } catch (err) {
     return authFail(err);
   }

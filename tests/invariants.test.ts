@@ -11,6 +11,7 @@ import { parseWorkerOutput, InvalidWorkerOutputError } from '../src/core/worker-
 import { computeQualityScore } from '../src/core/verify';
 import { safeJoin } from '../src/core/context';
 import { FaultInjector, INJECTED_RATE_LIMIT } from '../src/core/faults';
+import { requireWritable, AuthError, type Identity } from '../src/auth/policy';
 import type {
   ContextBundle,
   MissionSpec,
@@ -573,5 +574,34 @@ describe('fault injection', () => {
 
   it('labels itself as injected so nothing downstream can present it as real', () => {
     expect(INJECTED_RATE_LIMIT.message).toMatch(/INJECTED/);
+  });
+});
+
+// ------------------------------------------------------------------- identity
+
+describe('read-only identity', () => {
+  const readOnly: Identity = {
+    userId: 'public-demo',
+    workspaceId: 'ws_demo',
+    displayName: 'Public demo',
+    verified: false,
+    readOnly: true,
+  };
+
+  it('refuses a mutation from a read-only identity', () => {
+    // The public demo exists so a deployed instance can be explored. An identity
+    // that could still POST would let a stranger spend the owner's inference
+    // budget, which is the whole reason the flag is read-only rather than just
+    // unverified.
+    expect(() => requireWritable(readOnly)).toThrow(AuthError);
+    try {
+      requireWritable(readOnly);
+    } catch (err) {
+      expect((err as AuthError).status).toBe(403);
+    }
+  });
+
+  it('permits a mutation from a writable identity', () => {
+    expect(() => requireWritable({ ...readOnly, readOnly: false })).not.toThrow();
   });
 });
