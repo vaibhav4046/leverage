@@ -1,0 +1,21 @@
+{
+  "apiUrl": "http://127.0.0.1:3000",
+  "startedAt": "2026-09-03T23:59:03.800Z",
+  "server": {
+    "name": "leverage",
+    "version": "1.0.0"
+  },
+  "tools": [
+    "leverage_run",
+    "leverage_status",
+    "leverage_cancel",
+    "leverage_proof",
+    "leverage_models"
+  ],
+  "schemaProblems": [],
+  "modelsPreview": "{\n  \"models\": [\n    {\n      \"key\": \"ollama:samantha-v0.1:latest\",\n      \"displayName\": \"samantha-v0.1\",\n      \"provider\": \"ollama\",\n      \"costClass\": \"local\",\n      \"contextTokens\": 262144,\n      \"capabilities\": [\n        \"reasoning\",\n        \"tools\"\n      ],\n      \"supportsTools\": true,\n      \"health\": \"HEALTHY\",\n      \"reputation\": {\n        \"samples\": 2,\n        \"verifiedSuccesses\": 2,\n       ",
+  "missionId": null,
+  "runAdmittedMs": 34722,
+  "error": "no mission id returned",
+  "finishedAt": "2026-09-04T00:00:03.227Z"
+}

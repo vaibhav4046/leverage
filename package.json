@@ -13,11 +13,13 @@
     "mission": "tsx scripts/run-mission.ts",
     "probe:models": "tsx scripts/benchmark-models.ts",
     "verify:rocketride": "tsx scripts/verify-rocketride.ts",
-    "mcp": "tsx mcp/server.ts",
+    "mcp": "node mcp/server.ts",
     "fixture:reset": "node -e \"require('fs').readdirSync('benchmark/forge-app/src').forEach(f=>require('fs').unlinkSync('benchmark/forge-app/src/'+f))\"",
     "fixture:reset:arcade": "node -e \"const fs=require('fs'),d='benchmark/arcade/src';fs.existsSync(d)&&fs.readdirSync(d).forEach(f=>fs.unlinkSync(d+'/'+f))\"",
     "arcade:publish": "node -e \"const fs=require('fs');fs.mkdirSync('public/arcade/src',{recursive:true});fs.copyFileSync('benchmark/arcade/index.html','public/arcade/index.html');fs.readdirSync('benchmark/arcade/src').forEach(f=>fs.copyFileSync('benchmark/arcade/src/'+f,'public/arcade/src/'+f))\"",
-    "mission:arcade": "tsx scripts/run-mission.ts --arcade"
+    "mission:arcade": "tsx scripts/run-mission.ts --arcade",
+    "mcp:harness": "tsx scripts/mcp-harness.ts",
+    "scale": "tsx scripts/scale-harness.ts"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",

@@ -1,0 +1,31 @@
+{
+  "label": "Synthetic control-plane stress test",
+  "methodology": "Deterministic local stub workers on a seeded PRNG. No provider is called and no credit is spent. This measures the control plane (DAG readiness, task claiming, budget ledger, recovery accounting) under a diamond-dependency graph. It is not a measurement of cloud worker throughput and must never be presented as one.",
+  "seed": 20260904,
+  "ranAt": "2026-09-03T23:39:41.118Z",
+  "graph": {
+    "tasks": 100,
+    "shape": "diamond, 4 per layer",
+    "dagError": null
+  },
+  "concurrency": {
+    "limit": 8,
+    "peakConcurrent": 4
+  },
+  "results": {
+    "completed": 100,
+    "failed": 0,
+    "blocked": 0,
+    "handoffs": 15,
+    "events": 230,
+    "elapsedMs": 577,
+    "tasksPerSecond": 173.3
+  },
+  "invariants": {
+    "duplicateClaims": 0,
+    "budgetOvershoots": 0,
+    "orderingViolations": 0,
+    "hardBudgetUsd": 0,
+    "settledUsd": 0
+  }
+}

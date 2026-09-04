@@ -1,0 +1,21 @@
+Zero dollars of paid inference. Four tasks verified. Three cognitive handoffs.
+
+This is Leverage.
+
+Your frontier model makes the expensive decisions once. Leverage turns the
+mission into a validated task graph, removes any worker that violates the
+budget, and hires the strongest eligible model for each job.
+
+Here, a worker hits a provider limit. Leverage keeps its decisions, changed
+files, failed checks, and remaining work in a compact checkpoint. A replacement
+resumes from that state instead of restarting.
+
+Cloud work runs through RocketRide, preserving execution and usage evidence.
+
+And a model saying "done" means nothing. The compiler and tests decide whether
+the work ships.
+
+Eight proof checks. Seventeen real assertions. Actual paid inference: zero
+dollars.
+
+One frontier brain. An elastic workforce.
