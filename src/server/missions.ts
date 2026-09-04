@@ -153,7 +153,16 @@ export async function createMission(input: CreateMissionInput): Promise<MissionS
  * mutation stays refused. These are the same files the evidence pages read, so the
  * app and the marketing cannot disagree.
  */
-const DEMO_RUN_FILES = ['canonical-run.json', 'arcade-run.json'];
+const DEMO_RUN_FILES = [
+  'canonical-run.json',
+  'arcade-run.json',
+  // The run where RocketRide actually did the work: three of its six workers were
+  // free-class, which routes them through the RocketRide executor, and all four
+  // tasks passed verification. It is the single strongest answer to "is RocketRide
+  // load-bearing or decorative", and it was sitting on disk unreadable by anyone
+  // without a terminal and a staging key.
+  'rocketride-mission.json',
+];
 
 async function loadDemoRuns(): Promise<MissionSnapshot[]> {
   const runs = await Promise.all(

@@ -113,6 +113,27 @@ struck out with `Zero-Dollar Mode: hard budget $0.00 blocks all paid routes`. Po
 
 ## 4 · Check RocketRide is load-bearing (20 seconds)
 
+Open the run where it did the work. No terminal, no credentials:
+
+**https://useleverage.vercel.app/app/missions/LVR-bda3ba68**
+
+```
+status              COMPLETED, 4 / 4 tasks passed
+workers             6 total, 3 of them free-class
+                    free-class routes through the RocketRide executor
+cognitive handoffs  2, context reduced 39% and 45%
+actual paid         $0.00
+```
+
+Three of the four tasks were finished by `pool:auto/best-free`. That cost class is
+what sends a worker through a RocketRide pipeline rather than a local call, and
+their output passed the same verification as everything else. Two local workers
+failed their tests and were replaced. That is the whole product claim, executed
+end to end, in one inspectable run.
+
+If you do have a RocketRide staging key, you can reproduce a single inference
+yourself:
+
 ```bash
 npm run verify:rocketride
 ```
