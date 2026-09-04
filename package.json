@@ -19,7 +19,8 @@
     "arcade:publish": "node -e \"const fs=require('fs');fs.mkdirSync('public/arcade/src',{recursive:true});fs.copyFileSync('benchmark/arcade/index.html','public/arcade/index.html');fs.readdirSync('benchmark/arcade/src').forEach(f=>fs.copyFileSync('benchmark/arcade/src/'+f,'public/arcade/src/'+f))\"",
     "mission:arcade": "tsx scripts/run-mission.ts --arcade",
     "mcp:harness": "tsx scripts/mcp-harness.ts",
-    "scale": "tsx scripts/scale-harness.ts"
+    "scale": "tsx scripts/scale-harness.ts",
+    "pool:tunnel": "node scripts/pool-tunnel.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",

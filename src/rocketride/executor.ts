@@ -103,6 +103,11 @@ export class RocketRideExecutor {
             apikey: this.config.poolApiKey,
             modelTotalTokens: Math.max(8192, contextTokens),
             'openai_api.profile': 'custom',
+            // Non-streaming is enforced by scripts/pool-proxy.mjs, not here: the
+            // component does not forward unknown config keys into the upstream
+            // request body, so `stream: false` at this level is silently ignored.
+            // An SSE reply surfaces as "LLM error - ValueError" while the
+            // pipeline still bills, which reads exactly like an unreachable pool.
           },
           input: [{ lane: 'questions', from: 'in' }],
         },
