@@ -767,6 +767,16 @@ function Footer() {
               {label}
             </Link>
           ))}
+          {/* This page tells the reader to reproduce every number themselves. Until
+              now there was nowhere to click to get the code. */}
+          <a
+            href="https://github.com/vaibhav4046/leverage"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[var(--color-quartz)]"
+          >
+            Source
+          </a>
         </div>
       </div>
     </footer>

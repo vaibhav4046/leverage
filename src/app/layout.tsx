@@ -39,10 +39,10 @@ export const metadata: Metadata = {
   // card, because the deployed environment never set NEXT_PUBLIC_APP_URL. The
   // deployed origin is the correct default; local dev overrides it via the env var.
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL ??
-      (process.env.VERCEL_URL
-        ? `https://${process.env.VERCEL_URL}`
-        : 'https://useleverage.vercel.app'),
+    // The stable production domain, not VERCEL_URL: that resolves to the
+    // per-deployment hostname, which is both ugly in a shared card and behind
+    // Vercel's SSO wall for anyone who is not on the team.
+    process.env.NEXT_PUBLIC_APP_URL ?? 'https://useleverage.vercel.app',
   ),
   title: 'Leverage · Give your best model a workforce',
   description:
