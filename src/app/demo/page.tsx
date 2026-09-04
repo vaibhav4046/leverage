@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { Wordmark } from '@/components/brand';
+import { SiteNav, SiteFooter } from '@/components/marketing/page-shell';
 import { Reveal } from '@/components/visual/motion';
 import type { MissionSnapshot } from '@/core/mission';
 
@@ -34,16 +34,7 @@ export default async function DemoPage() {
 
   return (
     <div className="min-h-screen bg-[var(--color-abyss)]">
-      <header className="sticky top-0 z-50 border-b border-[var(--color-obsidian-edge)] bg-[rgba(11,12,14,0.82)] backdrop-blur-xl">
-        <nav className="mx-auto flex h-14 max-w-[1200px] items-center justify-between px-6">
-          <Link href="/" aria-label="Leverage home">
-            <Wordmark />
-          </Link>
-          <Link href="/app/new" className="btn-primary !py-2 !text-[14px]">
-            Run your own
-          </Link>
-        </nav>
-      </header>
+      <SiteNav />
 
       <main id="main" className="mx-auto max-w-[1200px] px-6 py-16">
         <Reveal>
@@ -203,6 +194,8 @@ cd benchmark/arcade && npm test`}
           </div>
         )}
       </main>
+
+      <SiteFooter />
     </div>
   );
 }

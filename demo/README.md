@@ -29,7 +29,6 @@ workers hired            7
 cognitive handoffs       3
 events                   129
 actual paid inference    $0.00
-RocketRide credits       30.40
 ```
 
 Reproduce:

@@ -6,6 +6,9 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   globalIgnores([
+  // Vendored, minified third-party code. Linting it produces 8 errors about
+  // someone else's build output and turns `npm run verify` red.
+  'motion/**',
     // Default ignores of eslint-config-next:
     ".next/**",
     "out/**",

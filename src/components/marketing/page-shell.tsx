@@ -41,10 +41,10 @@ export function SiteNav() {
         </div>
         <div className="flex items-center gap-3">
           <Link
-            href="/sign-in"
+            href="/app"
             className="hidden text-[14px] text-[var(--color-ash)] transition-colors hover:text-[var(--color-quartz)] sm:block"
           >
-            Sign in
+            Mission Control
           </Link>
           <Link href="/app/new" className="btn-primary !py-2 !text-[14px]">
             Deploy Leverage
@@ -71,6 +71,16 @@ export function SiteFooter() {
               {label}
             </Link>
           ))}
+          {/* Every claim on this site says "reproduce it yourself". Until now there
+              was nowhere to click to do that. */}
+          <a
+            href="https://github.com/vaibhav4046/leverage"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-[var(--color-quartz)]"
+          >
+            Source
+          </a>
         </div>
       </div>
     </footer>

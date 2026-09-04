@@ -98,8 +98,10 @@ async function main() {
   let events = 0;
   let peakConcurrent = 0;
   let completed = 0;
-  let failed = 0;
   let blocked = 0;
+  // Deliberately absent: a `failed` counter. The stub worker has no failure branch,
+  // so any figure reported here would be zero by construction, not by measurement.
+  // Recovery is exercised by the handoff path below and by the real missions.
   let handoffs = 0;
   let orderingViolations = 0;
 
@@ -147,10 +149,10 @@ async function main() {
     events++;
   }
 
-  while (completed + failed + blocked < tasks.length) {
+  while (completed + blocked < tasks.length) {
     const ready = readyTasks(tasks).filter((t) => !claimed.has(t.id));
     if (ready.length === 0 && inFlight.size === 0) {
-      blocked = tasks.length - completed - failed;
+      blocked = tasks.length - completed;
       break;
     }
 
@@ -180,7 +182,6 @@ async function main() {
     concurrency: { limit: WORKERS, peakConcurrent },
     results: {
       completed,
-      failed,
       blocked,
       handoffs,
       events,

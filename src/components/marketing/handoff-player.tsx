@@ -68,7 +68,9 @@ export function HandoffPlayer({ steps }: { steps: HandoffStep[] }) {
     clear();
     if (!playing) return;
     if (index >= steps.length - 1) {
-      setPlaying(false);
+      // Deferred: setting state synchronously here makes React re-enter the effect
+      // in the same commit, which is a cascading render rather than a state change.
+      queueMicrotask(() => setPlaying(false));
       return;
     }
     timer.current = setTimeout(advance, gaps[index + 1] ?? MIN_GAP_MS);
@@ -83,8 +85,11 @@ export function HandoffPlayer({ steps }: { steps: HandoffStep[] }) {
     const el = sectionRef.current;
     if (!el) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setIndex(steps.length - 1);
-      setHasPlayed(true);
+      // Same reason as above: jump to the end without a synchronous cascade.
+      queueMicrotask(() => {
+        setIndex(steps.length - 1);
+        setHasPlayed(true);
+      });
       return;
     }
     const start = () => {

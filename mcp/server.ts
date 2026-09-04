@@ -11,9 +11,9 @@
  * unusable and would lose all the work if the socket blinked.
  *
  * Install:
- *   claude mcp add leverage -- node <abs-path>/mcp/server.js
+ *   claude mcp add leverage -- node <abs-path>/mcp/server.ts
  * or in a host config:
- *   { "mcpServers": { "leverage": { "command": "node", "args": ["<abs>/mcp/server.js"],
+ *   { "mcpServers": { "leverage": { "command": "node", "args": ["<abs>/mcp/server.ts"],
  *     "env": { "LEVERAGE_API_URL": "http://localhost:3000" } } } }
  */
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';

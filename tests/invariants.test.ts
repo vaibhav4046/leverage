@@ -721,7 +721,7 @@ describe('approval resolution', () => {
       state: 'AWAITING_APPROVAL',
       dependencies: [],
       updatedAt: '',
-    }) as unknown as Parameters<typeof canTransition>[0] extends never ? never : any;
+    }) as unknown as Parameters<typeof isSettled>[0][number];
 
   it('a rejected approval fails the task rather than running it', () => {
     expect(canTransition('AWAITING_APPROVAL', 'FAILED')).toBe(true);

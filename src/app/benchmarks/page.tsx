@@ -21,6 +21,47 @@ async function loadRun(file: string): Promise<MissionSnapshot | null> {
   }
 }
 
+/**
+ * RocketRide evidence, read from the file the verification script wrote.
+ *
+ * This page is about measurement, and until now it did not mention the execution
+ * fabric once — in a RocketRide buildathon. The numbers below are credit deltas
+ * against the real staging org, not a description of an integration.
+ */
+async function loadRocketRide(): Promise<{
+  run: { latencyMs: number; engineTokens: number; creditsConsumed: number; workerOutput: string };
+  before: { credits: number; granted: number };
+  after: { credits: number; granted: number };
+  endpoint: string;
+  pipeline: { lane: string; credentialField: string; note: string };
+} | null> {
+  try {
+    return JSON.parse(
+      await fs.readFile(path.resolve('demo/evidence/rocketride-run.json'), 'utf8'),
+    );
+  } catch {
+    return null;
+  }
+}
+
+async function loadRocketRideMission(): Promise<{
+  missionId: string;
+  status: string;
+  elapsedSeconds: number;
+  tasks: { total: number; passed: number };
+  proofChecks: number;
+  workers: { total: number; viaRocketRide: number; local: number };
+  actualPaidInferenceUsd: number;
+} | null> {
+  try {
+    return JSON.parse(
+      await fs.readFile(path.resolve('demo/evidence/rocketride-mission-summary.json'), 'utf8'),
+    );
+  } catch {
+    return null;
+  }
+}
+
 async function loadProbe(): Promise<{ results: { model: string; passed: number; total: number; note: string }[] } | null> {
   try {
     return JSON.parse(
@@ -32,10 +73,12 @@ async function loadProbe(): Promise<{ results: { model: string; passed: number; 
 }
 
 export default async function BenchmarksPage() {
-  const [forge, arcade, probe] = await Promise.all([
+  const [forge, arcade, probe, rr, rrMission] = await Promise.all([
     loadRun('canonical-run.json'),
     loadRun('arcade-run.json'),
     loadProbe(),
+    loadRocketRide(),
+    loadRocketRideMission(),
   ]);
   const runs = [
     { label: 'forge-app', sub: 'receipt-splitting library', run: forge },
@@ -128,6 +171,85 @@ export default async function BenchmarksPage() {
           show numbers nobody measured.
         </Callout>
       )}
+
+      {rr ? (
+        <>
+          <H2>RocketRide executed the cloud workers</H2>
+          <Prose>
+            <p>
+              Leverage decides which intelligence deserves a job. RocketRide runs it. A worker whose
+              cost class is not <code className="mono">local</code> or <code className="mono">host</code>{' '}
+              executes as a RocketRide pipeline, so the sponsor is on the critical path rather than
+              beside it.
+            </p>
+            <p>
+              These are credit deltas against the real staging organisation, written by{' '}
+              <code className="mono">npm run verify:rocketride</code> to{' '}
+              <code className="mono">demo/evidence/rocketride-run.json</code>. A health check would
+              prove nothing, so the figure that matters is the one at the bottom: the worker inside
+              the pipeline returned output.
+            </p>
+          </Prose>
+
+          <Reveal className="min-w-0">
+            <div className="surface-card mt-8 min-w-0 overflow-x-auto">
+              <table className="w-full min-w-0 border-collapse text-left">
+                <caption className="sr-only">RocketRide staging execution evidence</caption>
+                <tbody>
+                  {([
+                    ['Endpoint', rr.endpoint],
+                    ['Credits before', `${rr.before.credits} / ${rr.before.granted}`],
+                    ['Credits after', `${rr.after.credits} / ${rr.after.granted}`],
+                    ['Credits consumed', rr.run.creditsConsumed.toFixed(2)],
+                    ['Round trip', `${(rr.run.latencyMs / 1000).toFixed(1)}s`],
+                    ['Engine tokens', String(rr.run.engineTokens)],
+                    ['Worker output', `"${rr.run.workerOutput}"`],
+                  ] as [string, string][]).map(([k, v]) => (
+                    <tr key={k} className="border-b border-[var(--color-inkline)] last:border-0">
+                      <th
+                        scope="row"
+                        className="mono w-[190px] px-5 py-3 text-left text-[11px] font-normal uppercase tracking-[0.08em] text-[var(--color-ash)]"
+                      >
+                        {k}
+                      </th>
+                      <td className="mono px-5 py-3 text-[13px] text-[var(--color-mist)]">{v}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Reveal>
+
+          {rrMission ? (
+            <Prose>
+              <p>
+                One full mission ran this way. Mission{' '}
+                <code className="mono">{rrMission.missionId}</code> was started through the MCP tool{' '}
+                <code className="mono">leverage_run</code>, not a script:{' '}
+                <strong className="font-normal text-[var(--color-quartz)]">
+                  {rrMission.tasks.passed}/{rrMission.tasks.total} tasks verified
+                </strong>{' '}
+                across {rrMission.proofChecks} proof checks in {rrMission.elapsedSeconds}s, with{' '}
+                {rrMission.workers.viaRocketRide} of {rrMission.workers.total} workers executing as
+                RocketRide pipelines and{' '}
+                <strong className="font-normal text-[var(--color-state-pass)]">
+                  ${rrMission.actualPaidInferenceUsd.toFixed(2)}
+                </strong>{' '}
+                of paid inference.
+              </p>
+            </Prose>
+          ) : null}
+
+          <Callout title="Three things RocketRide's own docs get wrong">
+            An LLM component wired to the control lane runs, consumes credits, and returns its input
+            unchanged; the worker has to sit in the data lane. The credential field is{' '}
+            <code className="mono">{rr.pipeline.credentialField}</code>, though the server error asks
+            for <code className="mono">api_key</code>. And the hackathon runs on staging, not the host
+            the SDK defaults to. All three cost us a day and are written up in{' '}
+            <code className="mono">docs/ROCKETRIDE_FINDINGS.md</code>.
+          </Callout>
+        </>
+      ) : null}
 
       <H2>Capability probe</H2>
       <Prose>

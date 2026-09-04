@@ -4,6 +4,24 @@ Everything below is checkable. Nothing on this page is a claim you have to take 
 
 ---
 
+## If you have three minutes and no terminal
+
+Everything below can be checked without cloning anything. These are live and
+read-only; every mutating route answers 403 by design.
+
+| What | Where |
+|---|---|
+| The recorded mission, event by event | <https://useleverage.vercel.app/app/missions/LVR-f8f72d56> |
+| The handoff, scrubbable | <https://useleverage.vercel.app/demo> |
+| Every measured number and its methodology | <https://useleverage.vercel.app/benchmarks> |
+| What the deployment thinks of itself | <https://useleverage.vercel.app/api/v1/health> |
+| Source | <https://github.com/vaibhav4046/leverage> |
+
+The public deployment has no local runtime and no provider keys, so it replays
+recorded runs rather than executing new ones. It says so on the pages themselves.
+
+---
+
 ## 0 · The idea, in ten seconds
 
 Your best model should decide the architecture. It should not spend the same premium
@@ -37,12 +55,12 @@ physically cannot pass by weakening an assertion.
 What you should see in the timeline:
 
 ```
-auction.completed   Winner: Pool · best-free — 72 task fit · 79 verified success over 22 prior jobs
+auction.completed   Winner: Pool · best-free — 72 task fit · 70 verified success over 28 prior jobs · free route, no spend
 worker.hired        Hired Pool · best-free as Backend Engineer
 provider.rate_limit Pool · best-free: INJECTED 429 rate limit
-checkpoint.created  cp_… : 197 tokens captured from 421 of context (53% smaller)
-worker.hired        Hired kodro-tutor as Backend Engineer (resuming from cp_…)
-verification.passed "Implement receipt validation" verified — quality 100
+checkpoint.created  Checkpoint cp_e79faf1d95be: 196 tokens captured from 453 of context (57% smaller)
+worker.hired        Hired kodro-tutor as Backend Engineer
+verification.passed "Implement money helpers" verified — quality 100
 mission.completed   Mission verified: 4/4 tasks passed
 ```
 
@@ -102,11 +120,11 @@ npm run verify:rocketride
 ```
 endpoint  https://staging.rocketride.ai
 auth      ok (org df58d291...)
-credits   4802.9 / 5000
+credits   4690.2 / 5000
 answer    "READY"
-latency   22885ms
-engine    2.1 tokens
-consumed  2.50 credits
+latency   25452ms
+engine    2.4 tokens
+consumed  2.9 credits
 ```
 
 Every cloud worker's inference is a real RocketRide pipeline execution —
@@ -126,7 +144,7 @@ written up in [docs/ROCKETRIDE_FINDINGS.md](docs/ROCKETRIDE_FINDINGS.md).
 ## 5 · Try it from your own host (30 seconds)
 
 ```bash
-claude mcp add leverage -- node /abs/path/to/leverage/mcp/server.js
+claude mcp add leverage -- node /abs/path/to/leverage/mcp/server.ts
 ```
 
 > Use Leverage. Finish this application. Budget $0. Quality production.
@@ -139,7 +157,7 @@ claude mcp add leverage -- node /abs/path/to/leverage/mcp/server.js
 npm run verify
 ```
 
-40 tests. The ones that matter:
+53 tests. The ones that matter:
 
 - a hard budget cannot be overshot, including by concurrent reservations
 - a paid model is *ineligible* at `$0`, not merely out-ranked

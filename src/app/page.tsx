@@ -134,7 +134,7 @@ export default async function Home() {
                       <span className="dot-live-halo absolute inline-flex h-full w-full animate-ping rounded-full" />
                       <span className="dot-live relative inline-flex h-2 w-2 rounded-full" />
                     </span>
-                    Hire your own host seat. No API key.
+                    An MCP server for Claude Code, Codex and Cursor. No API key.
                   </div>
                 </Reveal>
 

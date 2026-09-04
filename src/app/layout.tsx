@@ -35,7 +35,15 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'),
+  // Falling back to localhost meant every shared link rendered a broken preview
+  // card, because the deployed environment never set NEXT_PUBLIC_APP_URL. The
+  // deployed origin is the correct default; local dev overrides it via the env var.
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL ??
+      (process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : 'https://useleverage.vercel.app'),
+  ),
   title: 'Leverage · Give your best model a workforce',
   description:
     'Leverage gives Claude, Codex and other MCP hosts a dynamic workforce of local, free and connected models, then verifies the work and replaces workers that fail.',

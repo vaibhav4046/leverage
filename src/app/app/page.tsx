@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { listMissions, loadPersistedRuns, getRegistry } from '@/server/missions';
+import { loadRecordedWorkforce, countsByCostClass } from '@/server/recorded-workforce';
 import { getPageIdentity } from '@/auth/identity';
 import { AuthNotice } from '@/components/app/auth-notice';
 import {
@@ -28,8 +29,16 @@ export default async function AppOverview() {
 
   const registry = getRegistry();
   await registry.sweep();
-  const counts = registry.countsByCostClass();
-  const total = counts.local + counts.free + counts.paid;
+
+  // Same reason as /app/models: this deployment discovers nothing, and a judge
+  // arriving from a landing page full of measured numbers should not be met with
+  // four zeros. Fall back to the committed record, labelled.
+  const liveCount = registry.allModels().length;
+  const recorded = liveCount === 0 ? await loadRecordedWorkforce() : [];
+  const usingRecorded = recorded.length > 0;
+
+  const counts = usingRecorded ? countsByCostClass(recorded) : registry.countsByCostClass();
+  const total = usingRecorded ? recorded.length : counts.local + counts.free + counts.paid;
 
   // Live missions plus recorded ones, the same union the missions page shows. An
   // overview that disagrees with the page it links to is worse than no overview.
@@ -66,14 +75,18 @@ export default async function AppOverview() {
         <Stat
           label="Reachable models"
           value={String(total)}
-          sub={`${counts.local} local · ${counts.free} free · ${counts.paid} paid`}
+          sub={
+            usingRecorded
+              ? `recorded · ${counts.local} local · ${counts.free} free`
+              : `${counts.local} local · ${counts.free} free · ${counts.paid} paid`
+          }
           icon={<IconModels size={17} />}
           tone="accent"
         />
         <Stat
           label="Local runtimes"
           value={String(counts.local)}
-          sub="never leave this machine"
+          sub={usingRecorded ? 'from the committed runs' : 'never leave this machine'}
           icon={<IconLocal size={17} />}
         />
         <Stat

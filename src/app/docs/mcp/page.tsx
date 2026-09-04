@@ -23,12 +23,12 @@ export default function McpPage() {
       intro="Leverage speaks MCP in both directions: your host calls it to run missions, and it calls back to your host to borrow the model your subscription already pays for."
     >
       <H2>Install</H2>
-      <Code label="Claude Code">{`claude mcp add leverage -- node /abs/path/to/leverage/mcp/server.js`}</Code>
+      <Code label="Claude Code">{`claude mcp add leverage -- node /abs/path/to/leverage/mcp/server.ts`}</Code>
       <Code label="Any host config">{`{
   "mcpServers": {
     "leverage": {
       "command": "node",
-      "args": ["/abs/path/to/leverage/mcp/server.js"],
+      "args": ["/abs/path/to/leverage/mcp/server.ts"],
       "env": { "LEVERAGE_API_URL": "http://localhost:3000" }
     }
   }

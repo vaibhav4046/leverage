@@ -50,8 +50,12 @@ paid calls                0
 blocked paid attempts     0
 local calls               3
 free cloud calls          3
-RocketRide credits used   30.40
 ```
+
+Credit consumption is **not** recorded per mission. The mission snapshots carry no
+credit field, so any per-run figure here would be a number nobody could check. The
+one credit measurement in this repository is a single verification call, captured
+by `npm run verify:rocketride` into `demo/evidence/rocketride-run.json`.
 
 ### The three handoffs
 
@@ -83,17 +87,49 @@ failed                 13
 Failure modes were not subtle: timeouts, HTTP 500 from the local runtime, malformed
 output, and one **genuine** HTTP 429 from `pool:auto/coding:free`.
 
-### The probe is not stable, and that is the point
+### The mission where RocketRide did the work
 
-The probe was run twice against the same 22 models. The results disagreed:
+The two runs above prove the workflow. This one answers the question a sponsor
+judge actually asks: did RocketRide execute anything load-bearing, or was it a
+health check beside the real work?
 
-| Model | Run 1 | Run 2 |
-|---|---|---|
-| `ollama:qwen2.5-coder:3b` | 2/2 | 1/2 (timeout) |
-| `ollama:gemma3:4b` | 2/2 | 0/2 (wrong behaviour) |
-| `ollama:kodro-fast` | 0/2 | 2/2 |
-| `ollama:kodro-tutor` | 1/2 | 0/2 |
-| `pool:auto/best-coding` | 2/2 | 1/2 (timeout) |
+Mission `LVR-bda3ba68`, started through the MCP tool `leverage_run` rather than a
+script. Snapshot: `demo/rocketride-mission.json`. Summary:
+`demo/evidence/rocketride-mission-summary.json`.
+
+```
+status                    COMPLETED
+tasks                     4 / 4 verified
+proof checks              8
+elapsed                   311s
+workers                   6  (3 executed as RocketRide pipelines, 3 local)
+cognitive handoffs        2  (39% and 45% context reduction)
+actual paid inference     $0.00
+```
+
+The three RocketRide workers were `pool:auto/best-free`, and they owned the `money`,
+`validate` and `split` tasks. All three passed verification. Routing is decided at
+`src/core/scheduler.ts` by cost class: anything that is not `local` or `host` runs
+inside a pipeline, so those three tasks could not have completed without RocketRide
+executing them.
+
+The pool has to be reachable from RocketRide's cloud for this to work at all, which
+is the constraint that produced `docs/ROCKETRIDE_FINDINGS.md`.
+
+
+## The probe is not stable, and that is the point
+
+The probe was run more than once against the same 22 models and the results moved
+between runs: models that passed 2/2 on one pass returned timeouts, HTTP 500s or
+wrong behaviour on the next.
+
+The per-run comparison table that used to sit here has been removed. Only one probe
+snapshot survives — `scripts/benchmark-models.ts` writes
+`demo/proof/capability-probe.json` in place, so each run overwrites the last, and a
+second column could not be traced to a file. Publishing a comparison whose second
+half nobody could check would undercut the exact argument it was making.
+
+What the retained snapshot does show, and what the argument actually rests on:
 
 Same prompts, same models, same machine, minutes apart. This is what small models on
 free routes actually behave like, and it is the strongest single argument for the
@@ -125,7 +161,6 @@ workers hired             6
 cost classes used         host · free · local
 cognitive handoffs        2  (62% and 84% context reduction)
 actual paid inference     $0.00
-RocketRide credits used   13.60
 ```
 
 Files written by workers: `src/vector.js`, `src/physics.js`, `src/spawner.js`,
@@ -181,7 +216,7 @@ Measured from `billing.getCreditBalance`, not estimated:
 |---|---|
 | `webhook -> response` (no model) | 0.4 |
 | `webhook -> llm_openai_api -> response`, one question | 2.0 – 2.5 |
-| Full 4-task benchmark mission | 14.6 - 30.4 |
+| Full 4-task benchmark mission | not recorded per mission |
 
 At that rate the 5,000-credit hackathon grant is roughly 160-340 full missions. Total
 consumed across all development and verification for this build: about 240 credits.

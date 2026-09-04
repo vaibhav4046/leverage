@@ -5,7 +5,7 @@
 > Your best model should make the expensive decisions. It should not write the fortieth test.
 
 [![Live](https://img.shields.io/badge/live-useleverage.vercel.app-4ade80?style=flat-square)](https://useleverage.vercel.app)
-[![Tests](https://img.shields.io/badge/tests-47%20passing-4ade80?style=flat-square)](tests/invariants.test.ts)
+[![Tests](https://img.shields.io/badge/tests-53%20passing-4ade80?style=flat-square)](tests/invariants.test.ts)
 [![Paid inference](https://img.shields.io/badge/actual%20paid%20inference-%240.00-4ade80?style=flat-square)](demo/canonical-run.json)
 [![RocketRide](https://img.shields.io/badge/RocketRide-staging%20verified-85a6e9?style=flat-square)](docs/ROCKETRIDE_FINDINGS.md)
 
@@ -91,7 +91,6 @@ A real recorded mission, not a mock — `LVR-f8f72d56`, in `demo/canonical-run.j
 | Cognitive handoffs | 3 (one injected 429, two genuine test failures) |
 | Context reduction at handoff | 57%, 48%, 30% — measured |
 | **Actual paid inference** | **$0.00** |
-| RocketRide credits consumed | 30.40 |
 
 Reproduce it:
 
@@ -147,7 +146,7 @@ or a token.
 ## Use it from your host
 
 ```bash
-claude mcp add leverage -- node /abs/path/to/leverage/mcp/server.js
+claude mcp add leverage -- node /abs/path/to/leverage/mcp/server.ts
 ```
 
 Then, inside the host:
@@ -195,7 +194,7 @@ places where the published docs disagree with the running system —
 ## Verify it yourself
 
 ```bash
-npm run verify              # typecheck, lint, 40 invariant tests, production build
+npm run verify              # typecheck, lint, 53 invariant tests, production build
 npm run verify:rocketride   # real inference through a real pipeline, real credit delta
 ```
 

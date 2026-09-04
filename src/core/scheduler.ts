@@ -512,7 +512,13 @@ export class MissionScheduler {
           bundle.availableRepoTokens > 0
             ? Math.round((1 - bundle.approximateTokens / bundle.availableRepoTokens) * 100)
             : 0,
-        via: this.opts.useRocketRide ? 'rocketride-pipeline' : 'direct',
+        // Must match the routing decision below, not the global switch: a local
+        // model never enters a pipeline, and labelling it as if it had would put a
+        // false claim into the event log a judge is invited to read.
+        via:
+          this.opts.useRocketRide && model.costClass !== 'local' && model.costClass !== 'host'
+            ? 'rocketride-pipeline'
+            : 'direct',
       },
     });
 

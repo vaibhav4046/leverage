@@ -7,6 +7,8 @@
  *
  *   npm run verify:rocketride
  */
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
 dotenv.config();
@@ -68,7 +70,19 @@ async function main() {
     console.log(`consumed  ${(before.balance - after.balance).toFixed(2)} credits`);
   }
 
-  if (!result.text.trim()) fail('pipeline returned an empty answer — the LLM node is not wired');
+  const answer = result.text.trim();
+  if (!answer) fail('pipeline returned an empty answer — the LLM node is not wired');
+
+  // A pipeline that runs, bills us, and hands back the provider's error string is
+  // not a verified execution path. Reporting it as one would put a fabricated
+  // success into the evidence file, which is the exact failure this project spends
+  // most of its effort avoiding.
+  if (/^\*\*LLM error\*\*|ValueError|An error occurred with the API/i.test(answer)) {
+    fail(
+      `the pipeline executed and consumed credits, but the worker returned a provider error: ` +
+        `${answer.slice(0, 120)}. The pool endpoint is probably not reachable from RocketRide's cloud.`,
+    );
+  }
   console.log('\nRocketRide execution path verified.');
 }
 
