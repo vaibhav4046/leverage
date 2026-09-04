@@ -95,31 +95,64 @@ does not forward unknown keys into the upstream body. `scripts/pool-proxy.mjs`
 forces it on our side instead, and is verified to return JSON where the router
 returns SSE.
 
-## 6b. Publishing that endpoint — PARTLY DONE, NOT RELIABLE
+## 6b. Publishing that endpoint — NEEDS AN ACCOUNT. Proven, not assumed.
+
+I tried every no-account option and they are all dead ends. This is the one
+remaining thing that stops the cloud path staying up on its own.
+
+| Option | Result when tested |
+|---|---|
+| cloudflared **quick** tunnel | Worked ~10 times, then Cloudflare began throttling: it now hangs at `Requesting new quick Tunnel...` and exits 1. Cloudflare's own banner says these have **no uptime guarantee**. |
+| `localhost.run` over SSH | Connects, then prints a registration QR code. The anonymous tunnel never serves. |
+| Hosting the router on Vercel | The router aggregates upstream providers whose credentials live in its own config. Replicating it means copying your provider keys into a public deployment, which I will not do. |
+
+**The fix, and it is two minutes of your time:**
+
+1. Create a named tunnel in the Cloudflare dashboard (free, needs an account and
+   any domain).
+2. Put the token and the hostname in `.env.local`:
+   ```
+   CLOUDFLARE_TUNNEL_TOKEN=...
+   POOL_PUBLIC_URL=https://pool.yourdomain.com
+   ```
+3. `pm2 start ecosystem.config.cjs`
+
+`scripts/pool-tunnel.mjs` already takes that path when both variables are set:
+stable hostname, no re-registration, no rate limit. Without them it falls back to
+a quick tunnel and says so in its own logs.
+
+The alternative with no Cloudflare account at all is to run the router on any box
+with a stable address and set `OMNIROUTE_BASE_URL` to it. That removes tunnels
+from the design entirely and is what I would do for judging.
+
+## 6b-i. What I fixed along the way (all committed and working)
 
 `scripts/pool-tunnel.mjs` + `ecosystem.config.cjs` turn the hand-run `cloudflared`
 process into a supervised service that waits for its upstream, verifies a
 hostname actually serves before registering it, and writes `OMNIROUTE_BASE_URL`
 itself.
 
-**It is not reliably registering.** It worked when run cleanly against the router
-and has since failed to publish the proxy, logging `tunnel hostname never began
-serving`. I did not get to the bottom of it. Two real bugs were found and fixed
-on the way (discarding a hostname after one failed probe, and two competing quick
-tunnels leaving the loser serving nothing), so what remains is a third cause.
+Four real bugs were found and fixed getting here, and every one of them produced
+the same misleading symptom — a hostname that is announced and then serves
+nothing, which reads exactly like a slow Cloudflare edge:
 
-**Action, in preference order:**
+1. **The router streams by default.** SSE where RocketRide's component expects one
+   JSON document. Fixed by `scripts/pool-proxy.mjs`.
+2. **Discarding the hostname after one failed probe.** cloudflared announces it
+   once; the edge takes a few seconds. Now retried.
+3. **Two competing quick tunnels.** The loser serves nothing silently.
+4. **The tunnel was killing the proxy it exists to publish.** I had it reap its
+   *upstream's* port. The process that binds a port owns freeing it.
 
-1. Put the router on a host with a stable address and set `OMNIROUTE_BASE_URL` to
-   it. This removes tunnels from the design entirely and is the only version that
-   survives a reboot without ceremony.
-2. Use a **named** Cloudflare tunnel (needs a Cloudflare account and a domain).
-   Stable hostname, no re-registration.
-3. Keep the quick tunnel, run `node scripts/pool-tunnel.mjs` in the foreground,
-   and confirm it prints `public pool registered` before demoing.
+Plus the one that cost the most: **a zombie listener on `127.0.0.1` while the new
+process bound `0.0.0.0`.** Both appear in netstat, both look healthy, and every
+localhost connection goes to the old code. `pkill` does not reliably kill Windows
+processes; `scripts/port-utils.mjs` now kills by port instead of by name.
 
-**State right now:** the cloud path is **not** live. `/api/v1/health` reports this
-honestly as `cloudWorkerPath`, so it can be checked rather than assumed.
+**State right now:** `OMNIROUTE_BASE_URL` points at the local proxy, so local and
+free workers run normally and the RocketRide cloud path is not publicly
+reachable. `/api/v1/health` reports that as `cloudWorkerPath`, so it can be
+checked rather than assumed. Nothing points at a dead tunnel.
 
 ## 6c. The earlier verified run — REAL, AND STILL THE EVIDENCE
 

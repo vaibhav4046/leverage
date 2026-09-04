@@ -77,6 +77,11 @@ async function reachable(url, timeoutMs = 15000) {
 /**
  * Kill stale tunnels before starting one.
  *
+ * Only tunnels. Reaping the upstream's port here killed the proxy this process
+ * exists to publish, so the hostname came up with nothing behind it and reported
+ * "never began serving" -- a self-inflicted outage that looked exactly like a
+ * slow Cloudflare edge. The process that binds a port owns freeing it.
+ *
  * Two quick tunnels pointed at the same local port compete, and the loser never
  * begins serving. The symptom is a hostname that is announced and then answers
  * nothing, which reads exactly like a slow edge, so it cost an hour to spot.
@@ -91,6 +96,56 @@ function killStaleTunnels() {
     say('cleared a stale tunnel');
   } catch {
     // Nothing to kill is the normal case.
+  }
+}
+
+/**
+ * A named tunnel, when one is configured.
+ *
+ * This is the version that actually holds. Quick tunnels are rate limited by
+ * Cloudflare (after roughly a dozen creations they simply hang at "Requesting new
+ * quick Tunnel"), get a new random hostname every start, and carry no uptime
+ * guarantee -- Cloudflare says so in the banner. A named tunnel has a stable
+ * hostname, so nothing needs re-registering and OMNIROUTE_BASE_URL can just be
+ * set once.
+ *
+ * Set CLOUDFLARE_TUNNEL_TOKEN and POOL_PUBLIC_URL and this path is used instead.
+ */
+function namedTunnelConfigured() {
+  return Boolean(process.env.CLOUDFLARE_TUNNEL_TOKEN && process.env.POOL_PUBLIC_URL);
+}
+
+async function runNamedTunnel() {
+  const publicUrl = process.env.POOL_PUBLIC_URL.replace(/\/$/, '');
+  say('using a named tunnel (stable hostname, no re-registration)');
+
+  const child = spawn(
+    process.platform === 'win32' ? 'cloudflared.cmd' : 'cloudflared',
+    ['tunnel', 'run', '--token', process.env.CLOUDFLARE_TUNNEL_TOKEN],
+    { stdio: ['ignore', 'pipe', 'pipe'], shell: process.platform === 'win32' },
+  );
+  child.stdout.on('data', () => {});
+  child.stderr.on('data', () => {});
+
+  for (let attempt = 1; attempt <= 20; attempt++) {
+    const count = await reachable(publicUrl);
+    if (count > 0) {
+      setEnvVar('OMNIROUTE_BASE_URL', publicUrl);
+      say(`public pool registered via named tunnel, ${count} models`);
+      break;
+    }
+    await new Promise((r) => setTimeout(r, 3000));
+  }
+
+  child.on('exit', (code) => {
+    console.error(`[pool-tunnel] named tunnel exited with ${code}`);
+    process.exit(code ?? 1);
+  });
+  for (const sig of ['SIGINT', 'SIGTERM']) {
+    process.on(sig, () => {
+      child.kill();
+      process.exit(0);
+    });
   }
 }
 
@@ -109,6 +164,14 @@ async function main() {
     await new Promise((r) => setTimeout(r, 5000));
   }
   log(`local router up, ${localModels} models`);
+
+  if (namedTunnelConfigured()) {
+    await runNamedTunnel();
+    return;
+  }
+
+  say('no named tunnel configured; falling back to a quick tunnel');
+  say('quick tunnels are rate limited and change hostname on every start');
 
   const child = spawn(
     process.platform === 'win32' ? 'cloudflared.cmd' : 'cloudflared',

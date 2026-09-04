@@ -22,11 +22,16 @@
  *   node scripts/pool-proxy.mjs           # listens on 20129, forwards to 20128
  */
 import http from 'node:http';
+import { freePort } from './port-utils.mjs';
 
 const PORT = Number(process.env.POOL_PROXY_PORT ?? 20129);
 const UPSTREAM = (process.env.POOL_UPSTREAM_URL ?? 'http://127.0.0.1:20128').replace(/\/$/, '');
 
+const reaped = freePort(PORT);
+if (reaped.length) console.log(`[pool-proxy] freed port ${PORT} from ${reaped.length} stale listener(s)`);
+
 const server = http.createServer(async (req, res) => {
+  if (process.env.POOL_PROXY_VERBOSE) console.log('[pool-proxy] inbound', req.method, req.url);
   const chunks = [];
   for await (const chunk of req) chunks.push(chunk);
   const raw = Buffer.concat(chunks);
