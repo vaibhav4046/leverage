@@ -65,7 +65,11 @@ Two missions were initiated **through MCP**, not through a script shortcut.
 | `LVR-3eee5ff5` | 4,319 ms | 8 | 8 | 122 | $0.00 | **FAILED** |
 | `LVR-e95ef2c8` | 34,722 ms | 8 | 7 | 125 | $0.00 | **FAILED** (1/4 tasks passed) |
 
-**Both fresh runs failed to complete the fixture.** They are real: real workers,
+**Both of the first two fresh runs failed to complete the fixture.** The third,
+`LVR-bda3ba68`, completed 4/4 once both providers were up and the pool was
+publicly reachable. See the RocketRide section.
+
+Original note on the first two: They are real: real workers,
 real handoffs, real `$0.00` enforcement. They did not finish the work.
 
 Cause is provider availability, not a code regression. Both the Ollama daemon and
@@ -83,7 +87,45 @@ the second run. Its own contract says it returns as soon as the mission is
 admitted, and the design note in the file gives the reason. 34s is not admission
 latency, it is the registry sweep blocking the call. Recorded, not fixed.
 
-## RocketRide — executed, but not load-bearing
+## RocketRide — LOAD-BEARING (fixed in wave 2)
+
+The blocker was never the integration. The pipeline pointed at
+`http://127.0.0.1:20128`, which RocketRide's cloud cannot route to, so the worker
+returned an LLM error while the pipeline itself ran and billed us. Behind a
+public HTTPS tunnel (`cloudflared`, installed this pass) the same pipeline
+returns real output:
+
+```
+pool      https://…trycloudflare.com   (public)
+auth      ok (org df58d291…)
+answer    "READY"
+latency   25,452 ms
+engine    2.4 tokens
+consumed  2.90 credits
+credits   4685.6 / 5000
+```
+
+### A full mission where RocketRide did the work
+
+`demo/rocketride-mission.json`, mission `LVR-bda3ba68`, initiated through
+**MCP `tools/call leverage_run`**, not a script:
+
+| | |
+|---|---|
+| Status | **COMPLETED** |
+| Tasks | **4/4 passed** |
+| Proof checks | 8 |
+| Workers | 6 — **3 executed as RocketRide pipelines**, 3 local |
+| Cognitive handoffs | 2, context reduced **39%** and **45%** |
+| Elapsed | 311 s |
+| Actual paid inference | **$0.00** |
+
+Three of the four tasks were completed by `pool:auto/best-free`, whose cost class
+routes it through the RocketRide executor, and their output passed verification.
+Two local workers were replaced after `TEST_FAILURE` and the replacements
+finished the work. That is the product's whole claim, executed end to end.
+
+## RocketRide — the earlier failed attempt, kept for the record
 
 Fresh run this pass:
 
@@ -148,17 +190,42 @@ clipped content.
 
 ## Things intentionally not claimed
 
-- No fresh successful end-to-end mission. Two were attempted; both failed.
-- No load-bearing RocketRide cloud worker result.
+- No browser video capture. Playwright is available as an MCP server but no
+  recording pipeline was built.
 - No ElevenLabs narration, alignment, SRT or VTT — no API key exists here.
 - No 60-second master film. The 9-second teaser from the previous pass stands.
 - No Supademo — the connector is unauthenticated and this session cannot OAuth.
 - No browser capture harness. Playwright is not installed and I did not add a
   large dependency and a recording pipeline in the time left.
-- No approval flow work, no Capability Mesh, no artifact foundry, no scheduler,
-  no Evidence Memory, no browser worker. The "Leverage Everywhere" expansion was
-  not started.
+- No Capability Mesh, no artifact foundry, no durable scheduler, no Evidence
+  Memory, no browser worker. The "Leverage Everywhere" expansion was not started
+  beyond the approval primitive.
 - The Postgres repository remains unexecuted against a live database.
+
+## Human control — implemented this pass
+
+An audit found approval was vocabulary only: `APPROVAL_REQUIRED_ACTIONS`, the
+`AWAITING_APPROVAL` *mission* status, both approval event types and the
+`approvals` table all existed with **zero consumers**, and `TaskState` had no
+such state, so a task could never enter the one the feature claimed.
+
+Now real:
+
+| Behaviour | Where |
+|---|---|
+| `AWAITING_APPROVAL` task state + legal transitions | `src/core/types.ts`, `src/core/dag.ts` |
+| Gate runs per task before any claim | `src/core/scheduler.ts` |
+| Independent branches keep running | per-task gate + `readyTasks` |
+| Mission **pauses** instead of finishing | `mission.paused`, scheduler returns with status RUNNING |
+| Approve returns task to READY, not PASSED | `resolveApproval` |
+| Reject fails the task | `resolveApproval` |
+| Audit record (actor, decision, timestamp) | `task.approval` |
+| Read-only demo refused | `403`, verified live |
+
+The non-obvious defect: with the gated task excluded from the claimable set, the
+loop hit its empty-set break and `finish()` counted the task as failed, silently
+dropping the work rather than waiting. Tests were written RED first and confirmed
+failing before the state existed. **53/53 pass.**
 
 ## Operator actions
 

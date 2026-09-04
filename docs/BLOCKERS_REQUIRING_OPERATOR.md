@@ -10,6 +10,9 @@ was either done or is recorded in `docs/OVERNIGHT_RESULT.md` as not done.
 
 **Action:** add `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID` to `.env.local`.
 
+Still the top remaining blocker: it is the only thing standing between the
+current state and a narrated 60-second master film.
+
 `.env.local` contains no ElevenLabs key, and no ElevenLabs variable exists in the
 shell environment. Narration, forced alignment, and therefore the aligned SRT/VTT
 subtitles could not be produced. The 60-second script is written and locked at
@@ -73,7 +76,20 @@ commits. Rotation is hygiene, not incident response.
 
 ---
 
-## 6. A load-bearing RocketRide cloud task — NEEDS A PUBLIC POOL ENDPOINT
+## 6. A load-bearing RocketRide cloud task — RESOLVED
+
+`cloudflared` was installed and the local OpenAI-compatible router exposed over a
+public HTTPS tunnel. RocketRide then executed workers that produced verified
+output: mission `LVR-bda3ba68`, 4/4 tasks passed, 3 of 6 workers run as
+RocketRide pipelines, $0.00 paid. Evidence in `demo/rocketride-mission.json` and
+`demo/evidence/rocketride-run.json`.
+
+**One caveat that is yours to decide:** the tunnel is a `trycloudflare.com`
+quick tunnel. It is ephemeral and dies with the process. For judging, either keep
+the tunnel process alive, or put the router on a stable host and set
+`OMNIROUTE_BASE_URL` to it. The tunnel URL is deliberately not committed.
+
+## 6b. Original diagnosis, kept for the record — NEEDED A PUBLIC POOL ENDPOINT
 
 **Action:** either expose the local pool over a tunnel, or point
 `OMNIROUTE_BASE_URL` at a publicly reachable OpenAI-compatible endpoint.
@@ -103,7 +119,13 @@ which is a judging criterion.
 
 ---
 
-## 7. A fresh end-to-end successful mission — ENVIRONMENT, NOT CODE
+## 7. A fresh end-to-end successful mission — RESOLVED
+
+`LVR-bda3ba68` completed 4/4 with both providers up and the pool publicly
+reachable. The two earlier failures below were provider availability, and the
+record is kept because it shows what the handoff machinery absorbs.
+
+## 7b. The two earlier failures, kept for the record
 
 **Action:** keep both the Ollama daemon and the OmniRoute router running, then
 re-run `npm run mcp:harness`.
