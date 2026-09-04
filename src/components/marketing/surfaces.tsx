@@ -6,14 +6,14 @@ import type { MissionEvent } from '@/core/types';
  * Product surfaces.
  *
  * The pattern the good developer-tool sites share is that they show the product
- * populated with real, specific, technical detail — Linear puts real issue ids and
+ * populated with real, specific, technical detail. Linear puts real issue ids and
  * timestamps in its mockups, Claude embeds an actual debugging session with the
  * code changes and test results in it. What makes those read as premium is not the
  * gradient, it is the density of true detail.
  *
  * Leverage has better raw material than a mockup: an append-only event log from a
  * mission that actually ran. These components render slices of it. Nothing here is
- * composed for the page — every timestamp, model name and check result is read from
+ * composed for the page: every timestamp, model name and check result is read from
  * `demo/canonical-run.json`.
  */
 
@@ -42,7 +42,7 @@ const TIMELINE_TYPES = new Set([
  * starts reading evidence.
  *
  * The slice is chosen around the failure, because the failure is the interesting
- * part — anyone can show a green run.
+ * part. Anyone can show a green run.
  */
 export function ExecutionSurface({ run }: { run: MissionSnapshot | null }) {
   if (!run) return null;
@@ -70,8 +70,8 @@ export function ExecutionSurface({ run }: { run: MissionSnapshot | null }) {
               <p className="mt-5 max-w-[32rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
                 Every line to the right is a real event from mission{' '}
                 <span className="mono text-[var(--color-frosted-lilac)]">{run.mission.id}</span>,
-                read from its append-only log. The rate limit is injected and labelled as such,
-                what is being demonstrated is the recovery, not the coincidence.
+                read from its append-only log. The rate limit is injected and labelled as such
+                in the stream, so what you are watching is how the scheduler handled it.
               </p>
 
               <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-5">
@@ -197,10 +197,10 @@ export function WorkforceLedger({ models }: { models: ModelRow[] }) {
             It learns which models are actually good.
           </h2>
           <p className="mt-5 max-w-[46rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
-            Not a leaderboard someone else published. This installation&rsquo;s own record of
-            which models passed verification on real work. Rates are shrunk toward a neutral
-            prior and carry their sample count, so nothing here can claim more than it has
-            earned.
+            This installation&rsquo;s own record of which models passed verification on real
+            work, rather than a leaderboard someone else published. Rates are shrunk toward a
+            neutral prior and carry their sample count, so nothing here can claim more than it
+            has earned.
           </p>
         </Reveal>
 

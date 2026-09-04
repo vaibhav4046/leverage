@@ -7,7 +7,7 @@ import { AuroraField } from '@/components/visual/aurora-field';
  * Shared chrome for the content pages.
  *
  * Extracted the moment there was a second page, because a nav that drifts between
- * routes is the fastest way to make a site feel assembled rather than designed —
+ * routes is the fastest way to make a site feel assembled rather than designed,
  * and because six of these links were pointing at 404s, which is a far louder
  * signal of "unfinished" than any amount of visual polish.
  */

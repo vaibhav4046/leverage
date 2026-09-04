@@ -1,0 +1,24 @@
+{
+  "apiUrl": "http://127.0.0.1:3000",
+  "startedAt": "2026-09-04T01:37:07.917Z",
+  "server": {
+    "name": "leverage",
+    "version": "1.0.0"
+  },
+  "tools": [
+    "leverage_run",
+    "leverage_status",
+    "leverage_cancel",
+    "leverage_proof",
+    "leverage_models"
+  ],
+  "schemaProblems": [],
+  "modelsPreview": "leverage error: The operation was aborted due to timeout",
+  "missionId": "LVR-bda3ba68",
+  "runAdmittedMs": 13615,
+  "polls": 75,
+  "finalStatus": "{\n  \"missionId\": \"LVR-bda3ba68\",\n  \"status\": \"COMPLETED\",\n  \"elapsedMs\": 310842,\n  \"tasks\": [\n    {\n      \"id\": \"money\",\n      \"title\": \"Implement money helpers\",\n      \"state\": \"PASSED\",\n      \"attempts\": 2\n    },\n    {\n      \"id\": \"validate\",\n      \"title\": \"Implement receipt validation\",\n      \"state\": \"PASSED\",\n      \"attempts\": 2\n    },\n    {\n      \"id\": \"split\",\n      \"title\": \"Implement the split calculation\",\n      \"state\": \"PASSED\",\n      \"attempts\": 1\n    },\n    {\n      \"id\": \"index\",\n      \"title\": \"Implement the request handler\",\n      \"state\": \"PASSED\",\n      \"attempts\": 1\n    }\n ",
+  "proofPreview": "{\n  \"missionId\": \"LVR-bda3ba68\",\n  \"status\": \"COMPLETED\",\n  \"checks\": [\n    {\n      \"label\": \"src/money.js exists\",\n      \"status\": \"pass\",\n      \"detail\": \"src/money.js exists\"\n    },\n    {\n      \"label\": \"test/money.test.js\",\n      \"status\": \"pass\",\n      \"detail\": \"ℹ duration_ms 89.6279\"\n    },\n    {\n      \"label\": \"src/validate.js exists\",\n      \"status\": \"pass\",\n      \"detail\": \"src/validate.js exists\"\n    },\n    {\n      \"label\": \"test/validate.test.js\",\n      \"status\": \"pass\",\n      \"detail\": \"ℹ duration_ms 98.3054\"\n    },\n    {\n      \"label\": \"src/split.js exists\",\n      \"status\": \"pass\",\n      \"detail\": \"src/split.js exists\"\n    },\n    {\n      \"label\": \"test/split.test.js\",\n      \"status\": \"pass\",\n      \"detail\": \"ℹ duration_ms 81.0695\"\n    },\n    {\n      \"label\": \"src/index.js exi",
+  "malformedRefused": true,
+  "finishedAt": "2026-09-04T01:43:02.574Z"
+}

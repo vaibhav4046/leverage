@@ -215,8 +215,8 @@ export default async function Home() {
         <Section eyebrow="The problem" title="Your smartest model is doing work it shouldn't.">
           <p className="max-w-[46rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
             Frontier intelligence earns its price on architecture, trade-offs and hard reasoning.
-            It should not spend the same premium compute on repository search, repetitive tests and
-            mechanical edits.
+            It should not spend the same premium compute on repository search and mechanical
+            edits.
           </p>
 
           <div className="mt-10 grid gap-4 md:grid-cols-2">

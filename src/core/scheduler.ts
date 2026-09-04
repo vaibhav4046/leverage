@@ -2,6 +2,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import type {
+  Risk,
   AuctionResult,
   CognitiveCheckpoint,
   ContextBundle,
@@ -59,6 +60,11 @@ export interface SchedulerOptions {
   maxContextTokens: number;
   /** Set false to invoke providers directly instead of via RocketRide pipelines. */
   useRocketRide: boolean;
+  /**
+   * Risk levels that stop for a human before running. Empty or absent means the
+   * gate is off, which is why every existing caller keeps its behaviour.
+   */
+  requireApprovalFor?: Risk[];
 }
 
 /**
@@ -163,6 +169,22 @@ export class MissionScheduler {
         }
       }
 
+      // Human approval, before anything is claimed.
+      //
+      // A high-risk task stops here and nowhere else: this is a scheduling
+      // primitive, not a modal in the UI. Because the gate runs per task and
+      // `readyTasks` only cares about each task's own dependencies, independent
+      // branches keep running while this one waits.
+      for (const task of readyTasks(state.tasks)) {
+        if (task.state !== 'READY' || this.inflight.has(task.id)) continue;
+        if (!this.requiresApproval(task)) continue;
+        this.transition(task, 'AWAITING_APPROVAL');
+        state.events.emit('approval.requested', `Approval required: ${task.title}`, {
+          taskId: task.id,
+          data: { risk: task.risk, reason: 'risk level requires a human decision' },
+        });
+      }
+
       const claimable = readyTasks(state.tasks).filter(
         (t) => t.state === 'READY' && !this.inflight.has(t.id),
       );
@@ -189,6 +211,19 @@ export class MissionScheduler {
       }
 
       if (running.size === 0) {
+        // A task waiting on a human is not a finished mission. Leaving the loop
+        // here would run finish(), which counts anything not PASSED as failed --
+        // so the gate would silently drop the task rather than pause it. Return
+        // instead: the mission stays RUNNING and resumes when someone decides.
+        if (state.tasks.some((t) => t.state === 'AWAITING_APPROVAL')) {
+          state.events.emit('mission.paused', 'Waiting on a human decision', {
+            data: {
+              awaiting: state.tasks.filter((t) => t.state === 'AWAITING_APPROVAL').map((t) => t.id),
+            },
+          });
+          return state;
+        }
+
         // Nothing running and nothing claimable: either everything settled or the
         // remainder is blocked. Either way the loop is done.
         if (readyTasks(state.tasks).every((t) => this.inflight.has(t.id))) break;
@@ -821,6 +856,40 @@ export class MissionScheduler {
   }
 
   // -------------------------------------------------------------------------
+
+  /**
+   * Which tasks need a human.
+   *
+   * Keyed on the task's own risk level, which the compiler already sets. An
+   * approval that has been granted is recorded on the task so a resumed mission
+   * does not ask twice.
+   */
+  private requiresApproval(task: MissionTask): boolean {
+    if (!this.opts.requireApprovalFor?.length) return false;
+    if (task.approval?.resolution) return false;
+    return this.opts.requireApprovalFor.includes(task.risk);
+  }
+
+  /**
+   * Resolve a pending approval. Returns false when the task is not waiting, which
+   * makes a replayed decision a no-op rather than a second state change.
+   */
+  resolveApproval(
+    taskId: string,
+    resolution: 'approved' | 'rejected',
+    actor: string,
+  ): boolean {
+    const task = this.state.tasks.find((t) => t.id === taskId);
+    if (!task || task.state !== 'AWAITING_APPROVAL') return false;
+
+    task.approval = { resolution, actor, at: new Date().toISOString() };
+    this.transition(task, resolution === 'approved' ? 'READY' : 'FAILED');
+    this.state.events.emit('approval.resolved', `Approval ${resolution} by ${actor}`, {
+      taskId: task.id,
+      data: { resolution, actor },
+    });
+    return true;
+  }
 
   private transition(task: MissionTask, to: MissionTask['state']): void {
     assertTransition(task.id, task.state, to);

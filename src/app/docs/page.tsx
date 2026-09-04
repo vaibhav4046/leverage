@@ -4,12 +4,12 @@ import { Callout, Code, ContentPage, H2, Prose } from '@/components/marketing/pa
 import { Reveal } from '@/components/visual/motion';
 
 export const metadata: Metadata = {
-  title: 'Docs — Leverage',
+  title: 'Docs · Leverage',
   description: 'Install Leverage, connect intelligence you already pay for, and run your first mission.',
 };
 
 const SOURCES: [string, string, string][] = [
-  ['Your agent CLI', 'none', 'Already installed and logged in — claude, codex, gemini, opencode.'],
+  ['Your agent CLI', 'none', 'Already installed and logged in: claude, codex, gemini, opencode.'],
   ['Your MCP host seat', 'none', 'Run Leverage inside your agent; it samples the host model.'],
   ['Ollama', 'none', 'Every model you have pulled. Nothing leaves the machine.'],
   ['OpenAI-compatible', 'yours', 'LM Studio, vLLM, llama.cpp, a gateway of your own.'],
@@ -31,7 +31,7 @@ cp .env.example .env.local`}</Code>
       <H2>Connect intelligence</H2>
       <Prose>
         <p>
-          At least one of these. Ordered by least setup — the first two need no key because
+          At least one of these, ordered by least setup. The first two need no key, because
           your subscription already paid for the model.
         </p>
       </Prose>
@@ -112,8 +112,8 @@ npm run dev             # Mission Control at http://localhost:3000`}</Code>
       <Prose>
         <p>
           The probe is worth running first. It costs a couple of minutes and stops the auction
-          hiring a model that returns an empty response to every structured request — which is a
-          real failure mode, not a hypothetical one.
+          hiring a model that returns an empty response to every structured request. That is
+          what happened here on the first real run.
         </p>
       </Prose>
 

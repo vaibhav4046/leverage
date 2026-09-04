@@ -12,8 +12,8 @@ import type { MissionEvent } from '@/core/types';
  * 01:23.8 shows what the scheduler was doing at 01:23.8 of a mission that ran.
  *
  * It is the most load-bearing interaction on the site, because the product's whole
- * claim is "do not trust the model, read the evidence" — and this is the evidence,
- * made legible instead of described.
+ * claim is "do not trust the model, read the evidence". This is that evidence, made
+ * legible instead of described.
  *
  * Timeline is compressed: real missions have minute-long gaps between events while
  * a model thinks, and watching a progress bar creep is not informative. Gaps are
@@ -37,8 +37,8 @@ export function HandoffPlayer({ steps }: { steps: HandoffStep[] }) {
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  // Compressed gaps, derived once. Real elapsed times are still displayed —
-  // only the wait between them is shortened.
+  // Compressed gaps, derived once. Real elapsed times are still displayed; only
+  // the wait between them is shortened.
   const gaps = useMemo(
     () =>
       steps.map((s, i) => {
@@ -75,7 +75,7 @@ export function HandoffPlayer({ steps }: { steps: HandoffStep[] }) {
     return clear;
   }, [playing, index, gaps, steps.length, advance]);
 
-  // Autoplay once, on first scroll into view. Never loops — a looping animation
+  // Autoplay once, on first scroll into view. Never loops, because a looping animation
   // beside a static reader is noise, and this is meant to be read.
   const [hasPlayed, setHasPlayed] = useState(false);
   useEffect(() => {
@@ -229,8 +229,8 @@ export function HandoffPlayer({ steps }: { steps: HandoffStep[] }) {
  * A diagram of what the scheduler is doing right now.
  *
  * Deliberately three boxes and an arrow rather than an elaborate visualisation:
- * the point being made is small and specific — the worker changed, the
- * understanding did not — and a busier graphic would bury it.
+ * the point is small and specific: the worker changed, the understanding did
+ * not. A busier graphic would bury it.
  */
 function StageGraphic({ step }: { step?: HandoffStep }) {
   if (!step) return null;

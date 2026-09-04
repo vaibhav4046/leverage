@@ -57,7 +57,7 @@ export default async function DemoPage() {
             A gravity-arena prototype. The vector maths, the physics integration, the seeded
             spawner and the whole game state machine were written by Leverage workers under a
             hard $0 budget, and none of it was accepted until the committed tests passed. The
-            render shell and the tests are given — the workers could read the tests they had to
+            render shell and the tests are given. The workers could read the tests they had to
             satisfy and could not edit them.
           </p>
         </Reveal>
@@ -179,11 +179,12 @@ npm run mission -- --arcade
 cd benchmark/arcade && npm test`}
                 </pre>
                 <p className="mt-3 max-w-[52rem] text-[13px] leading-relaxed text-[var(--color-ash)]">
-                  It will not reproduce identically — these are stochastic models on free routes,
-                  and the number of attempts and handoffs varies. What is stable is the shape:
-                  every module is verified before it is accepted, and paid spend is
+                  It will not reproduce identically. Small models on free routes are stochastic,
+                  so the attempt and handoff counts move between runs. The shape holds: nothing
+                  is accepted until the committed tests pass, and paid spend is
                   <span className="mono text-[var(--color-quartz)]"> $0.00 </span>
-                  every time, because that part is policy rather than luck.
+                  every time, because the budget is enforced before the auction rather than
+                  scored inside it.
                 </p>
               </div>
             </Reveal>

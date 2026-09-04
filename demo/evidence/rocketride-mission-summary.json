@@ -1,0 +1,37 @@
+{
+  "label": "MCP-initiated mission with RocketRide executing the cloud workers",
+  "missionId": "LVR-bda3ba68",
+  "initiatedVia": "MCP tools/call leverage_run (scripts/mcp-harness.ts)",
+  "status": "COMPLETED",
+  "elapsedSeconds": 311,
+  "tasks": {
+    "total": 4,
+    "passed": 4
+  },
+  "proofChecks": 8,
+  "workers": {
+    "total": 6,
+    "viaRocketRide": 3,
+    "local": 3
+  },
+  "rocketRideLoadBearing": true,
+  "rocketRideNote": "Workers whose cost class is 'free' execute as RocketRide pipelines (src/core/scheduler.ts routes anything that is not local or host through the executor). 3 of the 6 workers ran that way and their output passed verification.",
+  "cognitiveHandoffs": [
+    {
+      "reason": "TEST_FAILURE",
+      "from": "ollama:qwen2.5-coder:3b",
+      "contextTokens": 421,
+      "checkpointTokens": 256,
+      "reductionPct": 39
+    },
+    {
+      "reason": "TEST_FAILURE",
+      "from": "ollama:qwen2.5-coder:3b",
+      "contextTokens": 453,
+      "checkpointTokens": 247,
+      "reductionPct": 45
+    }
+  ],
+  "actualPaidInferenceUsd": 0,
+  "poolReachability": "public HTTPS tunnel (cloudflared) to the local OpenAI-compatible router"
+}

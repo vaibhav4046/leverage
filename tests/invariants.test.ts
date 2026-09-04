@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { BudgetGovernor, BudgetExceededError, FRONTIER_BASELINE } from '../src/core/budget';
-import { validateDag, readyTasks, isBlocked, canTransition, DagError } from '../src/core/dag';
+import { validateDag, readyTasks, isBlocked, canTransition, isSettled, DagError } from '../src/core/dag';
 import { runAuction } from '../src/core/auction';
 import { checkEligibility, isCommandAllowed } from '../src/core/policy';
 import { compileMissionSpec, parseTaskPlan, PlanRejectedError } from '../src/core/compiler';
@@ -669,5 +669,85 @@ describe('mission repository', () => {
     await r.save('ws_a', snapshot('LVR-good', '2026-01-01T00:00:00.000Z'));
     await fs.writeFile(path.join(dir, 'ws_a', 'LVR-bad.json'), '{ not json');
     expect((await r.list('ws_a')).map((m) => m.mission.id)).toEqual(['LVR-good']);
+  });
+});
+
+// ------------------------------------------------------------------ approval
+
+describe('human approval gate', () => {
+  it('AWAITING_APPROVAL is a legal task state with legal transitions', () => {
+    // A high-risk task must be able to stop. Without the state and the
+    // transitions, assertTransition throws and the gate cannot exist.
+    expect(canTransition('READY', 'AWAITING_APPROVAL')).toBe(true);
+    expect(canTransition('AWAITING_APPROVAL', 'HIRING')).toBe(true);
+    expect(canTransition('AWAITING_APPROVAL', 'CANCELLED')).toBe(true);
+    // It must not be able to skip straight to done.
+    expect(canTransition('AWAITING_APPROVAL', 'PASSED')).toBe(false);
+  });
+
+  it('a task awaiting approval is not settled, so the mission is not finished', () => {
+    // The subtle one. With the gated task excluded from the claimable set, a
+    // scheduler that only asks "is anything claimable" would end the mission and
+    // silently drop the task instead of pausing for the human.
+    const tasks = [
+      { id: 'a', state: 'AWAITING_APPROVAL', dependencies: [] },
+      { id: 'b', state: 'PASSED', dependencies: [] },
+    ] as unknown as Parameters<typeof isSettled>[0];
+    expect(isSettled(tasks)).toBe(false);
+  });
+
+  it('a gated task does not block an independent branch', () => {
+    // Approval pauses one branch, not the mission. readyTasks is per-task, so a
+    // sibling with satisfied dependencies must still be offered.
+    const tasks = [
+      { id: 'risky', state: 'AWAITING_APPROVAL', dependencies: [] },
+      { id: 'safe', state: 'READY', dependencies: [] },
+      { id: 'downstream', state: 'PENDING', dependencies: ['risky'] },
+    ] as unknown as Parameters<typeof readyTasks>[0];
+    const ready = readyTasks(tasks).map((t) => t.id);
+    expect(ready).toContain('safe');
+    // The gated task itself is not runnable, and neither is what depends on it.
+    expect(ready).not.toContain('risky');
+    expect(ready).not.toContain('downstream');
+  });
+});
+
+describe('approval resolution', () => {
+  const gated = () =>
+    ({
+      id: 'deploy',
+      title: 'Deploy to production',
+      risk: 'critical',
+      state: 'AWAITING_APPROVAL',
+      dependencies: [],
+      updatedAt: '',
+    }) as unknown as Parameters<typeof canTransition>[0] extends never ? never : any;
+
+  it('a rejected approval fails the task rather than running it', () => {
+    expect(canTransition('AWAITING_APPROVAL', 'FAILED')).toBe(true);
+  });
+
+  it('a read-only identity cannot approve', () => {
+    // The gate is only as good as the thing that stops the public demo resolving
+    // it. requireWritable is what every mutating route calls first.
+    const readOnly = {
+      userId: 'demo',
+      workspaceId: 'ws_demo',
+      displayName: 'Public demo',
+      verified: false,
+      readOnly: true,
+    } as Identity;
+    expect(() => requireWritable(readOnly)).toThrow(AuthError);
+
+    const operator = { ...readOnly, readOnly: false } as Identity;
+    expect(() => requireWritable(operator)).not.toThrow();
+  });
+
+  it('an approved task returns to READY, not straight to PASSED', () => {
+    // Approval is permission to run, not a result. A gate that could mark work
+    // done would be worse than no gate.
+    expect(canTransition('AWAITING_APPROVAL', 'READY')).toBe(true);
+    expect(canTransition('AWAITING_APPROVAL', 'PASSED')).toBe(false);
+    void gated;
   });
 });

@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Callout, Code, ContentPage, H2, Prose } from '@/components/marketing/page-shell';
 
 export const metadata: Metadata = {
-  title: 'Sign in — Leverage',
+  title: 'Sign in · Leverage',
   description: 'How authentication works in Leverage, and its current state in this build.',
 };
 
@@ -12,8 +12,8 @@ export const metadata: Metadata = {
  *
  * There is no Privy app configured in this build, so there is nothing honest to put
  * behind a button. Rather than render a dead form, this states exactly where auth
- * stands and how to finish it — a fake sign-in on a product whose whole argument is
- * "check the evidence" would be the worst possible page to fake.
+ * stands and how to finish it. On a product whose whole argument is "check the
+ * evidence", a fake sign-in would be the worst page in the site to invent.
  */
 export default function SignInPage() {
   return (
@@ -33,7 +33,7 @@ export default function SignInPage() {
         <p>
           Every request resolves identity → workspace → resource, and the tenancy check lives in
           the mission store rather than in each route, so a new route cannot forget it. A mission
-          belonging to another workspace returns 404 rather than 403 — a 403 confirms the id
+          belonging to another workspace returns 404 rather than 403. A 403 confirms the id
           exists, which is a free enumeration oracle.
         </p>
       </Prose>
@@ -73,7 +73,7 @@ PRIVY_APP_SECRET=...
 PRIVY_VERIFICATION_KEY=...
 LEVERAGE_DEV_AUTH=0`}</Code>
       <Prose>
-        <p>No code change beyond the install — the verification path is already in place.</p>
+        <p>No code change beyond the install. The verification path is already in place.</p>
       </Prose>
 
       <Callout title="In the meantime">

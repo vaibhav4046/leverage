@@ -20,8 +20,12 @@ import path from 'node:path';
 
 const API_URL = process.env.LEVERAGE_API_URL ?? 'http://127.0.0.1:3000';
 const OUT_DIR = path.resolve('demo/evidence');
-const TRANSCRIPT = path.join(OUT_DIR, 'mcp-transcript.jsonl');
-const SUMMARY = path.join(OUT_DIR, 'mcp-summary.json');
+// Stamped, because a second run silently destroyed the first run's transcript.
+const STAMP = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+const TRANSCRIPT = path.join(OUT_DIR, `mcp-transcript-${STAMP}.jsonl`);
+const SUMMARY = path.join(OUT_DIR, `mcp-summary-${STAMP}.json`);
+const LATEST_TRANSCRIPT = path.join(OUT_DIR, 'mcp-transcript.jsonl');
+const LATEST_SUMMARY = path.join(OUT_DIR, 'mcp-summary.json');
 
 /** Redaction is applied on the way into the transcript, never after the fact. */
 const SECRET_SHAPES =
@@ -90,7 +94,20 @@ async function main() {
   });
   record('tools/call leverage_run', run);
   const runText = textOf(run);
-  const missionId = runText.match(/LVR-[A-Za-z0-9-]+/)?.[0] ?? null;
+  let missionId = runText.match(/LVR-[A-Za-z0-9-]+/)?.[0] ?? null;
+  if (!missionId) {
+    // leverage_run can take tens of seconds when the registry sweep is cold, and
+    // the id may arrive as a JSON field rather than in prose. Fall back to the
+    // mission list rather than declaring failure on a parsing detail.
+    try {
+      const res = await fetch(`${API_URL}/api/v1/missions`);
+      const body = (await res.json()) as { missions?: { mission: { id: string } }[] };
+      missionId = body.missions?.[0]?.mission?.id ?? null;
+      if (missionId) record('recovered mission id from /missions', { missionId });
+    } catch {
+      /* leave null */
+    }
+  }
   summary.missionId = missionId;
   summary.runAdmittedMs = Date.now() - started;
 

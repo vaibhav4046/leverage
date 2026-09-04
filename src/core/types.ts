@@ -66,6 +66,7 @@ export type TaskState =
   | 'HIRING'
   | 'RUNNING'
   | 'BLOCKED'
+  | 'AWAITING_APPROVAL'
   | 'CHECKPOINTING'
   | 'HANDOFF'
   | 'VERIFYING'
@@ -136,6 +137,8 @@ export interface MissionTask {
   dependencies: string[];
   requiredCapabilities: CapabilityRequirement[];
   risk: Risk;
+  /** Set once a human has decided. Absent means never asked. */
+  approval?: { resolution: 'approved' | 'rejected'; actor: string; at: string };
   qualityTarget: number;
   budgetUsd: number;
   /** Files this task may create or modify. Enforced when the patch is applied. */
@@ -452,6 +455,7 @@ export type MissionEventType =
   | 'task.completed'
   | 'task.failed'
   | 'budget.blocked'
+  | 'mission.paused'
   | 'approval.requested'
   | 'approval.resolved'
   | 'mission.completed'

@@ -6,7 +6,7 @@ import { IconPlay, IconPause } from '@/components/icons';
 /**
  * The handoff, as a nine-second film.
  *
- * Rendered with HyperFrames from `motion/index.html` — a real composition on the
+ * Rendered with HyperFrames from `motion/index.html`: a real composition on the
  * product's own tokens, not a screen recording. It sits above the interactive
  * replay because the two do different jobs: the film states the argument in nine
  * seconds, the replay lets you check it against the event log.
@@ -88,7 +88,7 @@ export function HandoffFilm() {
             >
               {/* h264 only. The VP9 encode of this composition came out 2.6 MB
                   against 1.5 MB, and every browser that can play the webm can
-                  already play this — a second source here is pure download. */}
+                  already play this, so a second source here is pure download. */}
               <source src="/motion/handoff.mp4" type="video/mp4" />
             </video>
 

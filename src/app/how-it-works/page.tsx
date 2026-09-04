@@ -3,7 +3,7 @@ import { Callout, Code, ContentPage, H2, Prose } from '@/components/marketing/pa
 import { Reveal } from '@/components/visual/motion';
 
 export const metadata: Metadata = {
-  title: 'How it works — Leverage',
+  title: 'How it works · Leverage',
   description:
     'The four layers of Leverage, the decisions that make it an intelligence resource manager rather than a router, and the invariants that hold it together.',
 };
@@ -12,12 +12,12 @@ const LAYERS: [string, string, string][] = [
   [
     'Host model',
     'Claude · Codex · Kimi · Cursor',
-    'Strategy. Called once for intent, not for every unit of work. Calling it for everything is the problem, not the product.',
+    'Strategy. Called once for intent, not for every unit of work. Calling it for everything is the problem this exists to solve.',
   ],
   [
     'Leverage',
     'the control plane',
-    'What work exists, who should do it, what it may cost, what context it gets, and whether the output is true.',
+    'Owns the task graph, the auction, the budget policy, the context each worker receives, and the verification of whatever comes back.',
   ],
   [
     'RocketRide',
@@ -32,7 +32,7 @@ const LAYERS: [string, string, string][] = [
 ];
 
 const STAGES: [string, string][] = [
-  ['Compile', 'A sentence becomes a validated MissionSpec. Budget and privacy are parsed here, with no model call — policy must not depend on an LLM.'],
+  ['Compile', 'A sentence becomes a validated MissionSpec. Budget and privacy are parsed here, with no model call, because policy must not depend on an LLM.'],
   ['Plan', 'A task graph, cycle-checked before anything executes. A planner is untrusted; its output is a proposal until it survives validation.'],
   ['Filter', 'Hard eligibility. A paid model at $0 is removed from the pool, not out-ranked. If policy were a weight, a good enough score could buy past it.'],
   ['Hire', 'Survivors are scored on task fit, measured reputation, context headroom, availability and latency. The winner is shown with its reasoning.'],
@@ -88,7 +88,7 @@ export default function HowItWorksPage() {
       <Prose>
         <p>
           These are the properties the product&rsquo;s claims rest on. If one fails, something in
-          the copy has become a lie — so each is asserted in{' '}
+          the copy has become a lie. So each is asserted in{' '}
           <code className="mono">tests/invariants.test.ts</code> rather than merely intended.
         </p>
       </Prose>
@@ -105,10 +105,10 @@ a model with one observation never reports a confident success rate`}</Code>
       <Prose>
         <p>
           The single most important ordering decision in the system. A paid model under a $0
-          budget is not given a large negative weight — it is removed from the pool and displayed
-          struck out with the reason. If policy were a weight, a sufficiently good score could buy
-          past it, and &ldquo;zero means zero&rdquo; would be a preference rather than a
-          guarantee.
+          budget is removed from the pool entirely and displayed struck out with the reason,
+          never scored down and left competing. If policy were a weight, a sufficiently good
+          score could buy past it, and &ldquo;zero means zero&rdquo; would be a preference
+          rather than a guarantee.
         </p>
         <p>
           The budget governor reinforces it from the other side: workers run concurrently, so
@@ -121,8 +121,8 @@ a model with one observation never reports a confident success rate`}</Code>
         A model that returns malformed output or fails tests is barred from that task. A model
         that hits a 429 or a timeout goes on a one-auction cooldown and can be hired again. Before
         that distinction existed, a single injected rate limit permanently benched the strongest
-        candidate and the task failed on weaker workers — a bug found by watching a real run, not
-        by reasoning about it.
+        candidate and the task failed on weaker workers. That bug only surfaced by watching a
+        real run.
       </Callout>
 
       <H2>Context is compiled, not dumped</H2>

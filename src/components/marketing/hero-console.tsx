@@ -4,8 +4,8 @@ import type { MissionSnapshot } from '@/core/mission';
  * Hero product surface.
  *
  * Three overlapping panels lifted from the real Mission Control: the mission and its
- * policy, the workforce, and the live event tail. Not an illustration of a product —
- * the same layout the app renders, fed from `demo/canonical-run.json`.
+ * policy, the workforce, and the live event tail. This is the layout the app itself
+ * renders, fed from `demo/canonical-run.json`, rather than an illustration of one.
  *
  * When that file is missing the panels render an explicit "no run recorded yet"
  * state rather than plausible-looking placeholder numbers. A hero that invents
@@ -31,7 +31,7 @@ export function HeroConsole({ run }: { run: MissionSnapshot | null }) {
 
   return (
     <div className="relative min-w-0">
-      {/* Panel 1 — mission + policy */}
+      {/* Panel 1: mission + policy */}
       <div className="glass glass-live relative z-30 min-w-0 p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
@@ -56,7 +56,7 @@ export function HeroConsole({ run }: { run: MissionSnapshot | null }) {
         </div>
       </div>
 
-      {/* Panel 2 — workforce */}
+      {/* Panel 2: workforce */}
       <div className="glass relative z-20 -mt-2 ml-6 min-w-0 p-5 sm:ml-8">
         <div className="mono mb-3 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
           Workforce
@@ -78,7 +78,7 @@ export function HeroConsole({ run }: { run: MissionSnapshot | null }) {
         )}
       </div>
 
-      {/* Panel 3 — live tail */}
+      {/* Panel 3: live tail */}
       <div className="glass relative z-10 -mt-2 ml-12 min-w-0 p-5 sm:ml-16">
         <div className="mono mb-3 text-[11px] uppercase tracking-[0.08em] text-[var(--color-frosted-lilac)]">
           Execution

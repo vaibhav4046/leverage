@@ -7,10 +7,10 @@ import { Reveal } from '@/components/visual/motion';
  * models", because they have very different mechanics and conflating them is how a
  * product ends up promising something it cannot legally do:
  *
- *   1. Your host seat  — MCP sampling. No key. The strongest option, and the one
+ *   1. Your host seat: MCP sampling. No key. The strongest option, and the one
  *      people actually want when they say "use my Claude Max".
- *   2. Your own runtime — Ollama, LM Studio, vLLM. No key, nothing leaves the box.
- *   3. Your own keys   — any OpenAI-compatible endpoint, encrypted at rest.
+ *   2. Your own runtime: Ollama, LM Studio, vLLM. No key, nothing leaves the box.
+ *   3. Your own keys: any OpenAI-compatible endpoint, encrypted at rest.
  *
  * The marks are original geometric glyphs, not copied brand assets. They read as a
  * coherent set and avoid using anyone's trademark as decoration.

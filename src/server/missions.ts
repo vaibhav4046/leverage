@@ -257,6 +257,36 @@ export async function startMission(
   return { started: true };
 }
 
+/**
+ * Resolve a pending approval on a running mission, then let it continue.
+ *
+ * The tenancy check lives here with every other one, so a route cannot forget it.
+ * Restarting the scheduler after an approval is deliberate: `run()` returns when
+ * the only remaining work is gated, so something has to start it again.
+ */
+export function resolveApproval(
+  missionId: string,
+  workspaceId: string,
+  taskId: string,
+  resolution: 'approved' | 'rejected',
+  actor: string,
+): boolean {
+  const entry = missions.get(missionId);
+  if (!entry || entry.state.spec.workspaceId !== workspaceId) return false;
+  if (!entry.scheduler?.resolveApproval(taskId, resolution, actor)) return false;
+
+  if (resolution === 'approved' && !entry.running) {
+    entry.running = true;
+    void entry.scheduler
+      .run()
+      .then((state) => persist(state))
+      .finally(() => {
+        entry.running = false;
+      });
+  }
+  return true;
+}
+
 export function cancelMission(missionId: string, workspaceId: string): boolean {
   const entry = missions.get(missionId);
   if (!entry || entry.state.spec.workspaceId !== workspaceId) return false;

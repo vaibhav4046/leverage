@@ -8,7 +8,7 @@ import type { MissionSnapshot } from '@/core/mission';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Benchmarks — Leverage',
+  title: 'Benchmarks · Leverage',
   description:
     'Measured results from recorded Leverage missions, the methodology behind them, and the comparisons we deliberately do not make.',
 };
@@ -198,8 +198,8 @@ export default async function BenchmarksPage() {
         </p>
       </Prose>
 
-      <Callout title="The probe is not stable, and that is the point" tone="warn">
-        Run twice against the same models, minutes apart, the results disagreed —
+      <Callout title="The probe is unstable between runs" tone="warn">
+        Run twice against the same models, minutes apart, the results disagreed:
         <span className="mono"> qwen2.5-coder</span> went 2/2 then 1/2,
         <span className="mono"> gemma3:4b</span> went 2/2 then 0/2,
         <span className="mono"> kodro-fast</span> went 0/2 then 2/2. That is what small models on
@@ -217,7 +217,7 @@ export default async function BenchmarksPage() {
           them at published frontier API rates, report the result.
         </p>
       </Prose>
-      <Code label="src/core/budget.ts — FRONTIER_BASELINE">{`baseline   Claude Sonnet 4.5 published pricing
+      <Code label="src/core/budget.ts · FRONTIER_BASELINE">{`baseline   Claude Sonnet 4.5 published pricing
            $3.00 / 1M input · $15.00 / 1M output
 
 ${runs.map((r) => `${r.label.padEnd(10)} $${r.run.usage.estimatedFrontierEquivalentUsd.toFixed(4)}`).join('\n')}`}</Code>
@@ -225,8 +225,8 @@ ${runs.map((r) => `${r.label.padEnd(10)} $${r.run.usage.estimatedFrontierEquival
         <p>
           It is <strong className="font-normal text-[var(--color-mist)]">not</strong> a saving,
           not a charge, and not a claim about what a frontier agent would have spent solving the
-          problem — it would plausibly have used a different number of tokens and far fewer
-          attempts. It prices this workload at those rates and nothing more.
+          problem. That agent would plausibly have used a different number of tokens and far
+          fewer attempts. It prices this workload at those rates and nothing more.
         </p>
       </Prose>
 
@@ -235,7 +235,7 @@ ${runs.map((r) => `${r.label.padEnd(10)} $${r.run.usage.estimatedFrontierEquival
         <p>
           <strong className="font-normal text-[var(--color-mist)]">No baseline comparison.</strong>{' '}
           Running the same mission on a single frontier model needs a paid API key this build does
-          not have. Rather than invent one, there isn&rsquo;t one — no speedup multiple, no
+          not have. Rather than invent one, there isn&rsquo;t one: no speedup multiple, no
           cost-reduction percentage, no &ldquo;N× faster&rdquo; anywhere in this repository.
         </p>
         <p>
@@ -251,10 +251,10 @@ ${runs.map((r) => `${r.label.padEnd(10)} $${r.run.usage.estimatedFrontierEquival
         </p>
         <p>
           <strong className="font-normal text-[var(--color-mist)]">
-            The rate limit in the canonical run is injected
+            The rate limit in the canonical run is injected.
           </strong>{' '}
-          — deterministic, and labelled INJECTED in the event stream, the UI and here. What is
-          being demonstrated is the recovery, not the coincidence.
+          It is deterministic, and labelled INJECTED in the event stream, the UI and here. What
+          is being demonstrated is the recovery, not the coincidence.
         </p>
       </Prose>
 

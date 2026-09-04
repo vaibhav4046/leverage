@@ -2,13 +2,13 @@ import type { Metadata } from 'next';
 import { Callout, Code, ContentPage, H2, Prose } from '@/components/marketing/page-shell';
 
 export const metadata: Metadata = {
-  title: 'MCP server — Leverage',
+  title: 'MCP server · Leverage',
   description:
     'Install the Leverage MCP server so Claude Code, Codex or Cursor can run missions and lend their own model as a worker.',
 };
 
 const TOOLS: [string, string][] = [
-  ['leverage_run', 'Start a mission. Returns a mission id immediately — a mission takes minutes.'],
+  ['leverage_run', 'Start a mission. Returns a mission id immediately, because a mission takes minutes.'],
   ['leverage_status', 'Task states, hired workers, handoffs, spend, elapsed. Safe to poll.'],
   ['leverage_cancel', 'Stop it. No further hires; in-flight work is checkpointed where possible.'],
   ['leverage_proof', 'The evidence: every check, what it returned, files changed, real spend.'],
@@ -62,13 +62,13 @@ export default function McpPage() {
         <p>
           If your host offers the sampling capability, the Leverage MCP server registers itself as
           a worker source. Leverage can then hire your host&rsquo;s own model through{' '}
-          <code className="mono">sampling/createMessage</code> — no API key is minted, none is
+          <code className="mono">sampling/createMessage</code>. No API key is minted, none is
           stored, and the inference is billed to the seat you already pay for.
         </p>
         <p>
-          The control plane cannot initiate sampling — only the process holding the protocol
-          connection can — so it parks requests on a queue and the MCP server drains them:
-          register, claim, sample, post back.
+          The control plane cannot initiate sampling. Only the process holding the protocol
+          connection can, so the plane parks requests on a queue and the MCP server drains
+          them: register, claim, sample, post back.
         </p>
       </Prose>
       <Code label="what you will see on stderr">{`leverage: Host seat registered. Leverage can now hire your own model with no API key.`}</Code>
@@ -85,9 +85,9 @@ export default function McpPage() {
         <p>
           <code className="mono">leverage_run</code> defaults to{' '}
           <code className="mono">budgetMaxUsd: 0</code>, which is a hard block rather than a
-          preference — paid models never enter the ranking pool. Host and local workers are still
-          eligible, because a subscription seat and a local runtime are not Leverage spending
-          money.
+          preference. Paid models never enter the ranking pool. Host and local workers are
+          still eligible, because a subscription seat and a local runtime are not Leverage
+          spending money.
         </p>
       </Prose>
       <Code>{`{
