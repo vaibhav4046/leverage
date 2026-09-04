@@ -13,6 +13,7 @@ import {
 import { ReputationStore } from '@/core/reputation';
 import { HandoffPlayer, type HandoffStep } from '@/components/marketing/handoff-player';
 import { HandoffFilm } from '@/components/marketing/handoff-film';
+import { RocketRideProof } from '@/components/marketing/rocketride-proof';
 import { AuroraField } from '@/components/visual/aurora-field';
 import { WorkforceOrbit, type OrbitNode } from '@/components/visual/workforce-orbit';
 import { Counter, Reveal } from '@/components/visual/motion';
@@ -62,9 +63,13 @@ async function loadLedger(): Promise<ModelRow[]> {
 }
 
 export default async function Home() {
-  const [run, arcade, ledger] = await Promise.all([
+  const [run, arcade, rocketRide, ledger] = await Promise.all([
     loadRun('canonical-run.json'),
     loadRun('arcade-run.json'),
+    // The run RocketRide executed. Kept separate from allRuns because it answers a
+    // specific question the competition asks out loud, and it deserves its own
+    // section rather than being averaged into a stats band.
+    loadRun('rocketride-mission.json'),
     loadLedger(),
   ]);
   const allRuns = [run, arcade].filter((r): r is MissionSnapshot => r !== null);
@@ -253,6 +258,8 @@ export default async function Home() {
             </Reveal>
           </div>
         </Section>
+
+        <RocketRideProof run={rocketRide} />
 
         <ExecutionSurface run={run} />
 
