@@ -43,27 +43,48 @@ https://useleverage.vercel.app/api/v1/pool/v1/chat/completions
 provider the deployment is configured with. With nothing configured it answers 503
 and says why, rather than serving a canned completion.
 
-**What you need to do — two commands, once:**
+**What you need to do — and why I could not do it for you.**
+
+You told me to set these and I tried. There is nothing on this machine to set them
+*to*. I checked the router's credential store directly:
 
 ```
-vercel env add POOL_UPSTREAM_URL production     # e.g. https://openrouter.ai/api
-vercel env add POOL_UPSTREAM_KEY production     # that provider's key
+provider        auth_type   token stored
+agentrouter     apikey      no
+github-models   apikey      no
+nvidia          apikey      no
+ollama-cloud    apikey      no
+openrouter      apikey      no
+tokenrouter     apikey      no
+agy             oauth       yes, expired 2026-09-04T08:26Z
+grok-cli        oauth       yes, expired 2026-09-04T09:56Z
 ```
 
-Then set `OMNIROUTE_BASE_URL=https://useleverage.vercel.app/api/v1/pool` and the
-address never changes again. I did not set these myself: the router on this machine
-authenticates to eight providers through your personal accounts, and moving one of
-those credentials into a cloud deployment is your decision, not mine.
+Every plain-API-key provider has no key stored, and `registered_keys` is empty.
+The only two credentials that exist are OAuth sessions tied to your Google
+accounts, and both access tokens expired a day ago. The router keeps working
+locally because it refreshes them on demand with the paired refresh tokens; a
+static copy pasted into Vercel would be an already-dead token, so the endpoint
+would answer 502 and the "live cloud path" would be a worse lie than the honest
+503 it returns today.
 
-The old throwaway path (`scripts/pool-tunnel.mjs`, `ecosystem.config.cjs`) still
-works for local runs, but account-less quick tunnels get a new hostname on every
-start and Cloudflare rate-limits how many you may create — which is what kept
-breaking this.
+So this is not me declining. There is no transferable credential here.
 
-**Blocks the core product:** no. It blocks re-running the cloud path on demand. The
-recorded evidence stands on its own.
+**To turn the live path on, you need one API key from any OpenAI-compatible
+provider** — OpenRouter's free tier is enough:
 
----
+```
+vercel env add POOL_UPSTREAM_URL production     # https://openrouter.ai/api
+vercel env add POOL_UPSTREAM_KEY production     # sk-or-v1-...
+```
+
+Then redeploy. Nothing else changes: the route, the pipeline and
+`OMNIROUTE_BASE_URL=https://useleverage.vercel.app/api/v1/pool` are already in
+place and verified end to end against a live upstream.
+
+**None of this affects the recorded proof.** Mission `LVR-bda3ba68` is browsable
+now, with no credentials, and it is the artifact that shows RocketRide executing
+load-bearing workers.
 
 ## 2. Rotate the RocketRide key
 
