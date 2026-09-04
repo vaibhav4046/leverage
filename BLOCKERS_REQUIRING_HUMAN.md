@@ -32,13 +32,33 @@ router on `127.0.0.1` is not: the pipeline still runs and still bills, and the
 worker inside it returns a provider error. `npm run verify:rocketride` now fails
 loudly on exactly that case rather than reporting success.
 
-**What you need to do:** give the router a stable public address. Either a named
-Cloudflare tunnel (needs a Cloudflare account, which is why it is on this list) or
-a hosted OpenAI-compatible endpoint, then set `OMNIROUTE_BASE_URL` to it.
+**The tunnel is no longer part of this.** The deployment now hosts the endpoint
+itself, at a permanent address:
 
-`scripts/pool-tunnel.mjs` and `ecosystem.config.cjs` automate the throwaway version
-of this, but account-less quick tunnels get a new hostname on every start and
-Cloudflare rate-limits how many you may create.
+```
+https://useleverage.vercel.app/api/v1/pool/v1/chat/completions
+```
+
+`src/app/api/v1/pool/[...path]/route.ts` forwards to whatever OpenAI-compatible
+provider the deployment is configured with. With nothing configured it answers 503
+and says why, rather than serving a canned completion.
+
+**What you need to do — two commands, once:**
+
+```
+vercel env add POOL_UPSTREAM_URL production     # e.g. https://openrouter.ai/api
+vercel env add POOL_UPSTREAM_KEY production     # that provider's key
+```
+
+Then set `OMNIROUTE_BASE_URL=https://useleverage.vercel.app/api/v1/pool` and the
+address never changes again. I did not set these myself: the router on this machine
+authenticates to eight providers through your personal accounts, and moving one of
+those credentials into a cloud deployment is your decision, not mine.
+
+The old throwaway path (`scripts/pool-tunnel.mjs`, `ecosystem.config.cjs`) still
+works for local runs, but account-less quick tunnels get a new hostname on every
+start and Cloudflare rate-limits how many you may create — which is what kept
+breaking this.
 
 **Blocks the core product:** no. It blocks re-running the cloud path on demand. The
 recorded evidence stands on its own.
