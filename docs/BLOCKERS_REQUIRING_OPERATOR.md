@@ -76,7 +76,59 @@ commits. Rotation is hygiene, not incident response.
 
 ---
 
-## 6. A load-bearing RocketRide cloud task — RESOLVED
+## 6a. The real cause of RocketRide worker failures — DIAGNOSED AND FIXED IN CODE
+
+Not an unreachable pool. **The local router streams by default.** It answers in
+Server-Sent Events whether or not `stream` was requested, and RocketRide's
+`llm_openai_api` component parses the body as a single JSON document, so it fails
+with `ValueError` while the pipeline still runs and bills.
+
+Proven directly against the router:
+
+```
+default request        -> data: {"object":"chat.completion.chunk", ...}   (SSE)
+same request + stream:false -> {"object":"chat.completion", ... "content":"READY"}
+```
+
+`stream: false` in the pipeline component config does **not** help: the component
+does not forward unknown keys into the upstream body. `scripts/pool-proxy.mjs`
+forces it on our side instead, and is verified to return JSON where the router
+returns SSE.
+
+## 6b. Publishing that endpoint — PARTLY DONE, NOT RELIABLE
+
+`scripts/pool-tunnel.mjs` + `ecosystem.config.cjs` turn the hand-run `cloudflared`
+process into a supervised service that waits for its upstream, verifies a
+hostname actually serves before registering it, and writes `OMNIROUTE_BASE_URL`
+itself.
+
+**It is not reliably registering.** It worked when run cleanly against the router
+and has since failed to publish the proxy, logging `tunnel hostname never began
+serving`. I did not get to the bottom of it. Two real bugs were found and fixed
+on the way (discarding a hostname after one failed probe, and two competing quick
+tunnels leaving the loser serving nothing), so what remains is a third cause.
+
+**Action, in preference order:**
+
+1. Put the router on a host with a stable address and set `OMNIROUTE_BASE_URL` to
+   it. This removes tunnels from the design entirely and is the only version that
+   survives a reboot without ceremony.
+2. Use a **named** Cloudflare tunnel (needs a Cloudflare account and a domain).
+   Stable hostname, no re-registration.
+3. Keep the quick tunnel, run `node scripts/pool-tunnel.mjs` in the foreground,
+   and confirm it prints `public pool registered` before demoing.
+
+**State right now:** the cloud path is **not** live. `/api/v1/health` reports this
+honestly as `cloudWorkerPath`, so it can be checked rather than assumed.
+
+## 6c. The earlier verified run — REAL, AND STILL THE EVIDENCE
+
+Mission `LVR-bda3ba68` is not affected by any of the above: it ran while the
+tunnel was up, 4/4 tasks passed, 3 of 6 workers executed as RocketRide pipelines,
+$0.00 paid. That evidence stands. What is unresolved is keeping the path up
+without supervision, not whether it works.
+
+## 6d. Original note, kept for the record
 
 `cloudflared` was installed and the local OpenAI-compatible router exposed over a
 public HTTPS tunnel. RocketRide then executed workers that produced verified
