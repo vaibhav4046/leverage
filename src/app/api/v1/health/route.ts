@@ -56,5 +56,19 @@ export async function GET() {
     },
     // Real value or nothing. A guessed credit balance is worse than no balance.
     rocketrideCredits: credits ?? 'unavailable',
+    /**
+     * What the hosted pool will and will not forward, so a reader can confirm the
+     * allowlist is active without a token. Ids only; never keys.
+     */
+    pool: {
+      gated: Boolean(process.env.POOL_ACCESS_TOKEN),
+      upstreams: (process.env.POOL_UPSTREAMS ?? '')
+        .split(',')
+        .map((e) => e.trim().split('=')[0])
+        .filter(Boolean),
+      allowlist: process.env.POOL_MODELS
+        ? { active: true, models: process.env.POOL_MODELS.split(',').map((m) => m.trim()).filter(Boolean).length }
+        : { active: false, models: 0 },
+    },
   });
 }
