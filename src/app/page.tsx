@@ -11,9 +11,8 @@ import {
   type ModelRow,
 } from '@/components/marketing/surfaces';
 import { ReputationStore } from '@/core/reputation';
-import { HandoffPlayer, type HandoffStep } from '@/components/marketing/handoff-player';
-import { HandoffFilm } from '@/components/marketing/handoff-film';
-import { MasterFilm } from '@/components/marketing/master-film';
+import nextDynamic from 'next/dynamic';
+import type { HandoffStep } from '@/components/marketing/handoff-player';
 import { RocketRideProof } from '@/components/marketing/rocketride-proof';
 import { AuroraField, WorkforceOrbit } from '@/components/visual/lazy';
 import type { OrbitNode } from '@/components/visual/workforce-orbit';
@@ -21,6 +20,13 @@ import { Counter, Reveal } from '@/components/visual/motion';
 import type { MissionSnapshot } from '@/core/mission';
 
 export const dynamic = 'force-dynamic';
+
+// The three interactive sections below the fold are server-rendered as usual
+// but code-split, so their hydration lands in separate short tasks after the
+// first paint instead of inside the one long task that hydrates the page.
+const HandoffPlayer = nextDynamic(() => import('@/components/marketing/handoff-player').then((m) => m.HandoffPlayer));
+const HandoffFilm = nextDynamic(() => import('@/components/marketing/handoff-film').then((m) => m.HandoffFilm));
+const MasterFilm = nextDynamic(() => import('@/components/marketing/master-film').then((m) => m.MasterFilm));
 
 /**
  * Landing page.
