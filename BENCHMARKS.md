@@ -227,8 +227,9 @@ so every settled call in the ledger is local.
 
 The one derived number, and the one most likely to be abused. What it means, precisely:
 
-> Take the prompt and completion tokens **actually observed during this run**. Price them
-> at published frontier API rates. Report the result.
+> Take the prompt and completion tokens **observed during this run** where the provider
+> reported them, and **counted from the text at 3.6 characters per token** where it did not.
+> Price them at published frontier API rates. Report the result.
 
 ```
 observed workload, LVR-f8f72d56   ->   $0.0467

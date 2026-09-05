@@ -369,8 +369,9 @@ export default async function BenchmarksPage() {
       <Prose>
         <p>
           The one derived number, and the one most likely to be abused. What it means, precisely:
-          take the prompt and completion tokens <em>actually observed during the run</em>, price
-          them at published frontier API rates, report the result.
+          take the prompt and completion tokens <em>observed during the run</em> where the
+          provider reported them, and counted from the text at 3.6 characters per token where it
+          did not; price them at published frontier API rates; report the result.
         </p>
       </Prose>
       <Code label="src/core/budget.ts · FRONTIER_BASELINE">{`baseline   Claude Sonnet 4.5 published pricing

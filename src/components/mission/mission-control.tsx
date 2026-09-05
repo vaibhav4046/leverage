@@ -101,7 +101,10 @@ export function MissionControl({
       <MissionMetrics snapshot={snapshot} />
 
       <div className="grid flex-1 grid-cols-[minmax(0,1fr)] items-start gap-4 p-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
-        <TaskGraph snapshot={snapshot} selected={selected} onSelect={setSelected} />
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-4">
+          <TaskGraph snapshot={snapshot} selected={selected} onSelect={setSelected} />
+          <PlanPanel snapshot={snapshot} />
+        </div>
         <WorkforcePanel snapshot={snapshot} />
       </div>
 
@@ -126,6 +129,105 @@ export function MissionControl({
 }
 
 /* ------------------------------------------------------------------ header */
+
+interface PlannerRecordShape {
+  displayName?: string;
+  costClass?: string;
+  durationMs?: number;
+  taskCount?: number;
+  promptTokens?: number;
+  completionTokens?: number;
+  skipped?: string[];
+}
+
+function plannerOf(snapshot: MissionSnapshot): {
+  planner?: PlannerRecordShape;
+  checks?: { taskId: string; suite: string }[];
+  planText?: string;
+} {
+  const compiled = snapshot.events.find((e) => e.type === 'mission.compiled' && (e.data as { planner?: unknown } | undefined)?.planner);
+  const data = (compiled?.data ?? {}) as { planner?: PlannerRecordShape; checks?: { taskId: string; suite: string }[]; planText?: string };
+  return { planner: data.planner, checks: data.checks, planText: data.planText };
+}
+
+/**
+ * The plan as evidence. For a model-planned mission: who planned, how long it
+ * took, what each task is held to, and the proposal exactly as the model wrote
+ * it. For a fixture: a plain statement that the plan is committed, so nobody
+ * mistakes a benchmark for a planner demonstration.
+ */
+function PlanPanel({ snapshot }: { snapshot: MissionSnapshot }) {
+  const { planner, checks, planText } = plannerOf(snapshot);
+  const byTask = new Map((checks ?? []).map((c) => [c.taskId, c.suite]));
+  const suites = snapshot.tasks.map((t) => ({ id: t.id, title: t.title, suite: byTask.get(t.id) }));
+
+  return (
+    <section className="surface-card p-5" aria-label="Plan">
+      <div className="mono mb-4 flex items-center justify-between gap-3 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
+        <span>Plan</span>
+        <span className="normal-case tracking-normal text-[var(--color-frosted-lilac)]">
+          {planner?.displayName ? 'written by a model' : snapshot.mission.status === 'PLANNING' ? 'being written' : 'committed'}
+        </span>
+      </div>
+
+      {planner?.displayName ? (
+        <dl className="mono grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1.5 text-[12px]">
+          <dt className="text-[var(--color-ash)]">planner</dt>
+          <dd className="text-[var(--color-mist)]">
+            {planner.displayName} <span className="text-[var(--color-ash)]">· {planner.costClass ?? 'free'}</span>
+          </dd>
+          <dt className="text-[var(--color-ash)]">took</dt>
+          <dd className="text-[var(--color-mist)]">
+            {((planner.durationMs ?? 0) / 1000).toFixed(1)}s
+            {typeof planner.promptTokens === 'number' && typeof planner.completionTokens === 'number'
+              ? ` · ${planner.promptTokens.toLocaleString()} in, ${planner.completionTokens.toLocaleString()} out`
+              : ''}
+          </dd>
+          {planner.skipped && planner.skipped.length > 0 && (
+            <>
+              <dt className="text-[var(--color-ash)]">skipped</dt>
+              <dd className="text-[var(--color-mist)]">
+                {planner.skipped.length} candidate{planner.skipped.length === 1 ? '' : 's'} that did not answer
+              </dd>
+            </>
+          )}
+        </dl>
+      ) : (
+        <p className="text-[12.5px] leading-relaxed text-[var(--color-ash)]">
+          {snapshot.mission.status === 'PLANNING'
+            ? 'A planner model is reading the repository and writing the task graph. Tasks appear here when the compiler accepts them.'
+            : 'The bundled benchmark runs its committed task graph, so a run measures the workforce and not the planner. Give a mission a repository path and a model writes the plan instead.'}
+        </p>
+      )}
+
+      {suites.length > 0 && (
+        <ul className="mt-4 space-y-1.5 border-t border-[var(--color-inkline)] pt-3">
+          {suites.map((s) => (
+            <li key={s.id} className="grid grid-cols-[minmax(0,1fr)] gap-0.5 text-[12px] sm:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] sm:gap-3">
+              <span className="truncate text-[var(--color-quartz)]" title={s.title}>
+                {s.title}
+              </span>
+              <span className="mono truncate text-[11.5px] text-[var(--color-ash)]" title={s.suite ?? ''}>
+                {s.suite ? `held to: ${s.suite}` : 'held to: the checks in its proof'}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {planText && (
+        <details className="mt-4 border-t border-[var(--color-inkline)] pt-3">
+          <summary className="mono cursor-pointer text-[11.5px] text-[var(--color-frosted-lilac)]">
+            The proposal, as the model wrote it
+          </summary>
+          <pre className="mono mt-3 max-h-[320px] overflow-auto whitespace-pre-wrap break-words rounded-[9px] border border-[var(--color-inkline)] bg-[var(--color-void)] p-3 text-[11px] leading-relaxed text-[var(--color-mist)]">
+            {planText}
+          </pre>
+        </details>
+      )}
+    </section>
+  );
+}
 
 /** Where the task graph came from: a planner model, or the fixture's committed plan. */
 function PlanOrigin({ snapshot }: { snapshot: MissionSnapshot }) {

@@ -89,6 +89,14 @@ describe('checksForTask', () => {
     expect(suiteOf(checks)?.argv).toEqual(['npx', 'vitest', 'run', 'test/slug.test.js']);
   });
 
+  it('will not verify a task that may edit package.json by an npm script it could rewrite', () => {
+    const checks = checksForTask(
+      task({ fileScope: ['src/slug.js', 'package.json'], verify: { argv: ['npm', 'test'] }, referenceFiles: ['test/slug.test.js'] }),
+      digest(),
+    );
+    expect(suiteOf(checks)?.argv).toEqual(['node', '--test', 'test/slug.test.js']);
+  });
+
   it('refuses a code task that no test reaches in a repository that has tests', () => {
     expect(() => checksForTask(task({ id: 'create-util', fileScope: ['src/util.js'] }), digest())).toThrow(PlanRejectedError);
     expect(() => checksForTask(task({ id: 'create-util', fileScope: ['src/util.js'] }), digest())).toThrow(/create-util/);

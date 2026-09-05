@@ -332,16 +332,19 @@ export function computeQualityScore(input: {
   staticChecks: ProofCheck[];
   aiReview?: number;
 }): QualityScore {
-  const acceptance =
-    input.acceptanceTotal === 0 ? 1 : input.acceptanceMet / input.acceptanceTotal;
+  // A bucket nobody evaluated is left out of the weighting rather than scored
+  // as a pass: acceptance statements are reviewed by no one yet, and a static
+  // pass with no static checks is not a pass. What remains is the weighted pass
+  // rate of the checks that actually ran, which is what the score should mean.
+  const acceptanceEvaluated = input.acceptanceTotal > 0;
+  const acceptance = acceptanceEvaluated ? input.acceptanceMet / input.acceptanceTotal : 0;
   const automated = weightedPassRate(input.checks);
-  const staticChecks = input.staticChecks.length ? weightedPassRate(input.staticChecks) : 1;
+  const staticEvaluated = input.staticChecks.length > 0;
+  const staticChecks = staticEvaluated ? weightedPassRate(input.staticChecks) : 0;
 
-  const buckets: [keyof typeof QUALITY_WEIGHTS, number][] = [
-    ['acceptance', acceptance],
-    ['automated', automated],
-    ['staticChecks', staticChecks],
-  ];
+  const buckets: [keyof typeof QUALITY_WEIGHTS, number][] = [['automated', automated]];
+  if (acceptanceEvaluated) buckets.push(['acceptance', acceptance]);
+  if (staticEvaluated) buckets.push(['staticChecks', staticChecks]);
   if (input.aiReview !== undefined) buckets.push(['aiReview', input.aiReview]);
 
   const weightSum = buckets.reduce((s, [k]) => s + QUALITY_WEIGHTS[k], 0);

@@ -810,9 +810,11 @@ export class MissionScheduler {
     }
 
     // --- Proof ------------------------------------------------------------
+    // Acceptance statements are not reviewed by anyone yet, so they are not
+    // counted as met; the score is the pass rate of the checks that ran.
     const quality = computeQualityScore({
-      acceptanceMet: task.verification.acceptance.length,
-      acceptanceTotal: task.verification.acceptance.length,
+      acceptanceMet: 0,
+      acceptanceTotal: 0,
       checks: verification.checks,
       staticChecks: [],
     });

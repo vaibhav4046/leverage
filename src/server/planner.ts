@@ -253,7 +253,11 @@ export function checksForTask(task: PlannedTaskShape, digest: RepositoryDigest):
 
   const verify = task.verify as { argv?: unknown; label?: unknown } | undefined;
   const named = Array.isArray(verify?.argv) ? verify!.argv.map(String) : null;
-  if (named && acceptedCommand(named, digest.scripts)) {
+  // A worker allowed to edit package.json could rewrite the very script that
+  // verifies it; such a task is held to a runner over named test files only.
+  const editsManifest = task.fileScope.some((f) => /(^|\/)package\.json$/.test(f));
+  const scriptBacked = (argv: string[]) => argv[0] === 'npm' || argv[0] === 'pnpm';
+  if (named && acceptedCommand(named, digest.scripts) && !(editsManifest && scriptBacked(named))) {
     return [...existence, suite(named, typeof verify?.label === 'string' ? verify.label : named.join(' '))];
   }
 

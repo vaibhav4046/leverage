@@ -76,15 +76,21 @@ occurs in the recorded probe data (`pool:auto/coding:free`).
 
 ## 2 · Check the proof (30 seconds)
 
-The Proof panel at the bottom of Mission Control, or:
+The Proof panel at the bottom of Mission Control. On a clone, the fixtures' `src/`
+directories are gitignored so that every benchmark fails on a clean checkout, which
+means `npm test` inside `benchmark/forge-app` fails until a mission has run. The code
+the workers wrote is preserved where it can be checked: `public/arcade/src` (the arcade
+run) and `demo/output/greeter/src` (the model-planned run, whose files reproduce the
+`patchHash` in each proof of `demo/planned-run.json`). To run the fixture's tests
+against what the models wrote:
 
 ```bash
-cd benchmark/forge-app && npm test
+cp demo/output/greeter/src/*.js benchmark/greeter/src/ && cd benchmark/greeter && npm test
 ```
 
 ```
-ℹ tests 17
-ℹ pass 17
+ℹ tests 8
+ℹ pass 8
 ℹ fail 0
 ```
 
