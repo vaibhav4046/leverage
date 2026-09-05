@@ -1,0 +1,49 @@
+{
+  "voiceId": "onwK4e9ZLuTAKqWW03F9",
+  "modelId": "eleven_multilingual_v2",
+  "duration": 68.174,
+  "lines": [
+    {
+      "id": "thesis",
+      "text": "Your strongest model should decide the architecture. It should not write the fortieth boilerplate test.",
+      "start": 0,
+      "end": 6.339
+    },
+    {
+      "id": "what",
+      "text": "Leverage is an intelligence resource manager for MCP hosts. Your frontier model stays the strategist. Leverage hires the workforce underneath it.",
+      "start": 7.036,
+      "end": 17.508
+    },
+    {
+      "id": "policy",
+      "text": "Hard policy runs before scoring. A paid model under a zero dollar budget is not ranked lower. It is removed. Then an auction hires the best eligible worker for every task.",
+      "start": 18.111,
+      "end": 31.892
+    },
+    {
+      "id": "rocketride",
+      "text": "Cloud workers execute as RocketRide pipelines, through a permanent hosted pool. Credits are measured, not estimated.",
+      "start": 32.589,
+      "end": 40.786
+    },
+    {
+      "id": "handoff",
+      "text": "When a worker hits a rate limit, Leverage checkpoints what it understood and hands it to a replacement. The work does not restart.",
+      "start": 41.227,
+      "end": 50.422
+    },
+    {
+      "id": "proof",
+      "text": "A model saying done is not proof. A task completes when a compiler or a test suite agrees.",
+      "start": 51.026,
+      "end": 58.015
+    },
+    {
+      "id": "close",
+      "text": "Four of four tasks verified. Three handoffs. Zero dollars of paid inference. One frontier brain. An elastic workforce.",
+      "start": 58.34,
+      "end": 68.174
+    }
+  ]
+}

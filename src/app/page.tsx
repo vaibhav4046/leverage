@@ -13,6 +13,7 @@ import {
 import { ReputationStore } from '@/core/reputation';
 import { HandoffPlayer, type HandoffStep } from '@/components/marketing/handoff-player';
 import { HandoffFilm } from '@/components/marketing/handoff-film';
+import { MasterFilm } from '@/components/marketing/master-film';
 import { RocketRideProof } from '@/components/marketing/rocketride-proof';
 import { AuroraField } from '@/components/visual/aurora-field';
 import { WorkforceOrbit, type OrbitNode } from '@/components/visual/workforce-orbit';
@@ -212,6 +213,7 @@ export default async function Home() {
           </section>
         )}
 
+        <MasterFilm />
         <HandoffFilm />
 
         <StatsBand runs={allRuns} />
