@@ -134,21 +134,28 @@ async function open(page, url) {
 const BEATS = {
   landing: {
     page: '/',
-    about: 'hero, the film section (not played), the RocketRide section',
+    about: 'hero, the RocketRide section, the planner section',
     async run(page, mark) {
       await open(page, `${BASE}/`);
       await glide(page, 1500, 700, 300);
       mark('Hero: "One frontier brain. An elastic workforce." with the hero console');
       await glide(page, 1420, 620, 1800);
       await wait(page, 1700);
-      await tweenScroll(page, { to: 880, ms: 3500 });
-      mark('Film section: "One frontier brain. An elastic workforce." with the film poster (not played)');
-      await glide(page, 1300, 760, 1200);
-      await wait(page, 1800);
-      await tweenScroll(page, { to: 3880, ms: 5200 });
+      // Sections move as the page evolves; scroll to where they are, not to a
+      // pixel offset measured on an older layout.
+      const yOf = (sel) =>
+        page.evaluate((s) => {
+          const el = document.querySelector(s);
+          return el ? Math.round(el.getBoundingClientRect().top + window.scrollY - 40) : 0;
+        }, sel);
+      await tweenScroll(page, { to: await yOf('#rocketride'), ms: 4200 });
       mark('"RocketRide runs the work. Leverage decides what work should run." with the proof panels');
       await glide(page, 1180, 640, 1400);
-      await wait(page, 3600);
+      await wait(page, 2600);
+      await tweenScroll(page, { to: await yOf('#planner'), ms: 3800 });
+      mark('"Point it at a repository and a model writes the plan." with the planned mission figures');
+      await glide(page, 1300, 700, 1200);
+      await wait(page, 2400);
     },
   },
 

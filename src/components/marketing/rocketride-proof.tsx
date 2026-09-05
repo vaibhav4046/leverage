@@ -28,7 +28,7 @@ export function RocketRideProof({ run }: { run: MissionSnapshot | null }) {
   const allPassed = viaRocketRide.every((w) => w.status === 'passed');
 
   return (
-    <section className="border-t border-[var(--color-obsidian-edge)] bg-[var(--color-void)]">
+    <section id="rocketride" className="scroll-mt-14 border-t border-[var(--color-obsidian-edge)] bg-[var(--color-void)]">
       <div className="mx-auto max-w-[1200px] px-6 py-20">
         <div className="mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
           Execution fabric

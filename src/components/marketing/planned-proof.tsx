@@ -27,7 +27,7 @@ export function PlannedProof({ run }: { run: MissionSnapshot | null }) {
   const credits = run.usage.rocketRideCredits;
 
   return (
-    <section className="border-t border-[var(--color-obsidian-edge)] bg-[var(--color-abyss)]">
+    <section id="planner" className="scroll-mt-14 border-t border-[var(--color-obsidian-edge)] bg-[var(--color-abyss)]">
       <div className="mx-auto max-w-[1200px] px-6 py-20">
         <div className="mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
           Your repository
