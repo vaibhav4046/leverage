@@ -1,0 +1,10 @@
+{
+  "base": "https://useleverage.vercel.app",
+  "fixture": "greeter",
+  "file": "live-planned.mp4",
+  "capturedAt": "2026-09-05T20:00:00Z",
+  "width": 1920,
+  "height": 1080,
+  "note": "moments in seconds from the first frame; the run verified on camera and the page rendered the mission view afterwards",
+  "moments": { "pageReady": 12.4, "click": 15.9, "planned": 71.5, "firstHired": 73.5, "verified": 121.9, "scrollStart": 334.0, "end": 345.5 }
+}

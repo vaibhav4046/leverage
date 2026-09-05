@@ -12,7 +12,7 @@ import { IconArrowRight, IconCloud, IconVerified, IconCheckpoint } from '@/compo
  *
  * Every number here is read from the recorded mission at render time. Nothing is
  * typed into the copy, so this section cannot drift away from the artifact it
- * describes — if the run changes, the page changes with it, and if the run is
+ * describes, if the run changes, the page changes with it, and if the run is
  * missing the section does not render at all rather than showing zeroes.
  */
 export function RocketRideProof({ run }: { run: MissionSnapshot | null }) {

@@ -1,21 +1,27 @@
 import Link from 'next/link';
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { Wordmark } from '@/components/brand';
+import nextDynamic from 'next/dynamic';
 import { HeroConsole } from '@/components/marketing/hero-console';
 import { ConnectSources } from '@/components/marketing/connect-sources';
-import {
-  ExecutionSurface,
-  StatsBand,
-  WorkforceLedger,
-  type ModelRow,
-} from '@/components/marketing/surfaces';
-import { ReputationStore } from '@/core/reputation';
-import nextDynamic from 'next/dynamic';
+import { ExecutionSurface, WorkforceLedger } from '@/components/marketing/surfaces';
 import type { HandoffStep } from '@/components/marketing/handoff-player';
 import { RocketRideProof } from '@/components/marketing/rocketride-proof';
 import { PlannedProof } from '@/components/marketing/planned-proof';
-import { MobileMenu } from '@/components/marketing/page-shell';
+import { ProductModes, pickMarket } from '@/components/marketing/product-modes';
+import { Evidence } from '@/components/marketing/evidence';
+import { WorkforceMarquee, plannerOf } from '@/components/marketing/workforce-marquee';
+import { Faq } from '@/components/marketing/faq';
+import { Install } from '@/components/marketing/install';
+import { LandingFooter, LandingNav } from '@/components/marketing/landing-chrome';
+import {
+  countTests,
+  loadLedger,
+  loadLiveRuns,
+  loadPoolSweep,
+  loadProbe,
+  loadRocketRideRun,
+  loadRun,
+  loadScale,
+} from '@/components/marketing/evidence-data';
 import { AuroraField, WorkforceOrbit } from '@/components/visual/lazy';
 import type { OrbitNode } from '@/components/visual/workforce-orbit';
 import { Counter, Reveal } from '@/components/visual/motion';
@@ -33,89 +39,37 @@ const MasterFilm = nextDynamic(() => import('@/components/marketing/master-film'
 /**
  * Landing page.
  *
- * Every number here comes from `demo/canonical-run.json`, a real recorded mission,
- * or the panel says it has nothing to show. There is no placeholder metric anywhere.
- * A product whose argument is "check the evidence, don't trust the model" cannot have
- * an invented hero.
+ * Every number here comes from a recorded mission or another file in the
+ * repository, read when the page renders, or the panel says it has nothing to
+ * show. There is no placeholder metric anywhere. A product whose argument is
+ * "check the evidence, don't trust the model" cannot have an invented hero.
+ *
+ * The shape follows what a product landing page is expected to have (product,
+ * live preview, capabilities, community proof, pricing, FAQ, install, footer)
+ * with every slot filled by something this repository can actually show.
  */
-// In production the run files never change between deploys; parsing a megabyte
-// of JSON on every request was most of the landing page's server time.
-const runMemo = new Map<string, Promise<MissionSnapshot | null>>();
-
-function loadRun(file: string): Promise<MissionSnapshot | null> {
-  if (process.env.NODE_ENV !== 'production') return readRun(file);
-  let hit = runMemo.get(file);
-  if (!hit) {
-    hit = readRun(file);
-    runMemo.set(file, hit);
-  }
-  return hit;
-}
-
-async function readRun(file: string): Promise<MissionSnapshot | null> {
-  try {
-    return JSON.parse(await fs.readFile(path.resolve('demo', file), 'utf8')) as MissionSnapshot;
-  } catch {
-    return null;
-  }
-}
-
-/**
- * The workforce ledger is this installation's own record, so it is read from the
- * committed observations rather than from a table anyone typed by hand.
- */
-async function loadLedger(): Promise<ModelRow[]> {
-  try {
-    const raw = await fs.readFile(path.resolve('demo/proof/model-observations.json'), 'utf8');
-    const store = ReputationStore.fromJSON(JSON.parse(raw));
-    return store
-      .leaderboard()
-      .filter((r) => r.samples >= 2)
-      .map((r) => ({
-        displayName: r.modelKey.split(':').slice(1).join(':') || r.modelKey,
-        costClass: r.modelKey.startsWith('ollama') ? 'local' : r.modelKey.startsWith('agent-cli') || r.modelKey.startsWith('host') ? 'host' : 'free',
-        samples: r.samples,
-        verified: r.verifiedSuccesses,
-        successRate: r.successRate,
-        medianLatencyMs: r.medianLatencyMs,
-        confidence: r.confidence,
-      }));
-  } catch {
-    return [];
-  }
-}
-
 export default async function Home() {
-  const [run, arcade, rocketRide, hosted, planned, ledger] = await Promise.all([
-    loadRun('canonical-run.json'),
-    loadRun('arcade-run.json'),
-    // The run RocketRide executed gets its own section because it answers a
-    // question the competition asks out loud; it still counts in the stats band,
-    // so the band and Mission Control agree on how many missions there are.
-    loadRun('rocketride-mission.json'),
-    loadRun('hosted-pool-mission.json'),
-    // The mission whose plan a model wrote, so the stats band counts it too.
-    loadRun('planned-run.json'),
-    loadLedger(),
-  ]);
+  const [run, arcade, rocketRide, hosted, planned, ledger, tests, scale, probe, rocketRideRun, pool, liveRuns] =
+    await Promise.all([
+      loadRun('canonical-run.json'),
+      loadRun('arcade-run.json'),
+      // The run RocketRide executed gets its own section because it answers a
+      // question the competition asks out loud; it still counts in the totals,
+      // so the band and Mission Control agree on how many missions there are.
+      loadRun('rocketride-mission.json'),
+      loadRun('hosted-pool-mission.json'),
+      // The mission whose plan a model wrote, so the totals count it too.
+      loadRun('planned-run.json'),
+      loadLedger(),
+      countTests(),
+      loadScale(),
+      loadProbe(),
+      loadRocketRideRun(),
+      loadPoolSweep(),
+      loadLiveRuns(),
+    ]);
   const allRuns = [run, arcade, rocketRide, hosted, planned].filter((r): r is MissionSnapshot => r !== null);
-
-  // The job-market panel shows a real auction from a recorded run: the first one
-  // where policy struck a candidate, so the "removed, not out-ranked" point is a
-  // recorded fact rather than an illustration. Top three eligible by utility,
-  // plus the first candidate policy refused.
-  const market = (() => {
-    for (const r of allRuns) {
-      for (const auction of r.auctions) {
-        const struck = auction.candidates.find((c) => !c.eligible);
-        const task = r.tasks.find((t) => t.id === auction.taskId);
-        if (!struck || !task) continue;
-        const eligible = auction.candidates.filter((c) => c.eligible).sort((a, b) => b.utility - a.utility).slice(0, 3);
-        return { missionId: r.mission.id, task, auction, privacy: r.mission.privacy.mode, budgetMaxUsd: r.usage.budgetMaxUsd, rows: [...eligible, struck] };
-      }
-    }
-    return null;
-  })();
+  const market = pickMarket(allRuns);
 
   const handoff = run?.checkpoints[0];
   const proofChecks = run?.proofs.flatMap((p) => p.checks) ?? [];
@@ -138,9 +92,7 @@ export default async function Home() {
     'task.completed',
   ]);
   const replayAll = (run?.events ?? []).filter((e) => REPLAY_TYPES.has(e.type));
-  const failAt = replayAll.findIndex(
-    (e) => e.type === 'provider.rate_limit' || e.type === 'worker.failed',
-  );
+  const failAt = replayAll.findIndex((e) => e.type === 'provider.rate_limit' || e.type === 'worker.failed');
   const replaySteps: HandoffStep[] = replayAll
     .slice(Math.max(0, failAt - 2), Math.max(0, failAt - 2) + 10)
     .map((e) => ({
@@ -165,9 +117,23 @@ export default async function Home() {
               : 'idle',
     })) ?? [];
 
+  // Footer evidence links, from the runs that loaded, so a link can never point
+  // at a mission the page does not know about.
+  const footerMissions = (
+    [
+      [run, 'Recorded run'],
+      [rocketRide, 'RocketRide run'],
+      [hosted, 'Hosted pool run'],
+      [planned, 'Model-planned run'],
+      [arcade, 'Arcade run'],
+    ] as [MissionSnapshot | null, string][]
+  )
+    .filter((x): x is [MissionSnapshot, string] => x[0] !== null)
+    .map(([r, label]) => ({ label: `${label} · ${r.mission.id}`, id: r.mission.id }));
+
   return (
     <>
-      <Nav />
+      <LandingNav />
       <main id="main">
         {/* ---------------------------------------------------------------- Hero */}
         <section className="aurora relative isolate overflow-hidden border-b border-[var(--color-obsidian-edge)]">
@@ -207,13 +173,18 @@ export default async function Home() {
 
                 <Reveal delay={200}>
                   <div className="mt-9 flex flex-wrap items-center gap-3">
-                    <Link href="/app/live" className="btn-primary">
+                    <Link href="/app/live" className="btn-primary inline-flex min-h-[44px] items-center">
                       Run a real mission now
                     </Link>
-                    <Link href="#film" className="btn-ghost">
-                      Watch the film
+                    <Link href="#film" className="btn-ghost inline-flex min-h-[44px] items-center">
+                      See it in action
                     </Link>
                   </div>
+                  <p className="mt-4 max-w-[34rem] text-[12.5px] leading-relaxed text-[var(--color-ash)] opacity-90">
+                    No account, no key. The live page runs one bounded mission per visitor every ten
+                    minutes; every other run on this site is a recording, and each page says which
+                    it is.
+                  </p>
                 </Reveal>
 
                 <Reveal delay={260}>
@@ -242,10 +213,7 @@ export default async function Home() {
             <div className="mx-auto grid max-w-[1200px] grid-cols-2 gap-px bg-[var(--color-obsidian-edge)] md:grid-cols-4">
               <Ribbon label="Tasks verified" node={<><Counter value={passedTasks} />/{run.tasks.length}</>} />
               <Ribbon label="Proof checks" node={<><Counter value={passedChecks} />/{proofChecks.length}</>} />
-              <Ribbon
-                label="Cognitive handoffs"
-                node={<Counter value={run.checkpoints.length} />}
-              />
+              <Ribbon label="Cognitive handoffs" node={<Counter value={run.checkpoints.length} />} />
               <Ribbon
                 label="Actual paid inference"
                 accent
@@ -255,63 +223,72 @@ export default async function Home() {
           </section>
         )}
 
+        {/* ------------------------------------------------------------ Product */}
+        <ProductModes run={run} market={market} />
+
+        {/* ---------------------------------------------------------- See it run */}
         <MasterFilm />
         <HandoffFilm />
 
-        <StatsBand runs={allRuns} />
-
-        {/* ------------------------------------------------------------- Problem */}
-        <Section eyebrow="The problem" title="Your smartest model is doing work it shouldn't.">
+        {/* ------------------------------------------------------------- Handoff */}
+        <Section eyebrow="Cognitive handoff" title="Replace the worker, not the project." border>
           <p className="max-w-[46rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
-            Frontier intelligence earns its price on architecture, trade-offs and hard reasoning.
-            It should not spend the same premium compute on repository search and mechanical
-            edits.
+            When a model hits a quota, times out or cannot solve the job, Leverage captures a compact
+            checkpoint of what it understood: decisions, files touched, checks already passing,
+            what is left. It hands that to a replacement. The work continues instead of restarting.
           </p>
 
-          <div className="mt-10 grid gap-4 md:grid-cols-2">
-            <Reveal className="min-w-0">
-              <div className="surface-card h-full p-6">
-                <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-frosted-lilac)]">
-                  Worth the premium
+          {handoff ? (
+            <Reveal>
+              <div className="surface-card mt-10 overflow-hidden">
+                <div className="grid divide-y divide-[var(--color-obsidian-edge)] md:grid-cols-3 md:divide-x md:divide-y-0">
+                  <HandoffCell
+                    label="Worker released"
+                    value={handoff.fromModelKey.split(':').slice(1).join(':')}
+                    detail={`stopped with ${handoff.reason}`}
+                  />
+                  <HandoffCell
+                    label="Checkpoint"
+                    value={`${handoff.checkpointTokens} tokens`}
+                    detail={`from ${handoff.originalContextTokens} of context`}
+                    accent
+                  />
+                  <HandoffCell
+                    label="Context reduction"
+                    value={`${handoff.reductionPct}%`}
+                    detail="counted from the text, 3.6 characters per token"
+                  />
                 </div>
-                <ul className="mt-4 space-y-2.5 text-[15px] text-[var(--color-mist)]">
-                  {['System architecture', 'Difficult trade-offs', 'Security judgement', 'Final review'].map(
-                    (x) => (
-                      <li key={x}>{x}</li>
-                    ),
-                  )}
-                </ul>
               </div>
             </Reveal>
-            <Reveal delay={90} className="min-w-0">
-              <div className="surface-card h-full p-6">
-                <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-                  Not worth the premium
-                </div>
-                <ul className="mt-4 space-y-2.5 text-[15px] text-[var(--color-ash)]">
-                  {[
-                    'Searching every file for one symbol',
-                    'Forty boilerplate test cases',
-                    'Mechanical migrations and refactors',
-                    'Retrying a formatter that failed',
-                  ].map((x) => (
-                    <li key={x}>{x}</li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          </div>
+          ) : (
+            <EmptyEvidence what="handoff" />
+          )}
         </Section>
+
+        {replaySteps.length > 3 && <HandoffPlayer steps={replaySteps} />}
+
+        <ExecutionSurface run={run} />
+
+        {/* --------------------------------------------------------------- Proof */}
+        <Evidence
+          runs={allRuns}
+          tests={tests}
+          scale={scale}
+          probe={probe}
+          rocketRide={rocketRideRun}
+          pool={pool}
+          live={liveRuns}
+          planned={planned}
+        />
 
         <RocketRideProof run={rocketRide} />
 
         <PlannedProof run={planned} />
 
-        <ExecutionSurface run={run} />
+        {/* ----------------------------------------------------------- Workforce */}
+        <WorkforceMarquee runs={allRuns} planner={plannerOf(planned)} />
 
-        {replaySteps.length > 3 && <HandoffPlayer steps={replaySteps} />}
-
-        {/* ------------------------------------------------------------- Orbit */}
         {orbitNodes.length > 0 && (
           <section className="relative border-t border-[var(--color-obsidian-edge)] bg-[var(--color-void)]">
             <div className="mx-auto max-w-[1200px] px-6 py-20">
@@ -353,62 +330,6 @@ export default async function Home() {
           </section>
         )}
 
-        {/* ------------------------------------------------------------ Job market */}
-        <Section eyebrow="Model job market" title="Hire intelligence task by task." border>
-          <p className="max-w-[46rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
-            Every task becomes a job posting. Leverage scores each reachable model against the work,
-            your budget, its measured track record, latency and your privacy policy, then hires the
-            best eligible worker and shows you why.
-          </p>
-          {market ? (
-            <div className="mt-10 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
-              <Reveal className="min-w-0">
-                <div className="surface-card h-full p-6">
-                  <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-                    Job · from mission {market.missionId}
-                  </div>
-                  <div className="mt-2 text-[16px] text-[var(--color-quartz)]">{market.task.title}</div>
-                  <dl className="mono mt-5 space-y-2 text-[12px]">
-                    {[
-                      ['Category', market.task.category],
-                      ['Candidates', `${market.auction.candidates.length} scored`],
-                      ['Max cost', `$${market.budgetMaxUsd.toFixed(2)}`],
-                      ['Privacy', market.privacy],
-                    ].map(([k, v]) => (
-                      <div key={k} className="flex justify-between gap-4">
-                        <dt className="text-[var(--color-ash)]">{k}</dt>
-                        <dd className="text-[var(--color-mist)]">{v}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              </Reveal>
-              <Reveal delay={90} className="min-w-0">
-                <div className="surface-card h-full p-6">
-                  <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-                    Candidates · as recorded
-                  </div>
-                  <ul className="mt-4 space-y-3">
-                    {market.rows.map((c) => (
-                      <Candidate
-                        key={c.modelKey}
-                        name={c.displayName}
-                        utility={c.eligible ? c.utility.toFixed(2) : '–'}
-                        note={c.eligible ? `${c.costClass} · ${c.sampleCount} prior job${c.sampleCount === 1 ? '' : 's'}` : (c.ineligibleReason ?? 'ineligible')}
-                        winner={c.modelKey === market.auction.winner?.modelKey}
-                        blocked={!c.eligible}
-                      />
-                    ))}
-                  </ul>
-                  <p className="mt-5 border-t border-[var(--color-obsidian-edge)] pt-4 text-[13px] text-[var(--color-ash)]">
-                    Policy runs before scoring. A paid model under a $0 budget is not out-ranked. It is
-                    never in the pool.
-                  </p>
-                </div>
-              </Reveal>
-            </div>
-          ) : null}
-        </Section>
         <WorkforceLedger models={ledger} />
 
         {/* --------------------------------------------------------- Connect */}
@@ -424,7 +345,7 @@ export default async function Home() {
         {/* --------------------------------------------------------- Zero dollar */}
         <Section eyebrow="Zero-dollar mode" title="When the budget says zero, zero means zero." border>
           <div className="mt-2 grid items-center gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
-            <Reveal>
+            <Reveal className="min-w-0">
               <div>
                 <div className="display text-[clamp(3.5rem,9vw,5rem)] text-[var(--color-quartz)]">
                   <Counter value={run?.usage.paidSpendUsd ?? 0} decimals={2} prefix="$" />
@@ -432,21 +353,32 @@ export default async function Home() {
                 <div className="mono mt-3 text-[11px] uppercase tracking-[0.1em] text-[var(--color-ash)]">
                   {run ? 'Actual paid inference, recorded run' : 'Hard spending limit'}
                 </div>
+                <ul className="mt-6 space-y-2 text-[14px] text-[var(--color-mist)]">
+                  {[
+                    'MIT licence. No account, no API key, nothing to download.',
+                    'Five MCP tools. Your host stays the strategist.',
+                    'Paid providers struck before scoring, asserted in the tests.',
+                    'RocketRide credits read from billing, per run, never estimated.',
+                  ].map((x) => (
+                    <li key={x} className="flex gap-3">
+                      <span aria-hidden className="mono text-[var(--color-state-pass)]">
+                        ✓
+                      </span>
+                      <span>{x}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </Reveal>
 
-            <Reveal delay={90}>
+            <Reveal delay={90} className="min-w-0">
               <div className="surface-card divide-y divide-[var(--color-obsidian-edge)]">
                 {[
                   ['Paid providers', 'BLOCKED', 'fail'],
                   ['Your host seat', 'READY', 'pass'],
                   ['Local runtime', 'READY', 'pass'],
                   ['Free cloud routes', 'READY', 'pass'],
-                  [
-                    'Blocked paid attempts',
-                    run ? String(run.usage.blockedPaidAttempts) : '–',
-                    'neutral',
-                  ],
+                  ['Blocked paid attempts', run ? String(run.usage.blockedPaidAttempts) : '–', 'neutral'],
                 ].map(([label, value, tone]) => (
                   <div key={label} className="flex items-center justify-between px-6 py-3.5">
                     <span className="text-[15px] text-[var(--color-mist)]">{label}</span>
@@ -470,99 +402,11 @@ export default async function Home() {
           </div>
         </Section>
 
-        {/* ------------------------------------------------------------- Handoff */}
-        <Section eyebrow="Cognitive handoff" title="Replace the worker, not the project." border>
-          <p className="max-w-[46rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
-            When a model hits a quota, times out or cannot solve the job, Leverage captures a compact
-            checkpoint of what it understood: decisions, files touched, checks already passing,
-            what is left. It hands that to a replacement. The work continues instead of restarting.
-          </p>
+        {/* ----------------------------------------------------------------- FAQ */}
+        <Faq rocketRide={rocketRide} hosted={hosted} planned={planned} />
 
-          {handoff ? (
-            <Reveal>
-              <div className="surface-card mt-10 overflow-hidden">
-                <div className="grid divide-y divide-[var(--color-obsidian-edge)] md:grid-cols-3 md:divide-x md:divide-y-0">
-                  <HandoffCell
-                    label="Worker released"
-                    value={handoff.fromModelKey.split(':').slice(1).join(':')}
-                    detail={`stopped with ${handoff.reason}`}
-                  />
-                  <HandoffCell
-                    label="Checkpoint"
-                    value={`${handoff.checkpointTokens} tokens`}
-                    detail={`from ${handoff.originalContextTokens} of context`}
-                    accent
-                  />
-                  <HandoffCell
-                    label="Context reduction"
-                    value={`${handoff.reductionPct}%`}
-                    detail="counted from the text, 3.6 characters per token"
-                  />
-                </div>
-              </div>
-            </Reveal>
-          ) : (
-            <EmptyEvidence what="handoff" />
-          )}
-        </Section>
-
-        {/* --------------------------------------------------------------- Proof */}
-        <Section eyebrow="Proof-carrying work" title="Every worker ships evidence." border>
-          <p className="max-w-[46rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
-            A task is not complete because a model said so. It is complete when a compiler, a test
-            runner or the filesystem says so. Model self-confidence is recorded separately and is
-            the smallest term in the score.
-          </p>
-
-          {run && proofChecks.length > 0 ? (
-            <Reveal>
-              <div className="surface-card mt-10 p-6">
-                <div className="mono mb-4 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-                  ProofPack · mission {run.mission.id}
-                </div>
-                <ul className="mono space-y-2 text-[13px]">
-                  {proofChecks.slice(0, 8).map((c, i) => (
-                    <li key={`${c.id}-${i}`} className="flex items-center justify-between gap-4">
-                      <span className="truncate text-[var(--color-mist)]">{c.label}</span>
-                      <span
-                        style={{
-                          color:
-                            c.status === 'pass'
-                              ? 'var(--color-state-pass)'
-                              : 'var(--color-state-fail)',
-                        }}
-                      >
-                        {c.status.toUpperCase()}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mono mt-5 flex flex-wrap gap-x-8 gap-y-2 border-t border-[var(--color-obsidian-edge)] pt-4 text-[12px] text-[var(--color-ash)]">
-                  <span>
-                    checks{' '}
-                    <span className="text-[var(--color-quartz)]">
-                      {passedChecks}/{proofChecks.length}
-                    </span>
-                  </span>
-                  <span>
-                    paid spend{' '}
-                    <span className="text-[var(--color-quartz)]">
-                      ${run.usage.paidSpendUsd.toFixed(2)}
-                    </span>
-                  </span>
-                  <span>
-                    elapsed{' '}
-                    <span className="text-[var(--color-quartz)]">
-                      {(run.mission.elapsedMs / 1000).toFixed(1)}s
-                    </span>
-                  </span>
-                </div>
-              </div>
-            </Reveal>
-          ) : (
-            <EmptyEvidence what="ProofPack" />
-          )}
-        </Section>
+        {/* ------------------------------------------------------------- Install */}
+        <Install />
 
         {/* ----------------------------------------------------------- Final CTA */}
         <section className="aurora relative isolate overflow-hidden border-t border-[var(--color-obsidian-edge)]">
@@ -573,10 +417,10 @@ export default async function Home() {
                 Give your best model a workforce.
               </h2>
               <div className="mt-9 flex flex-wrap justify-center gap-3">
-                <Link href="/app/live" className="btn-primary">
+                <Link href="/app/live" className="btn-primary inline-flex min-h-[44px] items-center">
                   Run a real mission now
                 </Link>
-                <Link href="/docs/mcp" className="btn-ghost">
+                <Link href="/docs/mcp" className="btn-ghost inline-flex min-h-[44px] items-center">
                   Install the MCP server
                 </Link>
               </div>
@@ -584,63 +428,12 @@ export default async function Home() {
           </div>
         </section>
       </main>
-      <Footer />
+      <LandingFooter missions={footerMissions} />
     </>
   );
 }
 
 /* -------------------------------------------------------------------------- */
-
-function Nav() {
-  return (
-    <header className="sticky top-0 z-50 border-b border-[var(--color-obsidian-edge)] bg-[rgba(11,12,14,0.82)] backdrop-blur-xl">
-      <nav
-        aria-label="Main"
-        className="mx-auto flex h-14 max-w-[1200px] items-center justify-between gap-6 px-6"
-      >
-        <Link href="/" aria-label="Leverage home">
-          <Wordmark />
-        </Link>
-        <div className="hidden items-center gap-7 text-[14px] text-[var(--color-ash)] md:flex">
-          {[
-            ['/how-it-works', 'How it works'],
-            ['/benchmarks', 'Benchmarks'],
-            ['/docs', 'Docs'],
-          ].map(([href, label]) => (
-            <Link
-              key={href}
-              href={href}
-              className="transition-colors duration-150 hover:text-[var(--color-quartz)]"
-            >
-              {label}
-            </Link>
-          ))}
-        </div>
-        <div className="flex items-center gap-3">
-          <MobileMenu
-            links={[
-              ['/how-it-works', 'How it works'],
-              ['/benchmarks', 'Benchmarks'],
-              ['/docs', 'Docs'],
-              ['/app', 'Mission Control'],
-              ['/demo', 'Demo'],
-            ]}
-          />
-          <Link
-            href="/app"
-            className="hidden text-[14px] text-[var(--color-ash)] transition-colors hover:text-[var(--color-quartz)] sm:block"
-          >
-            Mission Control
-          </Link>
-          <Link href="/app/live" className="btn-primary whitespace-nowrap !py-2.5 !text-[14px]">
-            <span className="sm:hidden">Run one</span>
-            <span className="hidden sm:inline">Run a real mission</span>
-          </Link>
-        </div>
-      </nav>
-    </header>
-  );
-}
 
 function MidCta({
   heading,
@@ -666,7 +459,7 @@ function MidCta({
                 {body}
               </p>
             </div>
-            <Link href={href} className="btn-primary shrink-0 self-start md:self-auto">
+            <Link href={href} className="btn-primary inline-flex min-h-[44px] shrink-0 items-center self-start md:self-auto">
               {label}
             </Link>
           </div>
@@ -678,7 +471,7 @@ function MidCta({
 
 function Ribbon({ label, node, accent }: { label: string; node: React.ReactNode; accent?: boolean }) {
   return (
-    <div className="bg-[var(--color-void)] px-6 py-6">
+    <div className="min-w-0 bg-[var(--color-void)] px-6 py-6">
       <div className="mono text-[10px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
         {label}
       </div>
@@ -726,42 +519,6 @@ function Section({
   );
 }
 
-function Candidate({
-  name,
-  utility,
-  note,
-  winner,
-  blocked,
-}: {
-  name: string;
-  utility: string;
-  note: string;
-  winner?: boolean;
-  blocked?: boolean;
-}) {
-  return (
-    <li className="flex items-baseline justify-between gap-4 border-b border-[var(--color-inkline)] pb-3 last:border-0">
-      <div className="min-w-0">
-        <div className="mono truncate text-[13px] text-[var(--color-quartz)]">
-          {name}
-          {winner && (
-            <span className="ml-2 rounded-full border border-[rgba(74,222,128,0.4)] px-2 py-0.5 text-[10px] text-[var(--color-state-pass)]">
-              HIRED
-            </span>
-          )}
-          {blocked && (
-            <span className="ml-2 rounded-full border border-[var(--color-obsidian-edge)] px-2 py-0.5 text-[10px] text-[var(--color-ash)]">
-              INELIGIBLE
-            </span>
-          )}
-        </div>
-        <div className="mt-1 text-[12px] text-[var(--color-ash)]">{note}</div>
-      </div>
-      <div className="mono shrink-0 tabular-nums text-[13px] text-[var(--color-mist)]">{utility}</div>
-    </li>
-  );
-}
-
 function HandoffCell({
   label,
   value,
@@ -774,12 +531,12 @@ function HandoffCell({
   accent?: boolean;
 }) {
   return (
-    <div className="p-6">
+    <div className="min-w-0 p-6">
       <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
         {label}
       </div>
       <div
-        className="mt-2 text-[22px] tabular-nums"
+        className="mt-2 break-words text-[22px] tabular-nums"
         style={{
           fontFamily: 'var(--font-display)',
           fontWeight: 500,
@@ -811,35 +568,4 @@ function EmptyEvidence({ what }: { what: string }) {
 
 function Dot() {
   return <span className="text-[var(--color-ash)] opacity-70">·</span>;
-}
-
-function Footer() {
-  return (
-    <footer className="border-t border-[var(--color-obsidian-edge)] bg-[var(--color-void)]">
-      <div className="mx-auto flex max-w-[1200px] flex-col gap-4 px-6 py-10 sm:flex-row sm:items-center sm:justify-between">
-        <Wordmark />
-        <div className="flex flex-wrap gap-6 text-[13px] text-[var(--color-ash)]">
-          {[
-            ['/docs', 'Docs'],
-            ['/benchmarks', 'Benchmarks'],
-            ['/demo', 'Demo'],
-          ].map(([href, label]) => (
-            <Link key={href} href={href} className="hover:text-[var(--color-quartz)]">
-              {label}
-            </Link>
-          ))}
-          {/* This page tells the reader to reproduce every number themselves. Until
-              now there was nowhere to click to get the code. */}
-          <a
-            href="https://github.com/vaibhav4046/leverage"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-[var(--color-quartz)]"
-          >
-            Source
-          </a>
-        </div>
-      </div>
-    </footer>
-  );
 }

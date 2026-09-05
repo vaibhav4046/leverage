@@ -384,3 +384,28 @@ body {
     font-size: 12px;
   }
 }
+
+/*
+ * The workforce marquee. Two copies of the row, translated by half the track,
+ * so the loop has no seam. It pauses under the pointer so the names can be read,
+ * and the reduced-motion rule above stops it outright.
+ */
+.marquee {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 46s linear infinite;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}

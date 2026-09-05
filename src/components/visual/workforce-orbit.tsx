@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * Workforce orbit — the product as a rotating 3D object.
+ * Workforce orbit, the product as a rotating 3D object.
  *
  * One host node at the centre, workers on a tilted ring around it, each edge a
  * dispatch. It is a real perspective projection with depth sorting and depth-scaled
@@ -11,7 +11,7 @@ import { useEffect, useRef } from 'react';
  * nothing and avoids shipping a scene graph to draw twelve circles.
  *
  * The states come from the caller, so on the landing page this is fed by the
- * canonical run — the ring you see is the workforce that actually ran, including
+ * canonical run, the ring you see is the workforce that actually ran, including
  * the worker that was replaced.
  */
 
@@ -146,7 +146,7 @@ export function WorkforceOrbit({
         }
       }
 
-      // Host core, last and brightest — it is the thing everything orbits.
+      // Host core, last and brightest, it is the thing everything orbits.
       const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, scale * 0.1);
       core.addColorStop(0, 'rgba(255, 255, 255, 0.95)');
       core.addColorStop(0.28, 'rgba(133, 166, 233, 0.5)');

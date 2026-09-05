@@ -1,7 +1,7 @@
 /**
  * Leverage mark.
  *
- * One node branching into many and recombining — the product in a glyph. Drawn on a
+ * One node branching into many and recombining, the product in a glyph. Drawn on a
  * 24-unit grid so it stays legible at 16px in a browser tab, which rules out
  * anything with interior detail. No brain, no robot, no borrowed brand asset.
  */

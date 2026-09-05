@@ -51,7 +51,8 @@ const nextConfig: NextConfig = {
   },
   outputFileTracingRoot: __dirname,
   outputFileTracingIncludes: {
-    '/': ['./demo/**/*.json'],
+    // The landing also reads the live-run transcripts and counts the test cases.
+    '/': ['./demo/**/*.json', './demo/evidence/*.sse', './tests/*.test.ts'],
     '/demo': ['./demo/**/*.json'],
     '/benchmarks': ['./demo/**/*.json'],
     '/app/missions': ['./demo/**/*.json'],

@@ -115,8 +115,17 @@ export class ProviderRegistry {
           };
         }
 
-        if (entry.health.status === 'UNAVAILABLE' || entry.health.status === 'AUTH_ERROR') {
+        // Bad credentials empty the catalogue: nothing on that provider can be
+        // hired. A probe that merely timed out keeps the last catalogue for the
+        // same reason a discovery blip does below: one slow fetch must not
+        // leave a running mission with no hosted models to plan or hire with.
+        if (entry.health.status === 'AUTH_ERROR') {
           entry.models = [];
+          return;
+        }
+        if (entry.health.status === 'UNAVAILABLE') {
+          if (entry.models.length === 0) return;
+          entry.lastDiscoveryError = entry.health.detail;
           return;
         }
 

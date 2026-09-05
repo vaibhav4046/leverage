@@ -37,7 +37,7 @@ export function MobileMenu({ links }: { links: [string, string][] }) {
           <Link
             key={href}
             href={href}
-            className="block rounded-[8px] px-3 py-2.5 text-[14px] text-[var(--color-mist)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[var(--color-quartz)]"
+            className="flex min-h-[44px] items-center rounded-[8px] px-3 py-2.5 text-[14px] text-[var(--color-mist)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[var(--color-quartz)]"
           >
             {label}
           </Link>

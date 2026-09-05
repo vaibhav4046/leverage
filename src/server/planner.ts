@@ -38,7 +38,7 @@ const MAX_TEST_EXCERPTS = 4;
 const EXCERPT_LINES = 60;
 const EXCERPT_BUDGET_CHARS = 7000;
 /** Hosted routes are tried first; a hosted route out of quota costs seconds, so a few are affordable before local takes it. */
-const MAX_HOSTED_ATTEMPTS = 4;
+const MAX_HOSTED_ATTEMPTS = 10;
 const MAX_LOCAL_ATTEMPTS = 2;
 const ATTEMPT_TIMEOUT_MS = 120_000;
 const SKIP = new Set(['node_modules', '.git', '.next', 'dist', 'build', 'coverage', '.leverage-state', '.turbo', '.cache']);
@@ -159,7 +159,10 @@ export function rankPlanners(registry: ProviderRegistry, privacy: PrivacyMode = 
   const usable = registry
     .allModels()
     .filter((m) => m.costClass !== 'paid' && (privacy !== 'local-only' || m.costClass === 'local'))
-    .filter((m) => !['UNAVAILABLE', 'AUTH_ERROR'].includes(registry.healthFor(m.providerId).status));
+    // A provider whose last probe failed keeps its catalogue and stays a
+    // candidate: one timed-out probe is not proof a planning call will fail,
+    // and the attempt loop moves on in seconds if it does.
+    .filter((m) => registry.healthFor(m.providerId).status !== 'AUTH_ERROR');
   const rank = (m: ModelDescriptor) =>
     classRank[m.costClass] * 1_000_000 +
     (m.capabilities.includes('reasoning') ? 100_000 : 0) +
@@ -344,19 +347,31 @@ export async function planWithModel(opts: {
     if (!adapter) continue;
     const started = Date.now();
     const timeout = AbortSignal.timeout(ATTEMPT_TIMEOUT_MS + 5_000);
-    let text: string;
+    let text: string | null = null;
     let usage: { promptTokens?: number; completionTokens?: number } = {};
-    try {
-      const response = await adapter.invoke(model, request, opts.signal ? AbortSignal.any([opts.signal, timeout]) : timeout);
-      text = response.text;
-      usage = { promptTokens: response.promptTokens, completionTokens: response.completionTokens };
-    } catch (err) {
-      if (opts.signal?.aborted) throw err;
-      // A route that is rate limited or down is not a rejected plan; the next
-      // candidate gets the same question.
-      skipped.push(`${model.displayName}: ${(err as Error).message.slice(0, 140)}`);
-      continue;
+    // A hosted route that is momentarily full (503, "ResourceExhausted") usually
+    // answers a few seconds later; a route out of quota for the day (429) does
+    // not. Give the first kind two more chances before moving on.
+    for (let attempt = 0; attempt < 3 && text === null; attempt++) {
+      try {
+        const response = await adapter.invoke(model, request, opts.signal ? AbortSignal.any([opts.signal, timeout]) : timeout);
+        text = response.text;
+        usage = { promptTokens: response.promptTokens, completionTokens: response.completionTokens };
+      } catch (err) {
+        if (opts.signal?.aborted) throw err;
+        const message = (err as Error).message;
+        const transient = /HTTP 503|ResourceExhausted|HTTP 502|HTTP 504/.test(message);
+        if (transient && attempt < 2) {
+          await new Promise((r) => setTimeout(r, 5_000));
+          continue;
+        }
+        // A route that is rate limited or down is not a rejected plan; the next
+        // candidate gets the same question.
+        skipped.push(`${model.displayName}: ${message.slice(0, 140)}`);
+        break;
+      }
     }
+    if (text === null) continue;
 
     let tasks: MissionTask[];
     try {

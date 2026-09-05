@@ -193,7 +193,8 @@ async function planInBackground(entry: Entry, goal: string, repositoryRoot: stri
   } catch (err) {
     state.status = 'FAILED';
     state.completedAt = Date.now();
-    state.events.emit('mission.failed', `Planning failed: ${(err as Error).message.slice(0, 600)}`);
+    // The whole list of what was tried is the useful part of this message.
+    state.events.emit('mission.failed', `Planning failed: ${(err as Error).message.slice(0, 2000)}`);
     await persist(state);
     return;
   }

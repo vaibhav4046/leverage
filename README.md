@@ -51,8 +51,8 @@ replacement, and the work resumes instead of restarting.*
 
 ## See it produce something
 
-`/demo` embeds a playable gravity-arena prototype whose entire logic — vector maths,
-physics integration, seeded spawner, game state machine — was written by Leverage
+`/demo` embeds a playable gravity-arena prototype whose entire logic (vector maths,
+physics integration, seeded spawner, game state machine) was written by Leverage
 workers under a hard `$0` budget. The tests and the render shell are given; the workers
 could read the tests they had to satisfy and could not edit them.
 
@@ -84,7 +84,7 @@ Credential values never leave the server and are never rendered.*
 
 ## The run this repository ships with
 
-A real recorded mission, not a mock — `LVR-f8f72d56`, in `demo/canonical-run.json`:
+A real recorded mission, not a mock: `LVR-f8f72d56`, in `demo/canonical-run.json`:
 
 | | |
 |---|---|
@@ -93,7 +93,7 @@ A real recorded mission, not a mock — `LVR-f8f72d56`, in `demo/canonical-run.j
 | Full suite | 17 / 17 tests, `exit 0` |
 | Workers hired | 7 |
 | Cognitive handoffs | 3 (one injected 429, two genuine test failures) |
-| Context reduction at handoff | 57%, 48%, 30% — measured |
+| Context reduction at handoff | 57%, 48%, 30%, measured |
 | **Actual paid inference** | **$0.00** |
 
 Reproduce it:
@@ -165,8 +165,29 @@ Then, inside the host:
 > Use Leverage. Finish this application. Budget $0. Quality production.
 
 Five tools: `leverage_run`, `leverage_status`, `leverage_cancel`, `leverage_proof`,
-`leverage_models`. `leverage_run` returns a mission id immediately — a mission takes
+`leverage_models`. `leverage_run` returns a mission id immediately, because a mission takes
 minutes and holding a synchronous MCP call open for that long would be unusable.
+
+### From a chat application
+
+A host that connects to a URL instead of spawning a process (a claude.ai custom connector,
+or any client behind a tunnel) gets the same five tools over Streamable HTTP:
+
+```bash
+npm run mcp:http                                  # http://127.0.0.1:3200/mcp, stateless
+cloudflared tunnel --url http://127.0.0.1:3200    # then add https://<host>/mcp as a connector
+```
+
+Then ask in the chat:
+
+> Use the Leverage connector. Run a mission on the repository at D:\project\webguard with
+> this goal: implement src/redirect.js, src/ssrf.js and src/ratelimit.js so that the whole
+> test suite in test/ passes. Budget $0. Quality production. Poll leverage_status until it is
+> COMPLETED or FAILED, then call leverage_proof.
+
+Mission `LVR-e6443739` in the demo film started exactly this way: planned by Nemotron 3
+Nano 30B via NVIDIA in 45.7 s, three tasks, two real handoffs with checkpoints, whole
+suite green, $0 paid. The proof pack lists the whole-suite run alongside every task check.
 
 ## Zero-Dollar Mode
 
@@ -199,13 +220,13 @@ Ollama / free routes / BYOK          the compute pool
 ```
 
 Full detail in [ARCHITECTURE.md](ARCHITECTURE.md). The RocketRide integration has three
-places where the published docs disagree with the running system —
+places where the published docs disagree with the running system;
 [docs/ROCKETRIDE_FINDINGS.md](docs/ROCKETRIDE_FINDINGS.md) records what is actually true.
 
 ## Verify it yourself
 
 ```bash
-npm run verify              # typecheck, lint, 84 tests (63 invariants, 7 pool guards, 14 planner and verification), production build
+npm run verify              # typecheck, lint, 88 tests (63 invariants, 7 pool guards, 18 planner and verification), production build
 npm run verify:rocketride   # real inference through a real pipeline, real credit delta
 ```
 

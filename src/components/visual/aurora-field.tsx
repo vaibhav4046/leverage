@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
  * Volumetric aurora field.
  *
  * A hand-written WebGL fragment shader rather than a 3D library. Three.js would be
- * ~150KB gzipped for what is, in the end, one full-screen quad and some noise —
+ * ~150KB gzipped for what is, in the end, one full-screen quad and some noise,
  * that is most of the landing page's entire JS budget spent on a background. This
  * is a few kilobytes and draws at the same quality.
  *

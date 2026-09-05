@@ -285,7 +285,7 @@ export function execArgv(
  * "expected 'a-b-c', actual 'abc'" is the difference between a handoff that
  * fixes the bug and one that repeats it.
  */
-const FAILURE_LINE = /\b(not ok|fail(?:ing|ed|ure)?|error|expected|actual|assert)\b|✖|×|✗/i;
+const FAILURE_LINE = /\b(not ok|fail(?:ing|ed|ure)?|error|expected|actual|assert)\b|assertionerror|\[err_|✖|×|✗/i;
 const FAILURE_NOISE = /^\s*at\s|^\s*[{}\]\[],?\s*$|^\s*(operator|generatedMessage|diff|code):/;
 
 /** Colour codes a test reporter may emit even into a pipe; a proof is text, not a terminal. */

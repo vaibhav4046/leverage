@@ -222,3 +222,56 @@ describe('ProviderRegistry.sweep', () => {
     expect(registry.allModels()).toHaveLength(1);
   });
 });
+
+describe('ProviderRegistry keeps a known catalogue through a failed probe', () => {
+  it('still ranks the provider for planning after one health probe times out', async () => {
+    const { ProviderRegistry } = await import('../src/providers/registry');
+    const { rankPlanners } = await import('../src/server/planner');
+    const registry = new ProviderRegistry();
+    let probes = 0;
+    registry.register(
+      {
+        providerId: 'flaky',
+        costClass: 'free',
+        async health() {
+          probes += 1;
+          if (probes > 1) throw new Error('fetch timed out');
+          return { status: 'HEALTHY', checkedAt: new Date().toISOString() };
+        },
+        async discoverModels() {
+          return [
+            {
+              key: 'flaky:one',
+              providerId: 'flaky',
+              modelId: 'one',
+              displayName: 'One',
+              costClass: 'free',
+              pricing: { inputPerMTok: 0, outputPerMTok: 0 },
+              contextTokens: 8000,
+              capabilities: ['code'],
+              supportsTools: false,
+            },
+          ];
+        },
+        estimate: () => ({ estimatedPromptTokens: 0, estimatedCompletionTokens: 0, estimatedCostUsd: 0 }),
+        invoke: async () => ({ text: '', durationMs: 0 }),
+        classifyError: () => ({ type: 'UNKNOWN', message: '', retryable: false }),
+      } as never,
+      'flaky provider',
+    );
+    await registry.sweep(true);
+    expect(registry.allModels()).toHaveLength(1);
+    await registry.sweep(true);
+    expect(registry.healthFor('flaky').status).toBe('UNAVAILABLE');
+    expect(registry.allModels()).toHaveLength(1);
+    expect(rankPlanners(registry).map((m) => m.key)).toEqual(['flaky:one']);
+  });
+});
+
+describe('failureExcerpt keeps the assertion message', () => {
+  it('carries the failing input named in an AssertionError line', async () => {
+    const { failureExcerpt } = await import('../src/core/verify');
+    const out = ['not ok 2 - private ranges are refused', '  error: |-', '    AssertionError [ERR_ASSERTION]: http://localhost/admin', '    actual: true,', '    expected: false,'].join('\n');
+    expect(failureExcerpt(out, '')).toContain('http://localhost/admin');
+  });
+});

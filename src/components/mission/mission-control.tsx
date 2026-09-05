@@ -231,10 +231,9 @@ function PlanPanel({ snapshot }: { snapshot: MissionSnapshot }) {
 
 /** Where the task graph came from: a planner model, or the fixture's committed plan. */
 function PlanOrigin({ snapshot }: { snapshot: MissionSnapshot }) {
-  const compiled = snapshot.events.find((e) => e.type === 'mission.compiled');
-  const planner = compiled?.data?.planner as
-    | { displayName?: string; costClass?: string; taskCount?: number; durationMs?: number }
-    | undefined;
+  // A model-planned mission has two compiled events: the admission ("being
+  // planned") and the plan itself; the one with a planner record is the source.
+  const { planner } = plannerOf(snapshot);
   const text =
     snapshot.mission.status === 'PLANNING'
       ? 'a planner model is reading the repository and writing the task graph'

@@ -85,7 +85,10 @@ const SOURCES: Source[] = [
 
 export function ConnectSources() {
   return (
-    <section className="border-t border-[var(--color-obsidian-edge)] bg-[var(--color-abyss)]">
+    <section
+      id="connect"
+      className="scroll-mt-14 border-t border-[var(--color-obsidian-edge)] bg-[var(--color-abyss)]"
+    >
       <div className="mx-auto max-w-[1200px] px-6 py-20">
         <Reveal>
           <div className="mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-ash)]">

@@ -22,8 +22,8 @@ function prefersReduced(): boolean {
  * Reveal on first entry into the viewport.
  *
  * Renders **visible** from the server and only hides itself once the client has
- * confirmed it is below the fold. The obvious implementation — start at opacity 0,
- * reveal on intersect — ships a page that is entirely invisible until hydration
+ * confirmed it is below the fold. The obvious implementation, start at opacity 0,
+ * reveal on intersect, ships a page that is entirely invisible until hydration
  * finishes, and permanently invisible if it never does. That is a content bug
  * wearing an animation costume, and it is exactly what happened here the first time.
  *

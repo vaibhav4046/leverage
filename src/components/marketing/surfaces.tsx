@@ -306,7 +306,7 @@ function RateBar({ rate }: { rate: number }) {
  * for a number that sounds like traction; these are simply the totals of what is
  * in the repository, and the labels say so.
  */
-export function StatsBand({ runs }: { runs: MissionSnapshot[] }) {
+export function StatsBand({ runs, bare }: { runs: MissionSnapshot[]; bare?: boolean }) {
   if (runs.length === 0) return null;
 
   const tasks = runs.reduce((n, r) => n + r.tasks.length, 0);
@@ -323,31 +323,36 @@ export function StatsBand({ runs }: { runs: MissionSnapshot[] }) {
     ['Paid inference', `$${spend.toFixed(2)}`, 'across every run'],
   ];
 
+  const grid = (
+    <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+      {stats.map(([label, value, note], i) => (
+        <Reveal key={label} delay={i * 60} className="min-w-0">
+          <div>
+            <div
+              className="text-[clamp(1.75rem,3vw,2.25rem)] tabular-nums"
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 500,
+                letterSpacing: '-0.02em',
+                color: i === 4 ? 'var(--color-state-pass)' : 'var(--color-quartz)',
+              }}
+            >
+              {value}
+            </div>
+            <div className="mt-2 text-[13px] text-[var(--color-mist)]">{label}</div>
+            <div className="mt-0.5 text-[12px] text-[var(--color-ash)] opacity-80">{note}</div>
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  );
+
+  // `bare` drops the section wrapper so the band can sit inside another section.
+  if (bare) return grid;
+
   return (
     <section className="border-t border-[var(--color-obsidian-edge)] bg-[var(--color-void)]">
-      <div className="mx-auto max-w-[1200px] px-6 py-14">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
-          {stats.map(([label, value, note], i) => (
-            <Reveal key={label} delay={i * 60}>
-              <div>
-                <div
-                  className="text-[clamp(1.75rem,3vw,2.25rem)] tabular-nums"
-                  style={{
-                    fontFamily: 'var(--font-display)',
-                    fontWeight: 500,
-                    letterSpacing: '-0.02em',
-                    color: i === 4 ? 'var(--color-state-pass)' : 'var(--color-quartz)',
-                  }}
-                >
-                  {value}
-                </div>
-                <div className="mt-2 text-[13px] text-[var(--color-mist)]">{label}</div>
-                <div className="mt-0.5 text-[12px] text-[var(--color-ash)] opacity-80">{note}</div>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
+      <div className="mx-auto max-w-[1200px] px-6 py-14">{grid}</div>
     </section>
   );
 }

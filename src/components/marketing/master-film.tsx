@@ -4,34 +4,40 @@ import { useEffect, useRef, useState } from 'react';
 import { IconPlay } from '@/components/icons';
 
 /**
- * The film. Narrated, over untouched footage of the live site.
+ * The film. Narrated, over untouched footage of the live site and of a Claude
+ * chat driving the product through its connector.
  *
- * Rendered with HyperFrames from `motion/compositions/walkthrough.html`: every
- * frame inside the window is a real browser session against the deployment,
- * including one real live run recorded once, in order. It has a voice track, so
- * it never autoplays: a page that starts talking is a page people close. One
- * click, native controls after that, because a scrub bar and a volume control
- * are what a viewer expects from a film and nobody expects from a diagram.
+ * Rendered with HyperFrames from `motion/compositions/demo.html`: every frame
+ * inside a window is a real browser session, against the deployment or inside
+ * claude.ai, including one real live run recorded once, in order. It has a voice
+ * track, so it never autoplays: a page that starts talking is a page people
+ * close. One click, native controls after that, because a scrub bar and a
+ * volume control are what a viewer expects from a film and nobody expects from
+ * a diagram.
  *
- * The 68-second motion piece, which states the thesis without footage, stays
- * available from the caption.
+ * The earlier site walkthrough and the 69-second motion piece stay available
+ * from the caption.
  */
 export function MasterFilm({
-  src = '/motion/walkthrough.mp4',
-  poster = '/motion/walkthrough-poster.webp',
-  eyebrow = 'The film · 1:51 · narrated',
-  title = 'Press the button. Then read the log.',
-  lede = 'A real mission runs on the site while you watch, then the auction, the handoff and the supply, all on untouched footage of the live deployment. No number is spoken that is not on the site with its evidence.',
-  length = '1:51',
-  sourceNote = 'motion/compositions/walkthrough.html',
+  src = '/motion/demo.mp4',
+  poster = '/motion/demo-poster.webp',
+  captions = '/motion/demo.vtt',
+  eyebrow = 'The demo · 2:22 · narrated',
+  title = 'What it is. What it is for. How it works. Then watch it work.',
+  lede = 'What Leverage is, the use cases, the harness, a real mission running on this site, and the same product driven from a Claude chat through its connector: a mission on a real repository, three guards for the failures at the top of the OWASP list, planned by a model, verified by the repository\'s own tests, zero dollars paid.',
+  length = '2:22',
+  sourceNote = 'motion/compositions/demo.html',
+  ariaLabel = 'Leverage, the demo. What it is, what it is for, the harness, a real mission on the live site, and a mission driven from a Claude chat through the Leverage connector.',
 }: {
   src?: string;
   poster?: string;
+  captions?: string;
   eyebrow?: string;
   title?: string;
   lede?: string;
   length?: string;
   sourceNote?: string;
+  ariaLabel?: string;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [started, setStarted] = useState(false);
@@ -71,10 +77,10 @@ export function MasterFilm({
               preload="metadata"
               controls={started}
               poster={poster}
-              aria-label="Leverage, the film. A narrated walkthrough of the live site: a real mission running on RocketRide, the auction, the cognitive handoff, and the measured supply."
+              aria-label={ariaLabel}
             >
               <source src={src} type="video/mp4" />
-              <track kind="captions" srcLang="en" label="English" src="/motion/walkthrough.vtt" default />
+              <track kind="captions" srcLang="en" label="English" src={captions} default />
             </video>
 
             {!started && (
@@ -102,9 +108,13 @@ export function MasterFilm({
 
           <figcaption className="mono mt-3 text-[11px] text-[var(--color-ash)]">
             Rendered with HyperFrames from <span className="text-[var(--color-mist)]">{sourceNote}</span> over
-            real browser sessions against the deployment · voiced with ElevenLabs from{' '}
-            <span className="text-[var(--color-mist)]">scripts/narrate-film.mjs</span> · the 69-second motion
-            version is at{' '}
+            real browser sessions · voiced with ElevenLabs from{' '}
+            <span className="text-[var(--color-mist)]">scripts/narrate-film.mjs</span> · the 1:51 site walkthrough
+            is at{' '}
+            <a href="/motion/walkthrough.mp4" className="text-[var(--color-frosted-lilac)] underline underline-offset-2">
+              /motion/walkthrough.mp4
+            </a>{' '}
+            and the 69-second motion version at{' '}
             <a href="/motion/film.mp4" className="text-[var(--color-frosted-lilac)] underline underline-offset-2">
               /motion/film.mp4
             </a>

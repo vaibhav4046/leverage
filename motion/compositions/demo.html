@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Leverage · the demo</title>
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Figtree"; font-style: normal; font-weight: 500; font-display: block; src: url("assets/fonts/figtree-500.woff2") format("woff2"); }
+      @font-face { font-family: "Figtree"; font-style: normal; font-weight: 600; font-display: block; src: url("assets/fonts/figtree-600.woff2") format("woff2"); }
+      @font-face { font-family: "Cascadia Mono"; src: local("Cascadia Mono"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0e111b; }
+      body { font-family: "Figtree", "Inter", system-ui, sans-serif; color: #ffffff; }
+      :root {
+        --abyss: #0e111b; --void: #0b0c0e; --quartz: #ffffff; --ash: #abaebb; --mist: #c7c9d1;
+        --lilac: #85a6e9; --aurora: #625fff; --pass: #4ade80; --fail: #f87171; --amber: #fbbf24;
+        --hairline: #24375a; --inkline: #151e32; --rose: #ff7dda;
+      }
+      .mono { font-family: "IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace; }
+      #root { position: relative; width: 1920px; height: 1080px; background: var(--abyss); overflow: hidden; }
+
+      /* Backdrop: the product's aurora, drifting slowly, plus a faint grid. */
+      #aurora {
+        /* Centred on (960, 600) by its box, not by a CSS transform, so the
+           GSAP drift owns the transform outright. */
+        position: absolute; left: 10px; top: 0px; width: 1900px; height: 1200px;
+        background:
+          radial-gradient(closest-side at 40% 45%, rgba(98,95,255,0.30), rgba(98,95,255,0.05) 55%, transparent 75%),
+          radial-gradient(closest-side at 68% 60%, rgba(255,125,218,0.12), transparent 70%);
+        filter: blur(24px);
+      }
+      #grid { position: absolute; inset: 0; opacity: 0.28; background-image: linear-gradient(rgba(36,55,90,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(36,55,90,0.35) 1px, transparent 1px); background-size: 96px 96px; background-position: 48px 60px; }
+      #eyebrow { position: absolute; left: 96px; top: 52px; font-size: 20px; letter-spacing: 0.16em; color: var(--lilac); text-transform: uppercase; }
+      #wordmark { position: absolute; right: 96px; top: 52px; font-size: 20px; letter-spacing: 0.12em; color: var(--ash); }
+      #progress { position: absolute; left: 0; bottom: 0; height: 6px; width: 1920px; background: var(--aurora); transform-origin: left center; }
+
+      /* Footage windows: the product floating over the backdrop. */
+      .win {
+        position: absolute; left: 160px; top: 112px; width: 1600px; height: 900px;
+        border-radius: 18px; overflow: hidden; background: #0b0e17;
+        box-shadow: 0 50px 140px rgba(0,0,0,0.65), 0 0 0 1px rgba(98,95,255,0.35);
+      }
+      .win video { display: block; width: 1600px; height: 900px; object-fit: cover; }
+      /* The chat capture is the page area of a 1920x1080 desktop cropped to 1920x860. */
+      .win.chat { left: 160px; top: 176px; width: 1600px; height: 717px; }
+      .win.chat video { width: 1600px; height: 717px; object-fit: fill; }
+
+      /* Lower third: small uppercase label, one sentence. */
+      .lt {
+        position: absolute; left: 160px; bottom: 96px; max-width: 1240px;
+        padding: 22px 30px 24px; border-radius: 14px;
+        background: rgba(14,17,27,0.86); border: 1px solid rgba(36,55,90,0.9); backdrop-filter: blur(12px);
+      }
+      .lt .k { font-size: 18px; letter-spacing: 0.14em; color: var(--lilac); text-transform: uppercase; }
+      .lt .h { margin-top: 8px; font-size: 40px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.1; color: var(--quartz); }
+      .lt .h em { font-style: normal; color: var(--pass); }
+
+      /* Title */
+      #title { position: absolute; inset: 0; }
+      #title .mark { position: absolute; left: 160px; top: 372px; font-size: 26px; letter-spacing: 0.34em; color: var(--lilac); text-transform: uppercase; }
+      #title .h1 { position: absolute; left: 160px; top: 424px; font-size: 118px; font-weight: 600; letter-spacing: -0.03em; line-height: 1.0; width: 1600px; }
+      #title .h1 em { font-style: normal; color: var(--lilac); }
+      #title .h1 .dim { color: var(--ash); }
+      #title .sub { position: absolute; left: 160px; top: 700px; font-size: 30px; color: var(--mist); letter-spacing: 0.02em; }
+
+      /* Motion scenes share a stage */
+      .scene { position: absolute; inset: 0; }
+      .stage-h { position: absolute; left: 160px; top: 140px; font-size: 64px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.02; width: 1600px; }
+      .stage-h em { font-style: normal; color: var(--lilac); }
+      .stage-sub { position: absolute; left: 160px; top: 232px; font-size: 26px; color: var(--ash); letter-spacing: 0.02em; }
+
+      /* Act 1: host, control plane, workforce */
+      .node { position: absolute; border-radius: 16px; border: 1px solid var(--hairline); background: rgba(14,17,27,0.92); padding: 22px 26px; }
+      .node .k { font-size: 15px; letter-spacing: 0.14em; color: var(--ash); text-transform: uppercase; }
+      .node .t { margin-top: 8px; font-size: 30px; font-weight: 600; letter-spacing: -0.015em; color: var(--quartz); line-height: 1.1; }
+      .node .d { margin-top: 8px; font-size: 19px; color: var(--mist); line-height: 1.35; }
+      .node.host { left: 560px; top: 300px; width: 800px; }
+      .node.host .t em { font-style: normal; color: var(--lilac); }
+      .node.plane { left: 460px; top: 496px; width: 1000px; border-color: rgba(98,95,255,0.6); box-shadow: 0 0 0 1px rgba(98,95,255,0.25), 0 30px 80px rgba(0,0,0,0.5); }
+      .tools { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+      .tool { font-size: 15px; padding: 6px 11px; border-radius: 999px; border: 1px solid var(--hairline); color: var(--lilac); }
+      .worker { position: absolute; top: 760px; width: 300px; border-radius: 14px; border: 1px solid var(--inkline); background: rgba(11,12,14,0.9); padding: 16px 18px; }
+      .worker .t { font-size: 21px; font-weight: 600; color: var(--quartz); }
+      .worker .d { margin-top: 6px; font-size: 15px; color: var(--ash); line-height: 1.35; }
+      .worker .p { margin-top: 10px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pass); }
+      #wk1 { left: 232px; } #wk2 { left: 562px; } #wk3 { left: 892px; } #wk4 { left: 1222px; }
+      .edge { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; }
+      .edge path { fill: none; stroke: rgba(133,166,233,0.55); stroke-width: 2; stroke-dasharray: 6 8; }
+      .gate { position: absolute; left: 1520px; top: 560px; width: 260px; border-radius: 14px; border: 1px solid rgba(74,222,128,0.5); background: rgba(11,12,14,0.9); padding: 16px 18px; }
+      .gate .k { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--pass); }
+      .gate .t { margin-top: 6px; font-size: 20px; font-weight: 600; color: var(--quartz); line-height: 1.2; }
+
+      /* Act 2: use cases */
+      .card { position: absolute; top: 340px; width: 380px; height: 520px; border-radius: 18px; border: 1px solid var(--hairline); background: rgba(14,17,27,0.92); padding: 28px 28px 26px; overflow: hidden; }
+      .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--lilac); opacity: 0.9; }
+      .card .n { font-size: 15px; letter-spacing: 0.14em; color: var(--ash); text-transform: uppercase; }
+      .card .t { margin-top: 12px; font-size: 34px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; color: var(--quartz); }
+      .card .d { margin-top: 16px; font-size: 19px; color: var(--mist); line-height: 1.4; }
+      .card .v { position: absolute; left: 28px; bottom: 26px; font-size: 44px; font-weight: 600; letter-spacing: -0.02em; color: var(--pass); line-height: 1; }
+      .card .vs { position: absolute; left: 28px; bottom: 96px; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ash); }
+      #c1 { left: 160px; } #c2 { left: 566px; } #c3 { left: 972px; } #c4 { left: 1378px; }
+
+      /* Act 3: harness */
+      .step { position: absolute; top: 380px; width: 250px; height: 250px; border-radius: 18px; border: 1px solid var(--hairline); background: rgba(14,17,27,0.94); padding: 22px 22px; }
+      .step .n { font-size: 13px; letter-spacing: 0.14em; color: var(--ash); text-transform: uppercase; }
+      .step .t { margin-top: 10px; font-size: 27px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.1; color: var(--quartz); }
+      .step .d { margin-top: 10px; font-size: 15.5px; color: var(--mist); line-height: 1.35; }
+      .step .d b { color: var(--quartz); font-weight: 500; }
+      #p1 { left: 160px; } #p2 { left: 434px; } #p3 { left: 708px; } #p4 { left: 982px; } #p5 { left: 1256px; } #p6 { left: 1530px; }
+      #p6 { border-color: rgba(74,222,128,0.55); }
+      .arrow { position: absolute; top: 500px; width: 24px; height: 2px; background: rgba(133,166,233,0.7); }
+      .arrow::after { content: ""; position: absolute; right: -2px; top: -5px; border: 6px solid transparent; border-left-color: rgba(133,166,233,0.9); }
+      #a1 { left: 410px; } #a2 { left: 684px; } #a3 { left: 958px; } #a4 { left: 1232px; } #a5 { left: 1506px; }
+      .fail { position: absolute; top: 700px; left: 434px; width: 1346px; border-radius: 16px; border: 1px solid rgba(248,113,113,0.45); background: rgba(14,17,27,0.94); padding: 20px 26px; display: flex; gap: 26px; align-items: center; }
+      .fail .b { flex: 1; }
+      .fail .n { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; }
+      .fail .t { margin-top: 6px; font-size: 24px; font-weight: 600; letter-spacing: -0.015em; color: var(--quartz); line-height: 1.15; }
+      .fail .d { margin-top: 6px; font-size: 15px; color: var(--mist); }
+      .fail .sep { width: 1px; height: 78px; background: var(--hairline); }
+      .auction { position: absolute; left: 708px; top: 252px; width: 250px; }
+      .cand { font-size: 14.5px; color: var(--mist); display: flex; justify-content: space-between; gap: 8px; padding: 4px 0; border-bottom: 1px solid var(--inkline); }
+      .cand b { color: var(--quartz); font-weight: 500; }
+      .cand.top { color: var(--pass); }
+
+      /* Close */
+      #close { position: absolute; inset: 0; }
+      .stat { position: absolute; top: 300px; width: 520px; }
+      .stat .v { font-size: 124px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+      .stat .v .dim { color: var(--ash); }
+      .stat .l { font-size: 25px; color: var(--ash); margin-top: 14px; letter-spacing: 0.04em; }
+      #st1 { left: 160px; } #st2 { left: 740px; } #st3 { left: 1320px; }
+      #st1 .v { color: var(--pass); }
+      #tag { position: absolute; left: 160px; top: 600px; font-size: 84px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; width: 1600px; }
+      #tag em { font-style: normal; color: var(--lilac); }
+      #url { position: absolute; left: 160px; top: 900px; font-size: 34px; color: var(--mist); letter-spacing: 0.04em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="142" data-width="1920" data-height="1080">
+      <audio id="voice" src="assets/demo-voice.mp3" data-start="0" data-duration="138.81" data-track-index="10" data-volume="1"></audio>
+
+      <div id="aurora"></div>
+      <div id="grid"></div>
+      <div id="eyebrow" class="mono">Leverage · the demo</div>
+      <div id="wordmark" class="mono">useleverage.vercel.app</div>
+
+      <!-- Title (0.0 to 5.9): the landing floats in behind the words -->
+      <div class="win" id="w0"><video id="v0" src="assets/capture/raw/landing.mp4" data-start="0.0" data-duration="6.0" data-media-start="0.6" muted></video></div>
+      <div id="title" class="scene">
+        <div class="mark mono">Leverage</div>
+        <div class="h1">One frontier brain.<br /><em>An elastic workforce.</em></div>
+        <div class="sub">An MCP server for Claude Code, Codex and Cursor. No API key.</div>
+      </div>
+
+      <!-- Act 1 · what (5.9 to 26.5) -->
+      <div id="act1" class="scene">
+        <div class="stage-h">What <em>Leverage</em> is</div>
+        <div class="stage-sub">An intelligence resource manager under the model you already pay for</div>
+        <div class="node host" id="n-host">
+          <div class="k">Your MCP host</div>
+          <div class="t">Claude Code · Codex · Cursor <em>stays the strategist</em></div>
+          <div class="d">It states an outcome and a policy. It never writes the code.</div>
+        </div>
+        <div class="node plane" id="n-plane">
+          <div class="k">Leverage · control plane · MCP server</div>
+          <div class="t">Five tools. Nothing else to learn.</div>
+          <div class="tools mono">
+            <span class="tool">leverage_run</span><span class="tool">leverage_status</span><span class="tool">leverage_cancel</span><span class="tool">leverage_proof</span><span class="tool">leverage_models</span>
+          </div>
+        </div>
+        <svg class="edge" id="edges1" viewBox="0 0 1920 1080">
+          <path d="M960 452 L960 496" />
+          <path d="M760 654 C 760 720, 382 700, 382 760" />
+          <path d="M880 654 C 880 720, 712 700, 712 760" />
+          <path d="M1040 654 C 1040 720, 1042 700, 1042 760" />
+          <path d="M1160 654 C 1160 720, 1372 700, 1372 760" />
+        </svg>
+        <div class="worker" id="wk1"><div class="t">Local runtime</div><div class="d">Ollama on your machine. Nothing leaves it.</div><div class="p mono">local · $0</div></div>
+        <div class="worker" id="wk2"><div class="t">Free routes</div><div class="d">A hosted pool over OpenRouter and NVIDIA, thirteen proven models.</div><div class="p mono">free · $0</div></div>
+        <div class="worker" id="wk3"><div class="t">Your own seat</div><div class="d">The agent CLI you are already signed in to, hired as a worker.</div><div class="p mono">host · $0</div></div>
+        <div class="worker" id="wk4"><div class="t">RocketRide pipelines</div><div class="d">Cloud-class workers execute as pipelines, credits read from billing.</div><div class="p mono">executed · metered</div></div>
+        <div class="gate" id="gate1"><div class="k">The gate</div><div class="t">The repository's own tests decide. A failed worker is replaced.</div></div>
+      </div>
+
+      <!-- Act 2 · use cases (26.5 to 46.2) -->
+      <div id="act2" class="scene">
+        <div class="stage-h">What it is <em>for</em></div>
+        <div class="stage-sub">Four things, each one on the record</div>
+        <div class="card" id="c1"><div class="n">Your repository</div><div class="t">A model writes the plan.</div><div class="d">Point it at a repository with tests and no plan. A planner reads it, proposes the task graph, the compiler validates it.</div><div class="vs">Recorded · LVR-31eacf88</div><div class="v">3 of 3 verified</div></div>
+        <div class="card" id="c2"><div class="n">Zero-dollar mode</div><div class="t">Paid routes are removed, not outranked.</div><div class="d">Budget zero means the auction never sees a paid candidate. Free, local and your own seat do the work.</div><div class="vs">Across five recorded missions</div><div class="v">$0.00 paid</div></div>
+        <div class="card" id="c3"><div class="n">Cognitive handoff</div><div class="t">A worker dies. The work does not.</div><div class="d">What it understood is checkpointed and handed to a replacement, smaller than the transcript, so the task resumes instead of restarting.</div><div class="vs">Canonical run · first checkpoint</div><div class="v">57% smaller</div></div>
+        <div class="card" id="c4"><div class="n">Verified or nothing</div><div class="t">Done means the tests said so.</div><div class="d">Every task passes its own test command, then the whole suite runs once more. The proof pack lists every check and its result.</div><div class="vs">Canonical run · proof checks</div><div class="v">8 of 8 passed</div></div>
+      </div>
+
+      <!-- Act 3 · harness (46.2 to 70.9) -->
+      <div id="act3" class="scene">
+        <div class="stage-h">The <em>harness</em></div>
+        <div class="stage-sub">A control plane, not a router</div>
+        <div class="step" id="p1"><div class="n">1 · Compile</div><div class="t">Goal to task graph</div><div class="d">A planner proposes; the compiler refuses cycles, dangling edges, escaping paths and any task <b>no test can prove</b>.</div></div>
+        <div class="step" id="p2"><div class="n">2 · Auction</div><div class="t">Every reachable model, scored</div><div class="d">Task fit, track record, context fit, availability, cost and privacy. <b>Utility, not vibes.</b></div></div>
+        <div class="step" id="p3"><div class="n">3 · Hire</div><div class="t">The best eligible one</div><div class="d">Ineligible candidates are struck out with a stated reason, and the winner's rationale is written into the log.</div></div>
+        <div class="step" id="p4"><div class="n">4 · Execute</div><div class="t">RocketRide pipeline</div><div class="d"><b>webhook → llm_openai_api → response</b>, through a token gated pool. Credits read from billing.</div></div>
+        <div class="step" id="p5"><div class="n">5 · Verify</div><div class="t">node --test is the gate</div><div class="d">A real process, a real exit code, a failure excerpt that quotes the assertion.</div></div>
+        <div class="step" id="p6"><div class="n">6 · Proof</div><div class="t">Every check, every result</div><div class="d">Files changed, patch hash, quality as the pass rate of what actually ran.</div></div>
+        <div class="arrow" id="a1"></div><div class="arrow" id="a2"></div><div class="arrow" id="a3"></div><div class="arrow" id="a4"></div><div class="arrow" id="a5"></div>
+        <div class="auction mono" id="auction">
+          <div class="cand top"><b>MiniMax M2.7 via OpenRouter</b><span>0.776</span></div>
+          <div class="cand"><b>MiniMax M3 via OpenRouter</b><span>0.760</span></div>
+          <div class="cand"><b>MiniMax M3 via NVIDIA</b><span>0.760</span></div>
+          <div class="cand"><b>qwen2.5-coder:3b</b><span>0.672</span></div>
+        </div>
+        <div class="fail" id="failrow">
+          <div class="b"><div class="n" style="color: var(--fail)">When it fails</div><div class="t">429, timeout, or a red test</div><div class="d">The worker is released, not retried blindly.</div></div>
+          <div class="sep"></div>
+          <div class="b"><div class="n" style="color: var(--amber)">Checkpoint</div><div class="t">What it understood, 57% smaller</div><div class="d">Brief, constraints, decisions, the failing assertion.</div></div>
+          <div class="sep"></div>
+          <div class="b"><div class="n" style="color: var(--pass)">Handoff</div><div class="t">A replacement resumes</div><div class="d">The auction runs again; the task continues from the checkpoint.</div></div>
+        </div>
+      </div>
+
+      <!-- Act 4 · site (70.9 to 109.8): the live planned run, then the console -->
+      <div class="win" id="w1"><video id="v1" src="assets/capture/raw/live-planned.mp4" data-start="70.9" data-duration="9.0" data-media-start="13.40" muted></video></div>
+      <div class="lt" id="l1"><div class="k mono">/app/live · not a recording</div><div class="h">One button. <em>A model writes the plan first.</em></div></div>
+
+      <div class="win" id="w2"><video id="v2" src="assets/capture/raw/live-planned.mp4" data-start="79.9" data-duration="8.0" data-media-start="70.00" muted></video></div>
+      <div class="lt" id="l2"><div class="k mono">Planned · validated · hiring</div><div class="h">The compiler accepts the graph. The auction hires.</div></div>
+
+      <div class="win" id="w3"><video id="v3" src="assets/capture/raw/live-planned.mp4" data-start="87.9" data-duration="7.8" data-media-start="119.40" muted></video></div>
+      <div class="lt" id="l3"><div class="k mono">Verified</div><div class="h"><em>Every task passed its tests. Whole suite green.</em> $0.00 paid.</div></div>
+
+      <div class="win" id="w4"><video id="v4" src="assets/capture/raw/mission.mp4" data-start="95.7" data-duration="14.1" data-media-start="6.0" muted></video></div>
+      <div class="lt" id="l4"><div class="k mono">Mission Control</div><div class="h">The plan, the auction, the log, the proof. All inspectable.</div></div>
+
+      <!-- Act 5 · chat (110.1 to 131.6): Leverage as a connector in Claude -->
+      <div class="win chat" id="w5"><video id="v5" src="assets/capture/raw/claude-chat-send.mp4" data-start="110.1" data-duration="7.5" data-media-start="0.0" muted></video></div>
+      <div class="lt" id="l5"><div class="k mono">Claude · connector</div><div class="h">One message points Leverage at a real repository.</div></div>
+
+      <div class="win chat" id="w6"><video id="v6" src="assets/capture/raw/claude-chat-plan.mp4" data-start="117.6" data-duration="7.0" data-media-start="0.5" muted></video></div>
+      <div class="lt" id="l6"><div class="k mono">webguard · OWASP top of the list</div><div class="h">Safe redirects, SSRF-safe URLs, a rate limiter. <em>Planned. Hired. Verified.</em></div></div>
+
+      <div class="win chat" id="w7"><video id="v7" src="assets/capture/raw/claude-chat-proof.mp4" data-start="124.6" data-duration="7.0" data-media-start="0.0" style="transform:scale(1.22);transform-origin:50% 0" muted></video></div>
+      <div class="lt" id="l7"><div class="k mono">leverage_proof</div><div class="h">The proof comes back into the chat.</div></div>
+
+      <!-- Close (131.6 to 142) -->
+      <div id="close">
+        <div class="stat" id="st1"><div class="v">$0.00</div><div class="l">paid inference, five recorded missions</div></div>
+        <div class="stat" id="st2"><div class="v">13</div><div class="l">hosted models, each proven with a completion</div></div>
+        <div class="stat" id="st3"><div class="v">88</div><div class="l">tests on the control plane</div></div>
+        <div id="tag">Open the site. Press the button. Read the log.<br /><em>Verified or nothing.</em></div>
+        <div id="url" class="mono">useleverage.vercel.app</div>
+      </div>
+
+      <div id="progress"></div>
+    </div>
+
+    <script>
+      /**
+       * Eight beats, cut on the narration in motion/assets/demo-timing.json.
+       * Acts 1 to 3 are motion; every figure in them is read from a recorded
+       * mission. Acts 4 and 5 are untouched footage: one live run on the deployed
+       * site and one chat session with Leverage added as a connector.
+       */
+      const S = {
+        title: 0.0, what: 5.9, uses: 26.5, harness: 46.2, site: 70.9,
+        site2: 79.9, site3: 87.9, console: 95.7, chat: 110.1, chat2: 117.6, chat3: 124.6,
+        close: 131.6, end: 142.0,
+      };
+      const build = () => {
+        const tl = gsap.timeline({ paused: true });
+        const E = "power3.out";
+        const wins = ["#w0", "#w1", "#w2", "#w3", "#w4", "#w5", "#w6", "#w7"];
+        const lts = ["#l1", "#l2", "#l3", "#l4", "#l5", "#l6", "#l7"];
+        gsap.set(wins, { autoAlpha: 0, y: 18, scale: 0.985, transformOrigin: "50% 60%" });
+        gsap.set(lts, { autoAlpha: 0, y: 14 });
+        gsap.set(["#title", "#act1", "#act2", "#act3", "#close"], { autoAlpha: 0 });
+        gsap.set("#progress", { scaleX: 0 });
+        gsap.set("#aurora", { x: 0, y: 0 });
+
+        tl.to("#progress", { scaleX: 1, duration: S.end, ease: "none" }, 0);
+        tl.to("#aurora", { x: 120, y: -60, duration: S.end, ease: "sine.inOut" }, 0);
+        tl.from("#eyebrow", { y: 10, autoAlpha: 0, duration: 0.5, ease: E }, 0.1);
+        tl.from("#wordmark", { y: 10, autoAlpha: 0, duration: 0.5, ease: E }, 0.2);
+
+        // Title: the landing floats in dimmed behind the words, then the words own the frame.
+        tl.to("#w0", { autoAlpha: 0.38, y: 0, scale: 1, duration: 1.2, ease: E }, 0.0);
+        tl.to("#title", { autoAlpha: 1, duration: 0.3 }, 0.3);
+        tl.from("#title .mark", { y: 14, autoAlpha: 0, duration: 0.5, ease: E }, 0.4);
+        tl.from("#title .h1", { y: 30, autoAlpha: 0, duration: 0.8, ease: E }, 0.7);
+        tl.from("#title .sub", { y: 16, autoAlpha: 0, duration: 0.6, ease: E }, 1.6);
+        tl.to(["#title", "#w0"], { autoAlpha: 0, duration: 0.5, ease: "power2.in" }, S.what - 0.5);
+
+        // Act 1: host, then the plane, then the workforce, then the gate.
+        tl.to("#act1", { autoAlpha: 1, duration: 0.3 }, S.what);
+        tl.from("#act1 .stage-h", { y: 24, autoAlpha: 0, duration: 0.6, ease: E }, S.what + 0.1);
+        tl.from("#act1 .stage-sub", { y: 12, autoAlpha: 0, duration: 0.5, ease: E }, S.what + 0.4);
+        tl.from("#n-host", { y: 24, autoAlpha: 0, duration: 0.6, ease: E }, S.what + 1.4);
+        tl.from("#n-plane", { y: 24, autoAlpha: 0, duration: 0.7, ease: E }, S.what + 3.6);
+        tl.from("#n-plane .tool", { y: 8, autoAlpha: 0, duration: 0.35, stagger: 0.12, ease: E }, S.what + 4.4);
+        tl.from("#edges1 path", { drawSVG: "0%", autoAlpha: 0, duration: 0.6, stagger: 0.12, ease: E }, S.what + 7.0);
+        tl.from(["#wk1", "#wk2", "#wk3", "#wk4"], { y: 24, autoAlpha: 0, duration: 0.55, stagger: 0.28, ease: E }, S.what + 7.4);
+        tl.from("#gate1", { x: 24, autoAlpha: 0, duration: 0.6, ease: E }, S.what + 15.2);
+        tl.to("#act1", { autoAlpha: 0, duration: 0.5, ease: "power2.in" }, S.uses - 0.5);
+
+        // Act 2: four cards, each with its figure.
+        tl.to("#act2", { autoAlpha: 1, duration: 0.3 }, S.uses);
+        tl.from("#act2 .stage-h", { y: 24, autoAlpha: 0, duration: 0.6, ease: E }, S.uses + 0.1);
+        tl.from("#act2 .stage-sub", { y: 12, autoAlpha: 0, duration: 0.5, ease: E }, S.uses + 0.4);
+        tl.from("#c1", { y: 30, autoAlpha: 0, duration: 0.6, ease: E }, S.uses + 1.0);
+        tl.from("#c2", { y: 30, autoAlpha: 0, duration: 0.6, ease: E }, S.uses + 5.6);
+        tl.from("#c3", { y: 30, autoAlpha: 0, duration: 0.6, ease: E }, S.uses + 10.2);
+        tl.from("#c4", { y: 30, autoAlpha: 0, duration: 0.6, ease: E }, S.uses + 14.4);
+        tl.from(["#c1 .v", "#c2 .v", "#c3 .v", "#c4 .v"], { y: 10, autoAlpha: 0, duration: 0.4, ease: E, stagger: 0 }, S.uses + 2.2);
+        tl.to("#act2", { autoAlpha: 0, duration: 0.5, ease: "power2.in" }, S.harness - 0.5);
+
+        // Act 3: the pipeline, left to right, then the failure row.
+        tl.to("#act3", { autoAlpha: 1, duration: 0.3 }, S.harness);
+        tl.from("#act3 .stage-h", { y: 24, autoAlpha: 0, duration: 0.6, ease: E }, S.harness + 0.1);
+        tl.from("#act3 .stage-sub", { y: 12, autoAlpha: 0, duration: 0.5, ease: E }, S.harness + 0.4);
+        const steps = ["#p1", "#p2", "#p3", "#p4", "#p5", "#p6"];
+        const arrows = ["#a1", "#a2", "#a3", "#a4", "#a5"];
+        gsap.set("#auction", { autoAlpha: 0, y: 10 });
+        steps.forEach((s, i) => tl.from(s, { y: 26, autoAlpha: 0, duration: 0.55, ease: E }, S.harness + 1.2 + i * 2.15));
+        arrows.forEach((a, i) => tl.from(a, { scaleX: 0, transformOrigin: "left center", duration: 0.4, ease: E }, S.harness + 2.4 + i * 2.15));
+        tl.to("#auction", { autoAlpha: 1, y: 0, duration: 0.5, ease: E }, S.harness + 4.2);
+        tl.from("#auction .cand", { x: -10, autoAlpha: 0, duration: 0.35, stagger: 0.15, ease: E }, S.harness + 4.4);
+        tl.from("#failrow", { y: 30, autoAlpha: 0, duration: 0.7, ease: E }, S.harness + 16.4);
+        tl.from("#failrow .b", { y: 12, autoAlpha: 0, duration: 0.45, stagger: 0.7, ease: E }, S.harness + 16.8);
+        tl.to("#act3", { autoAlpha: 0, duration: 0.5, ease: "power2.in" }, S.site - 0.5);
+
+        // Footage scenes.
+        const scene = (win, lt, at, until, ltIn = 0.6, ltOut = 1.0) => {
+          tl.to(win, { autoAlpha: 1, y: 0, scale: 1, duration: 0.7, ease: E }, at);
+          if (lt) {
+            tl.to(lt, { autoAlpha: 1, y: 0, duration: 0.5, ease: E }, at + ltIn);
+            tl.to(lt, { autoAlpha: 0, y: -8, duration: 0.4, ease: "power2.in" }, until - ltOut);
+          }
+          tl.to(win, { autoAlpha: 0, scale: 0.99, duration: 0.5, ease: "power2.in" }, until - 0.5);
+        };
+        scene("#w1", "#l1", S.site, S.site2);
+        scene("#w2", "#l2", S.site2, S.site3);
+        scene("#w3", "#l3", S.site3, S.console);
+        scene("#w4", "#l4", S.console, S.chat);
+        scene("#w5", "#l5", S.chat, S.chat2);
+        scene("#w6", "#l6", S.chat2, S.chat3);
+        scene("#w7", "#l7", S.chat3, S.close);
+
+        // Close.
+        tl.to("#close", { autoAlpha: 1, duration: 0.6 }, S.close);
+        tl.from(["#st1", "#st2", "#st3"], { y: 30, autoAlpha: 0, duration: 0.6, stagger: 0.25, ease: E }, S.close + 0.2);
+        tl.from("#tag", { y: 30, autoAlpha: 0, duration: 0.8, ease: E }, S.close + 1.6);
+        tl.from("#url", { autoAlpha: 0, y: 12, duration: 0.5, ease: E }, S.close + 3.0);
+        tl.to({}, { duration: 0.1 }, S.end - 0.1);
+
+        tl.seek(0);
+        window.__timelines["main"] = tl;
+      };
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(build); else build();
+    </script>
+  </body>
+</html>
