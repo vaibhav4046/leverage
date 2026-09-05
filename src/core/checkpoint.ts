@@ -149,7 +149,7 @@ function deriveHypotheses(reason: FailureType, detail: string, failed: ProofChec
     case 'QUOTA_EXHAUSTED':
       return [
         'The previous worker hit a provider limit, not a problem with the approach.',
-        'Its partial reasoning is sound — continue rather than restarting.',
+        'Its partial reasoning is sound, continue rather than restarting.',
       ];
     case 'CONTEXT_LIMIT':
       return [

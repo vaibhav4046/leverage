@@ -28,9 +28,6 @@ import { getRepository } from '../db';
  */
 
 const STATE_DIR = path.resolve('.leverage-state');
-const RUNS_DIR = path.join(STATE_DIR, 'runs');
-
-
 
 interface Entry {
   state: MissionState;
@@ -167,7 +164,21 @@ const DEMO_RUN_FILES = [
   'hosted-pool-mission.json',
 ];
 
-async function loadDemoRuns(): Promise<MissionSnapshot[]> {
+/**
+ * In production the run files never change between deploys, and the missions list
+ * serialises about 340 KB per hit, so parsing them on every request is
+ * amplification for nothing. In development they are re-read, because a mission
+ * runner may have just written a new one.
+ */
+let demoRunsMemo: Promise<MissionSnapshot[]> | null = null;
+
+function loadDemoRuns(): Promise<MissionSnapshot[]> {
+  if (process.env.NODE_ENV !== 'production') return readDemoRuns();
+  if (!demoRunsMemo) demoRunsMemo = readDemoRuns();
+  return demoRunsMemo;
+}
+
+async function readDemoRuns(): Promise<MissionSnapshot[]> {
   const runs = await Promise.all(
     DEMO_RUN_FILES.map(async (file) => {
       try {

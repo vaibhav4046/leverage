@@ -298,7 +298,7 @@ function explain(winner: CandidateScore, all: CandidateScore[]): string {
   if (winner.sampleCount > 0) {
     parts.push(`${pct(winner.breakdown.reputation)} verified success over ${winner.sampleCount} prior job${winner.sampleCount === 1 ? '' : 's'}`);
   } else {
-    parts.push('no prior jobs — scored on the neutral prior');
+    parts.push('no prior jobs, scored on the neutral prior');
   }
 
   parts.push(

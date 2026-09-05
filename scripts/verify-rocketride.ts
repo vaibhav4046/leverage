@@ -7,8 +7,6 @@
  *
  *   npm run verify:rocketride
  */
-import fs from 'node:fs/promises';
-import path from 'node:path';
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
 dotenv.config();

@@ -440,7 +440,7 @@ export class MissionScheduler {
     state.events.emit(
       'auction.completed',
       auction.winner
-        ? `Winner: ${auction.winner.displayName} — ${auction.rationale}`
+        ? `Winner: ${auction.winner.displayName} · ${auction.rationale}`
         : 'No eligible candidate',
       { taskId: task.id },
     );

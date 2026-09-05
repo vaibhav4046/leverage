@@ -195,7 +195,7 @@ places where the published docs disagree with the running system —
 ## Verify it yourself
 
 ```bash
-npm run verify              # typecheck, lint, 53 invariant tests, production build
+npm run verify              # typecheck, lint, 60 tests (53 invariants, 7 pool guards), production build
 npm run verify:rocketride   # real inference through a real pipeline, real credit delta
 ```
 

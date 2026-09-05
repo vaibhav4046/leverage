@@ -127,4 +127,4 @@ claude mcp add leverage -- node /abs/path/to/leverage/mcp/server.ts
 
 > Use Leverage. Finish this application. Budget $0. Quality production.
 
-53 invariant tests: `npm run test`. Full verification: `npm run verify`.
+60 tests (53 invariants, 7 pool guards): `npm run test`. Full verification: `npm run verify`.

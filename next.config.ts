@@ -12,7 +12,42 @@ import type { NextConfig } from 'next';
  * that has its own lockfile; without it Next picks the parent as the root and
  * warns on every build.
  */
+/**
+ * Hardening headers. The public deployment is read-only, so there is no state to
+ * hijack, but a page that can be framed and a response that can be sniffed are
+ * still weaknesses an outside tester will write down. Everything the app loads
+ * is same-origin: fonts are self-hosted by next/font, the film and posters live in
+ * /public, and the only client fetches are to the app's own routes. So the policy
+ * can be strict. `unsafe-inline` for scripts is what Next's hydration payload
+ * needs without a per-request nonce; `unsafe-eval` is dev-only, for Turbopack.
+ */
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''}`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob:",
+  "font-src 'self' data:",
+  "media-src 'self'",
+  "connect-src 'self'",
+  "frame-ancestors 'none'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join('; ');
+
+const securityHeaders = [
+  { key: 'Content-Security-Policy', value: contentSecurityPolicy },
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'X-Frame-Options', value: 'DENY' },
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+];
+
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
+  async headers() {
+    return [{ source: '/(.*)', headers: securityHeaders }];
+  },
   outputFileTracingRoot: __dirname,
   outputFileTracingIncludes: {
     '/': ['./demo/**/*.json'],

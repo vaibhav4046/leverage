@@ -23,7 +23,7 @@ export default async function ProvidersPage() {
       <PageHead
         eyebrow="Supply"
         title="Providers"
-        lede="Where intelligence comes from, and where it executes. Credential values never leave the server and are never rendered here — only whether one is present."
+        lede="Where intelligence comes from, and where it executes. Credential values never leave the server and are never rendered here, only whether one is present."
       />
 
       <Section

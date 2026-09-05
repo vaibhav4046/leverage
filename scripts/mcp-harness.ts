@@ -24,8 +24,6 @@ const OUT_DIR = path.resolve('demo/evidence');
 const STAMP = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
 const TRANSCRIPT = path.join(OUT_DIR, `mcp-transcript-${STAMP}.jsonl`);
 const SUMMARY = path.join(OUT_DIR, `mcp-summary-${STAMP}.json`);
-const LATEST_TRANSCRIPT = path.join(OUT_DIR, 'mcp-transcript.jsonl');
-const LATEST_SUMMARY = path.join(OUT_DIR, 'mcp-summary.json');
 
 /** Redaction is applied on the way into the transcript, never after the fact. */
 const SECRET_SHAPES =

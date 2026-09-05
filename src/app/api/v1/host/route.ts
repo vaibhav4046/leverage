@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
       const sessionId = str(body.sessionId);
       if (!sessionId) return NextResponse.json({ error: 'sessionId required' }, { status: 400 });
       if (!hostChannel.heartbeat(sessionId)) {
-        return NextResponse.json({ error: 'unknown session — re-register' }, { status: 409 });
+        return NextResponse.json({ error: 'unknown session, re-register' }, { status: 409 });
       }
       return NextResponse.json({ request: hostChannel.claim(sessionId) });
     }

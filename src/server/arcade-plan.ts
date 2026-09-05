@@ -77,7 +77,7 @@ export function buildArcadePlan(missionId: string): MissionTask[] {
       'Create src/physics.js as an ES module exporting gravityAt(pos, wellPos, strength), ' +
         'integrate(body, accel, dt), circlesOverlap(aPos, aR, bPos, bR) and wrap(pos, w, h). ' +
         'gravityAt returns an acceleration vector pointing from pos toward wellPos whose ' +
-        'magnitude falls off with distance and stays finite at distance zero — soften the ' +
+        'magnitude falls off with distance and stays finite at distance zero, soften the ' +
         'denominator. integrate returns a NEW {pos, vel} where vel += accel*dt and then ' +
         'pos += vel*dt; it must not mutate the body it is given. wrap moves a point across ' +
         'to the opposite edge when it leaves the arena. Import what you need from ./vector.js.',
@@ -90,7 +90,7 @@ export function buildArcadePlan(missionId: string): MissionTask[] {
       'Implement deterministic wave spawning',
       'Create src/spawner.js as an ES module exporting createRng(seed), waveSize(wave) and ' +
         'spawnWave(wave, rng, width, height). createRng returns a seeded pseudo-random ' +
-        'function producing values in [0,1) — the same seed must always produce the same ' +
+        'function producing values in [0,1), the same seed must always produce the same ' +
         'sequence, so use something like mulberry32 rather than Math.random. ' +
         'waveSize(1) is exactly 3 and grows with the wave number. spawnWave returns ' +
         'waveSize(wave) enemies, each { pos:{x,y}, vel:{x,y}, radius } positioned inside the ' +
