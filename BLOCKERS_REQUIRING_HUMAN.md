@@ -169,3 +169,22 @@ production domain, which is why the site is reachable without weakening anything
 
 `leverage.vercel.app`, `leverage-app` and `leverage-ai` are all taken by other
 accounts.
+
+## 8. Pool quota on judging day
+
+**Status:** works today, with a ceiling only the account owner can raise.
+
+The hosted pool forwards to OpenRouter's free tier and NVIDIA's developer
+endpoint. OpenRouter caps free-model requests per key per day; once the cap is
+hit every OpenRouter id answers `429 Rate limit exceeded: free-models-per-day`
+until the daily reset, and the pool's per-model cooldown moves hires to the
+NVIDIA ids. NVIDIA in turn answers `503 ResourceExhausted: Worker local total
+request limit reached` when its shared workers are busy. Both were observed on
+5 September while the sweeps and the persona runs shared the key.
+
+What that means for a judge pressing "Run a real mission now": the run still
+completes on whichever ids are answering, and the mission log names the ids it
+skipped and why. What only the owner can do: OpenRouter lifts the daily free cap
+from 50 to 1000 requests for an account holding 10 credits, one time, which is
+the difference between a busy judging day and a quiet one. This is a paid
+action, so it is the owner's call, not the pipeline's.
