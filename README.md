@@ -11,6 +11,7 @@
 <p align="center">
   <a href="https://useleverage.vercel.app"><img src="https://img.shields.io/badge/Live-useleverage.vercel.app-4ade80?style=for-the-badge" alt="Live"></a>
   <a href="https://youtu.be/TQJ_neL7gFY"><img src="https://img.shields.io/badge/Demo-2%3A22-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Demo film"></a>
+  <a href="https://github.com/vaibhav4046/leverage/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/vaibhav4046/leverage/ci.yml?branch=master&style=for-the-badge&label=verify" alt="CI"></a>
   <a href="tests/invariants.test.ts"><img src="https://img.shields.io/badge/Tests-88%20passing-4ade80?style=for-the-badge" alt="88 tests"></a>
   <a href="demo/canonical-run.json"><img src="https://img.shields.io/badge/Paid%20inference-%240.00-4ade80?style=for-the-badge" alt="Paid inference $0.00"></a>
   <a href="docs/ROCKETRIDE_FINDINGS.md"><img src="https://img.shields.io/badge/RocketRide-staging%20verified-85a6e9?style=for-the-badge" alt="RocketRide staging verified"></a>
