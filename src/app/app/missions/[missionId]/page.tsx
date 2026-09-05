@@ -1,5 +1,5 @@
-import { notFound } from 'next/navigation';
-import { getMissionSnapshot } from '@/server/missions';
+import { notFound, redirect } from 'next/navigation';
+import { getMissionSnapshot, MISSION_ALIASES } from '@/server/missions';
 import { getPageIdentity } from '@/auth/identity';
 import { AuthNotice } from '@/components/app/auth-notice';
 import { MissionControl } from '@/components/mission/mission-control';
@@ -17,6 +17,7 @@ export default async function MissionPage({
   params: Promise<{ missionId: string }>;
 }) {
   const { missionId } = await params;
+  if (MISSION_ALIASES[missionId]) redirect(`/app/missions/${MISSION_ALIASES[missionId]}`);
   const identity = getPageIdentity();
   if (!identity) return <AuthNotice />;
   // Workspace scoping happens server-side. The client never chooses its own tenant.

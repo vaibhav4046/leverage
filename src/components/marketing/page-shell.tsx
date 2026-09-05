@@ -25,14 +25,14 @@ const NAV: [string, string][] = [
  */
 export function MobileMenu({ links }: { links: [string, string][] }) {
   return (
-    <details className="relative md:hidden">
+    <details className="static md:hidden">
       <summary
         className="mono cursor-pointer list-none rounded-full border border-[var(--color-sapphire-hairline)] px-3 py-1.5 text-[11px] uppercase tracking-[0.08em] text-[var(--color-mist)] [&::-webkit-details-marker]:hidden"
         aria-label="Menu"
       >
         Menu
       </summary>
-      <div className="absolute right-0 top-full z-50 mt-2 min-w-[13rem] rounded-[12px] border border-[var(--color-obsidian-edge)] bg-[var(--color-abyss)] p-2 shadow-[0_24px_60px_rgba(0,0,0,0.55)]">
+      <div className="absolute inset-x-4 top-full z-50 mt-2 rounded-[12px] border border-[var(--color-obsidian-edge)] bg-[var(--color-abyss)] p-2 shadow-[0_24px_60px_rgba(0,0,0,0.55)] sm:left-auto sm:right-6 sm:min-w-[13rem]">
         {links.map(([href, label]) => (
           <Link
             key={href}
@@ -76,8 +76,9 @@ export function SiteNav() {
           >
             Mission Control
           </Link>
-          <Link href="/app/live" className="btn-primary !py-2.5 !text-[14px]">
-            Run a real mission
+          <Link href="/app/live" className="btn-primary whitespace-nowrap !py-2.5 !text-[14px]">
+            <span className="sm:hidden">Run one</span>
+            <span className="hidden sm:inline">Run a real mission</span>
           </Link>
         </div>
       </nav>

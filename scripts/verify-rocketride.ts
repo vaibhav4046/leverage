@@ -92,6 +92,14 @@ async function main() {
     org: health.orgId ?? null,
     sdk: 'rocketride@1.3.0',
     poolReachability: `public OpenAI-compatible endpoint at ${redactHost(pool!)}`,
+    // The three platform facts this script depends on, kept with the evidence so a
+    // reader of the file learns them without the findings document.
+    pipeline: {
+      component: 'llm_openai_api',
+      lane: 'data',
+      credentialField: 'apikey',
+      note: 'An LLM component wired to the control lane runs, consumes credits and returns its input unchanged. The worker must sit in the data lane.',
+    },
     credentialsInThisFile: 'none',
     run: {
       modelId: process.env.POOL_MODEL ?? 'auto/best-free',

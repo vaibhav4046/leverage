@@ -164,7 +164,7 @@ export function HandoffPlayer({ steps }: { steps: HandoffStep[] }) {
             <div className="mono border-b border-[var(--color-obsidian-edge)] px-5 py-3 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
               Event log · {index + 1} of {steps.length}
             </div>
-            <ul className="max-h-[268px] min-h-[268px] overflow-y-auto">
+            <ul className="md:max-h-[268px] md:min-h-[268px] md:overflow-y-auto">
               {visible.map((s, i) => (
                 <li
                   key={s.seq}

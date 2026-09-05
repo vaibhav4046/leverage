@@ -374,3 +374,13 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/*
+ * Phones: nothing below 12 px. The 10 px pill labels read fine at desktop
+ * distance and not at arm's length.
+ */
+@media (max-width: 640px) {
+  .text-\[10px\] {
+    font-size: 12px;
+  }
+}

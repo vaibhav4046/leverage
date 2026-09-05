@@ -5,6 +5,12 @@
   "org": "df58d291-287a-4c9f-b1b2-e472846bf958",
   "sdk": "rocketride@1.3.0",
   "poolReachability": "public OpenAI-compatible endpoint at https://useleverage.vercel.app",
+  "pipeline": {
+    "component": "llm_openai_api",
+    "lane": "data",
+    "credentialField": "apikey",
+    "note": "An LLM component wired to the control lane runs, consumes credits and returns its input unchanged. The worker must sit in the data lane."
+  },
   "credentialsInThisFile": "none",
   "run": {
     "modelId": "openrouter/minimax/minimax-m2.7:free",

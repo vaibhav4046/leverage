@@ -49,7 +49,8 @@
       }
       .hud b { display: block; margin-top: 3px; font: 500 20px ui-sans-serif, system-ui; color: #fff; letter-spacing: -0.01em; }
       /* On a phone the badge and the HUD share one short top edge; the badge moves to the bottom corner. */
-      @media (max-width: 640px) { .badge { top: auto !important; bottom: 14px; } }
+      /* On a phone the touch controls own the bottom edge and the HUD the top-left, so the badge sits under the HUD. */
+      @media (max-width: 640px) { .badge { top: 58px; right: 12px; } }
       /* Touch controls, only where there is no keyboard to speak of. */
       .touch { display: none; position: absolute; left: 0; right: 0; bottom: 14px; justify-content: center; gap: 12px; }
       @media (pointer: coarse) { .touch { display: flex; } .hint { display: none; } }

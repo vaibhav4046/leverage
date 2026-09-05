@@ -33,7 +33,8 @@ async function loadRocketRide(): Promise<{
   before: { credits: number; granted: number };
   after: { credits: number; granted: number };
   endpoint: string;
-  pipeline: { lane: string; credentialField: string; note: string };
+  /** Present in the first capture; later captures record the finding in docs instead. */
+  pipeline?: { lane: string; credentialField: string; note: string };
 } | null> {
   try {
     return JSON.parse(
@@ -278,7 +279,7 @@ export default async function BenchmarksPage() {
           <Callout title="Three things RocketRide's own docs get wrong">
             An LLM component wired to the control lane runs, consumes credits, and returns its input
             unchanged; the worker has to sit in the data lane. The credential field is{' '}
-            <code className="mono">{rr.pipeline.credentialField}</code>, though the server error asks
+            <code className="mono">{rr.pipeline?.credentialField ?? 'apikey'}</code>, though the server error asks
             for <code className="mono">api_key</code>. And the hackathon runs on staging, not the host
             the SDK defaults to. All three cost us a day and are written up in{' '}
             <code className="mono">docs/ROCKETRIDE_FINDINGS.md</code>.

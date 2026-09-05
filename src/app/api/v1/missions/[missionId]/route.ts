@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { getMissionSnapshot } from '@/server/missions';
+import { getMissionSnapshot, MISSION_ALIASES } from '@/server/missions';
 import { requireIdentity, AuthError } from '@/auth/identity';
 
 export const dynamic = 'force-dynamic';
@@ -14,6 +14,9 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ missionId: 
   }
 
   const { missionId } = await ctx.params;
+  if (MISSION_ALIASES[missionId]) {
+    return NextResponse.redirect(new URL(`/api/v1/missions/${MISSION_ALIASES[missionId]}`, req.url), 301);
+  }
   // Same lookup the page uses, so a mission the UI can render is never one the API
   // reports as missing — this previously read live memory only, and returned 404
   // for every completed run recovered from disk.

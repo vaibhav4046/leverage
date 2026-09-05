@@ -57,6 +57,10 @@ function parseFrames(buffer: string): { frames: { event: string; data: string }[
 
 export function LiveRun({ enabled }: { enabled: boolean }) {
   const [phase, setPhase] = useState<Phase>('idle');
+  // Server-rendered buttons look tappable a second or two before React attaches
+  // handlers; on a phone that is a tap that does nothing. Inert until hydrated.
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
   const [live, setLive] = useState<Live>({ events: [] });
   const [now, setNow] = useState(Date.now());
   const feedRef = useRef<HTMLDivElement>(null);
@@ -164,6 +168,15 @@ export function LiveRun({ enabled }: { enabled: boolean }) {
     <div className="space-y-6">
       {phase === 'idle' && (
         <div className="glass p-6 md:p-8">
+          <button
+            type="button"
+            onClick={start}
+            disabled={!ready}
+            className="btn-primary mb-6 inline-flex items-center gap-2 disabled:cursor-wait disabled:opacity-70"
+          >
+            <IconPlay size={15} />
+            {ready ? 'Run a real mission now' : 'Loading the console…'}
+          </button>
           <p className="max-w-[52rem] text-[16px] font-light leading-relaxed text-[var(--color-mist)]">
             Press the button and a mission starts on this deployment, now. The workspace is a fresh
             copy of the fixture in this function&rsquo;s temp directory. Workers are hired from the
@@ -176,10 +189,6 @@ export function LiveRun({ enabled }: { enabled: boolean }) {
             time per instance, cancelled if you leave, and stopped at four and a half minutes. It
             usually takes one to three.
           </p>
-          <button type="button" onClick={start} className="btn-primary mt-6 inline-flex items-center gap-2">
-            <IconPlay size={15} />
-            Run a real mission now
-          </button>
         </div>
       )}
 

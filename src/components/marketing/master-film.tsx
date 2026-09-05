@@ -67,12 +67,14 @@ export function MasterFilm({
               width={1920}
               height={1080}
               playsInline
+              crossOrigin="anonymous"
               preload="metadata"
               controls={started}
               poster={poster}
               aria-label="Leverage, the film. A narrated walkthrough of the live site: a real mission running on RocketRide, the auction, the cognitive handoff, and the measured supply."
             >
               <source src={src} type="video/mp4" />
+              <track kind="captions" srcLang="en" label="English" src="/motion/walkthrough.vtt" default />
             </video>
 
             {!started && (

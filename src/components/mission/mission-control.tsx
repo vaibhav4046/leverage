@@ -540,7 +540,7 @@ function WorkforcePanel({ snapshot }: { snapshot: MissionSnapshot }) {
                   <div className="text-[14px] text-[var(--color-quartz)]">{w.role}</div>
                   <div className="mono mt-0.5 truncate text-[12px] text-[var(--color-mist)]">
                     {w.displayName}
-                    <span className="ml-2 text-[var(--color-ash)]">
+                    <span className="block text-[var(--color-ash)] sm:ml-2 sm:inline">
                       {viaRocketRide.has(w.id)
                         ? 'RocketRide pipeline'
                         : w.costClass === 'local'
@@ -603,9 +603,21 @@ function WorkerBadge({ status }: { status: string }) {
 
 /* ----------------------------------------------------------------- timeline */
 
+/** Families a reader actually looks for in a log of a hundred events. */
+const LOG_FILTERS: { key: string; label: string; match: (type: string) => boolean }[] = [
+  { key: 'all', label: 'All', match: () => true },
+  { key: 'hiring', label: 'Hiring', match: (t) => t.startsWith('auction.') || t === 'worker.hired' },
+  { key: 'handoffs', label: 'Handoffs', match: (t) => t.startsWith('checkpoint.') || t.startsWith('handoff.') || t === 'worker.failed' || t === 'worker.released' },
+  { key: 'proof', label: 'Proof', match: (t) => t.startsWith('proof.') || t.startsWith('verification.') || t === 'task.completed' },
+  { key: 'failures', label: 'Failures', match: (t) => t.endsWith('.failed') || t === 'budget.blocked' || t === 'task.blocked' },
+];
+
 function EventTimeline({ events, live }: { events: MissionEvent[]; live: boolean }) {
   const endRef = useRef<HTMLDivElement>(null);
   const mounted = useRef(false);
+  const [filter, setFilter] = useState('all');
+  const active = LOG_FILTERS.find((f) => f.key === filter) ?? LOG_FILTERS[0];
+  const shown = filter === 'all' ? events : events.filter((e) => active.match(e.type));
   useEffect(() => {
     // Scroll the log's own box, never the page. scrollIntoView walked up to the
     // document and dropped a visitor two thousand pixels down a mission page on
@@ -620,12 +632,34 @@ function EventTimeline({ events, live }: { events: MissionEvent[]; live: boolean
 
   return (
     <section className="surface-card" aria-label="Execution timeline">
-      <div className="mono border-b border-[var(--color-obsidian-edge)] px-5 py-3 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-        {live ? 'Live execution' : 'Execution log'} · {events.length} events
+      <div className="mono flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-[var(--color-obsidian-edge)] px-5 py-3 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
+        <span>
+          {live ? 'Live execution' : 'Execution log'} · {filter === 'all' ? `${events.length} events` : `${shown.length} of ${events.length} events`}
+        </span>
+        <div className="flex flex-wrap gap-1" role="group" aria-label="Filter the log">
+          {LOG_FILTERS.map((f) => (
+            <button
+              key={f.key}
+              type="button"
+              onClick={() => setFilter(f.key)}
+              aria-pressed={filter === f.key}
+              className="rounded-full border px-2.5 py-1 text-[10.5px] uppercase tracking-[0.08em] transition-colors"
+              style={{
+                borderColor: filter === f.key ? 'var(--color-frosted-lilac)' : 'var(--color-obsidian-edge)',
+                color: filter === f.key ? 'var(--color-quartz)' : 'var(--color-ash)',
+              }}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
       </div>
       <div className="max-h-[340px] overflow-y-auto px-5 py-3" role="log" aria-live="polite" aria-label="Execution log" tabIndex={0}>
+        {shown.length === 0 && (
+          <p className="mono py-2 text-[12px] text-[var(--color-ash)]">Nothing of that kind happened in this mission.</p>
+        )}
         <ul className="space-y-1">
-          {events.map((e) => (
+          {shown.map((e) => (
             // Below md the fixed columns left ~110px for the message, so one row
             // could run to 400px tall. Time and type share a line and the message
             // wraps underneath at full width; from md up the three columns return.

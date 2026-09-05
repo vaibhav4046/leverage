@@ -220,6 +220,14 @@ async function planInBackground(entry: Entry, goal: string, repositoryRoot: stri
  * mutation stays refused. These are the same files the evidence pages read, so the
  * app and the marketing cannot disagree.
  */
+/**
+ * Ids that were public and are now recorded under a different id. A link a judge
+ * bookmarked should land on the replacement, not on a 404.
+ */
+export const MISSION_ALIASES: Record<string, string> = {
+  'LVR-f2102fb1': 'LVR-31eacf88',
+};
+
 const DEMO_RUN_FILES = [
   'canonical-run.json',
   'arcade-run.json',

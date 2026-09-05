@@ -66,7 +66,8 @@ export default async function DemoPage() {
             />
           </div>
           <p className="mono mt-3 text-[12px] text-[var(--color-ash)]">
-            Click the frame first, then ← → to rotate, ↑ to thrust, space to fire.
+            Click the frame first, then ← → to rotate, ↑ to thrust, space to fire. On a touch
+            screen, the buttons under the arena do the same.
           </p>
         </Reveal>
 
