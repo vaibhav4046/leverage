@@ -24,6 +24,7 @@
 import http from 'node:http';
 import { freePort } from './port-utils.mjs';
 
+const UPSTREAM_TIMEOUT_MS = 120_000;
 const PORT = Number(process.env.POOL_PROXY_PORT ?? 20129);
 const UPSTREAM = (process.env.POOL_UPSTREAM_URL ?? 'http://127.0.0.1:20128').replace(/\/$/, '');
 
@@ -60,11 +61,27 @@ const server = http.createServer(async (req, res) => {
     { method: req.method, headers },
     (up) => {
       res.writeHead(up.statusCode ?? 502, up.headers);
+      up.on('error', () => res.destroy());
       up.pipe(res);
     },
   );
 
+  // A hung upstream must become an error, never a hung proxy. The router hangs
+  // every request while it cold-starts; without this, the first request that hit
+  // it stayed open forever and the proxy sat bound-and-dead on its port until
+  // someone killed it by pid. 120s is the same ceiling the hosted route uses:
+  // long enough for a slow completion, short enough to be a verdict.
+  upstream.setTimeout(UPSTREAM_TIMEOUT_MS, () => {
+    upstream.destroy(new Error(`upstream timed out after ${UPSTREAM_TIMEOUT_MS}ms`));
+  });
+
   upstream.on('error', (err) => {
+    // If the upstream already started streaming a response, headers are gone and
+    // writeHead would throw. Cut the client off instead of crashing the proxy.
+    if (res.headersSent) {
+      res.destroy();
+      return;
+    }
     res.writeHead(502, { 'content-type': 'application/json' });
     res.end(JSON.stringify({ error: { message: `pool upstream unreachable: ${err.message}` } }));
   });

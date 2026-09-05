@@ -20,7 +20,8 @@
     "mission:arcade": "tsx scripts/run-mission.ts --arcade",
     "mcp:harness": "tsx scripts/mcp-harness.ts",
     "scale": "tsx scripts/scale-harness.ts",
-    "pool:tunnel": "node scripts/pool-tunnel.mjs"
+    "pool:tunnel": "node scripts/pool-tunnel.mjs",
+    "stack:up": "node scripts/stack-up.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
