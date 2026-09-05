@@ -136,14 +136,17 @@ export default async function AppOverview() {
                     href={`/app/missions/${m.mission.id}`}
                     className="surface-card group flex flex-wrap items-center justify-between gap-4 p-4 transition-colors hover:border-[var(--color-sapphire-hairline)] hover:bg-[var(--color-deep-sea)]"
                   >
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2.5">
+                    {/* basis-[220px]: on a phone the stats cannot fit beside a
+                        220px title block, so they wrap underneath and the goal
+                        gets the full card width instead of ~110px. */}
+                    <div className="min-w-0 flex-1 basis-[220px]">
+                      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
                         <span className="mono text-[11px] text-[var(--color-ash)]">
                           {m.mission.id}
                         </span>
                         <Pill tone={toneForStatus(m.mission.status)}>{m.mission.status}</Pill>
                       </div>
-                      <div className="mt-1.5 truncate text-[14.5px] text-[var(--color-quartz)]">
+                      <div className="mt-1.5 line-clamp-2 text-[14.5px] text-[var(--color-quartz)]">
                         {m.mission.goal}
                       </div>
                     </div>

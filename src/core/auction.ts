@@ -320,5 +320,6 @@ function explain(winner: CandidateScore, all: CandidateScore[]): string {
 }
 
 function pct(n: number): string {
-  return `${Math.round(n * 100)}`;
+  // "29% verified success", not "29 verified success", which reads as a count.
+  return `${Math.round(n * 100)}%`;
 }

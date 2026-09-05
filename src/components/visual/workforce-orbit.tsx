@@ -52,7 +52,10 @@ export function WorkforceOrbit({
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     let raf = 0;
-    let running = true;
+    let running = false;
+    // The IntersectionObserver reports the true state on its first callback;
+    // until then assume visible so the first frame is not held back.
+    let inView = true;
     let angle = -0.35;
 
     const resize = () => {
@@ -163,22 +166,32 @@ export function WorkforceOrbit({
       raf = requestAnimationFrame(frame);
     };
 
-    const onVisibility = () => {
-      if (document.hidden) {
-        running = false;
-        cancelAnimationFrame(raf);
-      } else if (!reduced.matches) {
-        running = true;
-        raf = requestAnimationFrame(frame);
-      }
+    // One decision for every reason the loop may stop: tab hidden, reduced
+    // motion, or the ring scrolled out of view. The angle is kept, so it resumes
+    // exactly where it paused; nobody sees a ring spin while it is off-screen.
+    const sync = () => {
+      const shouldRun = inView && !document.hidden && !reduced.matches;
+      if (shouldRun === running) return;
+      running = shouldRun;
+      if (running) raf = requestAnimationFrame(frame);
+      else cancelAnimationFrame(raf);
     };
 
-    if (reduced.matches) {
-      draw();
-    } else {
-      document.addEventListener('visibilitychange', onVisibility);
-      raf = requestAnimationFrame(frame);
-    }
+    const onReducedChange = () => {
+      sync();
+      if (reduced.matches) draw();
+    };
+
+    const observer = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      sync();
+    });
+    observer.observe(canvas);
+
+    if (reduced.matches) draw();
+    document.addEventListener('visibilitychange', sync);
+    reduced.addEventListener('change', onReducedChange);
+    sync();
 
     const onResize = () => draw();
     window.addEventListener('resize', onResize);
@@ -186,8 +199,10 @@ export function WorkforceOrbit({
     return () => {
       running = false;
       cancelAnimationFrame(raf);
+      observer.disconnect();
       window.removeEventListener('resize', onResize);
-      document.removeEventListener('visibilitychange', onVisibility);
+      document.removeEventListener('visibilitychange', sync);
+      reduced.removeEventListener('change', onReducedChange);
     };
   }, []);
 

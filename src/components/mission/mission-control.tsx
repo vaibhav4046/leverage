@@ -16,7 +16,7 @@ import type { MissionEvent } from '@/core/types';
 export function MissionControl({
   initial,
   readOnly = false,
-  readOnlyLabel = 'read-only demo',
+  readOnlyLabel = 'recorded · read-only',
 }: {
   initial: MissionSnapshot;
   /** What the read-only pill says; a visitor's own live run is not a demo. */
@@ -85,12 +85,15 @@ export function MissionControl({
   }, [missionId, terminal, refresh]);
 
   const selectedTask = snapshot.tasks.find((t) => t.id === selected);
+  // Stable so the drawer's focus effect runs once per open, not once per event.
+  const closeDrawer = useCallback(() => setSelected(null), []);
 
   return (
     <div className="flex min-h-screen flex-col">
       <MissionHeader
         snapshot={snapshot}
         connected={connected}
+        terminal={terminal}
         onRefresh={refresh}
         readOnly={readOnly}
         readOnlyLabel={readOnlyLabel}
@@ -115,7 +118,7 @@ export function MissionControl({
         <DetailsDrawer
           snapshot={snapshot}
           taskId={selectedTask.id}
-          onClose={() => setSelected(null)}
+          onClose={closeDrawer}
         />
       )}
     </div>
@@ -127,12 +130,14 @@ export function MissionControl({
 function MissionHeader({
   snapshot,
   connected,
+  terminal,
   onRefresh,
   readOnly,
   readOnlyLabel,
 }: {
   snapshot: MissionSnapshot;
   connected: boolean;
+  terminal: boolean;
   onRefresh: () => void;
   readOnly: boolean;
   readOnlyLabel: string;
@@ -220,7 +225,11 @@ function MissionHeader({
 
       <div className="mono mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-[var(--color-ash)]">
         <span aria-live="polite">
-          {connected ? 'live event stream connected' : 'event stream idle'}
+          {connected
+            ? 'live event stream connected'
+            : terminal
+              ? 'event stream complete'
+              : 'event stream idle'}
         </span>
         <span>·</span>
         <span>budget ${mission.budget.maxUsd.toFixed(2)} {mission.budget.hard ? 'hard' : 'soft'}</span>
@@ -473,14 +482,22 @@ function EventTimeline({ events }: { events: MissionEvent[] }) {
       <div className="max-h-[340px] overflow-y-auto px-5 py-3" role="log" aria-live="polite">
         <ul className="space-y-1">
           {events.map((e) => (
-            <li key={e.id} className="mono flex gap-3 text-[12px] leading-relaxed">
+            // Below md the fixed columns left ~110px for the message, so one row
+            // could run to 400px tall. Time and type share a line and the message
+            // wraps underneath at full width; from md up the three columns return.
+            <li
+              key={e.id}
+              className="mono flex flex-wrap gap-x-3 gap-y-0.5 text-[12px] leading-relaxed md:flex-nowrap"
+            >
               <span className="w-[68px] shrink-0 tabular-nums text-[var(--color-ash)]">
                 {formatElapsed(e.elapsedMs)}
               </span>
-              <span className="w-[150px] shrink-0" style={{ color: eventColor(e.type) }}>
+              <span className="shrink-0 md:w-[150px]" style={{ color: eventColor(e.type) }}>
                 {e.type}
               </span>
-              <span className="min-w-0 flex-1 text-[var(--color-mist)]">{e.message}</span>
+              <span className="min-w-0 basis-full text-[var(--color-mist)] md:flex-1 md:basis-0">
+                {e.message}
+              </span>
             </li>
           ))}
         </ul>
@@ -606,20 +623,75 @@ function DetailsDrawer({
   const checkpoint = snapshot.checkpoints.find((c) => c.taskId === taskId);
   const proof = snapshot.proofs.find((p) => p.taskId === taskId);
 
+  const panelRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+
+  // Focus and scroll discipline for the open drawer. Focus lands on Close so the
+  // keyboard is inside the dialog, and goes back to the task node that opened it
+  // on close; otherwise it fell to <body> and Tab restarted from the page top.
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    closeRef.current?.focus();
+
+    // Below md the drawer covers the whole viewport, so the page behind it must
+    // not scroll under a finger. From md up it is a side panel and the page may.
+    const lockScroll = !window.matchMedia('(min-width: 768px)').matches;
+    const previousOverflow = document.body.style.overflow;
+    if (lockScroll) document.body.style.overflow = 'hidden';
+
+    return () => {
+      if (lockScroll) document.body.style.overflow = previousOverflow;
+      opener?.focus();
+    };
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+        return;
+      }
+      const panel = panelRef.current;
+      if (e.key !== 'Tab' || !panel) return;
+      // Tab cycles within the panel. Anything behind the backdrop is off limits.
+      const focusable = Array.from(
+        panel.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const current = document.activeElement;
+      const outside = !panel.contains(current);
+      if (e.shiftKey ? current === first || outside : current === last || outside) {
+        e.preventDefault();
+        (e.shiftKey ? last : first).focus();
+      }
+    };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end" role="dialog" aria-label={`Task ${task.title}`}>
+    <div
+      className="fixed inset-0 z-50 flex justify-end"
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Task ${task.title}`}
+    >
       <button
         className="flex-1 bg-black/50"
         aria-label="Close details"
+        // Mouse-only: a full-screen invisible button is a bad Tab stop, and the
+        // panel's own Close button plus Escape cover the keyboard.
+        tabIndex={-1}
         onClick={onClose}
       />
-      <div className="w-full max-w-[520px] overflow-y-auto border-l border-[var(--color-obsidian-edge)] bg-[var(--color-abyss)] p-6">
+      <div
+        ref={panelRef}
+        className="w-full max-w-[520px] overflow-y-auto border-l border-[var(--color-obsidian-edge)] bg-[var(--color-abyss)] p-6"
+      >
         <div className="flex items-start justify-between gap-4">
           <div>
             <div className="mono text-[10px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
@@ -627,7 +699,7 @@ function DetailsDrawer({
             </div>
             <h2 className="heading mt-1 text-[20px] text-[var(--color-quartz)]">{task.title}</h2>
           </div>
-          <button className="btn-ghost !px-3 !py-1 !text-[13px]" onClick={onClose}>
+          <button ref={closeRef} className="btn-ghost !px-3 !py-1 !text-[13px]" onClick={onClose}>
             Close
           </button>
         </div>

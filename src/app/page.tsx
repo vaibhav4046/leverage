@@ -64,16 +64,17 @@ async function loadLedger(): Promise<ModelRow[]> {
 }
 
 export default async function Home() {
-  const [run, arcade, rocketRide, ledger] = await Promise.all([
+  const [run, arcade, rocketRide, hosted, ledger] = await Promise.all([
     loadRun('canonical-run.json'),
     loadRun('arcade-run.json'),
-    // The run RocketRide executed. Kept separate from allRuns because it answers a
-    // specific question the competition asks out loud, and it deserves its own
-    // section rather than being averaged into a stats band.
+    // The run RocketRide executed gets its own section because it answers a
+    // question the competition asks out loud; it still counts in the stats band,
+    // so the band and Mission Control agree on how many missions there are.
     loadRun('rocketride-mission.json'),
+    loadRun('hosted-pool-mission.json'),
     loadLedger(),
   ]);
-  const allRuns = [run, arcade].filter((r): r is MissionSnapshot => r !== null);
+  const allRuns = [run, arcade, rocketRide, hosted].filter((r): r is MissionSnapshot => r !== null);
 
   const handoff = run?.checkpoints[0];
   const proofChecks = run?.proofs.flatMap((p) => p.checks) ?? [];
@@ -579,10 +580,10 @@ function Nav() {
             href="/app"
             className="hidden text-[14px] text-[var(--color-ash)] transition-colors hover:text-[var(--color-quartz)] sm:block"
           >
-            Sign in
+            Mission Control
           </Link>
           <Link href="/app/live" className="btn-primary !py-2 !text-[14px]">
-            Deploy Leverage
+            Run a real mission
           </Link>
         </div>
       </nav>

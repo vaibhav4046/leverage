@@ -83,9 +83,10 @@ export function MissionComposer({ readOnly }: { readOnly: boolean }) {
             <IconShield size={18} className="mt-0.5 shrink-0 text-[var(--color-frosted-lilac)]" />
             <p className="text-[13.5px] leading-relaxed text-[var(--color-mist)]">
               This deployment is a <strong className="font-normal text-[var(--color-quartz)]">read-only public demo</strong>.
-              You can compose a mission here to see how policy is expressed, but compiling is
-              refused, executing one needs a local repository to write into and a local model pool
-              to hire from. The recorded runs under Missions are real.
+              You can compose a mission here to see how policy is expressed, but compiling from
+              this page is refused: an arbitrary mission needs a local repository to write into.
+              Two things do run here. The Live run page in the sidebar executes one bounded
+              mission on RocketRide while you watch, and the recorded runs under Missions are real.
             </p>
           </div>
         ) : null}

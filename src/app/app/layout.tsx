@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Wordmark } from '@/components/brand';
-import { SidebarNav } from '@/components/app/sidebar-nav';
+import { MobileNav, SidebarNav } from '@/components/app/sidebar-nav';
 import { IconDocs, IconExternal } from '@/components/icons';
 import { authMode, getPageIdentity } from '@/auth/identity';
 
@@ -26,7 +26,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     mode === 'privy'
       ? 'signed in'
       : mode === 'public-demo'
-        ? 'public demo · read-only'
+        ? 'Public demo · read-only except Live run'
         : mode === 'dev'
           ? 'local workspace'
           : 'no identity';
@@ -93,6 +93,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <IconExternal size={13} />
           </Link>
         </div>
+        <MobileNav />
 
         <main id="main" className="min-w-0 flex-1">
           {children}

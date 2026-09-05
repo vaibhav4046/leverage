@@ -13,7 +13,7 @@ import { useEffect, useRef } from 'react';
  * It degrades three ways, in order:
  *   - `prefers-reduced-motion`  -> renders one static frame, no loop
  *   - no WebGL                  -> renders nothing, the CSS aurora underneath shows
- *   - tab hidden                -> stops the loop entirely
+ *   - tab hidden or scrolled off-screen -> stops the loop, resumes where it paused
  *
  * The palette is the design system's, not the shader's own invention: aurora purple
  * and plasma pink over void, the same two glows the CSS uses.
@@ -165,19 +165,27 @@ export function AuroraField({ className = '' }: { className?: string }) {
     };
 
     let raf = 0;
-    let running = true;
-    const start = performance.now();
+    let running = false;
+    // The IntersectionObserver reports the true state on its first callback;
+    // until then assume visible so the first frame is not held back.
+    let inView = true;
+    // The clock only advances while frames are drawn, so a field that scrolls
+    // back into view carries on from where it paused instead of jumping phase.
+    let elapsed = 0;
+    let last = 0;
 
     const frame = (now: number) => {
       if (!running) return;
       resize();
+      elapsed += now - last;
+      last = now;
 
       // Ease the pointer so the parallax glides instead of snapping.
       pointer.x += (target.x - pointer.x) * 0.045;
       pointer.y += (target.y - pointer.y) * 0.045;
 
       gl.uniform2f(uRes, canvas.width, canvas.height);
-      gl.uniform1f(uTime, (now - start) / 1000);
+      gl.uniform1f(uTime, elapsed / 1000);
       gl.uniform2f(uPointer, pointer.x, pointer.y);
       gl.uniform1f(uIntensity, 1);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
@@ -194,40 +202,44 @@ export function AuroraField({ className = '' }: { className?: string }) {
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
 
-    const onVisibility = () => {
-      if (document.hidden) {
-        running = false;
-        cancelAnimationFrame(raf);
-      } else if (!reduced.matches) {
-        running = true;
+    // One decision for every reason the loop may stop: tab hidden, reduced
+    // motion, or the canvas scrolled out of view. Off-screen, rAF still fires at
+    // full rate and the shader still burns GPU time that nobody can see.
+    const sync = () => {
+      const shouldRun = inView && !document.hidden && !reduced.matches;
+      if (shouldRun === running) return;
+      running = shouldRun;
+      if (running) {
+        last = performance.now();
         raf = requestAnimationFrame(frame);
+      } else {
+        cancelAnimationFrame(raf);
       }
     };
-
-    if (reduced.matches) {
-      renderOnce();
-    } else {
-      window.addEventListener('pointermove', onPointer, { passive: true });
-      document.addEventListener('visibilitychange', onVisibility);
-      raf = requestAnimationFrame(frame);
-    }
 
     const onReducedChange = () => {
-      running = false;
-      cancelAnimationFrame(raf);
+      sync();
       if (reduced.matches) renderOnce();
-      else {
-        running = true;
-        raf = requestAnimationFrame(frame);
-      }
     };
+
+    const observer = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      sync();
+    });
+    observer.observe(canvas);
+
+    if (reduced.matches) renderOnce();
+    window.addEventListener('pointermove', onPointer, { passive: true });
+    document.addEventListener('visibilitychange', sync);
     reduced.addEventListener('change', onReducedChange);
+    sync();
 
     return () => {
       running = false;
       cancelAnimationFrame(raf);
+      observer.disconnect();
       window.removeEventListener('pointermove', onPointer);
-      document.removeEventListener('visibilitychange', onVisibility);
+      document.removeEventListener('visibilitychange', sync);
       reduced.removeEventListener('change', onReducedChange);
       gl.deleteProgram(program);
       gl.deleteBuffer(buffer);

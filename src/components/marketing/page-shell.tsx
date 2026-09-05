@@ -46,8 +46,8 @@ export function SiteNav() {
           >
             Mission Control
           </Link>
-          <Link href="/app/new" className="btn-primary !py-2 !text-[14px]">
-            Deploy Leverage
+          <Link href="/app/live" className="btn-primary !py-2 !text-[14px]">
+            Run a real mission
           </Link>
         </div>
       </nav>

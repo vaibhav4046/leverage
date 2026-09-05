@@ -198,9 +198,12 @@ export default async function BenchmarksPage() {
                 <tbody>
                   {([
                     ['Endpoint', rr.endpoint],
-                    ['Credits before', `${rr.before.credits} / ${rr.before.granted}`],
-                    ['Credits after', `${rr.after.credits} / ${rr.after.granted}`],
-                    ['Credits consumed', rr.run.creditsConsumed.toFixed(2)],
+                    ['Balance before the script', `${rr.before.credits} / ${rr.before.granted}`],
+                    ['Balance after the script', `${rr.after.credits} / ${rr.after.granted}`],
+                    ['Balance moved', (rr.before.credits - rr.after.credits).toFixed(2)],
+                    // Two measurements, two figures: the balance rows bracket the whole
+                    // script, this row is what the pipeline run reported for itself.
+                    ['Reported by the pipeline run', rr.run.creditsConsumed.toFixed(2)],
                     ['Round trip', `${(rr.run.latencyMs / 1000).toFixed(1)}s`],
                     ['Engine tokens', String(rr.run.engineTokens)],
                     ['Worker output', `"${rr.run.workerOutput}"`],

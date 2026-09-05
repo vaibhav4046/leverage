@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IconPlay } from '@/components/icons';
 
 /**
@@ -42,6 +42,13 @@ export function MasterFilm({
     setStarted(true);
     video.play().catch(() => setStarted(false));
   };
+
+  // The overlay button unmounts on start, which would drop keyboard focus to
+  // <body>. Runs after the commit that turns `controls` on, since a video is only
+  // focusable once it has controls.
+  useEffect(() => {
+    if (started) videoRef.current?.focus();
+  }, [started]);
 
   return (
     <section className="border-t border-[var(--color-obsidian-edge)] bg-[var(--color-abyss)]">
@@ -94,7 +101,7 @@ export function MasterFilm({
           <figcaption className="mono mt-3 text-[11px] text-[var(--color-ash)]">
             Rendered with HyperFrames from <span className="text-[var(--color-mist)]">{sourceNote}</span> over
             real browser sessions against the deployment · voiced with ElevenLabs from{' '}
-            <span className="text-[var(--color-mist)]">scripts/narrate-film.mjs</span> · the 68-second motion
+            <span className="text-[var(--color-mist)]">scripts/narrate-film.mjs</span> · the 69-second motion
             version is at{' '}
             <a href="/motion/film.mp4" className="text-[var(--color-frosted-lilac)]">
               /motion/film.mp4
