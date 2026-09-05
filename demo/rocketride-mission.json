@@ -87,7 +87,7 @@
       "status": "replaced",
       "startedAt": "2026-09-04T01:38:01.389Z",
       "actualCostUsd": 0,
-      "auctionRationale": "100 task fit \u00b7 25 verified success over 14 prior jobs \u00b7 local runtime, no spend",
+      "auctionRationale": "100 task fit · 25 verified success over 14 prior jobs · local runtime, no spend",
       "contextTokens": 453,
       "promptTokens": 763,
       "completionTokens": 285,
@@ -106,7 +106,7 @@
       "status": "replaced",
       "startedAt": "2026-09-04T01:38:01.437Z",
       "actualCostUsd": 0,
-      "auctionRationale": "100 task fit \u00b7 25 verified success over 14 prior jobs \u00b7 local runtime, no spend",
+      "auctionRationale": "100 task fit · 25 verified success over 14 prior jobs · local runtime, no spend",
       "contextTokens": 421,
       "promptTokens": 639,
       "completionTokens": 280,
@@ -119,14 +119,14 @@
       "taskId": "validate",
       "modelKey": "pool:auto/best-free",
       "providerId": "pool",
-      "displayName": "Pool \u00b7 best-free",
+      "displayName": "Pool · best-free",
       "role": "Backend Engineer",
       "costClass": "free",
       "status": "passed",
       "startedAt": "2026-09-04T01:38:18.273Z",
       "actualCostUsd": 0,
       "resumedFromCheckpointId": "cp_03fc5f874f9c",
-      "auctionRationale": "72 task fit \u00b7 65 verified success over 38 prior jobs \u00b7 free route, no spend \u00b7 1 candidate excluded by policy",
+      "auctionRationale": "72 task fit · 65 verified success over 38 prior jobs · free route, no spend · 1 candidate excluded by policy",
       "contextTokens": 649,
       "finishedAt": "2026-09-04T01:39:22.124Z"
     },
@@ -136,14 +136,14 @@
       "taskId": "money",
       "modelKey": "pool:auto/best-free",
       "providerId": "pool",
-      "displayName": "Pool \u00b7 best-free",
+      "displayName": "Pool · best-free",
       "role": "Backend Engineer",
       "costClass": "free",
       "status": "passed",
       "startedAt": "2026-09-04T01:38:25.277Z",
       "actualCostUsd": 0,
       "resumedFromCheckpointId": "cp_50392b0784dd",
-      "auctionRationale": "72 task fit \u00b7 65 verified success over 38 prior jobs \u00b7 free route, no spend \u00b7 1 candidate excluded by policy",
+      "auctionRationale": "72 task fit · 65 verified success over 38 prior jobs · free route, no spend · 1 candidate excluded by policy",
       "contextTokens": 626,
       "finishedAt": "2026-09-04T01:39:15.574Z"
     },
@@ -153,13 +153,13 @@
       "taskId": "split",
       "modelKey": "pool:auto/best-free",
       "providerId": "pool",
-      "displayName": "Pool \u00b7 best-free",
+      "displayName": "Pool · best-free",
       "role": "Backend Engineer",
       "costClass": "free",
       "status": "passed",
       "startedAt": "2026-09-04T01:40:21.995Z",
       "actualCostUsd": 0,
-      "auctionRationale": "72 task fit \u00b7 67 verified success over 40 prior jobs \u00b7 free route, no spend",
+      "auctionRationale": "72 task fit · 67 verified success over 40 prior jobs · free route, no spend",
       "contextTokens": 900,
       "finishedAt": "2026-09-04T01:41:45.863Z"
     },
@@ -175,7 +175,7 @@
       "status": "passed",
       "startedAt": "2026-09-04T01:42:40.892Z",
       "actualCostUsd": 0,
-      "auctionRationale": "100 task fit \u00b7 87 verified success over 8 prior jobs \u00b7 local runtime, no spend",
+      "auctionRationale": "100 task fit · 87 verified success over 8 prior jobs · local runtime, no spend",
       "contextTokens": 553,
       "promptTokens": 926,
       "completionTokens": 212,
@@ -217,7 +217,7 @@
       "worker": {
         "modelKey": "pool:auto/best-free",
         "providerId": "pool",
-        "displayName": "Pool \u00b7 best-free"
+        "displayName": "Pool · best-free"
       },
       "filesChanged": [
         "src/money.js"
@@ -237,7 +237,7 @@
           "label": "test/money.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "\u2139 duration_ms 89.6279",
+          "detail": "ℹ duration_ms 89.6279",
           "durationMs": 182
         }
       ],
@@ -267,7 +267,7 @@
       "worker": {
         "modelKey": "pool:auto/best-free",
         "providerId": "pool",
-        "displayName": "Pool \u00b7 best-free"
+        "displayName": "Pool · best-free"
       },
       "filesChanged": [
         "src/validate.js"
@@ -287,12 +287,12 @@
           "label": "test/validate.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "\u2139 duration_ms 98.3054",
+          "detail": "ℹ duration_ms 98.3054",
           "durationMs": 197
         }
       ],
       "unresolved": [
-        "none \u2014 node --test test/validate.test.js should exit 0 once money.js is present as assumed"
+        "none · node --test test/validate.test.js should exit 0 once money.js is present as assumed"
       ],
       "qualityScore": {
         "total": 100,
@@ -319,7 +319,7 @@
       "worker": {
         "modelKey": "pool:auto/best-free",
         "providerId": "pool",
-        "displayName": "Pool \u00b7 best-free"
+        "displayName": "Pool · best-free"
       },
       "filesChanged": [
         "src/split.js"
@@ -339,7 +339,7 @@
           "label": "test/split.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "\u2139 duration_ms 81.0695",
+          "detail": "ℹ duration_ms 81.0695",
           "durationMs": 165
         }
       ],
@@ -389,7 +389,7 @@
           "label": "test/index.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "\u2139 duration_ms 84.0652",
+          "detail": "ℹ duration_ms 84.0652",
           "durationMs": 164
         }
       ],
@@ -439,7 +439,7 @@
         },
         {
           "modelKey": "pool:auto/best-free",
-          "displayName": "Pool \u00b7 best-free",
+          "displayName": "Pool · best-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -610,7 +610,7 @@
         },
         {
           "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool \u00b7 best-coding",
+          "displayName": "Pool · best-coding",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -686,7 +686,7 @@
         },
         {
           "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool \u00b7 best-fast",
+          "displayName": "Pool · best-fast",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -705,7 +705,7 @@
         },
         {
           "modelKey": "pool:auto/coding:free",
-          "displayName": "Pool \u00b7 coding-free",
+          "displayName": "Pool · coding-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -724,7 +724,7 @@
         },
         {
           "modelKey": "pool:auto/best-reasoning",
-          "displayName": "Pool \u00b7 best-reasoning",
+          "displayName": "Pool · best-reasoning",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -875,7 +875,7 @@
         "sampleCount": 14,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit \u00b7 25 verified success over 14 prior jobs \u00b7 local runtime, no spend"
+      "rationale": "100 task fit · 25 verified success over 14 prior jobs · local runtime, no spend"
     },
     {
       "taskId": "validate",
@@ -901,7 +901,7 @@
         },
         {
           "modelKey": "pool:auto/best-free",
-          "displayName": "Pool \u00b7 best-free",
+          "displayName": "Pool · best-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1072,7 +1072,7 @@
         },
         {
           "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool \u00b7 best-coding",
+          "displayName": "Pool · best-coding",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1148,7 +1148,7 @@
         },
         {
           "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool \u00b7 best-fast",
+          "displayName": "Pool · best-fast",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1167,7 +1167,7 @@
         },
         {
           "modelKey": "pool:auto/coding:free",
-          "displayName": "Pool \u00b7 coding-free",
+          "displayName": "Pool · coding-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1186,7 +1186,7 @@
         },
         {
           "modelKey": "pool:auto/best-reasoning",
-          "displayName": "Pool \u00b7 best-reasoning",
+          "displayName": "Pool · best-reasoning",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1337,14 +1337,14 @@
         "sampleCount": 14,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit \u00b7 25 verified success over 14 prior jobs \u00b7 local runtime, no spend"
+      "rationale": "100 task fit · 25 verified success over 14 prior jobs · local runtime, no spend"
     },
     {
       "taskId": "validate",
       "candidates": [
         {
           "modelKey": "pool:auto/best-free",
-          "displayName": "Pool \u00b7 best-free",
+          "displayName": "Pool · best-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1515,7 +1515,7 @@
         },
         {
           "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool \u00b7 best-coding",
+          "displayName": "Pool · best-coding",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1591,7 +1591,7 @@
         },
         {
           "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool \u00b7 best-fast",
+          "displayName": "Pool · best-fast",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1610,7 +1610,7 @@
         },
         {
           "modelKey": "pool:auto/coding:free",
-          "displayName": "Pool \u00b7 coding-free",
+          "displayName": "Pool · coding-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1629,7 +1629,7 @@
         },
         {
           "modelKey": "pool:auto/best-reasoning",
-          "displayName": "Pool \u00b7 best-reasoning",
+          "displayName": "Pool · best-reasoning",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1783,7 +1783,7 @@
       ],
       "winner": {
         "modelKey": "pool:auto/best-free",
-        "displayName": "Pool \u00b7 best-free",
+        "displayName": "Pool · best-free",
         "providerId": "pool",
         "costClass": "free",
         "eligible": true,
@@ -1800,14 +1800,14 @@
         "sampleCount": 38,
         "estimatedCostUsd": 0
       },
-      "rationale": "72 task fit \u00b7 65 verified success over 38 prior jobs \u00b7 free route, no spend \u00b7 1 candidate excluded by policy"
+      "rationale": "72 task fit · 65 verified success over 38 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "taskId": "money",
       "candidates": [
         {
           "modelKey": "pool:auto/best-free",
-          "displayName": "Pool \u00b7 best-free",
+          "displayName": "Pool · best-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1978,7 +1978,7 @@
         },
         {
           "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool \u00b7 best-coding",
+          "displayName": "Pool · best-coding",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2054,7 +2054,7 @@
         },
         {
           "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool \u00b7 best-fast",
+          "displayName": "Pool · best-fast",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2073,7 +2073,7 @@
         },
         {
           "modelKey": "pool:auto/coding:free",
-          "displayName": "Pool \u00b7 coding-free",
+          "displayName": "Pool · coding-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2092,7 +2092,7 @@
         },
         {
           "modelKey": "pool:auto/best-reasoning",
-          "displayName": "Pool \u00b7 best-reasoning",
+          "displayName": "Pool · best-reasoning",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2246,7 +2246,7 @@
       ],
       "winner": {
         "modelKey": "pool:auto/best-free",
-        "displayName": "Pool \u00b7 best-free",
+        "displayName": "Pool · best-free",
         "providerId": "pool",
         "costClass": "free",
         "eligible": true,
@@ -2263,14 +2263,14 @@
         "sampleCount": 38,
         "estimatedCostUsd": 0
       },
-      "rationale": "72 task fit \u00b7 65 verified success over 38 prior jobs \u00b7 free route, no spend \u00b7 1 candidate excluded by policy"
+      "rationale": "72 task fit · 65 verified success over 38 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "taskId": "split",
       "candidates": [
         {
           "modelKey": "pool:auto/best-free",
-          "displayName": "Pool \u00b7 best-free",
+          "displayName": "Pool · best-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2460,7 +2460,7 @@
         },
         {
           "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool \u00b7 best-coding",
+          "displayName": "Pool · best-coding",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2536,7 +2536,7 @@
         },
         {
           "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool \u00b7 best-fast",
+          "displayName": "Pool · best-fast",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2555,7 +2555,7 @@
         },
         {
           "modelKey": "pool:auto/coding:free",
-          "displayName": "Pool \u00b7 coding-free",
+          "displayName": "Pool · coding-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2574,7 +2574,7 @@
         },
         {
           "modelKey": "pool:auto/best-reasoning",
-          "displayName": "Pool \u00b7 best-reasoning",
+          "displayName": "Pool · best-reasoning",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2708,7 +2708,7 @@
       ],
       "winner": {
         "modelKey": "pool:auto/best-free",
-        "displayName": "Pool \u00b7 best-free",
+        "displayName": "Pool · best-free",
         "providerId": "pool",
         "costClass": "free",
         "eligible": true,
@@ -2725,7 +2725,7 @@
         "sampleCount": 40,
         "estimatedCostUsd": 0
       },
-      "rationale": "72 task fit \u00b7 67 verified success over 40 prior jobs \u00b7 free route, no spend"
+      "rationale": "72 task fit · 67 verified success over 40 prior jobs · free route, no spend"
     },
     {
       "taskId": "index",
@@ -2770,7 +2770,7 @@
         },
         {
           "modelKey": "pool:auto/best-free",
-          "displayName": "Pool \u00b7 best-free",
+          "displayName": "Pool · best-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2827,7 +2827,7 @@
         },
         {
           "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool \u00b7 best-coding",
+          "displayName": "Pool · best-coding",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2998,7 +2998,7 @@
         },
         {
           "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool \u00b7 best-fast",
+          "displayName": "Pool · best-fast",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -3017,7 +3017,7 @@
         },
         {
           "modelKey": "pool:auto/coding:free",
-          "displayName": "Pool \u00b7 coding-free",
+          "displayName": "Pool · coding-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -3036,7 +3036,7 @@
         },
         {
           "modelKey": "pool:auto/best-reasoning",
-          "displayName": "Pool \u00b7 best-reasoning",
+          "displayName": "Pool · best-reasoning",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -3187,7 +3187,7 @@
         "sampleCount": 8,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit \u00b7 87 verified success over 8 prior jobs \u00b7 local runtime, no spend"
+      "rationale": "100 task fit · 87 verified success over 8 prior jobs · local runtime, no spend"
     }
   ],
   "usage": {
@@ -3405,7 +3405,7 @@
       "at": "2026-09-04T01:38:01.388Z",
       "elapsedMs": 13169,
       "taskId": "money",
-      "message": "Pool \u00b7 best-free: utility 0.648 (38 prior jobs)",
+      "message": "Pool · best-free: utility 0.648 (38 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
@@ -3480,7 +3480,7 @@
       "at": "2026-09-04T01:38:01.388Z",
       "elapsedMs": 13169,
       "taskId": "money",
-      "message": "Winner: qwen2.5-coder:3b \u2014 100 task fit \u00b7 25 verified success over 14 prior jobs \u00b7 local runtime, no spend"
+      "message": "Winner: qwen2.5-coder:3b · 100 task fit · 25 verified success over 14 prior jobs · local runtime, no spend"
     },
     {
       "seq": 18,
@@ -3555,7 +3555,7 @@
       "at": "2026-09-04T01:38:01.436Z",
       "elapsedMs": 13217,
       "taskId": "validate",
-      "message": "Pool \u00b7 best-free: utility 0.648 (38 prior jobs)",
+      "message": "Pool · best-free: utility 0.648 (38 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
@@ -3630,7 +3630,7 @@
       "at": "2026-09-04T01:38:01.437Z",
       "elapsedMs": 13218,
       "taskId": "validate",
-      "message": "Winner: qwen2.5-coder:3b \u2014 100 task fit \u00b7 25 verified success over 14 prior jobs \u00b7 local runtime, no spend"
+      "message": "Winner: qwen2.5-coder:3b · 100 task fit · 25 verified success over 14 prior jobs · local runtime, no spend"
     },
     {
       "seq": 28,
@@ -3700,7 +3700,7 @@
       "elapsedMs": 29891,
       "taskId": "validate",
       "workerRunId": "wr_3fbcece2",
-      "message": "src/validate.js exists: PASS \u2014 src/validate.js exists",
+      "message": "src/validate.js exists: PASS · src/validate.js exists",
       "data": {
         "checkId": "exists-0",
         "status": "pass"
@@ -3715,7 +3715,7 @@
       "elapsedMs": 29891,
       "taskId": "validate",
       "workerRunId": "wr_3fbcece2",
-      "message": "test/validate.test.js: FAIL \u2014 exit 1:   'test failed'",
+      "message": "test/validate.test.js: FAIL · exit 1:   'test failed'",
       "data": {
         "checkId": "suite",
         "status": "fail"
@@ -3741,7 +3741,7 @@
       "elapsedMs": 29891,
       "taskId": "validate",
       "workerRunId": "wr_3fbcece2",
-      "message": "qwen2.5-coder:3b failed: TEST_FAILURE \u2014 test/validate.test.js: exit 1:   'test failed'",
+      "message": "qwen2.5-coder:3b failed: TEST_FAILURE · test/validate.test.js: exit 1:   'test failed'",
       "data": {
         "failureType": "TEST_FAILURE"
       }
@@ -3816,7 +3816,7 @@
       "at": "2026-09-04T01:38:18.272Z",
       "elapsedMs": 30053,
       "taskId": "validate",
-      "message": "Pool \u00b7 best-free: utility 0.648 (38 prior jobs)",
+      "message": "Pool · best-free: utility 0.648 (38 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
@@ -3906,7 +3906,7 @@
       "at": "2026-09-04T01:38:18.273Z",
       "elapsedMs": 30054,
       "taskId": "validate",
-      "message": "Winner: Pool \u00b7 best-free \u2014 72 task fit \u00b7 65 verified success over 38 prior jobs \u00b7 free route, no spend \u00b7 1 candidate excluded by policy"
+      "message": "Winner: Pool · best-free · 72 task fit · 65 verified success over 38 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "seq": 47,
@@ -3917,7 +3917,7 @@
       "elapsedMs": 30054,
       "taskId": "validate",
       "workerRunId": "wr_58fb066a",
-      "message": "Hired Pool \u00b7 best-free as Backend Engineer (resuming from cp_03fc5f874f9c)",
+      "message": "Hired Pool · best-free as Backend Engineer (resuming from cp_03fc5f874f9c)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "costClass": "free"
@@ -3932,7 +3932,7 @@
       "elapsedMs": 30054,
       "taskId": "validate",
       "workerRunId": "wr_58fb066a",
-      "message": "Pool \u00b7 best-free started work",
+      "message": "Pool · best-free started work",
       "data": {
         "contextTokens": "[redacted]",
         "availableRepoTokens": "[redacted]",
@@ -3976,7 +3976,7 @@
       "elapsedMs": 37037,
       "taskId": "money",
       "workerRunId": "wr_ec657e66",
-      "message": "src/money.js exists: PASS \u2014 src/money.js exists",
+      "message": "src/money.js exists: PASS · src/money.js exists",
       "data": {
         "checkId": "exists-0",
         "status": "pass"
@@ -3991,7 +3991,7 @@
       "elapsedMs": 37037,
       "taskId": "money",
       "workerRunId": "wr_ec657e66",
-      "message": "test/money.test.js: FAIL \u2014 exit 1:   'test failed'",
+      "message": "test/money.test.js: FAIL · exit 1:   'test failed'",
       "data": {
         "checkId": "suite",
         "status": "fail"
@@ -4017,7 +4017,7 @@
       "elapsedMs": 37037,
       "taskId": "money",
       "workerRunId": "wr_ec657e66",
-      "message": "qwen2.5-coder:3b failed: TEST_FAILURE \u2014 test/money.test.js: exit 1:   'test failed'",
+      "message": "qwen2.5-coder:3b failed: TEST_FAILURE · test/money.test.js: exit 1:   'test failed'",
       "data": {
         "failureType": "TEST_FAILURE"
       }
@@ -4092,7 +4092,7 @@
       "at": "2026-09-04T01:38:25.276Z",
       "elapsedMs": 37057,
       "taskId": "money",
-      "message": "Pool \u00b7 best-free: utility 0.648 (38 prior jobs)",
+      "message": "Pool · best-free: utility 0.648 (38 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
@@ -4182,7 +4182,7 @@
       "at": "2026-09-04T01:38:25.277Z",
       "elapsedMs": 37058,
       "taskId": "money",
-      "message": "Winner: Pool \u00b7 best-free \u2014 72 task fit \u00b7 65 verified success over 38 prior jobs \u00b7 free route, no spend \u00b7 1 candidate excluded by policy"
+      "message": "Winner: Pool · best-free · 72 task fit · 65 verified success over 38 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "seq": 66,
@@ -4193,7 +4193,7 @@
       "elapsedMs": 37058,
       "taskId": "money",
       "workerRunId": "wr_b4e05a64",
-      "message": "Hired Pool \u00b7 best-free as Backend Engineer (resuming from cp_50392b0784dd)",
+      "message": "Hired Pool · best-free as Backend Engineer (resuming from cp_50392b0784dd)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "costClass": "free"
@@ -4208,7 +4208,7 @@
       "elapsedMs": 37058,
       "taskId": "money",
       "workerRunId": "wr_b4e05a64",
-      "message": "Pool \u00b7 best-free started work",
+      "message": "Pool · best-free started work",
       "data": {
         "contextTokens": "[redacted]",
         "availableRepoTokens": "[redacted]",
@@ -4225,7 +4225,7 @@
       "elapsedMs": 87170,
       "taskId": "money",
       "workerRunId": "wr_b4e05a64",
-      "message": "Pool \u00b7 best-free wrote 1 file(s)",
+      "message": "Pool · best-free wrote 1 file(s)",
       "data": {
         "files": [
           "src/money.js"
@@ -4252,7 +4252,7 @@
       "elapsedMs": 87353,
       "taskId": "money",
       "workerRunId": "wr_b4e05a64",
-      "message": "src/money.js exists: PASS \u2014 src/money.js exists",
+      "message": "src/money.js exists: PASS · src/money.js exists",
       "data": {
         "checkId": "exists-0",
         "status": "pass"
@@ -4267,7 +4267,7 @@
       "elapsedMs": 87353,
       "taskId": "money",
       "workerRunId": "wr_b4e05a64",
-      "message": "test/money.test.js: PASS \u2014 \u2139 duration_ms 89.6279",
+      "message": "test/money.test.js: PASS · ℹ duration_ms 89.6279",
       "data": {
         "checkId": "suite",
         "status": "pass"
@@ -4282,7 +4282,7 @@
       "elapsedMs": 87355,
       "taskId": "money",
       "workerRunId": "wr_b4e05a64",
-      "message": "\"Implement money helpers\" verified \u2014 quality 100",
+      "message": "\"Implement money helpers\" verified · quality 100",
       "data": {
         "proofId": "pf_af29780c",
         "quality": 100
@@ -4308,7 +4308,7 @@
       "elapsedMs": 93707,
       "taskId": "validate",
       "workerRunId": "wr_58fb066a",
-      "message": "Pool \u00b7 best-free wrote 1 file(s)",
+      "message": "Pool · best-free wrote 1 file(s)",
       "data": {
         "files": [
           "src/validate.js"
@@ -4335,7 +4335,7 @@
       "elapsedMs": 93905,
       "taskId": "validate",
       "workerRunId": "wr_58fb066a",
-      "message": "src/validate.js exists: PASS \u2014 src/validate.js exists",
+      "message": "src/validate.js exists: PASS · src/validate.js exists",
       "data": {
         "checkId": "exists-0",
         "status": "pass"
@@ -4350,7 +4350,7 @@
       "elapsedMs": 93905,
       "taskId": "validate",
       "workerRunId": "wr_58fb066a",
-      "message": "test/validate.test.js: PASS \u2014 \u2139 duration_ms 98.3054",
+      "message": "test/validate.test.js: PASS · ℹ duration_ms 98.3054",
       "data": {
         "checkId": "suite",
         "status": "pass"
@@ -4365,7 +4365,7 @@
       "elapsedMs": 93906,
       "taskId": "validate",
       "workerRunId": "wr_58fb066a",
-      "message": "\"Implement receipt validation\" verified \u2014 quality 100",
+      "message": "\"Implement receipt validation\" verified · quality 100",
       "data": {
         "proofId": "pf_ab0acbdd",
         "quality": 100
@@ -4418,7 +4418,7 @@
       "at": "2026-09-04T01:40:21.994Z",
       "elapsedMs": 153775,
       "taskId": "split",
-      "message": "Pool \u00b7 best-free: utility 0.651 (40 prior jobs)",
+      "message": "Pool · best-free: utility 0.651 (40 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
@@ -4508,7 +4508,7 @@
       "at": "2026-09-04T01:40:21.994Z",
       "elapsedMs": 153775,
       "taskId": "split",
-      "message": "Winner: Pool \u00b7 best-free \u2014 72 task fit \u00b7 67 verified success over 40 prior jobs \u00b7 free route, no spend"
+      "message": "Winner: Pool · best-free · 72 task fit · 67 verified success over 40 prior jobs · free route, no spend"
     },
     {
       "seq": 89,
@@ -4519,7 +4519,7 @@
       "elapsedMs": 153776,
       "taskId": "split",
       "workerRunId": "wr_1a20a41a",
-      "message": "Hired Pool \u00b7 best-free as Backend Engineer",
+      "message": "Hired Pool · best-free as Backend Engineer",
       "data": {
         "modelKey": "pool:auto/best-free",
         "costClass": "free"
@@ -4534,7 +4534,7 @@
       "elapsedMs": 153776,
       "taskId": "split",
       "workerRunId": "wr_1a20a41a",
-      "message": "Pool \u00b7 best-free started work",
+      "message": "Pool · best-free started work",
       "data": {
         "contextTokens": "[redacted]",
         "availableRepoTokens": "[redacted]",
@@ -4551,7 +4551,7 @@
       "elapsedMs": 237479,
       "taskId": "split",
       "workerRunId": "wr_1a20a41a",
-      "message": "Pool \u00b7 best-free wrote 1 file(s)",
+      "message": "Pool · best-free wrote 1 file(s)",
       "data": {
         "files": [
           "src/split.js"
@@ -4578,7 +4578,7 @@
       "elapsedMs": 237644,
       "taskId": "split",
       "workerRunId": "wr_1a20a41a",
-      "message": "src/split.js exists: PASS \u2014 src/split.js exists",
+      "message": "src/split.js exists: PASS · src/split.js exists",
       "data": {
         "checkId": "exists-0",
         "status": "pass"
@@ -4593,7 +4593,7 @@
       "elapsedMs": 237644,
       "taskId": "split",
       "workerRunId": "wr_1a20a41a",
-      "message": "test/split.test.js: PASS \u2014 \u2139 duration_ms 81.0695",
+      "message": "test/split.test.js: PASS · ℹ duration_ms 81.0695",
       "data": {
         "checkId": "suite",
         "status": "pass"
@@ -4608,7 +4608,7 @@
       "elapsedMs": 237645,
       "taskId": "split",
       "workerRunId": "wr_1a20a41a",
-      "message": "\"Implement the split calculation\" verified \u2014 quality 100",
+      "message": "\"Implement the split calculation\" verified · quality 100",
       "data": {
         "proofId": "pf_fea84ca2",
         "quality": 100
@@ -4691,7 +4691,7 @@
       "at": "2026-09-04T01:42:40.892Z",
       "elapsedMs": 292673,
       "taskId": "index",
-      "message": "Pool \u00b7 best-free: utility 0.651 (43 prior jobs)",
+      "message": "Pool · best-free: utility 0.651 (43 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
@@ -4736,7 +4736,7 @@
       "at": "2026-09-04T01:42:40.892Z",
       "elapsedMs": 292673,
       "taskId": "index",
-      "message": "Pool \u00b7 best-coding: utility 0.620 (6 prior jobs)",
+      "message": "Pool · best-coding: utility 0.620 (6 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-coding",
         "eligible": true,
@@ -4751,7 +4751,7 @@
       "at": "2026-09-04T01:42:40.892Z",
       "elapsedMs": 292673,
       "taskId": "index",
-      "message": "Winner: kodro-tutor \u2014 100 task fit \u00b7 87 verified success over 8 prior jobs \u00b7 local runtime, no spend"
+      "message": "Winner: kodro-tutor · 100 task fit · 87 verified success over 8 prior jobs · local runtime, no spend"
     },
     {
       "seq": 106,
@@ -4821,7 +4821,7 @@
       "elapsedMs": 310842,
       "taskId": "index",
       "workerRunId": "wr_246e1211",
-      "message": "src/index.js exists: PASS \u2014 src/index.js exists",
+      "message": "src/index.js exists: PASS · src/index.js exists",
       "data": {
         "checkId": "exists-0",
         "status": "pass"
@@ -4836,7 +4836,7 @@
       "elapsedMs": 310842,
       "taskId": "index",
       "workerRunId": "wr_246e1211",
-      "message": "test/index.test.js: PASS \u2014 \u2139 duration_ms 84.0652",
+      "message": "test/index.test.js: PASS · ℹ duration_ms 84.0652",
       "data": {
         "checkId": "suite",
         "status": "pass"
@@ -4851,7 +4851,7 @@
       "elapsedMs": 310842,
       "taskId": "index",
       "workerRunId": "wr_246e1211",
-      "message": "\"Implement the request handler\" verified \u2014 quality 100",
+      "message": "\"Implement the request handler\" verified · quality 100",
       "data": {
         "proofId": "pf_69f2adca",
         "quality": 100

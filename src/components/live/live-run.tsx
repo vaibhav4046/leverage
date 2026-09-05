@@ -248,7 +248,7 @@ export function LiveRun({ enabled }: { enabled: boolean }) {
           <div className="mono mb-3 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
             Your run, in the same view every recorded mission uses
           </div>
-          <MissionControl initial={snapshot} readOnly />
+          <MissionControl initial={snapshot} readOnly readOnlyLabel="your run · view only" />
         </div>
       )}
     </div>

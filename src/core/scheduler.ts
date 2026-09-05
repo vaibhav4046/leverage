@@ -432,7 +432,7 @@ export class MissionScheduler {
         'auction.candidate',
         c.eligible
           ? `${c.displayName}: utility ${c.utility.toFixed(3)} (${c.sampleCount} prior jobs)`
-          : `${c.displayName}: INELIGIBLE — ${c.ineligibleReason}`,
+          : `${c.displayName}: INELIGIBLE: ${c.ineligibleReason}`,
         { taskId: task.id, data: { modelKey: c.modelKey, eligible: c.eligible, utility: c.utility } },
       );
     }
@@ -694,7 +694,7 @@ export class MissionScheduler {
     for (const check of verification.checks) {
       state.events.emit(
         'proof.check',
-        `${check.label}: ${check.status.toUpperCase()} — ${check.detail}`,
+        `${check.label}: ${check.status.toUpperCase()}: ${check.detail}`,
         { taskId: task.id, workerRunId: worker.id, data: { checkId: check.id, status: check.status } },
       );
     }
@@ -762,7 +762,7 @@ export class MissionScheduler {
       at: new Date().toISOString(),
     });
 
-    state.events.emit('verification.passed', `"${task.title}" verified — quality ${quality.total}`, {
+    state.events.emit('verification.passed', `"${task.title}" verified, quality ${quality.total}`, {
       taskId: task.id,
       workerRunId: worker.id,
       data: { proofId: proof.id, quality: quality.total },
@@ -795,7 +795,7 @@ export class MissionScheduler {
     worker.failureType = failureType;
     worker.finishedAt = new Date().toISOString();
 
-    state.events.emit('worker.failed', `${worker.displayName} failed: ${failureType} — ${detail.slice(0, 200)}`, {
+    state.events.emit('worker.failed', `${worker.displayName} failed: ${failureType}: ${detail.slice(0, 200)}`, {
       taskId: task.id,
       workerRunId: worker.id,
       data: { failureType },

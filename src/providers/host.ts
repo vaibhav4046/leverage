@@ -273,7 +273,7 @@ export class HostAdapter implements ProviderAdapter {
       return {
         status: 'UNAVAILABLE',
         checkedAt,
-        detail: 'no MCP host connected — run Leverage as an MCP server to use your own seat',
+        detail: 'no MCP host connected, run Leverage as an MCP server to use your own seat',
       };
     }
     return { status: 'HEALTHY', checkedAt, detail: `${sessions.length} host session(s)` };

@@ -121,7 +121,7 @@ export default async function ModelsPage() {
                 </Pill>
               </Cell>
               <Cell mono muted>
-                {model.contextTokens > 0 ? `${(model.contextTokens / 1000).toFixed(0)}K` : '—'}
+                {model.contextTokens > 0 ? `${(model.contextTokens / 1000).toFixed(0)}K` : '–'}
               </Cell>
               <Cell>
                 <Pill
@@ -131,9 +131,9 @@ export default async function ModelsPage() {
                 </Pill>
               </Cell>
               <Cell mono>{rep?.samples ?? 0}</Cell>
-              <Cell mono>{rep ? `${rep.verifiedSuccesses}/${rep.samples}` : '—'}</Cell>
+              <Cell mono>{rep ? `${rep.verifiedSuccesses}/${rep.samples}` : '–'}</Cell>
               <Cell mono muted>
-                {rep?.medianLatencyMs ? `${(rep.medianLatencyMs / 1000).toFixed(1)}s` : '—'}
+                {rep?.medianLatencyMs ? `${(rep.medianLatencyMs / 1000).toFixed(1)}s` : '–'}
               </Cell>
               <Cell mono muted>
                 {rep?.confidence ?? 'none'}

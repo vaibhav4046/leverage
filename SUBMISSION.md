@@ -64,7 +64,7 @@ hundred-percent model.
 | 0–20 | https://useleverage.vercel.app | `$0.00` actual paid inference, from a recorded run |
 | or 0–68 | the film on the landing page, sound on | seven scenes, narrated; every figure spoken is on this site with its evidence |
 | 20–60 | `/app/missions/LVR-f8f72d56` | 4/4 verified · 3 handoffs · 129 events |
-| 60–90 | scrub to `worker.failed` → `checkpoint.created` → `handoff.completed` | the model failed; the work did not restart |
+| 60–90 | scrub to `worker.failed` → `checkpoint.created` → `handoff.started` → `worker.hired … resuming from cp_…` | the model failed; the work did not restart |
 | 90–120 | `/app/missions/LVR-bda3ba68` | RocketRide executed 3 of 6 workers · 3 of 4 tasks · all verified |
 | 120–140 | `/app/missions/LVR-719a8c22` | RocketRide executed 4 of 4 workers through the hosted pool · 4 of 4 verified · $0.00 |
 | 120–150 | `/benchmarks` | the control plane holding 100 tasks with 0 duplicate claims, 0 budget overshoots |

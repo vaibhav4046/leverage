@@ -353,7 +353,7 @@ export default async function Home() {
                   <Candidate name="Pool · best-coding" utility="0.79" note="free route · quota risk" />
                   <Candidate
                     name="Claude API"
-                    utility="—"
+                    utility="–"
                     note="Hard budget $0.00 blocks all paid routes"
                     blocked
                   />
@@ -402,7 +402,7 @@ export default async function Home() {
                   ['Free cloud routes', 'READY', 'pass'],
                   [
                     'Blocked paid attempts',
-                    run ? String(run.usage.blockedPaidAttempts) : '—',
+                    run ? String(run.usage.blockedPaidAttempts) : '–',
                     'neutral',
                   ],
                 ].map(([label, value, tone]) => (

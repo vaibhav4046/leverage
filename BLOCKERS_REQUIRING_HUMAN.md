@@ -65,6 +65,16 @@ passed, 13.6 credits, $0.00. It is browsable on the live site.
    three ids were 429 at sweep time. `node scripts/pool-sweep.mjs` regenerates the
    evidence and prints the `POOL_MODELS` line to set.
 
+**The deployment now executes, on one page.** `/app/live` runs a real mission
+inside a Vercel function: the fixture is copied to the function's temp directory,
+the auction hires from the hosted pool, workers run as RocketRide pipelines, the
+fixture's tests verify each task, and the finished snapshot renders in the normal
+mission view. Bounded: fixed goal, one run per instance at a time, one per visitor
+every ten minutes, cancelled on disconnect, wall clock at 270 s, refused when the
+RocketRide balance is under 1000 credits. Each run costs about 12 credits. Switch it
+off with `vercel env rm LEVERAGE_LIVE_RUN production` and a redeploy. The first
+deployed run, `LVR-783bade5`, passed 4/4 in 69 s.
+
 **The recorded proof stands on its own.** Mission `LVR-bda3ba68` is browsable now,
 with no credentials, and shows RocketRide executing load-bearing workers. It was
 produced while the pool ran through a tunnel; the hosted pool is what replaced
@@ -77,6 +87,11 @@ validity. It is **not** in git history — the only key-shaped string ever commi
 is the synthetic fixture `rr_0000…1234`. Rotation is hygiene, not incident
 response. `pnpm exec rocketride login` regenerates it into `.env.local` without
 anyone handling the literal value.
+
+The key is also set on the deployment now (`ROCKETRIDE_APIKEY`), which is what
+lets `/api/v1/health`, `/app/providers` and `/app/live` reach RocketRide. After
+rotating, re-add it with `vercel env add ROCKETRIDE_APIKEY production` (value from
+stdin) and redeploy, or the live page and the credit figures go dark.
 
 ---
 
@@ -117,12 +132,12 @@ so in the file.
 
 ## 5. ElevenLabs narration
 
-**Status:** blocks the narrated film only.
+**Status:** resolved 5 Sep 2026.
 
-No `ELEVENLABS_API_KEY` exists in `.env.local` or the environment, so narration,
-forced alignment and the aligned SRT/VTT could not be produced. The script is
-written and locked at `demo/audio/narration-script.txt`, with pronunciation notes
-beside it. Generation is one command once a key exists.
+The film is voiced. `scripts/narrate-film.mjs` holds the script, calls ElevenLabs
+once with character timestamps, and writes `motion/assets/film-voice.mp3` and
+`film-timing.json`; the composition cuts on those timestamps. The key lives only in
+`.env.local`. Revoke it after the event; re-voicing later is the same one command.
 
 The 9-second teaser at `public/motion/handoff.mp4` is real, rendered from the
 HyperFrames composition in `motion/`, and is embedded on the landing page.
@@ -131,11 +146,15 @@ HyperFrames composition in `motion/`, and is embedded on the landing page.
 
 ## 6. Supademo
 
-**Status:** blocks the interactive walkthrough only.
+**Status:** one owner step left.
 
-The Supademo MCP server is unauthenticated and this session is non-interactive, so
-the OAuth flow cannot run here. Authorise it from an interactive `claude` session
-(`/mcp`) or from claude.ai connector settings.
+The Supademo connector is authorised now (workspace "My Company"). Its only way to
+take media is an upload portal opened in the owner's browser, so the interactive
+walkthrough needs you once: the step assets are captured in
+`docs/shots/supademo/` (eleven 1920×1080 screens, landing to live run to models) and,
+when the upload job link is created, you upload them there; the demo is assembled
+from the resulting handles with per-step text. The job link expires an hour after
+it is created, so it is made when you are ready, not before.
 
 ---
 

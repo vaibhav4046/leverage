@@ -36,7 +36,7 @@ export function HeroConsole({ run }: { run: MissionSnapshot | null }) {
         <div className="flex items-start justify-between gap-4">
           <div className="min-w-0">
             <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-              Mission {run?.mission.id ?? '—'}
+              Mission {run?.mission.id ?? '–'}
             </div>
             <div className="mt-1 truncate text-[15px] text-[var(--color-quartz)]">
               {run?.mission.goal.slice(0, 64) ?? 'No recorded run yet'}
@@ -48,11 +48,11 @@ export function HeroConsole({ run }: { run: MissionSnapshot | null }) {
         <div className="mt-4 grid grid-cols-3 gap-3 border-t border-[var(--color-obsidian-edge)] pt-4">
           <Metric
             label="Paid spend"
-            value={run ? `$${run.usage.paidSpendUsd.toFixed(2)}` : '—'}
+            value={run ? `$${run.usage.paidSpendUsd.toFixed(2)}` : '–'}
             emphasis
           />
-          <Metric label="Quality target" value={run ? String(run.mission.quality.target * 100) : '—'} />
-          <Metric label="Workers" value={run ? String(run.workers.length) : '—'} />
+          <Metric label="Quality target" value={run ? String(run.mission.quality.target * 100) : '–'} />
+          <Metric label="Workers" value={run ? String(run.workers.length) : '–'} />
         </div>
       </div>
 

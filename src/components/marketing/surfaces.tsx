@@ -257,7 +257,7 @@ export function WorkforceLedger({ models }: { models: ModelRow[] }) {
                       <RateBar rate={m.successRate} />
                     </td>
                     <td className="mono px-5 py-3.5 text-[12px] tabular-nums text-[var(--color-ash)]">
-                      {m.medianLatencyMs ? `${(m.medianLatencyMs / 1000).toFixed(1)}s` : '—'}
+                      {m.medianLatencyMs ? `${(m.medianLatencyMs / 1000).toFixed(1)}s` : '–'}
                     </td>
                     <td className="mono px-5 py-3.5 text-[12px] text-[var(--color-ash)]">
                       {m.confidence}

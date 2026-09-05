@@ -85,7 +85,7 @@
       "status": "passed",
       "startedAt": "2026-09-05T04:14:27.970Z",
       "actualCostUsd": 0,
-      "auctionRationale": "80 task fit \u00b7 no prior jobs \u2014 scored on the neutral prior \u00b7 free route, no spend",
+      "auctionRationale": "80 task fit · no prior jobs · scored on the neutral prior · free route, no spend",
       "contextTokens": 615,
       "finishedAt": "2026-09-05T04:14:56.965Z"
     },
@@ -101,7 +101,7 @@
       "status": "passed",
       "startedAt": "2026-09-05T04:14:27.991Z",
       "actualCostUsd": 0,
-      "auctionRationale": "80 task fit \u00b7 no prior jobs \u2014 scored on the neutral prior \u00b7 free route, no spend",
+      "auctionRationale": "80 task fit · no prior jobs · scored on the neutral prior · free route, no spend",
       "contextTokens": 674,
       "finishedAt": "2026-09-05T04:14:56.940Z"
     },
@@ -117,7 +117,7 @@
       "status": "passed",
       "startedAt": "2026-09-05T04:14:57.634Z",
       "actualCostUsd": 0,
-      "auctionRationale": "80 task fit \u00b7 75 verified success over 2 prior jobs \u00b7 free route, no spend",
+      "auctionRationale": "80 task fit · 75 verified success over 2 prior jobs · free route, no spend",
       "contextTokens": 1005,
       "finishedAt": "2026-09-05T04:15:18.641Z"
     },
@@ -133,7 +133,7 @@
       "status": "passed",
       "startedAt": "2026-09-05T04:15:18.650Z",
       "actualCostUsd": 0,
-      "auctionRationale": "80 task fit \u00b7 78 verified success over 3 prior jobs \u00b7 free route, no spend",
+      "auctionRationale": "80 task fit · 78 verified success over 3 prior jobs · free route, no spend",
       "contextTokens": 740,
       "finishedAt": "2026-09-05T04:15:46.583Z"
     }
@@ -168,7 +168,7 @@
           "label": "test/validate.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "\u001b[34m\u2139 duration_ms 509.1679\u001b[39m",
+          "detail": "\u001b[34mℹ duration_ms 509.1679\u001b[39m",
           "durationMs": 1003
         }
       ],
@@ -218,7 +218,7 @@
           "label": "test/money.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "\u001b[34m\u2139 duration_ms 513.017\u001b[39m",
+          "detail": "\u001b[34mℹ duration_ms 513.017\u001b[39m",
           "durationMs": 1047
         }
       ],
@@ -268,7 +268,7 @@
           "label": "test/split.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "\u001b[34m\u2139 duration_ms 165.5513\u001b[39m",
+          "detail": "\u001b[34mℹ duration_ms 165.5513\u001b[39m",
           "durationMs": 647
         }
       ],
@@ -318,7 +318,7 @@
           "label": "test/index.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "\u001b[34m\u2139 duration_ms 626.3973\u001b[39m",
+          "detail": "\u001b[34mℹ duration_ms 626.3973\u001b[39m",
           "durationMs": 1460
         }
       ],
@@ -612,7 +612,7 @@
         "sampleCount": 0,
         "estimatedCostUsd": 0
       },
-      "rationale": "80 task fit \u00b7 no prior jobs \u2014 scored on the neutral prior \u00b7 free route, no spend"
+      "rationale": "80 task fit · no prior jobs · scored on the neutral prior · free route, no spend"
     },
     {
       "taskId": "validate",
@@ -884,7 +884,7 @@
         "sampleCount": 0,
         "estimatedCostUsd": 0
       },
-      "rationale": "80 task fit \u00b7 no prior jobs \u2014 scored on the neutral prior \u00b7 free route, no spend"
+      "rationale": "80 task fit · no prior jobs · scored on the neutral prior · free route, no spend"
     },
     {
       "taskId": "split",
@@ -1156,7 +1156,7 @@
         "sampleCount": 2,
         "estimatedCostUsd": 0
       },
-      "rationale": "80 task fit \u00b7 75 verified success over 2 prior jobs \u00b7 free route, no spend"
+      "rationale": "80 task fit · 75 verified success over 2 prior jobs · free route, no spend"
     },
     {
       "taskId": "index",
@@ -1428,7 +1428,7 @@
         "sampleCount": 3,
         "estimatedCostUsd": 0
       },
-      "rationale": "80 task fit \u00b7 78 verified success over 3 prior jobs \u00b7 free route, no spend"
+      "rationale": "80 task fit · 78 verified success over 3 prior jobs · free route, no spend"
     }
   ],
   "usage": {
@@ -1721,7 +1721,7 @@
       "at": "2026-09-05T04:14:27.969Z",
       "elapsedMs": 5237,
       "taskId": "money",
-      "message": "Winner: MiniMax M3 via OpenRouter \u2014 80 task fit \u00b7 no prior jobs \u2014 scored on the neutral prior \u00b7 free route, no spend"
+      "message": "Winner: MiniMax M3 via OpenRouter · 80 task fit · no prior jobs · scored on the neutral prior · free route, no spend"
     },
     {
       "seq": 18,
@@ -1871,7 +1871,7 @@
       "at": "2026-09-05T04:14:27.991Z",
       "elapsedMs": 5259,
       "taskId": "validate",
-      "message": "Winner: MiniMax M3 via OpenRouter \u2014 80 task fit \u00b7 no prior jobs \u2014 scored on the neutral prior \u00b7 free route, no spend"
+      "message": "Winner: MiniMax M3 via OpenRouter · 80 task fit · no prior jobs · scored on the neutral prior · free route, no spend"
     },
     {
       "seq": 28,
@@ -1968,7 +1968,7 @@
       "elapsedMs": 34207,
       "taskId": "validate",
       "workerRunId": "wr_efe68dd6",
-      "message": "src/validate.js exists: PASS \u2014 src/validate.js exists",
+      "message": "src/validate.js exists: PASS · src/validate.js exists",
       "data": {
         "checkId": "exists-0",
         "status": "pass"
@@ -1983,7 +1983,7 @@
       "elapsedMs": 34207,
       "taskId": "validate",
       "workerRunId": "wr_efe68dd6",
-      "message": "test/validate.test.js: PASS \u2014 \u001b[34m\u2139 duration_ms 509.1679\u001b[39m",
+      "message": "test/validate.test.js: PASS · \u001b[34mℹ duration_ms 509.1679\u001b[39m",
       "data": {
         "checkId": "suite",
         "status": "pass"
@@ -1998,7 +1998,7 @@
       "elapsedMs": 34208,
       "taskId": "validate",
       "workerRunId": "wr_efe68dd6",
-      "message": "\"Implement receipt validation\" verified \u2014 quality 100",
+      "message": "\"Implement receipt validation\" verified · quality 100",
       "data": {
         "proofId": "pf_db1b78ae",
         "quality": 100
@@ -2024,7 +2024,7 @@
       "elapsedMs": 34233,
       "taskId": "money",
       "workerRunId": "wr_460ff104",
-      "message": "src/money.js exists: PASS \u2014 src/money.js exists",
+      "message": "src/money.js exists: PASS · src/money.js exists",
       "data": {
         "checkId": "exists-0",
         "status": "pass"
@@ -2039,7 +2039,7 @@
       "elapsedMs": 34233,
       "taskId": "money",
       "workerRunId": "wr_460ff104",
-      "message": "test/money.test.js: PASS \u2014 \u001b[34m\u2139 duration_ms 513.017\u001b[39m",
+      "message": "test/money.test.js: PASS · \u001b[34mℹ duration_ms 513.017\u001b[39m",
       "data": {
         "checkId": "suite",
         "status": "pass"
@@ -2054,7 +2054,7 @@
       "elapsedMs": 34233,
       "taskId": "money",
       "workerRunId": "wr_460ff104",
-      "message": "\"Implement money helpers\" verified \u2014 quality 100",
+      "message": "\"Implement money helpers\" verified · quality 100",
       "data": {
         "proofId": "pf_dc4c145a",
         "quality": 100
@@ -2197,7 +2197,7 @@
       "at": "2026-09-05T04:14:57.634Z",
       "elapsedMs": 34902,
       "taskId": "split",
-      "message": "Winner: MiniMax M3 via OpenRouter \u2014 80 task fit \u00b7 75 verified success over 2 prior jobs \u00b7 free route, no spend"
+      "message": "Winner: MiniMax M3 via OpenRouter · 80 task fit · 75 verified success over 2 prior jobs · free route, no spend"
     },
     {
       "seq": 51,
@@ -2267,7 +2267,7 @@
       "elapsedMs": 55909,
       "taskId": "split",
       "workerRunId": "wr_8cdc3a8c",
-      "message": "src/split.js exists: PASS \u2014 src/split.js exists",
+      "message": "src/split.js exists: PASS · src/split.js exists",
       "data": {
         "checkId": "exists-0",
         "status": "pass"
@@ -2282,7 +2282,7 @@
       "elapsedMs": 55909,
       "taskId": "split",
       "workerRunId": "wr_8cdc3a8c",
-      "message": "test/split.test.js: PASS \u2014 \u001b[34m\u2139 duration_ms 165.5513\u001b[39m",
+      "message": "test/split.test.js: PASS · \u001b[34mℹ duration_ms 165.5513\u001b[39m",
       "data": {
         "checkId": "suite",
         "status": "pass"
@@ -2297,7 +2297,7 @@
       "elapsedMs": 55909,
       "taskId": "split",
       "workerRunId": "wr_8cdc3a8c",
-      "message": "\"Implement the split calculation\" verified \u2014 quality 100",
+      "message": "\"Implement the split calculation\" verified · quality 100",
       "data": {
         "proofId": "pf_32bf4236",
         "quality": 100
@@ -2440,7 +2440,7 @@
       "at": "2026-09-05T04:15:18.650Z",
       "elapsedMs": 55918,
       "taskId": "index",
-      "message": "Winner: MiniMax M3 via OpenRouter \u2014 80 task fit \u00b7 78 verified success over 3 prior jobs \u00b7 free route, no spend"
+      "message": "Winner: MiniMax M3 via OpenRouter · 80 task fit · 78 verified success over 3 prior jobs · free route, no spend"
     },
     {
       "seq": 68,
@@ -2510,7 +2510,7 @@
       "elapsedMs": 83851,
       "taskId": "index",
       "workerRunId": "wr_01df261f",
-      "message": "src/index.js exists: PASS \u2014 src/index.js exists",
+      "message": "src/index.js exists: PASS · src/index.js exists",
       "data": {
         "checkId": "exists-0",
         "status": "pass"
@@ -2525,7 +2525,7 @@
       "elapsedMs": 83851,
       "taskId": "index",
       "workerRunId": "wr_01df261f",
-      "message": "test/index.test.js: PASS \u2014 \u001b[34m\u2139 duration_ms 626.3973\u001b[39m",
+      "message": "test/index.test.js: PASS · \u001b[34mℹ duration_ms 626.3973\u001b[39m",
       "data": {
         "checkId": "suite",
         "status": "pass"
@@ -2540,7 +2540,7 @@
       "elapsedMs": 83851,
       "taskId": "index",
       "workerRunId": "wr_01df261f",
-      "message": "\"Implement the request handler\" verified \u2014 quality 100",
+      "message": "\"Implement the request handler\" verified · quality 100",
       "data": {
         "proofId": "pf_3f993905",
         "quality": 100

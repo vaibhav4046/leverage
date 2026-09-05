@@ -209,7 +209,7 @@ export class AgentCliAdapter implements ProviderAdapter {
         status: 'AUTH_ERROR',
         checkedAt,
         // Named so the Providers page can tell the user exactly what to run.
-        detail: `${clis.map((c) => c.spec.bin).join(', ')} installed but signed out — run \`${clis[0].spec.bin} login\``,
+        detail: `${clis.map((c) => c.spec.bin).join(', ')} installed but signed out, run \`${clis[0].spec.bin} login\``,
       };
     }
 

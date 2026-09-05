@@ -303,7 +303,7 @@ export default async function BenchmarksPage() {
                     </span>
                   </td>
                   <td className="px-5 py-3 text-[12px] text-[var(--color-ash)]">
-                    {r.note || '—'}
+                    {r.note || '–'}
                   </td>
                 </tr>
               ))}

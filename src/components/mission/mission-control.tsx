@@ -16,8 +16,11 @@ import type { MissionEvent } from '@/core/types';
 export function MissionControl({
   initial,
   readOnly = false,
+  readOnlyLabel = 'read-only demo',
 }: {
   initial: MissionSnapshot;
+  /** What the read-only pill says; a visitor's own live run is not a demo. */
+  readOnlyLabel?: string;
   /**
    * A read-only viewer sees the whole run and none of the controls. The buttons are
    * removed rather than disabled: a disabled Start on a public demo invites the
@@ -185,7 +188,7 @@ function MissionHeader({
 
           {readOnly && (
             <span className="mono rounded-full border border-[var(--color-sapphire-hairline)] px-3 py-1 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-              read-only demo
+              {readOnlyLabel}
             </span>
           )}
 
@@ -236,7 +239,7 @@ function MissionMetrics({ snapshot }: { snapshot: MissionSnapshot }) {
 
   return (
     <div className="grid grid-cols-2 gap-px border-b border-[var(--color-obsidian-edge)] bg-[var(--color-obsidian-edge)] md:grid-cols-3 xl:grid-cols-6">
-      <Metric label="Quality" value={quality === null ? '—' : quality.toFixed(0)} />
+      <Metric label="Quality" value={quality === null ? '–' : quality.toFixed(0)} />
       <Metric label="Paid spend" value={`$${snapshot.usage.paidSpendUsd.toFixed(2)}`} accent />
       <Metric label="Elapsed" value={`${(snapshot.mission.elapsedMs / 1000).toFixed(1)}s`} />
       <Metric label="Tasks" value={`${passed}/${snapshot.tasks.length}`} />
@@ -557,7 +560,7 @@ function UsagePanel({ snapshot }: { snapshot: MissionSnapshot }) {
         <span className="mono text-[var(--color-mist)]">
           ${u.estimatedFrontierEquivalentUsd.toFixed(4)}
         </span>{' '}
-        — what this observed token workload would have cost at published frontier rates. An
+        is what this observed token workload would have cost at published frontier rates. An
         estimate, never a charge. Methodology in BENCHMARKS.md.
       </p>
     </section>
@@ -645,7 +648,7 @@ function DetailsDrawer({
                     )}
                   </div>
                   <span className="mono shrink-0 tabular-nums text-[var(--color-mist)]">
-                    {c.eligible ? c.utility.toFixed(3) : '—'}
+                    {c.eligible ? c.utility.toFixed(3) : '–'}
                   </span>
                 </li>
               ))}
@@ -666,7 +669,7 @@ function DetailsDrawer({
             {checkpoint.remainingWork.length > 0 && (
               <ul className="mt-3 space-y-1 text-[12px] text-[var(--color-ash)]">
                 {checkpoint.remainingWork.map((w, i) => (
-                  <li key={i}>— {w}</li>
+                  <li key={i}>· {w}</li>
                 ))}
               </ul>
             )}

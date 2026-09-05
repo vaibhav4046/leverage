@@ -10,7 +10,7 @@ import { IconLocal, IconCloud, IconShield, IconBudget } from '@/components/icons
  *
  * Policy is expressed here, not inferred later: budget, quality and privacy are
  * explicit controls because they are the three things a user must be able to
- * guarantee. Everything else — which models, in what order, with what context — is
+ * guarantee. Everything else, which models, in what order, with what context, is
  * Leverage's job and is deliberately not exposed as a knob.
  */
 const DEFAULT_GOAL =
@@ -72,7 +72,7 @@ export function MissionComposer({ readOnly }: { readOnly: boolean }) {
         <PageHead
           eyebrow="Compose"
           title="New mission"
-          lede="State the outcome and the policy. Leverage compiles the plan and hires against it — compiling does not start work."
+          lede="State the outcome and the policy. Leverage compiles the plan and hires against it, compiling does not start work."
         />
 
         {readOnly ? (
@@ -84,7 +84,7 @@ export function MissionComposer({ readOnly }: { readOnly: boolean }) {
             <p className="text-[13.5px] leading-relaxed text-[var(--color-mist)]">
               This deployment is a <strong className="font-normal text-[var(--color-quartz)]">read-only public demo</strong>.
               You can compose a mission here to see how policy is expressed, but compiling is
-              refused — executing one needs a local repository to write into and a local model pool
+              refused, executing one needs a local repository to write into and a local model pool
               to hire from. The recorded runs under Missions are real.
             </p>
           </div>

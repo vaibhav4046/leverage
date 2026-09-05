@@ -88,7 +88,7 @@
       "status": "passed",
       "startedAt": "2026-09-03T04:06:17.791Z",
       "actualCostUsd": 0,
-      "auctionRationale": "100 task fit \u00b7 no prior jobs \u2014 scored on the neutral prior \u00b7 your own host seat, no API key",
+      "auctionRationale": "100 task fit · no prior jobs · scored on the neutral prior · your own host seat, no API key",
       "contextTokens": 556,
       "finishedAt": "2026-09-03T04:07:06.158Z"
     },
@@ -104,7 +104,7 @@
       "status": "replaced",
       "startedAt": "2026-09-03T04:06:17.800Z",
       "actualCostUsd": 0,
-      "auctionRationale": "100 task fit \u00b7 no prior jobs \u2014 scored on the neutral prior \u00b7 your own host seat, no API key",
+      "auctionRationale": "100 task fit · no prior jobs · scored on the neutral prior · your own host seat, no API key",
       "contextTokens": 467,
       "failureType": "INVALID_OUTPUT",
       "finishedAt": "2026-09-03T04:06:53.245Z"
@@ -115,14 +115,14 @@
       "taskId": "vector",
       "modelKey": "pool:auto/best-free",
       "providerId": "pool",
-      "displayName": "Pool \u00b7 best-free",
+      "displayName": "Pool · best-free",
       "role": "Backend Engineer",
       "costClass": "free",
       "status": "passed",
       "startedAt": "2026-09-03T04:06:53.264Z",
       "actualCostUsd": 0,
       "resumedFromCheckpointId": "cp_70f8ec2896de",
-      "auctionRationale": "78 task fit \u00b7 67 verified success over 34 prior jobs \u00b7 free route, no spend \u00b7 1 candidate excluded by policy",
+      "auctionRationale": "78 task fit · 67 verified success over 34 prior jobs · free route, no spend · 1 candidate excluded by policy",
       "contextTokens": 483,
       "finishedAt": "2026-09-03T04:07:11.739Z"
     },
@@ -138,7 +138,7 @@
       "status": "replaced",
       "startedAt": "2026-09-03T04:07:11.743Z",
       "actualCostUsd": 0,
-      "auctionRationale": "100 task fit \u00b7 58 verified success over 2 prior jobs \u00b7 your own host seat, no API key",
+      "auctionRationale": "100 task fit · 58 verified success over 2 prior jobs · your own host seat, no API key",
       "contextTokens": 1050,
       "failureType": "PROVIDER_5XX",
       "finishedAt": "2026-09-03T04:10:11.751Z"
@@ -149,14 +149,14 @@
       "taskId": "physics",
       "modelKey": "pool:auto/best-free",
       "providerId": "pool",
-      "displayName": "Pool \u00b7 best-free",
+      "displayName": "Pool · best-free",
       "role": "Backend Engineer",
       "costClass": "free",
       "status": "passed",
       "startedAt": "2026-09-03T04:11:06.284Z",
       "actualCostUsd": 0,
       "resumedFromCheckpointId": "cp_bc1d9e84b68f",
-      "auctionRationale": "78 task fit \u00b7 68 verified success over 35 prior jobs \u00b7 free route, no spend \u00b7 1 candidate excluded by policy",
+      "auctionRationale": "78 task fit · 68 verified success over 35 prior jobs · free route, no spend · 1 candidate excluded by policy",
       "contextTokens": 1065,
       "finishedAt": "2026-09-03T04:12:07.416Z"
     },
@@ -172,7 +172,7 @@
       "status": "passed",
       "startedAt": "2026-09-03T04:12:12.656Z",
       "actualCostUsd": 0,
-      "auctionRationale": "100 task fit \u00b7 86 verified success over 7 prior jobs \u00b7 local runtime, no spend",
+      "auctionRationale": "100 task fit · 86 verified success over 7 prior jobs · local runtime, no spend",
       "contextTokens": 2741,
       "promptTokens": 3988,
       "completionTokens": 2792,
@@ -230,12 +230,12 @@
           "label": "test/spawner.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "\u2139 duration_ms 78.2645",
+          "detail": "ℹ duration_ms 78.2645",
           "durationMs": 151
         }
       ],
       "unresolved": [
-        "none \u2014 `node --test test/spawner.test.js` should pass"
+        "none · `node --test test/spawner.test.js` should pass"
       ],
       "qualityScore": {
         "total": 100,
@@ -262,7 +262,7 @@
       "worker": {
         "modelKey": "pool:auto/best-free",
         "providerId": "pool",
-        "displayName": "Pool \u00b7 best-free"
+        "displayName": "Pool · best-free"
       },
       "filesChanged": [
         "src/vector.js",
@@ -283,7 +283,7 @@
           "label": "test/vector.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "\u2139 duration_ms 76.4946",
+          "detail": "ℹ duration_ms 76.4946",
           "durationMs": 141
         }
       ],
@@ -315,7 +315,7 @@
       "worker": {
         "modelKey": "pool:auto/best-free",
         "providerId": "pool",
-        "displayName": "Pool \u00b7 best-free"
+        "displayName": "Pool · best-free"
       },
       "filesChanged": [
         "src/physics.js"
@@ -335,12 +335,12 @@
           "label": "test/physics.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "\u2139 duration_ms 79.7921",
+          "detail": "ℹ duration_ms 79.7921",
           "durationMs": 145
         }
       ],
       "unresolved": [
-        "none \u2014 node --test test/physics.test.js should exit 0"
+        "none · node --test test/physics.test.js should exit 0"
       ],
       "qualityScore": {
         "total": 100,
@@ -387,7 +387,7 @@
           "label": "test/game.test.js",
           "weight": 4,
           "status": "pass",
-          "detail": "\u2139 duration_ms 84.534",
+          "detail": "ℹ duration_ms 84.534",
           "durationMs": 160
         }
       ],
@@ -439,7 +439,7 @@
         },
         {
           "modelKey": "pool:auto/best-free",
-          "displayName": "Pool \u00b7 best-free",
+          "displayName": "Pool · best-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -667,7 +667,7 @@
         },
         {
           "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool \u00b7 best-coding",
+          "displayName": "Pool · best-coding",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -686,7 +686,7 @@
         },
         {
           "modelKey": "pool:auto/best-reasoning",
-          "displayName": "Pool \u00b7 best-reasoning",
+          "displayName": "Pool · best-reasoning",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -705,7 +705,7 @@
         },
         {
           "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool \u00b7 best-fast",
+          "displayName": "Pool · best-fast",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -781,7 +781,7 @@
         },
         {
           "modelKey": "pool:auto/coding:free",
-          "displayName": "Pool \u00b7 coding-free",
+          "displayName": "Pool · coding-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -875,7 +875,7 @@
         "sampleCount": 0,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit \u00b7 no prior jobs, scored on the neutral prior \u00b7 your own host seat, no API key"
+      "rationale": "100 task fit · no prior jobs, scored on the neutral prior · your own host seat, no API key"
     },
     {
       "taskId": "vector",
@@ -901,7 +901,7 @@
         },
         {
           "modelKey": "pool:auto/best-free",
-          "displayName": "Pool \u00b7 best-free",
+          "displayName": "Pool · best-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1129,7 +1129,7 @@
         },
         {
           "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool \u00b7 best-coding",
+          "displayName": "Pool · best-coding",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1148,7 +1148,7 @@
         },
         {
           "modelKey": "pool:auto/best-reasoning",
-          "displayName": "Pool \u00b7 best-reasoning",
+          "displayName": "Pool · best-reasoning",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1167,7 +1167,7 @@
         },
         {
           "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool \u00b7 best-fast",
+          "displayName": "Pool · best-fast",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1243,7 +1243,7 @@
         },
         {
           "modelKey": "pool:auto/coding:free",
-          "displayName": "Pool \u00b7 coding-free",
+          "displayName": "Pool · coding-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1337,14 +1337,14 @@
         "sampleCount": 0,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit \u00b7 no prior jobs, scored on the neutral prior \u00b7 your own host seat, no API key"
+      "rationale": "100 task fit · no prior jobs, scored on the neutral prior · your own host seat, no API key"
     },
     {
       "taskId": "vector",
       "candidates": [
         {
           "modelKey": "pool:auto/best-free",
-          "displayName": "Pool \u00b7 best-free",
+          "displayName": "Pool · best-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1572,7 +1572,7 @@
         },
         {
           "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool \u00b7 best-coding",
+          "displayName": "Pool · best-coding",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1591,7 +1591,7 @@
         },
         {
           "modelKey": "pool:auto/best-reasoning",
-          "displayName": "Pool \u00b7 best-reasoning",
+          "displayName": "Pool · best-reasoning",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1610,7 +1610,7 @@
         },
         {
           "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool \u00b7 best-fast",
+          "displayName": "Pool · best-fast",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1686,7 +1686,7 @@
         },
         {
           "modelKey": "pool:auto/coding:free",
-          "displayName": "Pool \u00b7 coding-free",
+          "displayName": "Pool · coding-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -1783,7 +1783,7 @@
       ],
       "winner": {
         "modelKey": "pool:auto/best-free",
-        "displayName": "Pool \u00b7 best-free",
+        "displayName": "Pool · best-free",
         "providerId": "pool",
         "costClass": "free",
         "eligible": true,
@@ -1800,7 +1800,7 @@
         "sampleCount": 34,
         "estimatedCostUsd": 0
       },
-      "rationale": "78 task fit \u00b7 67 verified success over 34 prior jobs \u00b7 free route, no spend \u00b7 1 candidate excluded by policy"
+      "rationale": "78 task fit · 67 verified success over 34 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "taskId": "physics",
@@ -1826,7 +1826,7 @@
         },
         {
           "modelKey": "pool:auto/best-free",
-          "displayName": "Pool \u00b7 best-free",
+          "displayName": "Pool · best-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2054,7 +2054,7 @@
         },
         {
           "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool \u00b7 best-coding",
+          "displayName": "Pool · best-coding",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2073,7 +2073,7 @@
         },
         {
           "modelKey": "pool:auto/best-reasoning",
-          "displayName": "Pool \u00b7 best-reasoning",
+          "displayName": "Pool · best-reasoning",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2092,7 +2092,7 @@
         },
         {
           "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool \u00b7 best-fast",
+          "displayName": "Pool · best-fast",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2168,7 +2168,7 @@
         },
         {
           "modelKey": "pool:auto/coding:free",
-          "displayName": "Pool \u00b7 coding-free",
+          "displayName": "Pool · coding-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2262,14 +2262,14 @@
         "sampleCount": 2,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit \u00b7 58 verified success over 2 prior jobs \u00b7 your own host seat, no API key"
+      "rationale": "100 task fit · 58 verified success over 2 prior jobs · your own host seat, no API key"
     },
     {
       "taskId": "physics",
       "candidates": [
         {
           "modelKey": "pool:auto/best-free",
-          "displayName": "Pool \u00b7 best-free",
+          "displayName": "Pool · best-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2497,7 +2497,7 @@
         },
         {
           "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool \u00b7 best-coding",
+          "displayName": "Pool · best-coding",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2516,7 +2516,7 @@
         },
         {
           "modelKey": "pool:auto/best-reasoning",
-          "displayName": "Pool \u00b7 best-reasoning",
+          "displayName": "Pool · best-reasoning",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2535,7 +2535,7 @@
         },
         {
           "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool \u00b7 best-fast",
+          "displayName": "Pool · best-fast",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2611,7 +2611,7 @@
         },
         {
           "modelKey": "pool:auto/coding:free",
-          "displayName": "Pool \u00b7 coding-free",
+          "displayName": "Pool · coding-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2708,7 +2708,7 @@
       ],
       "winner": {
         "modelKey": "pool:auto/best-free",
-        "displayName": "Pool \u00b7 best-free",
+        "displayName": "Pool · best-free",
         "providerId": "pool",
         "costClass": "free",
         "eligible": true,
@@ -2725,7 +2725,7 @@
         "sampleCount": 35,
         "estimatedCostUsd": 0
       },
-      "rationale": "78 task fit \u00b7 68 verified success over 35 prior jobs \u00b7 free route, no spend \u00b7 1 candidate excluded by policy"
+      "rationale": "78 task fit · 68 verified success over 35 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "taskId": "game",
@@ -2770,7 +2770,7 @@
         },
         {
           "modelKey": "pool:auto/best-free",
-          "displayName": "Pool \u00b7 best-free",
+          "displayName": "Pool · best-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2979,7 +2979,7 @@
         },
         {
           "modelKey": "pool:auto/best-coding",
-          "displayName": "Pool \u00b7 best-coding",
+          "displayName": "Pool · best-coding",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -2998,7 +2998,7 @@
         },
         {
           "modelKey": "pool:auto/best-reasoning",
-          "displayName": "Pool \u00b7 best-reasoning",
+          "displayName": "Pool · best-reasoning",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -3017,7 +3017,7 @@
         },
         {
           "modelKey": "pool:auto/best-fast",
-          "displayName": "Pool \u00b7 best-fast",
+          "displayName": "Pool · best-fast",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -3074,7 +3074,7 @@
         },
         {
           "modelKey": "pool:auto/coding:free",
-          "displayName": "Pool \u00b7 coding-free",
+          "displayName": "Pool · coding-free",
           "providerId": "pool",
           "costClass": "free",
           "eligible": true,
@@ -3187,7 +3187,7 @@
         "sampleCount": 7,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit \u00b7 86 verified success over 7 prior jobs \u00b7 local runtime, no spend"
+      "rationale": "100 task fit · 86 verified success over 7 prior jobs · local runtime, no spend"
     }
   ],
   "usage": {
@@ -3407,7 +3407,7 @@
       "at": "2026-09-03T04:06:17.790Z",
       "elapsedMs": 1361,
       "taskId": "spawner",
-      "message": "Pool \u00b7 best-free: utility 0.673 (34 prior jobs)",
+      "message": "Pool · best-free: utility 0.673 (34 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
@@ -3482,7 +3482,7 @@
       "at": "2026-09-03T04:06:17.790Z",
       "elapsedMs": 1361,
       "taskId": "spawner",
-      "message": "Winner: OpenCode (your subscription) \u00b7 100 task fit \u00b7 no prior jobs \u00b7 scored on the neutral prior \u00b7 your own host seat, no API key"
+      "message": "Winner: OpenCode (your subscription) · 100 task fit · no prior jobs · scored on the neutral prior · your own host seat, no API key"
     },
     {
       "seq": 18,
@@ -3557,7 +3557,7 @@
       "at": "2026-09-03T04:06:17.800Z",
       "elapsedMs": 1371,
       "taskId": "vector",
-      "message": "Pool \u00b7 best-free: utility 0.673 (34 prior jobs)",
+      "message": "Pool · best-free: utility 0.673 (34 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
@@ -3632,7 +3632,7 @@
       "at": "2026-09-03T04:06:17.800Z",
       "elapsedMs": 1371,
       "taskId": "vector",
-      "message": "Winner: OpenCode (your subscription) \u00b7 100 task fit \u00b7 no prior jobs \u00b7 scored on the neutral prior \u00b7 your own host seat, no API key"
+      "message": "Winner: OpenCode (your subscription) · 100 task fit · no prior jobs · scored on the neutral prior · your own host seat, no API key"
     },
     {
       "seq": 28,
@@ -3675,7 +3675,7 @@
       "elapsedMs": 36816,
       "taskId": "vector",
       "workerRunId": "wr_bd70178d",
-      "message": "OpenCode (your subscription) failed: INVALID_OUTPUT \u00b7 no FILE block and no parseable JSON object in worker answer",
+      "message": "OpenCode (your subscription) failed: INVALID_OUTPUT · no FILE block and no parseable JSON object in worker answer",
       "data": {
         "failureType": "INVALID_OUTPUT"
       }
@@ -3750,7 +3750,7 @@
       "at": "2026-09-03T04:06:53.264Z",
       "elapsedMs": 36835,
       "taskId": "vector",
-      "message": "Pool \u00b7 best-free: utility 0.673 (34 prior jobs)",
+      "message": "Pool · best-free: utility 0.673 (34 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
@@ -3840,7 +3840,7 @@
       "at": "2026-09-03T04:06:53.264Z",
       "elapsedMs": 36835,
       "taskId": "vector",
-      "message": "Winner: Pool \u00b7 best-free \u00b7 78 task fit \u00b7 67 verified success over 34 prior jobs \u00b7 free route, no spend \u00b7 1 candidate excluded by policy"
+      "message": "Winner: Pool · best-free · 78 task fit · 67 verified success over 34 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "seq": 42,
@@ -3851,7 +3851,7 @@
       "elapsedMs": 36835,
       "taskId": "vector",
       "workerRunId": "wr_4e96515c",
-      "message": "Hired Pool \u00b7 best-free as Backend Engineer (resuming from cp_70f8ec2896de)",
+      "message": "Hired Pool · best-free as Backend Engineer (resuming from cp_70f8ec2896de)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "costClass": "free"
@@ -3866,7 +3866,7 @@
       "elapsedMs": 36835,
       "taskId": "vector",
       "workerRunId": "wr_4e96515c",
-      "message": "Pool \u00b7 best-free started work",
+      "message": "Pool · best-free started work",
       "data": {
         "contextTokens": "[redacted]",
         "availableRepoTokens": "[redacted]",
@@ -3910,7 +3910,7 @@
       "elapsedMs": 49728,
       "taskId": "spawner",
       "workerRunId": "wr_bc5cea63",
-      "message": "src/spawner.js exists: PASS \u00b7 src/spawner.js exists",
+      "message": "src/spawner.js exists: PASS · src/spawner.js exists",
       "data": {
         "checkId": "exists-0",
         "status": "pass"
@@ -3925,7 +3925,7 @@
       "elapsedMs": 49729,
       "taskId": "spawner",
       "workerRunId": "wr_bc5cea63",
-      "message": "test/spawner.test.js: PASS \u00b7 \u2139 duration_ms 78.2645",
+      "message": "test/spawner.test.js: PASS · ℹ duration_ms 78.2645",
       "data": {
         "checkId": "suite",
         "status": "pass"
@@ -3940,7 +3940,7 @@
       "elapsedMs": 49729,
       "taskId": "spawner",
       "workerRunId": "wr_bc5cea63",
-      "message": "\"Implement deterministic wave spawning\" verified \u00b7 quality 100",
+      "message": "\"Implement deterministic wave spawning\" verified · quality 100",
       "data": {
         "proofId": "pf_586c1aa1",
         "quality": 100
@@ -3966,7 +3966,7 @@
       "elapsedMs": 55168,
       "taskId": "vector",
       "workerRunId": "wr_4e96515c",
-      "message": "Pool \u00b7 best-free wrote 2 file(s)",
+      "message": "Pool · best-free wrote 2 file(s)",
       "data": {
         "files": [
           "src/vector.js",
@@ -3994,7 +3994,7 @@
       "elapsedMs": 55310,
       "taskId": "vector",
       "workerRunId": "wr_4e96515c",
-      "message": "src/vector.js exists: PASS \u00b7 src/vector.js exists",
+      "message": "src/vector.js exists: PASS · src/vector.js exists",
       "data": {
         "checkId": "exists-0",
         "status": "pass"
@@ -4009,7 +4009,7 @@
       "elapsedMs": 55310,
       "taskId": "vector",
       "workerRunId": "wr_4e96515c",
-      "message": "test/vector.test.js: PASS \u00b7 \u2139 duration_ms 76.4946",
+      "message": "test/vector.test.js: PASS · ℹ duration_ms 76.4946",
       "data": {
         "checkId": "suite",
         "status": "pass"
@@ -4024,7 +4024,7 @@
       "elapsedMs": 55310,
       "taskId": "vector",
       "workerRunId": "wr_4e96515c",
-      "message": "\"Implement 2D vector maths\" verified \u00b7 quality 100",
+      "message": "\"Implement 2D vector maths\" verified · quality 100",
       "data": {
         "proofId": "pf_a9ce9dfc",
         "quality": 100
@@ -4092,7 +4092,7 @@
       "at": "2026-09-03T04:07:11.743Z",
       "elapsedMs": 55314,
       "taskId": "physics",
-      "message": "Pool \u00b7 best-free: utility 0.675 (35 prior jobs)",
+      "message": "Pool · best-free: utility 0.675 (35 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
@@ -4167,7 +4167,7 @@
       "at": "2026-09-03T04:07:11.743Z",
       "elapsedMs": 55314,
       "taskId": "physics",
-      "message": "Winner: OpenCode (your subscription) \u00b7 100 task fit \u00b7 58 verified success over 2 prior jobs \u00b7 your own host seat, no API key"
+      "message": "Winner: OpenCode (your subscription) · 100 task fit · 58 verified success over 2 prior jobs · your own host seat, no API key"
     },
     {
       "seq": 65,
@@ -4210,7 +4210,7 @@
       "elapsedMs": 235322,
       "taskId": "physics",
       "workerRunId": "wr_52365523",
-      "message": "OpenCode (your subscription) failed: PROVIDER_5XX \u00b7 provider returned HTTP 502: \u001b[0m",
+      "message": "OpenCode (your subscription) failed: PROVIDER_5XX · provider returned HTTP 502: \u001b[0m",
       "data": {
         "failureType": "PROVIDER_5XX"
       }
@@ -4285,7 +4285,7 @@
       "at": "2026-09-03T04:11:06.283Z",
       "elapsedMs": 289854,
       "taskId": "physics",
-      "message": "Pool \u00b7 best-free: utility 0.675 (35 prior jobs)",
+      "message": "Pool · best-free: utility 0.675 (35 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
@@ -4375,7 +4375,7 @@
       "at": "2026-09-03T04:11:06.284Z",
       "elapsedMs": 289855,
       "taskId": "physics",
-      "message": "Winner: Pool \u00b7 best-free \u00b7 78 task fit \u00b7 68 verified success over 35 prior jobs \u00b7 free route, no spend \u00b7 1 candidate excluded by policy"
+      "message": "Winner: Pool · best-free · 78 task fit · 68 verified success over 35 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "seq": 79,
@@ -4386,7 +4386,7 @@
       "elapsedMs": 289855,
       "taskId": "physics",
       "workerRunId": "wr_f15794fa",
-      "message": "Hired Pool \u00b7 best-free as Backend Engineer (resuming from cp_bc1d9e84b68f)",
+      "message": "Hired Pool · best-free as Backend Engineer (resuming from cp_bc1d9e84b68f)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "costClass": "free"
@@ -4401,7 +4401,7 @@
       "elapsedMs": 289855,
       "taskId": "physics",
       "workerRunId": "wr_f15794fa",
-      "message": "Pool \u00b7 best-free started work",
+      "message": "Pool · best-free started work",
       "data": {
         "contextTokens": "[redacted]",
         "availableRepoTokens": "[redacted]",
@@ -4418,7 +4418,7 @@
       "elapsedMs": 350840,
       "taskId": "physics",
       "workerRunId": "wr_f15794fa",
-      "message": "Pool \u00b7 best-free wrote 1 file(s)",
+      "message": "Pool · best-free wrote 1 file(s)",
       "data": {
         "files": [
           "src/physics.js"
@@ -4445,7 +4445,7 @@
       "elapsedMs": 350986,
       "taskId": "physics",
       "workerRunId": "wr_f15794fa",
-      "message": "src/physics.js exists: PASS \u00b7 src/physics.js exists",
+      "message": "src/physics.js exists: PASS · src/physics.js exists",
       "data": {
         "checkId": "exists-0",
         "status": "pass"
@@ -4460,7 +4460,7 @@
       "elapsedMs": 350987,
       "taskId": "physics",
       "workerRunId": "wr_f15794fa",
-      "message": "test/physics.test.js: PASS \u00b7 \u2139 duration_ms 79.7921",
+      "message": "test/physics.test.js: PASS · ℹ duration_ms 79.7921",
       "data": {
         "checkId": "suite",
         "status": "pass"
@@ -4475,7 +4475,7 @@
       "elapsedMs": 350987,
       "taskId": "physics",
       "workerRunId": "wr_f15794fa",
-      "message": "\"Implement gravity and collision\" verified \u00b7 quality 100",
+      "message": "\"Implement gravity and collision\" verified · quality 100",
       "data": {
         "proofId": "pf_3c1d6642",
         "quality": 100
@@ -4558,7 +4558,7 @@
       "at": "2026-09-03T04:12:12.656Z",
       "elapsedMs": 356227,
       "taskId": "game",
-      "message": "Pool \u00b7 best-free: utility 0.676 (38 prior jobs)",
+      "message": "Pool · best-free: utility 0.676 (38 prior jobs)",
       "data": {
         "modelKey": "pool:auto/best-free",
         "eligible": true,
@@ -4618,7 +4618,7 @@
       "at": "2026-09-03T04:12:12.656Z",
       "elapsedMs": 356227,
       "taskId": "game",
-      "message": "Winner: kodro-tutor \u00b7 100 task fit \u00b7 86 verified success over 7 prior jobs \u00b7 local runtime, no spend"
+      "message": "Winner: kodro-tutor · 100 task fit · 86 verified success over 7 prior jobs · local runtime, no spend"
     },
     {
       "seq": 96,
@@ -4732,7 +4732,7 @@
       "elapsedMs": 422974,
       "taskId": "game",
       "workerRunId": "wr_f15c995d",
-      "message": "src/game.js exists: PASS \u00b7 src/game.js exists",
+      "message": "src/game.js exists: PASS · src/game.js exists",
       "data": {
         "checkId": "exists-0",
         "status": "pass"
@@ -4747,7 +4747,7 @@
       "elapsedMs": 422975,
       "taskId": "game",
       "workerRunId": "wr_f15c995d",
-      "message": "test/game.test.js: PASS \u00b7 \u2139 duration_ms 84.534",
+      "message": "test/game.test.js: PASS · ℹ duration_ms 84.534",
       "data": {
         "checkId": "suite",
         "status": "pass"
@@ -4762,7 +4762,7 @@
       "elapsedMs": 422975,
       "taskId": "game",
       "workerRunId": "wr_f15c995d",
-      "message": "\"Implement the game state machine\" verified \u00b7 quality 100",
+      "message": "\"Implement the game state machine\" verified · quality 100",
       "data": {
         "proofId": "pf_99a30e47",
         "quality": 100

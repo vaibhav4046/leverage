@@ -3,7 +3,7 @@ import { ImageResponse } from 'next/og';
 export const runtime = 'nodejs';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
-export const alt = 'Leverage — one frontier brain, an elastic workforce';
+export const alt = 'Leverage · one frontier brain, an elastic workforce';
 
 /**
  * Open Graph card, generated from the design system rather than screenshotted.
