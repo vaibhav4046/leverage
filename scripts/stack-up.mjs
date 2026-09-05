@@ -14,8 +14,9 @@
  *   npm run stack:up
  *
  * It never prints a credential and never writes one. The RocketRide cloud path is
- * reported, not started: it needs a publicly reachable pool, which is a deployment
- * concern rather than a local one (see BLOCKERS_REQUIRING_HUMAN.md).
+ * reported, not started: it needs a publicly reachable pool, and the deployment
+ * hosts one at /api/v1/pool. Point OMNIROUTE_BASE_URL at it and OMNIROUTE_API_KEY
+ * at its access token (see .env.example).
  */
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
@@ -189,7 +190,7 @@ async function main() {
         ? `rocketride  ${ok('ready')}  key present, public pool answers`
         : poolState === 'local'
           ? `rocketride  ${warn('local')}  key present, pool answers but only on localhost; cloud workers cannot reach it`
-          : `rocketride  ${warn('pool down')}  key present, but OMNIROUTE_BASE_URL does not answer; cloud workers would fail. Local run: set OMNIROUTE_BASE_URL=${PROXY} (see BLOCKERS_REQUIRING_HUMAN.md)`,
+          : `rocketride  ${warn('pool down')}  key present, but OMNIROUTE_BASE_URL does not answer; cloud workers would fail. Hosted pool: OMNIROUTE_BASE_URL=https://<deployment>/api/v1/pool plus its OMNIROUTE_API_KEY. Local-only run: OMNIROUTE_BASE_URL=${PROXY}`,
   );
 
   // ------------------------------------------------------------------ verdict

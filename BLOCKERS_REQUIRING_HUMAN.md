@@ -32,59 +32,40 @@ router on `127.0.0.1` is not: the pipeline still runs and still bills, and the
 worker inside it returns a provider error. `npm run verify:rocketride` now fails
 loudly on exactly that case rather than reporting success.
 
-**The tunnel is no longer part of this.** The deployment now hosts the endpoint
-itself, at a permanent address:
+**The pool is hosted, configured and gated. No tunnel.** The deployment serves the
+endpoint itself, at a permanent address:
 
 ```
 https://useleverage.vercel.app/api/v1/pool/v1/chat/completions
 ```
 
-`src/app/api/v1/pool/[...path]/route.ts` forwards to whatever OpenAI-compatible
-provider the deployment is configured with. With nothing configured it answers 503
-and says why, rather than serving a canned completion.
+`src/app/api/v1/pool/[...path]/route.ts` forwards to two upstreams, OpenRouter and
+NVIDIA, configured on the deployment as `POOL_UPSTREAMS` with `POOL_KEY_OPENROUTER`
+and `POOL_KEY_NVIDIA`. It refuses every request without `POOL_ACCESS_TOKEN`, and
+every model outside `POOL_MODELS`: a 13-id allowlist in which every id answered a
+real completion. `demo/evidence/pool-sweep.json` is the sweep of all 19 free
+OpenRouter ids and all 81 NVIDIA ids, with what answered, how fast, what was
+excluded and why. A 429 or 5xx cools that one model for a minute; failover is
+Leverage's auction, not the proxy.
 
-**What you need to do — and why I could not do it for you.**
+Verified 2026-09-05 with `npm run verify:rocketride` against the permanent URL:
+the pipeline ran on staging.rocketride.ai, the worker answered `READY` through
+`nvidia/nvidia/nemotron-3-super-120b-a12b`, 14.40 credits consumed, 67 s end to end.
 
-You told me to set these and I tried. There is nothing on this machine to set them
-*to*. I checked the router's credential store directly:
+**What only you can do.**
 
-```
-provider        auth_type   token stored
-agentrouter     apikey      no
-github-models   apikey      no
-nvidia          apikey      no
-ollama-cloud    apikey      no
-openrouter      apikey      no
-tokenrouter     apikey      no
-agy             oauth       yes, expired 2026-09-04T08:26Z
-grok-cli        oauth       yes, expired 2026-09-04T09:56Z
-```
+1. If you rotate the OpenRouter or NVIDIA key, run
+   `vercel env add POOL_KEY_OPENROUTER production` (or `POOL_KEY_NVIDIA`) again and
+   redeploy. Same for `POOL_ACCESS_TOKEN`, which must equal `OMNIROUTE_API_KEY` in
+   your local `.env.local`.
+2. The allowlist is a snapshot. OpenRouter's free tier rate-limits per model and
+   three ids were 429 at sweep time. `node scripts/pool-sweep.mjs` regenerates the
+   evidence and prints the `POOL_MODELS` line to set.
 
-Every plain-API-key provider has no key stored, and `registered_keys` is empty.
-The only two credentials that exist are OAuth sessions tied to your Google
-accounts, and both access tokens expired a day ago. The router keeps working
-locally because it refreshes them on demand with the paired refresh tokens; a
-static copy pasted into Vercel would be an already-dead token, so the endpoint
-would answer 502 and the "live cloud path" would be a worse lie than the honest
-503 it returns today.
-
-So this is not me declining. There is no transferable credential here.
-
-**To turn the live path on, you need one API key from any OpenAI-compatible
-provider** — OpenRouter's free tier is enough:
-
-```
-vercel env add POOL_UPSTREAM_URL production     # https://openrouter.ai/api
-vercel env add POOL_UPSTREAM_KEY production     # sk-or-v1-...
-```
-
-Then redeploy. Nothing else changes: the route, the pipeline and
-`OMNIROUTE_BASE_URL=https://useleverage.vercel.app/api/v1/pool` are already in
-place and verified end to end against a live upstream.
-
-**None of this affects the recorded proof.** Mission `LVR-bda3ba68` is browsable
-now, with no credentials, and it is the artifact that shows RocketRide executing
-load-bearing workers.
+**The recorded proof stands on its own.** Mission `LVR-bda3ba68` is browsable now,
+with no credentials, and shows RocketRide executing load-bearing workers. It was
+produced while the pool ran through a tunnel; the hosted pool is what replaced
+that tunnel and what `verify:rocketride` exercises today.
 
 ## 2. Rotate the RocketRide key
 

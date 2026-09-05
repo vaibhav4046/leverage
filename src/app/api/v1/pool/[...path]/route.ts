@@ -53,7 +53,7 @@ interface Upstream {
   key: string;
 }
 
-const ALLOWED_PATHS = new Set(['v1/chat/completions', 'v1/models', 'v1/completions']);
+const ALLOWED_PATHS = new Set(['chat/completions', 'models', 'completions']);
 const COOLDOWN_MS = 60_000;
 const UPSTREAM_TIMEOUT_MS = 120_000;
 const LIST_TIMEOUT_MS = 20_000;
@@ -223,7 +223,7 @@ async function forwardCompletion(req: NextRequest, ups: Upstream[], suffix: stri
 
   try {
     const res = await fetchWithTimeout(
-      `${target.base}/${suffix}`,
+      `${target.base}/v1/${suffix}`,
       {
         method: 'POST',
         headers: { 'content-type': 'application/json', authorization: `Bearer ${target.key}` },
@@ -268,11 +268,14 @@ async function handle(req: NextRequest, path: string[], method: 'GET' | 'POST') 
   const ups = upstreams();
   if (ups.length === 0) return unconfigured();
 
-  const suffix = path.join('/');
+  // OpenAI-style clients treat base_url as already ending in `/v1` and append
+  // `chat/completions`; RocketRide's component is one of them. Others append
+  // `v1/chat/completions`. Both spellings land here, so both are accepted.
+  const suffix = path.join('/').replace(/^v1\//, '');
   if (!ALLOWED_PATHS.has(suffix)) {
     return NextResponse.json({ error: `unsupported path: ${suffix}` }, { status: 404 });
   }
-  if (suffix === 'v1/models') return listModels(ups);
+  if (suffix === 'models') return listModels(ups);
   if (method !== 'POST') return NextResponse.json({ error: 'POST required' }, { status: 405 });
   return forwardCompletion(req, ups, suffix);
 }

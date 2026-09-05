@@ -131,22 +131,34 @@ their output passed the same verification as everything else. Two local workers
 failed their tests and were replaced. That is the whole product claim, executed
 end to end, in one inspectable run.
 
-If you do have a RocketRide staging key, you can reproduce a single inference
-yourself:
+If you have a RocketRide staging key and any OpenAI-compatible endpoint reachable
+from the public internet (`OMNIROUTE_BASE_URL` and `OMNIROUTE_API_KEY` in
+`.env.local`; the deployment's own `/api/v1/pool` is one), you can reproduce a
+single inference yourself:
 
 ```bash
 npm run verify:rocketride
 ```
 
+This is the run against the permanent hosted pool on 5 Sep 2026:
+
 ```
 endpoint  https://staging.rocketride.ai
+pool      https://useleverage.vercel.app
 auth      ok (org df58d291...)
-credits   4690.2 / 5000
+credits   4628.4 / 5000
 answer    "READY"
-latency   25452ms
-engine    2.4 tokens
-consumed  2.9 credits
+latency   67022ms
+engine    14 tokens
+consumed  14.40 credits
+
+RocketRide execution path verified.
 ```
+
+The same script fails loudly, and says why, when the pipeline runs but the worker
+cannot reach the pool. It did exactly that one run earlier, when the pool served
+`v1/chat/completions` but RocketRide's component, like every OpenAI client, asked
+for `chat/completions` under the base URL. `docs/ROCKETRIDE_FINDINGS.md` has it.
 
 Every cloud worker's inference is a real RocketRide pipeline execution —
 `validate → use → chat → getTaskStatus → terminate` — using

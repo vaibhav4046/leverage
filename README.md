@@ -117,6 +117,7 @@ You need at least one source of intelligence. In order of "least setup":
 | **Your MCP host seat** | run Leverage as an MCP server inside Claude Code / Codex / Cursor | none |
 | **Ollama** | `ollama pull qwen2.5-coder:3b` | none |
 | **Any OpenAI-compatible endpoint** | set `OMNIROUTE_BASE_URL` | yours |
+| **The hosted pool** | your deployment's `/api/v1/pool`, with `POOL_UPSTREAMS`, `POOL_KEY_*`, `POOL_MODELS` and `POOL_ACCESS_TOKEN` set on it (see `.env.example`) | free-tier provider keys work; `node scripts/pool-sweep.mjs` tells you which models actually answer |
 
 plus a RocketRide staging key for the execution fabric.
 

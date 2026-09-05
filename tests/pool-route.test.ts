@@ -74,4 +74,12 @@ describe('hosted pool: refusals happen before any forwarding', () => {
     expect((await get(['v1', 'admin'], { authorization: 'Bearer secret-token' })).status).toBe(404);
     expect((await get(['v1', 'chat', 'completions'], { authorization: 'Bearer secret-token' })).status).toBe(405);
   });
+
+  it('accepts the OpenAI-client spelling without the v1 prefix, as RocketRide sends it', async () => {
+    set({ ...CONFIGURED, POOL_MODELS: 'openrouter/free-a:free' });
+    // 403 on the allowlist, not 404 on the path: the path was recognised.
+    const res = await post(['chat', 'completions'], { model: 'openrouter/paid', messages: [] }, { authorization: 'Bearer secret-token' });
+    expect(res.status).toBe(403);
+    expect((await get(['chat', 'completions'], { authorization: 'Bearer secret-token' })).status).toBe(405);
+  });
 });

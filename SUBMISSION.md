@@ -88,8 +88,12 @@ The public deployment is deliberately read-only. It replays real recorded missio
 every mutation answers 403. Executing a mission needs a local repository to write into
 and a local model pool to hire from.
 
-The hosted pool endpoint at `/api/v1/pool` answers 503 until a provider key is
-configured. It refuses to fabricate a completion, because a fabricated result here
+The hosted pool endpoint at `/api/v1/pool` forwards to OpenRouter and NVIDIA behind
+an access token and a 13-model allowlist in which every id answered a real completion
+(`demo/evidence/pool-sweep.json` is the sweep). `npm run verify:rocketride` ran
+against that permanent URL on 5 Sep 2026: a RocketRide pipeline on
+staging.rocketride.ai, `READY`, 14.40 credits. The endpoint refuses anything outside
+the allowlist and never fabricates a completion, because a fabricated result here
 would end up inside a ProofPack.
 
 Privy is wired at the application boundary; production authentication is claimed only

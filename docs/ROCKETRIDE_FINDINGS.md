@@ -85,6 +85,18 @@ Measured, not estimated:
 `billing.getCreditBalance(orgId)` returns real balances, so Leverage reports
 consumption rather than guessing it.
 
+## base_url means what it means to an OpenAI client
+
+`llm_openai_api` appends `chat/completions` to `base_url`, the way the OpenAI SDK
+does when `base_url` already ends in `/v1`. It does not append `v1/chat/completions`.
+A router mounted at the root of a host hides this, because most routers answer both
+spellings. A pool mounted at a sub-path does not: with the pool at
+`https://host/api/v1/pool` and a route that only knew `v1/chat/completions`, the
+pipeline ran, billed 1.50 credits, and the worker reported
+`**LLM error** — ValueError: An error occurred with the API.` with nothing more
+specific. The pool now accepts both spellings. If a worker returns that error and
+the pool is reachable, check the path before anything else.
+
 ## terminate() is not optional
 
 `disconnect()` drops the socket; the pipeline keeps running server-side. Every
