@@ -1,0 +1,30 @@
+{
+  "_comment": "Lower-third captions per raw clip; start/end are seconds from clip start and follow the moments in raw/capture.json. Edit freely; walkthrough-cinema.mjs reads this file.",
+  "landing": [
+    { "start": 0.6, "end": 6.8, "kicker": "useleverage.vercel.app", "headline": "One frontier brain. An elastic workforce." },
+    { "start": 7.8, "end": 15.2, "kicker": "The film", "headline": "68 seconds. Every number has its evidence." },
+    { "start": 16.2, "end": 20.4, "kicker": "Execution fabric", "headline": "RocketRide runs the work. Leverage decides which work." }
+  ],
+  "mission": [
+    { "start": 0.6, "end": 5.8, "kicker": "Mission LVR-719a8c22", "headline": "Four tasks verified. Paid spend: $0.00." },
+    { "start": 6.7, "end": 10.8, "kicker": "Workforce", "headline": "Every hire carries its auction rationale." },
+    { "start": 11.8, "end": 18.9, "kicker": "Auction", "headline": "Eight candidates scored. Best eligible worker wins." },
+    { "start": 19.9, "end": 31.7, "kicker": "Live execution", "headline": "76 events, from mission.created to the hired worker." },
+    { "start": 32.7, "end": 34.0, "kicker": "Live execution", "headline": "auction.completed: the winner, with the reasons." }
+  ],
+  "handoff": [
+    { "start": 0.6, "end": 7.0, "kicker": "Mission LVR-bda3ba68", "headline": "Two tasks finished on the second attempt. Still $0.00." },
+    { "start": 8.0, "end": 13.2, "kicker": "Recovery", "headline": "worker.failed, then checkpoint.created." },
+    { "start": 14.1, "end": 18.1, "kicker": "Recovery", "headline": "handoff.started: the replacement inherits the checkpoint." },
+    { "start": 19.0, "end": 20.9, "kicker": "Recovery", "headline": "Resumed from the checkpoint. Nothing restarts." }
+  ],
+  "providers": [
+    { "start": 0.6, "end": 4.0, "kicker": "Providers", "headline": "A healthy free pool of 13 models." },
+    { "start": 4.9, "end": 8.2, "kicker": "Execution fabric", "headline": "RocketRide credits are measured, not estimated." },
+    { "start": 9.2, "end": 15.0, "kicker": "Models", "headline": "13 reachable models with observed records." }
+  ],
+  "benchmarks": [
+    { "start": 0.6, "end": 7.3, "kicker": "Benchmarks", "headline": "Measured, or not claimed." },
+    { "start": 8.2, "end": 9.4, "kicker": "Benchmarks", "headline": "RocketRide executed the cloud workers." }
+  ]
+}

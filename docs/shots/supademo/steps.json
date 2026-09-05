@@ -1,0 +1,13 @@
+[
+  { "file": "01-landing-hero.png", "text": "Leverage. One frontier brain, an elastic workforce. Your best model stays the strategist; Leverage hires local, free and connected models underneath it, verifies every result, and replaces workers that fail." },
+  { "file": "02-landing-rocketride.png", "text": "RocketRide runs the work. Every cloud worker is a real pipeline, and credit consumption is read from billing, so cost per run is measured. Press \"Run one yourself, now\" to see it happen." },
+  { "file": "04-live-idle.png", "text": "The one page that is not a recording. Press Run and a real mission starts inside the deployment: a fresh copy of the repository, a fixed goal, a zero-dollar budget, workers on RocketRide through the hosted pool." },
+  { "file": "05-mission-header.png", "text": "A finished mission: status, quality, paid spend $0.00, tasks 4/4, elapsed time. Every figure comes from the append-only event log." },
+  { "file": "06-mission-auction.png", "text": "The auction. Thirteen hosted candidates scored on task fit, measured reputation, context headroom and availability. The winner is shown with its reasoning. A paid model under a $0 budget is removed, not ranked lower." },
+  { "file": "07-mission-events.png", "text": "Live execution: the whole event stream, from mission.created to \"Mission verified: 4/4 tasks passed\". The ProofPack below lists every check with its result." },
+  { "file": "08-handoff.png", "text": "The cognitive handoff. A worker fails, Leverage writes a checkpoint of what it understood, and a replacement resumes from it. The transcript is not carried. The understanding is. The work does not restart." },
+  { "file": "09-providers.png", "text": "Supply, measured. The hosted pool is healthy with thirteen models; RocketRide is healthy with the live credit balance. Host and agent-CLI seats show as unavailable on a server, honestly." },
+  { "file": "10-models.png", "text": "Every model Leverage can reach, each one proven with a real completion before it was allowed on the list. Success rates are shrunk toward a neutral prior and carry a sample count." },
+  { "file": "11-benchmarks.png", "text": "Measured, or not claimed. The recorded missions, what RocketRide executed, and a 100-task control-plane test with zero duplicate claims and zero budget overshoots." },
+  { "file": "03-landing-film.png", "text": "The film, narrated, on the landing page. Then open useleverage.vercel.app/app/live and press the button yourself." }
+]

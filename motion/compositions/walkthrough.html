@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Leverage · the walkthrough</title>
+    <script src="vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Figtree"; font-style: normal; font-weight: 500; font-display: block; src: url("assets/fonts/figtree-500.woff2") format("woff2"); }
+      @font-face { font-family: "Figtree"; font-style: normal; font-weight: 600; font-display: block; src: url("assets/fonts/figtree-600.woff2") format("woff2"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0e111b; }
+      body { font-family: "Figtree", "Inter", system-ui, sans-serif; color: #ffffff; }
+      :root {
+        --abyss: #0e111b; --quartz: #ffffff; --ash: #abaebb; --mist: #c7c9d1;
+        --lilac: #85a6e9; --aurora: #625fff; --pass: #4ade80; --fail: #f87171; --hairline: #24375a;
+      }
+      .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+
+      #root { position: relative; width: 1920px; height: 1080px; background: var(--abyss); overflow: hidden; }
+      #aurora {
+        position: absolute; left: 960px; top: 620px; width: 1700px; height: 1000px;
+        background: radial-gradient(closest-side, rgba(98,95,255,0.30), rgba(98,95,255,0.06) 55%, transparent 75%);
+        transform: translate(-50%, -50%); filter: blur(12px);
+      }
+      #grid {
+        position: absolute; inset: 0; opacity: 0.3;
+        background-image: linear-gradient(rgba(36,55,90,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(36,55,90,0.35) 1px, transparent 1px);
+        background-size: 96px 96px; background-position: 48px 60px;
+      }
+      #eyebrow { position: absolute; left: 96px; top: 52px; font-size: 20px; letter-spacing: 0.16em; color: var(--lilac); text-transform: uppercase; }
+      #wordmark { position: absolute; right: 96px; top: 52px; font-size: 20px; letter-spacing: 0.12em; color: var(--ash); }
+      #progress { position: absolute; left: 0; bottom: 0; height: 6px; width: 1920px; background: var(--aurora); transform-origin: left center; }
+
+      /* The capture floats as a window. The wrapper carries the look; the video carries the time. */
+      .win {
+        position: absolute; left: 160px; top: 112px; width: 1600px; height: 900px;
+        border-radius: 18px; overflow: hidden; background: #0b0e17;
+        box-shadow: 0 50px 140px rgba(0,0,0,0.65), 0 0 0 1px rgba(98,95,255,0.35);
+      }
+      .win video { display: block; width: 1600px; height: 900px; object-fit: cover; }
+
+      /* Lower third, over the window's bottom edge. */
+      .lt {
+        position: absolute; left: 160px; bottom: 96px; max-width: 1200px;
+        padding: 22px 30px 24px; border-radius: 14px;
+        background: rgba(14,17,27,0.86); border: 1px solid rgba(36,55,90,0.9);
+        backdrop-filter: blur(6px);
+      }
+      .lt .k { font-size: 18px; letter-spacing: 0.14em; color: var(--lilac); text-transform: uppercase; }
+      .lt .h { margin-top: 8px; font-size: 40px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.1; color: var(--quartz); }
+      .lt .h em { font-style: normal; color: var(--pass); }
+
+      /* Close card */
+      #close { position: absolute; inset: 0; }
+      .stat { position: absolute; top: 300px; width: 520px; }
+      .stat .v { font-size: 132px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+      .stat .v .dim { color: var(--ash); }
+      .stat .l { font-size: 26px; color: var(--ash); margin-top: 14px; letter-spacing: 0.04em; }
+      #st1 { left: 120px; } #st2 { left: 700px; } #st3 { left: 1280px; }
+      #st3 .v { color: var(--pass); }
+      #tag { position: absolute; left: 120px; top: 640px; font-size: 84px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.05; width: 1600px; }
+      #tag em { font-style: normal; color: var(--lilac); }
+      #url { position: absolute; left: 120px; top: 880px; font-size: 34px; color: var(--mist); letter-spacing: 0.04em; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="108" data-width="1920" data-height="1080">
+      <audio id="voice" src="assets/walkthrough-voice.mp3" data-start="0" data-duration="106.7" data-track-index="10" data-volume="1"></audio>
+
+      <div id="aurora"></div>
+      <div id="grid"></div>
+      <div id="eyebrow" class="mono">Leverage · the walkthrough</div>
+      <div id="wordmark" class="mono">useleverage.vercel.app</div>
+      <div id="progress"></div>
+
+      <!-- 1 · intro: landing -->
+      <div class="win" id="w1"><video id="v1" src="assets/capture/raw/landing.mp4" data-start="0" data-duration="16.6" data-media-start="0" muted></video></div>
+      <div class="lt" id="l1"><div class="k mono">useleverage.vercel.app</div><div class="h">One frontier brain. An elastic workforce.</div></div>
+
+      <!-- 2 · live: press Run -->
+      <div class="win" id="w2"><video id="v2" src="assets/capture/raw/live-run.mp4" data-start="16.6" data-duration="12.8" data-media-start="6.82" muted></video></div>
+      <div class="lt" id="l2"><div class="k mono">/app/live</div><div class="h">Not a recording. <em>A mission starts now.</em></div></div>
+
+      <!-- 3 · live: streaming -->
+      <div class="win" id="w3"><video id="v3" src="assets/capture/raw/live-run.mp4" data-start="29.4" data-duration="16.4" data-media-start="12.82" muted></video></div>
+      <div class="lt" id="l3"><div class="k mono">Auction · hosted pool · RocketRide</div><div class="h">Thirteen candidates. The best eligible one is hired.</div></div>
+
+      <!-- 4 · live: finished -->
+      <div class="win" id="w4"><video id="v4" src="assets/capture/raw/live-run.mp4" data-start="45.8" data-duration="11.2" data-media-start="63.50" muted></video></div>
+      <div class="lt" id="l4"><div class="k mono">Verified</div><div class="h"><em>4 of 4.</em> Twelve credits measured. $0.00 paid.</div></div>
+
+      <!-- 5 · mission page -->
+      <div class="win" id="w5"><video id="v5" src="assets/capture/raw/mission.mp4" data-start="57.0" data-duration="14.0" data-media-start="6.0" muted></video></div>
+      <div class="lt" id="l5"><div class="k mono">Mission LVR-719a8c22</div><div class="h">Every hire carries its auction rationale.</div></div>
+
+      <!-- 6 · handoff -->
+      <div class="win" id="w6"><video id="v6" src="assets/capture/raw/handoff.mp4" data-start="71.0" data-duration="14.0" data-media-start="7.0" muted></video></div>
+      <div class="lt" id="l6"><div class="k mono">Cognitive handoff</div><div class="h">worker.failed, checkpoint.created, resumed. <em>Nothing restarts.</em></div></div>
+
+      <!-- 7 · supply -->
+      <div class="win" id="w7"><video id="v7" src="assets/capture/raw/providers.mp4" data-start="85.0" data-duration="12.8" data-media-start="0" muted></video></div>
+      <div class="lt" id="l7"><div class="k mono">Providers · Models</div><div class="h">Thirteen proven models. Credits read from billing.</div></div>
+
+      <!-- 8 · close -->
+      <div class="win" id="w8"><video id="v8" src="assets/capture/raw/benchmarks.mp4" data-start="97.8" data-duration="5.0" data-media-start="0" muted></video></div>
+      <div id="close">
+        <div class="stat" id="st1"><div class="v">4<span class="dim">/4</span></div><div class="l mono">verified, live, just now</div></div>
+        <div class="stat" id="st2"><div class="v">13</div><div class="l mono">hosted models on RocketRide</div></div>
+        <div class="stat" id="st3"><div class="v">$0.00</div><div class="l mono">paid inference</div></div>
+        <div id="tag">One frontier brain.<br /><em>An elastic workforce.</em></div>
+        <div id="url" class="mono">useleverage.vercel.app · press the button, then read the log</div>
+      </div>
+    </div>
+
+    <script>
+      /**
+       * Eight scenes cut on the narration (motion/assets/walkthrough-timing.json).
+       * Every frame inside a window is untouched footage of the live site; the
+       * live-run scenes are one real run, recorded once, in order.
+       */
+      const S = {
+        intro: 0, live_start: 16.6, live_stream: 29.4, live_finish: 45.8,
+        mission: 57.0, handoff: 71.0, supply: 85.0, close: 97.8, card: 102.8, end: 108,
+      };
+      const build = () => {
+        const tl = gsap.timeline({ paused: true });
+        const E = "power3.out";
+        const wins = ["#w1", "#w2", "#w3", "#w4", "#w5", "#w6", "#w7", "#w8"];
+        const lts = ["#l1", "#l2", "#l3", "#l4", "#l5", "#l6", "#l7"];
+        gsap.set(wins, { autoAlpha: 0, y: 18, scale: 0.985, transformOrigin: "50% 60%" });
+        gsap.set(lts, { autoAlpha: 0, y: 14 });
+        gsap.set("#close", { autoAlpha: 0 });
+        gsap.set("#progress", { scaleX: 0 });
+
+        tl.to("#progress", { scaleX: 1, duration: S.end, ease: "none" }, 0);
+        tl.from("#eyebrow", { y: 10, autoAlpha: 0, duration: 0.5, ease: E }, 0.1);
+        tl.from("#wordmark", { y: 10, autoAlpha: 0, duration: 0.5, ease: E }, 0.2);
+
+        const scene = (win, lt, at, until, ltIn = 0.6, ltOut = 1.2) => {
+          tl.to(win, { autoAlpha: 1, y: 0, scale: 1, duration: 0.7, ease: E }, at);
+          if (lt) {
+            tl.to(lt, { autoAlpha: 1, y: 0, duration: 0.5, ease: E }, at + ltIn);
+            tl.to(lt, { autoAlpha: 0, y: -8, duration: 0.4, ease: "power2.in" }, until - ltOut);
+          }
+          tl.to(win, { autoAlpha: 0, scale: 0.99, duration: 0.5, ease: "power2.in" }, until - 0.5);
+        };
+        scene("#w1", "#l1", S.intro, S.live_start);
+        scene("#w2", "#l2", S.live_start, S.live_stream);
+        scene("#w3", "#l3", S.live_stream, S.live_finish);
+        scene("#w4", "#l4", S.live_finish, S.mission);
+        scene("#w5", "#l5", S.mission, S.handoff);
+        scene("#w6", "#l6", S.handoff, S.supply);
+        scene("#w7", "#l7", S.supply, S.close);
+        scene("#w8", null, S.close, S.card);
+
+        tl.to("#close", { autoAlpha: 1, duration: 0.6 }, S.card);
+        tl.from(["#st1", "#st2", "#st3"], { y: 30, autoAlpha: 0, duration: 0.6, stagger: 0.25, ease: E }, S.card + 0.2);
+        tl.from("#tag", { y: 30, autoAlpha: 0, duration: 0.8, ease: E }, S.card + 1.4);
+        tl.from("#url", { autoAlpha: 0, y: 12, duration: 0.5, ease: E }, S.card + 2.4);
+        tl.to({}, { duration: 0.1 }, S.end - 0.1);
+
+        tl.seek(0);
+        window.__timelines["main"] = tl;
+      };
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(build); else build();
+    </script>
+  </body>
+</html>

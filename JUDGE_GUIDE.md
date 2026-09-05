@@ -147,11 +147,13 @@ as RocketRide pipelines, the fixture's tests verify each task, and the finished 
 renders in the same view as the recorded ones. One to three minutes. Bounded: fixed
 goal, one run per visitor every ten minutes, cancelled if you leave.
 
-If you would rather be told than read: the landing page carries a 68-second
-narrated film (`motion/compositions/film.html`, rendered with HyperFrames, voiced
-with ElevenLabs by `scripts/narrate-film.mjs`, scenes cut on the narration's own
-timestamps in `motion/assets/film-timing.json`). Nothing in it is a claim that is
-not also on a mission page.
+If you would rather be told than read: the landing page carries a narrated
+walkthrough (1:48) over untouched footage of the live site, including one real live
+run recorded once, in order (`motion/compositions/walkthrough.html`, captures from
+`scripts/walkthrough-record.mjs`, voiced by `scripts/narrate-film.mjs`, cut on the
+narration's timestamps). The 68-second motion piece that states the thesis without
+footage is at `/motion/film.mp4`. Nothing in either is a claim that is not also on a
+mission page.
 
 There is also a whole mission that ran this way. `/app/missions/LVR-719a8c22` was
 started through MCP with the local runtime stopped and privacy set to

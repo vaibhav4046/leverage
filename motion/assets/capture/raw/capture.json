@@ -1,0 +1,143 @@
+{
+  "base": "https://useleverage.vercel.app",
+  "capturedAt": "2026-09-05T09:13:40.866Z",
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "totalSeconds": 101.49,
+  "clips": [
+    {
+      "name": "landing",
+      "file": "landing.mp4",
+      "page": "/",
+      "about": "hero, the film section (not played), the RocketRide section",
+      "durationSeconds": 20.83,
+      "wallSeconds": 20.85,
+      "trimmedLeadSeconds": 3.09,
+      "sourceFps": "25/1",
+      "moments": [
+        {
+          "t": 0,
+          "visible": "Hero: \"One frontier brain. An elastic workforce.\" with the hero console"
+        },
+        {
+          "t": 7.29,
+          "visible": "Film section: \"One frontier brain. An elastic workforce.\" with the film poster (not played)"
+        },
+        {
+          "t": 15.75,
+          "visible": "\"RocketRide runs the work. Leverage decides what work should run.\" with the proof panels"
+        }
+      ],
+      "problems": []
+    },
+    {
+      "name": "mission",
+      "file": "mission.mp4",
+      "page": "/app/missions/LVR-719a8c22",
+      "about": "header and metrics, winner rationale, auction drawer with the candidate list, then the event log",
+      "durationSeconds": 34.33,
+      "wallSeconds": 34.07,
+      "trimmedLeadSeconds": 2.52,
+      "sourceFps": "25/1",
+      "moments": [
+        {
+          "t": 0,
+          "visible": "Mission header: goal, COMPLETED status, metrics row (Quality 100, Paid spend $0.00, Tasks 4/4)"
+        },
+        {
+          "t": 6.23,
+          "visible": "Workforce panel: winners with rationale (\"80 task fit · 78 verified success over 3 prior jobs · free route, no spend\")"
+        },
+        {
+          "t": 11.33,
+          "visible": "Task drawer: Auction block listing 8 candidates with utility scores (ProofPack and Scope below)"
+        },
+        {
+          "t": 19.41,
+          "visible": "Live execution timeline: 76 events from mission.created"
+        },
+        {
+          "t": 32.27,
+          "visible": "Event log at auction.candidate rows and auction.completed \"Winner: MiniMax M3 via OpenRouter\", then worker.hired"
+        }
+      ],
+      "problems": []
+    },
+    {
+      "name": "handoff",
+      "file": "handoff.mp4",
+      "page": "/app/missions/LVR-bda3ba68",
+      "about": "worker.failed, checkpoint.created, handoff.started, worker.hired resuming from the checkpoint",
+      "durationSeconds": 21.23,
+      "wallSeconds": 21.2,
+      "trimmedLeadSeconds": 2.44,
+      "sourceFps": "25/1",
+      "moments": [
+        {
+          "t": 0,
+          "visible": "Mission header: COMPLETED with \"attempt 2\" tasks in the graph, Paid spend $0.00"
+        },
+        {
+          "t": 7.58,
+          "visible": "Event log: verification.failed, worker.failed (TEST_FAILURE), checkpoint.created"
+        },
+        {
+          "t": 13.71,
+          "visible": "Event log: checkpoint.created, worker.released, handoff.started, auction re-run"
+        },
+        {
+          "t": 18.58,
+          "visible": "Event log: auction.completed and worker.hired \"resuming from cp_…\""
+        }
+      ],
+      "problems": []
+    },
+    {
+      "name": "providers",
+      "file": "providers.mp4",
+      "page": "/app/providers",
+      "about": "healthy free pool and RocketRide credits, then the 13 models",
+      "durationSeconds": 15.47,
+      "wallSeconds": 15.48,
+      "trimmedLeadSeconds": 3.49,
+      "sourceFps": "25/1",
+      "moments": [
+        {
+          "t": 0,
+          "visible": "Providers: Free model pool HEALTHY with 13 models; MCP host and agent CLI unavailable"
+        },
+        {
+          "t": 4.47,
+          "visible": "Execution fabric: RocketRide HEALTHY with credits balance / granted and consumed"
+        },
+        {
+          "t": 8.72,
+          "visible": "Models: the 13-model pool with observed quality and cost class"
+        }
+      ],
+      "problems": []
+    },
+    {
+      "name": "benchmarks",
+      "file": "benchmarks.mp4",
+      "page": "/benchmarks",
+      "about": "benchmarks page, one scroll",
+      "durationSeconds": 9.63,
+      "wallSeconds": 9.62,
+      "trimmedLeadSeconds": 2.57,
+      "sourceFps": "25/1",
+      "moments": [
+        {
+          "t": 0,
+          "visible": "Benchmarks: \"Measured, or not claimed.\""
+        },
+        {
+          "t": 7.81,
+          "visible": "Benchmarks: recorded missions and \"RocketRide executed the cloud workers\""
+        }
+      ],
+      "problems": []
+    }
+  ]
+}

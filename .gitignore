@@ -40,3 +40,7 @@ motion/.hyperframes/
 .vercel
 motion/renders/
 motion/snapshots/
+
+# Film source captures are reproducible with scripts/walkthrough-record.mjs; the rendered film ships in public/motion
+motion/assets/capture/raw/*.mp4
+motion/assets/capture/framed/*.mp4
