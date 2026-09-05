@@ -178,3 +178,47 @@ describe('wholeSuiteCheck', () => {
     expect(bad?.detail).toContain('not ok 1 - money rounds');
   }, 60_000);
 });
+
+describe('ProviderRegistry.sweep', () => {
+  it('waits for a sweep already in flight instead of returning an empty roster', async () => {
+    const { ProviderRegistry } = await import('../src/providers/registry');
+    const registry = new ProviderRegistry();
+    let release: () => void = () => undefined;
+    const gate = new Promise<void>((r) => (release = r));
+    registry.register(
+      {
+        providerId: 'slow',
+        costClass: 'free',
+        async health() {
+          await gate;
+          return { status: 'HEALTHY', checkedAt: new Date().toISOString() };
+        },
+        async discoverModels() {
+          return [
+            {
+              key: 'slow:one',
+              providerId: 'slow',
+              modelId: 'one',
+              displayName: 'One',
+              costClass: 'free',
+              pricing: { inputPerMTok: 0, outputPerMTok: 0 },
+              contextTokens: 8000,
+              capabilities: ['code'],
+              supportsTools: false,
+            },
+          ];
+        },
+        estimate: () => ({ estimatedPromptTokens: 0, estimatedCompletionTokens: 0, estimatedCostUsd: 0 }),
+        invoke: async () => ({ text: '', durationMs: 0 }),
+        classifyError: () => ({ type: 'UNKNOWN', message: '', retryable: false }),
+      } as never,
+      'slow provider',
+    );
+    const first = registry.sweep();
+    const second = registry.sweep();
+    expect(registry.allModels()).toHaveLength(0);
+    release();
+    await Promise.all([first, second]);
+    expect(registry.allModels()).toHaveLength(1);
+  });
+});

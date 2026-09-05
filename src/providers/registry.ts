@@ -87,10 +87,13 @@ export class ProviderRegistry {
 
   /** Refresh health and catalogue for every provider, concurrently. */
   async sweep(force = false): Promise<void> {
-    if (!force && Date.now() - this.lastSweep < HEALTH_TTL_MS) return;
     // One sweep at a time; a second caller waits on the first instead of
-    // probing every provider again.
+    // probing every provider again. This check comes before the freshness
+    // check: the warm-up sweep stamps its start time the moment it begins, and a
+    // caller that arrived a second later used to see a fresh timestamp, skip the
+    // wait, and plan against an empty roster on a cold instance.
     if (this.inflight) return this.inflight;
+    if (!force && Date.now() - this.lastSweep < HEALTH_TTL_MS) return;
     this.inflight = this.sweepNow().finally(() => {
       this.inflight = null;
     });
