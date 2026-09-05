@@ -1,121 +1,68 @@
-# Leverage
+<p align="center">
+  <img src="docs/shots/banner.png" alt="Leverage. One frontier brain. An elastic workforce." width="100%">
+</p>
 
-**One frontier brain. An elastic workforce.**
+<h1 align="center">Leverage</h1>
+
+<p align="center">
+  <a href="https://useleverage.vercel.app">Live site</a> · <a href="https://youtu.be/TQJ_neL7gFY">Demo film</a> · <a href="docs/TECHNICAL_REPORT.md">Technical report</a> · <a href="ARCHITECTURE.md">Architecture</a> · <a href="JUDGE_GUIDE.md">Judge guide</a>
+</p>
+
+<p align="center">
+  <a href="https://useleverage.vercel.app"><img src="https://img.shields.io/badge/Live-useleverage.vercel.app-4ade80?style=for-the-badge" alt="Live"></a>
+  <a href="https://youtu.be/TQJ_neL7gFY"><img src="https://img.shields.io/badge/Demo-2%3A22-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Demo film"></a>
+  <a href="tests/invariants.test.ts"><img src="https://img.shields.io/badge/Tests-88%20passing-4ade80?style=for-the-badge" alt="88 tests"></a>
+  <a href="demo/canonical-run.json"><img src="https://img.shields.io/badge/Paid%20inference-%240.00-4ade80?style=for-the-badge" alt="Paid inference $0.00"></a>
+  <a href="docs/ROCKETRIDE_FINDINGS.md"><img src="https://img.shields.io/badge/RocketRide-staging%20verified-85a6e9?style=for-the-badge" alt="RocketRide staging verified"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-625fff?style=for-the-badge" alt="MIT"></a>
+</p>
+
+**The intelligence resource manager under the model you already pay for.** Your best model keeps the strategy. Leverage is the MCP server underneath it: five tools that recruit local, free and subscription models, give each one the smallest job it can verify, execute cloud-class workers as RocketRide pipelines, and refuse to call anything done until the repository's own tests say so. When a worker fails, its understanding is checkpointed and handed to a replacement, so the work continues instead of restarting.
 
 > Your best model should make the expensive decisions. It should not write the fortieth test.
 
-[![Live](https://img.shields.io/badge/live-useleverage.vercel.app-4ade80?style=flat-square)](https://useleverage.vercel.app)
-[![Tests](https://img.shields.io/badge/tests-88%20passing-4ade80?style=flat-square)](tests/invariants.test.ts)
-[![Paid inference](https://img.shields.io/badge/actual%20paid%20inference-%240.00-4ade80?style=flat-square)](demo/canonical-run.json)
-[![RocketRide](https://img.shields.io/badge/RocketRide-staging%20verified-85a6e9?style=flat-square)](docs/ROCKETRIDE_FINDINGS.md)
+## Watch it work
 
-**Live: https://useleverage.vercel.app**, seeded with the runs that actually happened,
-plus one page that is not a recording: [/app/live](https://useleverage.vercel.app/app/live)
-runs a real mission on RocketRide through the hosted pool while you watch, on the
-benchmark's committed plan or, with the second button, on a plan a model writes first.
-Every other mutating route answers `403`.
+<p align="center">
+  <a href="https://youtu.be/TQJ_neL7gFY"><img src="public/motion/demo-poster.jpg" alt="Watch the demo film" width="100%"></a>
+</p>
 
-![Leverage landing page](docs/shots/landing-hero.png)
+*2:22. What Leverage is, what it is for, the harness, a real mission running on the live site, and the same product driven from a Claude chat through its connector. Every frame inside a window is a real session.*
 
-Leverage gives Claude, Codex and other MCP hosts a dynamic workforce of local, free and
-connected models, then verifies the work and replaces workers that fail.
+<table>
+<tr>
+<td width="50%"><img src="docs/shots/demo-live-run.gif" alt="A real mission running on the live site, planned by a model, verified by its tests" width="100%"></td>
+<td width="50%"><img src="docs/shots/demo-chat.gif" alt="A mission driven from a Claude chat through the Leverage connector" width="100%"></td>
+</tr>
+<tr>
+<td><i>Press one button on the live site: a planner writes the task graph, workers are hired, every task passes its own tests, the whole suite runs green. $0.00 paid.</i></td>
+<td><i>One Claude message on a real repository: planned in 45.7 s, 3 tasks, 2 real handoffs from checkpoints, whole suite green, proof back in the chat.</i></td>
+</tr>
+</table>
 
-Your best model should decide the architecture. It should not spend the same premium
-compute writing the fortieth boilerplate test.
-
----
-
-## What it actually does
-
-You state an outcome and a policy:
-
-```
-Finish this application and make the test suite pass.
-Budget: $0.  Quality: production.  Privacy: prefer local.
-```
-
-Given a repository, a planner model turns that into a task graph and the compiler validates
-it (the bundled benchmarks carry a committed plan so they measure the workforce, not the
-planner). Leverage then discovers every model it can reach, scores them against each task,
-hires the best *eligible* one, gives it the smallest context that can do the job, executes
-cloud-class workers as RocketRide pipelines, and refuses to call the task done until a
-compiler or a test runner says so. When a worker dies it keeps the worker's understanding
-and hands it to a replacement.
-
-### The cognitive handoff, replayed from the real event log
-
-![Mission replay](docs/shots/demo.png)
-
-*A worker hits a provider limit. Leverage checkpoints what it understood, hires a
-replacement, and the work resumes instead of restarting.*
-
-## See it produce something
-
-`/demo` embeds a playable gravity-arena prototype whose entire logic (vector maths,
-physics integration, seeded spawner, game state machine) was written by Leverage
-workers under a hard `$0` budget. The tests and the render shell are given; the workers
-could read the tests they had to satisfy and could not edit them.
-
-| Arcade run `LVR-5d6aff86` | |
-|---|---|
-| Tasks verified | 4 / 4 |
-| Proof checks | 8 / 8 |
-| Logic suite | 22 / 22, `exit 0` |
-| Workers | 6, across host · free · local |
-| Cognitive handoffs | 2 (62% and 84% context reduction) |
-| **Actual paid inference** | **$0.00** |
-
-```bash
-npm run fixture:reset:arcade
-npm run mission -- --arcade
-cd benchmark/arcade && npm test
-```
-
-### Mission Control
-
-![Mission Control](docs/shots/app-overview.png)
-
-### Connected compute
-
-![Providers](docs/shots/app-providers.png)
-
-*Local runtimes, free routes, your MCP host seat, and your agent-CLI subscription.
-Credential values never leave the server and are never rendered.*
-
-## The run this repository ships with
-
-A real recorded mission, not a mock: `LVR-f8f72d56`, in `demo/canonical-run.json`:
+## What it does
 
 | | |
 |---|---|
-| Tasks | 4 / 4 verified |
-| Proof checks | 8 / 8 pass |
-| Full suite | 17 / 17 tests, `exit 0` |
-| Workers hired | 7 |
-| Cognitive handoffs | 3 (one injected 429, two genuine test failures) |
-| Context reduction at handoff | 57%, 48%, 30%, measured |
-| **Actual paid inference** | **$0.00** |
+| **Plans from the repository** | Point it at a repository and a planner model writes the task graph. The compiler refuses cycles, escaping paths and any task no test can prove. |
+| **Auctions every reachable model** | Each task is scored on fit, verified track record, context fit, availability, cost and privacy. The winner's rationale is written into the log; the losers are struck out with a reason. |
+| **Zero means zero** | With a $0 budget the policy filter runs before scoring, so a paid route never enters the auction. Not outranked. Removed. |
+| **Verified or nothing** | A task is done when `node --test`, `npm test` or `vitest` exits 0. The failure excerpt quotes the assertion. After the last task, the whole suite runs once more. |
+| **Cognitive handoff** | A 429, a timeout, an invalid output or a red test releases the worker, checkpoints what it understood, and resumes the task on a replacement. Context reduction at handoff is measured. |
+| **Proof-carrying work** | Every completion carries the checks that ran, the files changed, a patch hash, quality as the pass rate of what actually ran, and the real spend. |
+| **Lives where you work** | Five MCP tools over stdio for Claude Code, Codex and Cursor, and over Streamable HTTP for chat connectors. |
+| **Runs on RocketRide** | Cloud-class workers execute as `webhook → llm_openai_api → response` pipelines on staging, through a token-gated pool. Credits are read from billing before and after. |
 
-Reproduce it:
-
-```bash
-npm run fixture:reset
-npm run mission -- --inject-429 --out=demo/canonical-run.json
-cd benchmark/forge-app && node --test      # 17 tests, 29 assertions
-```
-
-## Quickstart
+## Quick install
 
 ```bash
+git clone https://github.com/vaibhav4046/leverage && cd leverage
 npm install
 cp .env.example .env.local          # LEVERAGE_DEV_AUTH=1 is preset so a local checkout can run missions
-npm run probe:models                # measure what your models can actually do
-npm run mission                     # the benchmark mission, for real, on the bundled fixture
-npm run mission -- --repo=/abs/path/to/your/repo --goal="make test/ pass"   # your repository: a planner model writes the task graph
 npm run dev                         # Mission Control at http://localhost:3000
 ```
 
-You need at least one source of intelligence. In order of "least setup":
+You need at least one source of intelligence. In order of least setup:
 
 | Source | Setup | Key needed |
 |---|---|---|
@@ -123,105 +70,103 @@ You need at least one source of intelligence. In order of "least setup":
 | **Your MCP host seat** | run Leverage as an MCP server inside Claude Code / Codex / Cursor | none |
 | **Ollama** | `ollama pull qwen2.5-coder:3b` | none |
 | **Any OpenAI-compatible endpoint** | set `OMNIROUTE_BASE_URL` | yours |
-| **The hosted pool** | your deployment's `/api/v1/pool`, with `POOL_UPSTREAMS`, `POOL_KEY_*`, `POOL_MODELS` and `POOL_ACCESS_TOKEN` set on it (see `.env.example`) | free-tier provider keys work; `node scripts/pool-sweep.mjs` tells you which models actually answer |
+| **The hosted pool** | your deployment's `/api/v1/pool` with `POOL_UPSTREAMS`, `POOL_KEY_*`, `POOL_MODELS`, `POOL_ACCESS_TOKEN` (see `.env.example`); `node scripts/pool-sweep.mjs` tells you which models actually answer | free-tier keys work |
 
-A RocketRide key is optional on your machine: with `ROCKETRIDE_APIKEY` set, cloud-class
-workers run as RocketRide pipelines; without it they are called directly and the mission
-log says so. To use the hosted pool from a checkout, set `OMNIROUTE_BASE_URL` to
-`https://<your deployment>/api/v1/pool` and `OMNIROUTE_API_KEY` to that deployment's
-`POOL_ACCESS_TOKEN`; without a token the pool answers 401 and is simply not hired.
+A RocketRide key is optional on your machine: with `ROCKETRIDE_APIKEY` set, cloud-class workers run as RocketRide pipelines; without it they are called directly and the mission log says so.
 
-## Using the subscription you already pay for
+## Getting started
 
-Two routes, neither of which asks for an API key:
-
-**1. Your installed agent CLI.** Claude Code, Codex and friends ship a headless mode
-(`claude -p`, `codex exec`) that authenticates with the login you already performed.
-Leverage detects them on `PATH`, probes whether they are signed in, and hires them as
-workers. Some of them report real token usage and cost back, so the ledger gets measured
-numbers rather than estimates.
-
-**2. MCP sampling.** When Leverage runs as an MCP server inside your agent, it can call
-`sampling/createMessage` back through the protocol and get a completion from the model
-your host is already signed in to.
-
-Both land in the `host` cost class: counted separately from free routes, never charged,
-and eligible inside Zero-Dollar Mode because your subscription already paid.
-
-**What Leverage will not do:** drive a logged-in browser session to borrow a consumer
-subscription. ChatGPT Plus and Claude Pro have no API, and anything that claims to
-"connect" one is automating a web UI against its terms with your credentials. The two
-routes above get you the same model, legitimately, and Leverage never handles a password
-or a token.
-
-## Use it from your host
+**From your host.** Add the server, then talk to it:
 
 ```bash
 claude mcp add leverage -- node /abs/path/to/leverage/mcp/server.ts
 ```
 
-Then, inside the host:
-
 > Use Leverage. Finish this application. Budget $0. Quality production.
 
-Five tools: `leverage_run`, `leverage_status`, `leverage_cancel`, `leverage_proof`,
-`leverage_models`. `leverage_run` returns a mission id immediately, because a mission takes
-minutes and holding a synchronous MCP call open for that long would be unusable.
-
-### From a chat application
-
-A host that connects to a URL instead of spawning a process (a claude.ai custom connector,
-or any client behind a tunnel) gets the same five tools over Streamable HTTP:
+**From a chat application.** The same five tools over Streamable HTTP, for a claude.ai custom connector or any client behind a tunnel:
 
 ```bash
 npm run mcp:http                                  # http://127.0.0.1:3200/mcp, stateless
 cloudflared tunnel --url http://127.0.0.1:3200    # then add https://<host>/mcp as a connector
 ```
 
-Then ask in the chat:
+> Use the Leverage connector. Run a mission on the repository at D:\project\webguard with this goal: implement src/redirect.js, src/ssrf.js and src/ratelimit.js so that the whole test suite in test/ passes. Budget $0. Quality production. Poll leverage_status until it is COMPLETED or FAILED, then call leverage_proof.
 
-> Use the Leverage connector. Run a mission on the repository at D:\project\webguard with
-> this goal: implement src/redirect.js, src/ssrf.js and src/ratelimit.js so that the whole
-> test suite in test/ passes. Budget $0. Quality production. Poll leverage_status until it is
-> COMPLETED or FAILED, then call leverage_proof.
+**From the command line.**
 
-Mission `LVR-e6443739` in the demo film started exactly this way: planned by Nemotron 3
-Nano 30B via NVIDIA in 45.7 s, three tasks, two real handoffs with checkpoints, whole
-suite green, $0 paid. The proof pack lists the whole-suite run alongside every task check.
+```bash
+npm run probe:models                # measure what your models can actually do
+npm run mission                     # the benchmark mission, for real, on the bundled fixture
+npm run mission -- --repo=/abs/path/to/your/repo --goal="make test/ pass"   # your repository, planned by a model
+```
 
-## Zero-Dollar Mode
+Five tools: `leverage_run`, `leverage_status`, `leverage_cancel`, `leverage_proof`, `leverage_models`. `leverage_run` returns a mission id immediately, because a mission takes minutes and a synchronous MCP call held open that long would be unusable.
 
-When the budget is zero, zero means zero. It is not a preference the scheduler weighs:
+## The evidence
 
-- The **policy filter runs before scoring**, so a paid model at `$0` never enters the
-  ranking pool at all. Mission Control shows it struck out with the reason.
-- The **budget governor** reserves headroom atomically before any paid call, so four
-  concurrent workers cannot each check the balance and all proceed.
-- Both are asserted in `tests/invariants.test.ts`, including the concurrency case.
+Every mission below is in the repository or on film. None is a mock.
 
-## Proof-carrying work
+| Mission | What it proves | Result |
+|---|---|---|
+| `LVR-f8f72d56` · [`demo/canonical-run.json`](demo/canonical-run.json) | the full loop with an injected 429 | 4/4 tasks, 8/8 checks, suite 17/17, 7 workers, 3 handoffs, context cut 57%, 48%, 30%, **$0.00** |
+| `LVR-5d6aff86` · [`demo/arcade-run.json`](demo/arcade-run.json) | a playable game's logic written by workers under a hard $0 budget | 4/4 tasks, 8/8 checks, suite 22/22, 2 handoffs, **$0.00** |
+| `LVR-31eacf88` · [`demo/planned-run.json`](demo/planned-run.json) | a plan written by a model, not a committed one | whole suite green, 24.6 RocketRide credits, output at `demo/output/greeter` with a matching patch hash |
+| `LVR-2d4d56e0` · [`demo/evidence/`](demo/evidence/) | the live page's second button, planned inside the deployment | verified in 121 s, 15.8 credits, transcript recorded |
+| `LVR-e6443739` · [the film](https://youtu.be/TQJ_neL7gFY) | driven from a Claude chat on a real repository | planned in 45.7 s, 3 tasks, 2 handoffs, whole suite green, quality 100, **$0.00** |
 
-A task is complete when a compiler, a test runner or the filesystem says so. Every
-completion carries a ProofPack: the checks that ran, what they returned, files changed,
-a quality breakdown and the real spend. Model self-confidence is recorded separately and
-is the smallest term in the score.
+Reproduce the first one:
+
+```bash
+npm run fixture:reset
+npm run mission -- --inject-429 --out=demo/canonical-run.json
+cd benchmark/forge-app && node --test      # 17 tests, 29 assertions
+```
+
+### Mission Control
+
+<p align="center"><img src="docs/shots/app-overview.png" alt="Mission Control" width="100%"></p>
+
+*The plan as the model wrote it. Each candidate's utility and the winner's reasoning. An append-only log with filters. A proof pack with every check and its result, the whole-suite run included.*
+
+<p align="center"><img src="docs/shots/demo.png" alt="The cognitive handoff, replayed from the real event log" width="100%"></p>
+
+*A worker hits a provider limit. Leverage checkpoints what it understood, hires a replacement, and the work resumes instead of restarting.*
+
+### See it produce something
+
+[`/demo`](https://useleverage.vercel.app/demo) embeds a playable gravity-arena prototype whose entire logic (vector maths, physics integration, seeded spawner, game state machine) was written by Leverage workers under a hard `$0` budget. The tests and the render shell were given; the workers could read the tests they had to satisfy and could not edit them.
+
+```bash
+npm run fixture:reset:arcade
+npm run mission -- --arcade
+cd benchmark/arcade && npm test
+```
 
 ## How it is put together
 
 ```
-Host model (Claude / Codex / Kimi)   strategy
-        |  MCP
-Leverage control plane               what work exists, who does it, what it may cost,
-                                     whether the output is true
+Host model (Claude / Codex / Cursor)   strategy
+        |  MCP (stdio or Streamable HTTP)
+Leverage control plane                 what work exists, who does it, what it may cost,
+                                       whether the output is true
         |
-RocketRide                           execution fabric: pipelines, traces, token accounting
+RocketRide                             execution fabric: pipelines, traces, token accounting
         |
-Ollama / free routes / BYOK          the compute pool
+Ollama / free routes / your own seat   the compute pool
 ```
 
-Full detail in [ARCHITECTURE.md](ARCHITECTURE.md). The RocketRide integration has three
-places where the published docs disagree with the running system;
-[docs/ROCKETRIDE_FINDINGS.md](docs/ROCKETRIDE_FINDINGS.md) records what is actually true.
+The loop: **compile** the goal into a validated task graph, **auction** every reachable model per task, **hire** the best eligible one, **execute** as a RocketRide pipeline, **verify** with the repository's own tests, **prove** with a proof pack, and on failure **hand off** from a checkpoint. Full detail in [ARCHITECTURE.md](ARCHITECTURE.md); the reasoning behind each design decision is in the [technical report](docs/TECHNICAL_REPORT.md).
+
+### Using the subscription you already pay for
+
+Two routes, neither of which asks for an API key. **Your installed agent CLI**: Claude Code, Codex and friends ship a headless mode that authenticates with the login you already performed; Leverage detects them on `PATH`, probes whether they are signed in, and hires them as workers. **MCP sampling**: as an MCP server inside your agent, Leverage can call `sampling/createMessage` back through the protocol. Both land in the `host` cost class: never charged, eligible under a zero budget because your subscription already paid.
+
+What Leverage will not do: drive a logged-in browser session to borrow a consumer subscription. The two routes above get you the same model legitimately, and Leverage never handles a password or a token.
+
+### Zero-Dollar Mode
+
+When the budget is zero, zero means zero. The policy filter runs before scoring, so a paid model never enters the ranking pool; Mission Control shows it struck out with the reason. The budget governor reserves headroom atomically before any paid call, so four concurrent workers cannot each check the balance and all proceed. Both are asserted in [`tests/invariants.test.ts`](tests/invariants.test.ts), including the concurrency case.
 
 ## Verify it yourself
 
@@ -230,18 +175,38 @@ npm run verify              # typecheck, lint, 88 tests (63 invariants, 7 pool g
 npm run verify:rocketride   # real inference through a real pipeline, real credit delta
 ```
 
+CI runs the same commands on every push. The site was audited at 40 viewport and console combinations (all clean) and with axe on 12 pages (0 violations).
+
+## RocketRide, as it actually behaves
+
+The published docs disagree with the running engine in three places, and one wiring mistake produces a pipeline that runs, reports no errors, consumes credits and never invokes the model. [docs/ROCKETRIDE_FINDINGS.md](docs/ROCKETRIDE_FINDINGS.md) records what is true, verified by execution, with the measured cost per run.
+
 ## Documentation
 
 | | |
 |---|---|
+| [docs/TECHNICAL_REPORT.md](docs/TECHNICAL_REPORT.md) | The harness, the recorded missions, verification, evaluation |
 | [JUDGE_GUIDE.md](JUDGE_GUIDE.md) | Three minutes, in order |
-| [docs/TECHNICAL_REPORT.md](docs/TECHNICAL_REPORT.md) | The technical report: harness, recorded missions, verification, evaluation |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | The four layers and why they are separate |
 | [SECURITY.md](SECURITY.md) | Threat model, secrets, tenancy, prompt injection |
 | [BENCHMARKS.md](BENCHMARKS.md) | Methodology, and what the numbers do not mean |
 | [DESIGN.md](DESIGN.md) | The visual system, shared by app, site and film |
 | [docs/ROCKETRIDE_FINDINGS.md](docs/ROCKETRIDE_FINDINGS.md) | What the RocketRide docs get wrong |
-| [BLOCKERS_REQUIRING_HUMAN.md](BLOCKERS_REQUIRING_HUMAN.md) | What still needs a human |
+| [docs/EXECUTION_LEDGER.md](docs/EXECUTION_LEDGER.md) | What was executed, when, and what it cost |
+| [docs/supademo/](docs/supademo/) | Stills and the step script for the interactive demo |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | How to change it without breaking its standard |
+
+## Contributing
+
+```bash
+npm install && npm run verify
+```
+
+A change to scheduling, verification, policy or the proof pack comes with a test. Failures stay loud. No number without a source. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Built for the RocketRide x SCU Buildathon
+
+Solo, by [Vaibhav Lalwani](https://github.com/vaibhav4046), September 2026. Questions and showcase in the [RocketRide Discord](https://discord.gg/PMXrtenMsY).
 
 ## Licence
 

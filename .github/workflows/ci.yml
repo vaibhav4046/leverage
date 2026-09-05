@@ -1,0 +1,23 @@
+name: verify
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npx eslint . --max-warnings 0
+      - run: npx vitest run
+      - run: npx next build
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"

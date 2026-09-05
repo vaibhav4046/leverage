@@ -16,7 +16,7 @@ export function LeverageMark({ size = 24, className = '' }: { size?: number; cla
       aria-hidden="true"
     >
       <path
-        d="M4 12h3M17 12h3M7 12c0-3 1.6-5 5-5s5 2 5 5M7 12c0 3 1.6 5 5 5s5-2 5 5"
+        d="M4 12h3M17 12h3M7 12c0-3 1.6-5 5-5s5 2 5 5M7 12c0 3 1.6 5 5 5s5-2 5-5"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
