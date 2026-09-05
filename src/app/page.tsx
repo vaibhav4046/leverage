@@ -14,6 +14,7 @@ import { ReputationStore } from '@/core/reputation';
 import nextDynamic from 'next/dynamic';
 import type { HandoffStep } from '@/components/marketing/handoff-player';
 import { RocketRideProof } from '@/components/marketing/rocketride-proof';
+import { PlannedProof } from '@/components/marketing/planned-proof';
 import { MobileMenu } from '@/components/marketing/page-shell';
 import { AuroraField, WorkforceOrbit } from '@/components/visual/lazy';
 import type { OrbitNode } from '@/components/visual/workforce-orbit';
@@ -303,6 +304,8 @@ export default async function Home() {
         </Section>
 
         <RocketRideProof run={rocketRide} />
+
+        <PlannedProof run={planned} />
 
         <ExecutionSurface run={run} />
 
