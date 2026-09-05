@@ -44,6 +44,8 @@ const securityHeaders = [
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
 ];
 
+const EVIDENCE = ['./demo/**/*.json', './demo/evidence/*.sse', './tests/*.test.ts'];
+
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   async headers() {
@@ -51,14 +53,18 @@ const nextConfig: NextConfig = {
   },
   outputFileTracingRoot: __dirname,
   outputFileTracingIncludes: {
-    // The landing also reads the live-run transcripts and counts the test cases.
-    '/': ['./demo/**/*.json', './demo/evidence/*.sse', './tests/*.test.ts'],
-    '/demo': ['./demo/**/*.json'],
-    '/benchmarks': ['./demo/**/*.json'],
-    '/app/missions': ['./demo/**/*.json'],
-    '/app/missions/[missionId]': ['./demo/**/*.json'],
-    '/api/v1/missions': ['./demo/**/*.json'],
-    '/api/v1/missions/[missionId]': ['./demo/**/*.json'],
+    // Every route that reads the evidence gets the same list, on purpose: Vercel
+    // groups routes with identical traces into one function, and the Hobby plan
+    // allows twelve per deployment. Giving the landing its own list (it also reads
+    // the live-run transcripts and counts the test cases) split it into a
+    // thirteenth function and the deploy was refused.
+    '/': EVIDENCE,
+    '/demo': EVIDENCE,
+    '/benchmarks': EVIDENCE,
+    '/app/missions': EVIDENCE,
+    '/app/missions/[missionId]': EVIDENCE,
+    '/api/v1/missions': EVIDENCE,
+    '/api/v1/missions/[missionId]': EVIDENCE,
     // A live run copies the fixture into the function's writable temp directory
     // and verifies against its own test files, so the fixture must ship too.
     '/api/v1/live/run': ['./benchmark/forge-app/**', './benchmark/greeter/**'],
