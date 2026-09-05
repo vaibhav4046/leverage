@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { Wordmark } from '@/components/brand';
 import { Reveal } from '@/components/visual/motion';
-import { AuroraField } from '@/components/visual/aurora-field';
+import { AuroraField } from '@/components/visual/lazy';
 
 /**
  * Shared chrome for the content pages.
