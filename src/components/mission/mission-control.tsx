@@ -100,7 +100,7 @@ export function MissionControl({
       />
       <MissionMetrics snapshot={snapshot} />
 
-      <div className="grid flex-1 items-start gap-4 p-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
+      <div className="grid flex-1 grid-cols-[minmax(0,1fr)] items-start gap-4 p-4 xl:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]">
         <TaskGraph snapshot={snapshot} selected={selected} onSelect={setSelected} />
         <WorkforcePanel snapshot={snapshot} />
       </div>
@@ -109,7 +109,7 @@ export function MissionControl({
         <EventTimeline events={events} />
       </div>
 
-      <div className="grid gap-4 px-4 pb-8 lg:grid-cols-2">
+      <div className="grid grid-cols-[minmax(0,1fr)] gap-4 px-4 pb-8 lg:grid-cols-2">
         <ProofPanel snapshot={snapshot} />
         <UsagePanel snapshot={snapshot} />
       </div>

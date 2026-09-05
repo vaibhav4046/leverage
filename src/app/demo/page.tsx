@@ -77,7 +77,7 @@ export default async function DemoPage() {
               <Stat label="Actual paid inference" value={`$${run.usage.paidSpendUsd.toFixed(2)}`} accent />
             </div>
 
-            <div className="mt-10 grid gap-4 lg:grid-cols-2">
+            <div className="mt-10 grid grid-cols-[minmax(0,1fr)] gap-4 lg:grid-cols-2">
               <Reveal>
                 <section className="surface-card h-full p-6">
                   <div className="mono mb-4 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">

@@ -133,3 +133,11 @@ describe('failureExcerpt', () => {
     expect(failureExcerpt('building\ndone with code 3', '')).toBe('done with code 3');
   });
 });
+
+describe('stripAnsi', () => {
+  it('removes reporter colour codes so a proof detail is plain text', async () => {
+    const { stripAnsi, failureExcerpt } = await import('../src/core/verify');
+    expect(stripAnsi('\u001b[34mℹ duration_ms 404.1\u001b[39m')).toBe('ℹ duration_ms 404.1');
+    expect(failureExcerpt('', '\u001b[31mnot ok 1 - x\u001b[39m')).toBe('not ok 1 - x');
+  });
+});

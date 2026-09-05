@@ -249,10 +249,14 @@ export function execArgv(
 const FAILURE_LINE = /\b(not ok|fail(?:ing|ed|ure)?|error|expected|actual|assert)\b|✖|×|✗/i;
 const FAILURE_NOISE = /^\s*at\s|^\s*[{}\]\[],?\s*$|^\s*(operator|generatedMessage|diff|code):/;
 
+/** Colour codes a test reporter may emit even into a pipe; a proof is text, not a terminal. */
+const ANSI = /\[[0-9;]*[A-Za-z]/g;
+export const stripAnsi = (text: string) => text.replace(ANSI, '');
+
 export function failureExcerpt(stdout: string, stderr: string, max = 600): string {
   const seen = new Set<string>();
   const picked: string[] = [];
-  for (const raw of `${stdout}\n${stderr}`.split(/\r?\n/)) {
+  for (const raw of `${stripAnsi(stdout)}\n${stripAnsi(stderr)}`.split(/\r?\n/)) {
     const line = raw.trim().replace(/^#\s*/, '');
     if (!line || !FAILURE_LINE.test(line) || FAILURE_NOISE.test(line) || seen.has(line)) continue;
     seen.add(line);
@@ -263,7 +267,7 @@ export function failureExcerpt(stdout: string, stderr: string, max = 600): strin
 }
 
 function lastLine(text: string): string {
-  const lines = text.trim().split(/\r?\n/).filter(Boolean);
+  const lines = stripAnsi(text).trim().split(/\r?\n/).filter(Boolean);
   return lines.length ? lines[lines.length - 1].slice(0, 300) : '';
 }
 

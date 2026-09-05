@@ -290,7 +290,9 @@ async function api(path: string, init: RequestInit = {}): Promise<unknown> {
       ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : {}),
       ...(init.headers ?? {}),
     },
-    signal: AbortSignal.timeout(30_000),
+    // The roster sweeps every provider before answering, which can take longer
+    // than a status poll; give it the time rather than report a timeout.
+    signal: AbortSignal.timeout(path.startsWith('/api/v1/models') ? 90_000 : 30_000),
   });
 
   const text = await res.text();
