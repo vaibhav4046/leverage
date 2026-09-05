@@ -18,6 +18,12 @@ import path from 'node:path';
 const VOICE_ID = process.env.VOICE_ID ?? 'onwK4e9ZLuTAKqWW03F9'; // Daniel, steady broadcaster
 const MODEL_ID = process.env.ELEVENLABS_MODEL ?? 'eleven_multilingual_v2';
 const OUT_DIR = path.resolve('motion/assets');
+// Another script, another voice track: NARRATION_FILE is a JSON array of
+// { id, text } lines and NARRATION_NAME names the outputs (default "film").
+const NAME = process.env.NARRATION_NAME ?? 'film';
+const SCRIPT_LINES = process.env.NARRATION_FILE
+  ? JSON.parse(fs.readFileSync(process.env.NARRATION_FILE, 'utf8'))
+  : null;
 
 /** Every figure here is one a judge can open on the live site. */
 export const LINES = [
@@ -39,7 +45,8 @@ function apiKey() {
 }
 
 async function main() {
-  const text = LINES.map((l) => l.text).join('\n\n');
+  const script = SCRIPT_LINES ?? LINES;
+  const text = script.map((l) => l.text).join('\n\n');
   const res = await fetch(
     `https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}/with-timestamps?output_format=mp3_44100_128`,
     {
@@ -59,7 +66,7 @@ async function main() {
   // Map each line back onto the alignment by walking the sent text.
   const sent = characters.join('');
   let cursor = 0;
-  const lines = LINES.map((l) => {
+  const lines = script.map((l) => {
     const at = sent.indexOf(l.text, cursor);
     if (at === -1) throw new Error(`alignment does not contain line "${l.id}"`);
     cursor = at + l.text.length;
@@ -68,9 +75,9 @@ async function main() {
   const duration = ends[ends.length - 1];
 
   fs.mkdirSync(OUT_DIR, { recursive: true });
-  fs.writeFileSync(path.join(OUT_DIR, 'film-voice.mp3'), Buffer.from(body.audio_base64, 'base64'));
+  fs.writeFileSync(path.join(OUT_DIR, `${NAME}-voice.mp3`), Buffer.from(body.audio_base64, 'base64'));
   fs.writeFileSync(
-    path.join(OUT_DIR, 'film-timing.json'),
+    path.join(OUT_DIR, `${NAME}-timing.json`),
     JSON.stringify({ voiceId: VOICE_ID, modelId: MODEL_ID, duration, lines }, null, 2) + '\n',
   );
 

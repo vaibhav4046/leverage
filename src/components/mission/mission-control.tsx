@@ -93,6 +93,7 @@ export function MissionControl({
         connected={connected}
         onRefresh={refresh}
         readOnly={readOnly}
+        readOnlyLabel={readOnlyLabel}
       />
       <MissionMetrics snapshot={snapshot} />
 
@@ -128,11 +129,13 @@ function MissionHeader({
   connected,
   onRefresh,
   readOnly,
+  readOnlyLabel,
 }: {
   snapshot: MissionSnapshot;
   connected: boolean;
   onRefresh: () => void;
   readOnly: boolean;
+  readOnlyLabel: string;
 }) {
   const [busy, setBusy] = useState(false);
   const { mission } = snapshot;
