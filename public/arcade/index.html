@@ -48,6 +48,13 @@
         pointer-events: none;
       }
       .hud b { display: block; margin-top: 3px; font: 500 20px ui-sans-serif, system-ui; color: #fff; letter-spacing: -0.01em; }
+      /* On a phone the badge and the HUD share one short top edge; the badge moves to the bottom corner. */
+      @media (max-width: 640px) { .badge { top: auto !important; bottom: 14px; } }
+      /* Touch controls, only where there is no keyboard to speak of. */
+      .touch { display: none; position: absolute; left: 0; right: 0; bottom: 14px; justify-content: center; gap: 12px; }
+      @media (pointer: coarse) { .touch { display: flex; } .hint { display: none; } }
+      .touch button { width: 58px; height: 58px; border-radius: 50%; border: 1px solid var(--edge); background: rgba(13, 23, 43, 0.72); color: #fff; font: 500 20px ui-sans-serif, system-ui; touch-action: none; user-select: none; -webkit-user-select: none; }
+      .touch button:active { background: rgba(98, 95, 255, 0.35); }
       .badge {
         position: absolute;
         top: 14px;
@@ -93,6 +100,12 @@
         <div>Wave<b id="wave">1</b></div>
       </div>
       <div class="badge">logic written by Leverage · $0.00</div>
+      <div class="touch">
+        <button type="button" data-key="ArrowLeft" aria-label="Rotate left">&#9664;</button>
+        <button type="button" data-key="ArrowUp" aria-label="Thrust">&#9650;</button>
+        <button type="button" data-key="ArrowRight" aria-label="Rotate right">&#9654;</button>
+        <button type="button" data-fire aria-label="Fire">&#9679;</button>
+      </div>
       <div class="hint" id="hint">← → rotate · ↑ thrust · space fire</div>
     </div>
 
@@ -153,6 +166,13 @@
         }
       });
       addEventListener('keyup', (e) => keys.delete(e.code));
+      // The same key set, driven by thumbs. Holding a button holds the key.
+      for (const b of document.querySelectorAll('.touch [data-key]')) {
+        const k = b.dataset.key;
+        b.addEventListener('pointerdown', (e) => { e.preventDefault(); keys.add(k); });
+        for (const t of ['pointerup', 'pointercancel', 'pointerleave']) b.addEventListener(t, () => keys.delete(k));
+      }
+      document.querySelector('.touch [data-fire]')?.addEventListener('pointerdown', (e) => { e.preventDefault(); game = fire(game); });
 
       // Trails are a render concern, not game state, so they live here.
       const trails = [];

@@ -8,7 +8,11 @@ import { buildCheckpoint, contextReduction, renderCheckpoint } from '../src/core
 import { ReputationStore } from '../src/core/reputation';
 import { redactText, redactObject, MissionEventLog } from '../src/core/events';
 import { parseWorkerOutput, InvalidWorkerOutputError } from '../src/core/worker-output';
-import { computeQualityScore } from '../src/core/verify';
+import { computeQualityScore, runVerification } from '../src/core/verify';
+import { createMissionState, snapshotMission } from '../src/core/mission';
+import { MissionScheduler } from '../src/core/scheduler';
+import type { ProviderRegistry } from '../src/providers/registry';
+import type { RocketRideExecutor } from '../src/rocketride/executor';
 import { safeJoin } from '../src/core/context';
 import { FaultInjector, INJECTED_RATE_LIMIT } from '../src/core/faults';
 import { requireWritable, AuthError, type Identity } from '../src/auth/policy';
@@ -23,6 +27,7 @@ import type {
   MissionTask,
   ModelDescriptor,
   ProviderHealth,
+  VerificationCheckSpec,
   WorkerRun,
 } from '../src/core/types';
 
@@ -97,6 +102,11 @@ function model(
 
 const HEALTHY: ProviderHealth = { status: 'HEALTHY', checkedAt: new Date().toISOString() };
 
+/** One deterministic check, for plans that must get past the empty-gate refusal. */
+const oneCheck = (): VerificationCheckSpec[] => [
+  { id: 'exists-0', label: 'src/a.js exists', kind: 'file-exists', path: 'src/a.js', weight: 1 },
+];
+
 // ------------------------------------------------------------------ the budget
 
 describe('budget governor: a hard budget is a wall, not a suggestion', () => {
@@ -146,6 +156,30 @@ describe('budget governor: a hard budget is a wall, not a suggestion', () => {
     const s = b.snapshot();
     expect(s.settledUsd).toBe(0);
     expect(s.estimatedFrontierEquivalentUsd).toBeCloseTo(3 + 1.5, 5);
+  });
+
+  it('detects an overshoot at settle time, records the spend and refuses to hide it', () => {
+    // Reservation is the preventive control; settle is the detective one. A
+    // model that produced far more than estimated has already been paid for,
+    // so the ledger must show the bill and the caller must be told at once,
+    // not when assertInvariant runs at the end of the mission.
+    const b = new BudgetGovernor({ maxUsd: 0.1, hard: true });
+    const r = b.reserve(0.05, 'paid');
+    expect(() => b.settle(r, 0.2, 'paid')).toThrow(BudgetExceededError);
+    const s = b.snapshot();
+    expect(s.settledUsd).toBeCloseTo(0.2);
+    expect(s.reservedUsd).toBe(0);
+    expect(s.paidCalls).toBe(1);
+    expect(s.overshot).toBe(true);
+    expect(() => b.assertInvariant()).toThrow(/invariant/);
+  });
+
+  it('accepts a bill above the reservation that still fits the budget', () => {
+    const b = new BudgetGovernor({ maxUsd: 0.1, hard: true });
+    const r = b.reserve(0.05, 'paid');
+    expect(() => b.settle(r, 0.08, 'paid')).not.toThrow();
+    expect(b.snapshot().overshot).toBe(false);
+    b.assertInvariant();
   });
 });
 
@@ -380,6 +414,31 @@ describe('cognitive handoff', () => {
     expect(cp.decisions.length).toBeLessThanOrEqual(8);
     expect(cp.filesChanged.length).toBeLessThanOrEqual(20);
   });
+
+  it('surfaces what a checkpoint carried in the mission snapshot, not just its size', () => {
+    // The UI reads the snapshot. A checkpoint that arrives there as token counts
+    // and nothing else looks empty, and a handoff that looks empty is not evidence.
+    const state = createMissionState(mission(), [task('money')]);
+    state.checkpoints.push(
+      buildCheckpoint({
+        task: task('money'),
+        worker,
+        bundle,
+        reason: 'RATE_LIMIT',
+        detail: 'quota exhausted',
+        filesChanged: ['src/money.js'],
+        decisions: ['Used integer cents throughout'],
+        assumptions: ['Input is a decimal string'],
+        remainingWork: ['allocate() remainder distribution'],
+        successfulChecks: [],
+        failedChecks: [],
+      }),
+    );
+    const snap = snapshotMission(state);
+    expect(snap.checkpoints[0].decisions).toContain('Used integer cents throughout');
+    expect(snap.checkpoints[0].assumptions).toContain('Input is a decimal string');
+    expect(snap.checkpoints[0].filesChanged).toEqual(['src/money.js']);
+  });
 });
 
 // ------------------------------------------------------------------- security
@@ -411,6 +470,41 @@ describe('security boundaries', () => {
     };
     expect(out.apiKey).toBe('[redacted]');
     expect(out.nested.authorization).toBe('[redacted]');
+  });
+
+  it('does not redact a token count because its key contains "token"', () => {
+    // A recorded run lost 33 numeric fields to a substring match on "token".
+    // A credential is a `token`; a count is `tokens`.
+    const counts = {
+      contextTokens: 453,
+      checkpointTokens: 120,
+      engineTokens: 9,
+      maxTokens: 8000,
+      modelKey: 'pool:best-free',
+    };
+    expect(redactObject(counts)).toEqual(counts);
+  });
+
+  it('redacts a credential-named key in any casing convention', () => {
+    const out = redactObject({
+      apiKey: 'a',
+      api_key: 'b',
+      authorization: 'c',
+      accessToken: 'd',
+      refreshToken: 'e',
+      'X-Auth-Token': 'f',
+      clientSecret: 'g',
+    });
+    expect(Object.values(out)).toEqual(Array(7).fill('[redacted]'));
+  });
+
+  it('redacts a credential-shaped value whatever its key is called', () => {
+    const out = redactObject({
+      contextNote: 'see sk-abcdefghijklmnopqrstuvwxyz012345',
+      items: ['rr_0000000000000000deadbeefcafe1234'],
+    });
+    expect(out.contextNote).toBe('see [redacted]');
+    expect(out.items[0]).toBe('[redacted]');
   });
 
   it('keeps secrets out of the mission event log', () => {
@@ -462,7 +556,7 @@ describe('mission compiler', () => {
         { id: 'b', title: 'B', dependencies: ['a'], fileScope: ['src/b.js'] },
       ],
     });
-    expect(() => parseTaskPlan(raw, spec, () => [])).toThrow(DagError);
+    expect(() => parseTaskPlan(raw, spec, oneCheck)).toThrow(DagError);
   });
 
   it('strips a planner file scope that escapes the repository', () => {
@@ -470,8 +564,16 @@ describe('mission compiler', () => {
     const raw = JSON.stringify({
       tasks: [{ id: 'a', title: 'A', dependencies: [], fileScope: ['../../etc/passwd', 'src/a.js'] }],
     });
-    const tasks = parseTaskPlan(raw, spec, () => []);
+    const tasks = parseTaskPlan(raw, spec, oneCheck);
     expect(tasks[0].fileScope).toEqual(['src/a.js']);
+  });
+
+  it('rejects a planner task that has no verification checks', () => {
+    // A task nothing can prove done would otherwise reach the gate with an
+    // empty list and, before the fix, pass on it.
+    const raw = JSON.stringify({ tasks: [{ id: 'a', title: 'A', dependencies: [] }] });
+    expect(() => parseTaskPlan(raw, mission(), () => [])).toThrow(PlanRejectedError);
+    expect(() => parseTaskPlan(raw, mission(), () => [])).toThrow(/no verification checks/);
   });
 
   it('rejects planner output that is not JSON at all', () => {
@@ -536,6 +638,20 @@ describe('quality score', () => {
       staticChecks: [],
     });
     expect(s.total).toBe(100);
+  });
+});
+
+// ---------------------------------------------------------- verification gate
+
+describe('verification gate: an empty gate is a failed gate', () => {
+  it('fails a task with no checks instead of passing it vacuously', async () => {
+    // Zero checks means zero evidence. `checks.every(...)` on an empty list is
+    // true, which is exactly how nothing became proof of something.
+    const result = await runVerification(task('t'), '/repo');
+    expect(result.passed).toBe(false);
+    expect(result.checks).toHaveLength(1);
+    expect(result.checks[0].status).toBe('fail');
+    expect(result.checks[0].detail).toMatch(/no verification was defined/);
   });
 });
 
@@ -749,5 +865,86 @@ describe('approval resolution', () => {
     expect(canTransition('AWAITING_APPROVAL', 'READY')).toBe(true);
     expect(canTransition('AWAITING_APPROVAL', 'PASSED')).toBe(false);
     void gated;
+  });
+});
+
+// ------------------------------------------------------------------ scheduler
+
+describe('scheduler: an empty gate fails and a blown budget stops the hiring', () => {
+  const OUTPUT = '### FILE: src/t.js\n```\nexport const a = 1;\n```\n';
+
+  /** One model, one adapter, direct invocation. No providers, no network. */
+  function stubScheduler(input: {
+    spec?: Partial<MissionSpec>;
+    model: ModelDescriptor;
+    estimateUsd: number;
+    response: { promptTokens?: number; completionTokens?: number };
+  }) {
+    const adapter = {
+      estimate: () => ({
+        estimatedPromptTokens: 100,
+        estimatedCompletionTokens: 100,
+        estimatedCostUsd: input.estimateUsd,
+      }),
+      invoke: async () => ({ text: OUTPUT, durationMs: 1, ...input.response }),
+      classifyError: (err: unknown) => ({
+        type: 'UNKNOWN' as const,
+        message: String(err),
+        retryable: false,
+      }),
+    };
+    const registry = {
+      sweep: async () => {},
+      allModels: () => [input.model],
+      adapterFor: () => adapter,
+      healthFor: () => HEALTHY,
+    } as unknown as ProviderRegistry;
+    const state = createMissionState(mission(input.spec), [task('t')]);
+    const scheduler = new MissionScheduler(
+      state,
+      { registry, executor: {} as RocketRideExecutor, reputation: new ReputationStore() },
+      { useRocketRide: false, maxAttemptsPerTask: 1, maxConcurrency: 1 },
+    );
+    return { state, scheduler };
+  }
+
+  it('fails a task it cannot verify instead of passing it on an empty gate', async () => {
+    // The test mission has no repository root, so no check could run. Before
+    // the fix this path returned passed: true and the task completed on nothing.
+    const { state, scheduler } = stubScheduler({
+      model: model('ollama:local', 'local'),
+      estimateUsd: 0,
+      response: {},
+    });
+    await scheduler.run();
+    expect(state.status).toBe('FAILED');
+    expect(state.tasks[0].state).toBe('FAILED');
+    expect(state.proofs).toHaveLength(0);
+    const check = state.events.all().find((e) => e.type === 'proof.check');
+    expect(check?.message).toMatch(/no repository root/);
+  });
+
+  it('fails the task and stops hiring when a bill overshoots the hard budget', async () => {
+    // $0.05 reserved of $0.10, then the provider reported 20k completion tokens
+    // at $15/M: a $0.30 bill. The spend is real and must show; the task must
+    // not be handed to another worker; the mission loop must not crash.
+    const { state, scheduler } = stubScheduler({
+      spec: { budget: { maxUsd: 0.1, hard: true }, privacy: { mode: 'cloud-allowed' } },
+      model: model('paid:frontier', 'paid'),
+      estimateUsd: 0.05,
+      response: { promptTokens: 0, completionTokens: 20_000 },
+    });
+    await expect(scheduler.run()).resolves.toBe(state);
+
+    const ledger = state.budget.snapshot();
+    expect(ledger.settledUsd).toBeCloseTo(0.3);
+    expect(ledger.overshot).toBe(true);
+    expect(state.status).toBe('FAILED');
+    expect(state.tasks[0].state).toBe('FAILED');
+    expect(state.workers).toHaveLength(1);
+    expect(state.workers[0].failureType).toBe('POLICY_BLOCK');
+    expect(state.workers[0].actualCostUsd).toBeCloseTo(0.3);
+    const blocked = state.events.all().find((e) => e.type === 'budget.blocked');
+    expect(blocked?.message).toMatch(/overshot hard budget/);
   });
 });

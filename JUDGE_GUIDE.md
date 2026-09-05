@@ -6,19 +6,22 @@ Everything below is checkable. Nothing on this page is a claim you have to take 
 
 ## If you have three minutes and no terminal
 
-Everything below can be checked without cloning anything. These are live and
-read-only; every mutating route answers 403 by design.
+Everything below can be checked without cloning anything. These are live. One page
+executes; everything else is a recording, and every other mutating route answers 403.
 
 | What | Where |
 |---|---|
+| A real mission, run while you watch | <https://useleverage.vercel.app/app/live> |
 | The recorded mission, event by event | <https://useleverage.vercel.app/app/missions/LVR-f8f72d56> |
-| The handoff, scrubbable | <https://useleverage.vercel.app/demo> |
+| The handoff, scrubbable | the replay on the landing page, under "A worker fails. The work does not." |
+| What free models built, playable | <https://useleverage.vercel.app/demo> |
 | Every measured number and its methodology | <https://useleverage.vercel.app/benchmarks> |
 | What the deployment thinks of itself | <https://useleverage.vercel.app/api/v1/health> |
 | Source | <https://github.com/vaibhav4046/leverage> |
 
-The public deployment has no local runtime and no provider keys, so it replays
-recorded runs rather than executing new ones. It says so on the pages themselves.
+The deployment hires from a hosted pool of free-tier models and executes their work
+as RocketRide pipelines. The live page runs one bounded mission per visitor; every
+other mission on the site is a recording, and the pages say which is which.
 
 ---
 
@@ -148,7 +151,7 @@ renders in the same view as the recorded ones. One to three minutes. Bounded: fi
 goal, one run per visitor every ten minutes, cancelled if you leave.
 
 If you would rather be told than read: the landing page carries a narrated
-walkthrough (1:48) over untouched footage of the live site, including one real live
+walkthrough (1:51) over untouched footage of the live site, including one real live
 run recorded once, in order (`motion/compositions/walkthrough.html`, captures from
 `scripts/walkthrough-record.mjs`, voiced by `scripts/narrate-film.mjs`, cut on the
 narration's timestamps). The 68-second motion piece that states the thesis without
@@ -212,7 +215,7 @@ claude mcp add leverage -- node /abs/path/to/leverage/mcp/server.ts
 npm run verify
 ```
 
-53 tests. The ones that matter:
+81 tests. The ones that matter:
 
 - a hard budget cannot be overshot, including by concurrent reservations
 - a paid model is *ineligible* at `$0`, not merely out-ranked
@@ -228,8 +231,13 @@ npm run verify
 ## What is honest about the limits
 
 - **The task graph for the benchmark is committed, not planner-generated.** A benchmark
-  whose plan changes per run measures the planner, not the workforce. Arbitrary missions go
-  through `parseTaskPlan`, which rejects cycles, dangling edges and escaping paths.
+  whose plan changes per run measures the planner, not the workforce. A mission given a
+  repository path (`--repo` on the CLI, the Repository field in the composer, `repositoryRoot`
+  over the API and MCP) is planned by a model in `src/server/planner.ts`, and that plan goes
+  through `parseTaskPlan`, which rejects cycles, dangling edges, escaping paths and tasks with
+  no check. A rejected plan fails the mission with the reason; nothing falls back to the
+  fixture silently. The planner may only name test commands in a few fixed shapes, because the
+  goal text reaches it and a command it proposes is as trusted as the goal.
 - **No baseline comparison is claimed.** Running the same mission on one frontier model
   would need a paid key this build does not have, so BENCHMARKS.md reports Leverage's own
   numbers and no speedup multiple.

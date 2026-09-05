@@ -150,7 +150,7 @@ export default async function AppOverview() {
                         {m.mission.goal}
                       </div>
                     </div>
-                    <div className="mono flex shrink-0 items-center gap-7 text-[11.5px] tabular-nums">
+                    <div className="mono flex flex-wrap items-center gap-x-6 gap-y-1 text-[11.5px] tabular-nums">
                       <span className="text-[var(--color-ash)]">
                         {passed}/{m.tasks.length} tasks
                       </span>

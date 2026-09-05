@@ -14,6 +14,7 @@ import { ReputationStore } from '@/core/reputation';
 import nextDynamic from 'next/dynamic';
 import type { HandoffStep } from '@/components/marketing/handoff-player';
 import { RocketRideProof } from '@/components/marketing/rocketride-proof';
+import { MobileMenu } from '@/components/marketing/page-shell';
 import { AuroraField, WorkforceOrbit } from '@/components/visual/lazy';
 import type { OrbitNode } from '@/components/visual/workforce-orbit';
 import { Counter, Reveal } from '@/components/visual/motion';
@@ -84,7 +85,7 @@ async function loadLedger(): Promise<ModelRow[]> {
 }
 
 export default async function Home() {
-  const [run, arcade, rocketRide, hosted, ledger] = await Promise.all([
+  const [run, arcade, rocketRide, hosted, planned, ledger] = await Promise.all([
     loadRun('canonical-run.json'),
     loadRun('arcade-run.json'),
     // The run RocketRide executed gets its own section because it answers a
@@ -92,9 +93,28 @@ export default async function Home() {
     // so the band and Mission Control agree on how many missions there are.
     loadRun('rocketride-mission.json'),
     loadRun('hosted-pool-mission.json'),
+    // The mission whose plan a model wrote, so the stats band counts it too.
+    loadRun('planned-run.json'),
     loadLedger(),
   ]);
-  const allRuns = [run, arcade, rocketRide, hosted].filter((r): r is MissionSnapshot => r !== null);
+  const allRuns = [run, arcade, rocketRide, hosted, planned].filter((r): r is MissionSnapshot => r !== null);
+
+  // The job-market panel shows a real auction from a recorded run: the first one
+  // where policy struck a candidate, so the "removed, not out-ranked" point is a
+  // recorded fact rather than an illustration. Top three eligible by utility,
+  // plus the first candidate policy refused.
+  const market = (() => {
+    for (const r of allRuns) {
+      for (const auction of r.auctions) {
+        const struck = auction.candidates.find((c) => !c.eligible);
+        const task = r.tasks.find((t) => t.id === auction.taskId);
+        if (!struck || !task) continue;
+        const eligible = auction.candidates.filter((c) => c.eligible).sort((a, b) => b.utility - a.utility).slice(0, 3);
+        return { missionId: r.mission.id, task, auction, privacy: r.mission.privacy.mode, budgetMaxUsd: r.usage.budgetMaxUsd, rows: [...eligible, struck] };
+      }
+    }
+    return null;
+  })();
 
   const handoff = run?.checkpoints[0];
   const proofChecks = run?.proofs.flatMap((p) => p.checks) ?? [];
@@ -189,8 +209,8 @@ export default async function Home() {
                     <Link href="/app/live" className="btn-primary">
                       Run a real mission now
                     </Link>
-                    <Link href="/demo" className="btn-ghost">
-                      Watch the proof
+                    <Link href="#film" className="btn-ghost">
+                      Watch the film
                     </Link>
                   </div>
                 </Reveal>
@@ -322,7 +342,7 @@ export default async function Home() {
                   </dl>
                 </Reveal>
 
-                <div className="relative aspect-square w-full max-w-[520px] justify-self-center">
+                <div className="relative hidden aspect-square w-full max-w-[520px] justify-self-center md:block">
                   <WorkforceOrbit nodes={orbitNodes} />
                 </div>
               </div>
@@ -337,57 +357,55 @@ export default async function Home() {
             your budget, its measured track record, latency and your privacy policy, then hires the
             best eligible worker and shows you why.
           </p>
-
-          <div className="mt-10 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
-            <Reveal className="min-w-0">
-              <div className="surface-card h-full p-6">
-                <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-                  Job
+          {market ? (
+            <div className="mt-10 grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+              <Reveal className="min-w-0">
+                <div className="surface-card h-full p-6">
+                  <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
+                    Job · from mission {market.missionId}
+                  </div>
+                  <div className="mt-2 text-[16px] text-[var(--color-quartz)]">{market.task.title}</div>
+                  <dl className="mono mt-5 space-y-2 text-[12px]">
+                    {[
+                      ['Category', market.task.category],
+                      ['Candidates', `${market.auction.candidates.length} scored`],
+                      ['Max cost', `$${market.budgetMaxUsd.toFixed(2)}`],
+                      ['Privacy', market.privacy],
+                    ].map(([k, v]) => (
+                      <div key={k} className="flex justify-between gap-4">
+                        <dt className="text-[var(--color-ash)]">{k}</dt>
+                        <dd className="text-[var(--color-mist)]">{v}</dd>
+                      </div>
+                    ))}
+                  </dl>
                 </div>
-                <div className="mt-2 text-[16px] text-[var(--color-quartz)]">
-                  Implement the split calculation
+              </Reveal>
+              <Reveal delay={90} className="min-w-0">
+                <div className="surface-card h-full p-6">
+                  <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
+                    Candidates · as recorded
+                  </div>
+                  <ul className="mt-4 space-y-3">
+                    {market.rows.map((c) => (
+                      <Candidate
+                        key={c.modelKey}
+                        name={c.displayName}
+                        utility={c.eligible ? c.utility.toFixed(2) : '–'}
+                        note={c.eligible ? `${c.costClass} · ${c.sampleCount} prior job${c.sampleCount === 1 ? '' : 's'}` : (c.ineligibleReason ?? 'ineligible')}
+                        winner={c.modelKey === market.auction.winner?.modelKey}
+                        blocked={!c.eligible}
+                      />
+                    ))}
+                  </ul>
+                  <p className="mt-5 border-t border-[var(--color-obsidian-edge)] pt-4 text-[13px] text-[var(--color-ash)]">
+                    Policy runs before scoring. A paid model under a $0 budget is not out-ranked. It is
+                    never in the pool.
+                  </p>
                 </div>
-                <dl className="mono mt-5 space-y-2 text-[12px]">
-                  {[
-                    ['Requires', 'code · backend · reasoning'],
-                    ['Context', '1.4K tokens'],
-                    ['Max cost', '$0.00'],
-                    ['Privacy', 'prefer-local'],
-                  ].map(([k, v]) => (
-                    <div key={k} className="flex justify-between gap-4">
-                      <dt className="text-[var(--color-ash)]">{k}</dt>
-                      <dd className="text-[var(--color-mist)]">{v}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            </Reveal>
-
-            <Reveal delay={90} className="min-w-0">
-              <div className="surface-card h-full p-6">
-                <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-                  Candidates
-                </div>
-                <ul className="mt-4 space-y-3">
-                  <Candidate name="Claude Code (your seat)" utility="0.88" note="host seat · no API key" winner />
-                  <Candidate name="qwen2.5-coder:3b" utility="0.84" note="local runtime · 2 verified probes" />
-                  <Candidate name="Pool · best-coding" utility="0.79" note="free route · quota risk" />
-                  <Candidate
-                    name="Claude API"
-                    utility="–"
-                    note="Hard budget $0.00 blocks all paid routes"
-                    blocked
-                  />
-                </ul>
-                <p className="mt-5 border-t border-[var(--color-obsidian-edge)] pt-4 text-[13px] text-[var(--color-ash)]">
-                  Policy runs before scoring. A paid model under a $0 budget is not out-ranked. It is
-                  never in the pool.
-                </p>
-              </div>
-            </Reveal>
-          </div>
+              </Reveal>
+            </div>
+          ) : null}
         </Section>
-
         <WorkforceLedger models={ledger} />
 
         {/* --------------------------------------------------------- Connect */}
@@ -596,13 +614,22 @@ function Nav() {
           ))}
         </div>
         <div className="flex items-center gap-3">
+          <MobileMenu
+            links={[
+              ['/how-it-works', 'How it works'],
+              ['/benchmarks', 'Benchmarks'],
+              ['/docs', 'Docs'],
+              ['/app', 'Mission Control'],
+              ['/demo', 'Demo'],
+            ]}
+          />
           <Link
             href="/app"
             className="hidden text-[14px] text-[var(--color-ash)] transition-colors hover:text-[var(--color-quartz)] sm:block"
           >
             Mission Control
           </Link>
-          <Link href="/app/live" className="btn-primary !py-2 !text-[14px]">
+          <Link href="/app/live" className="btn-primary !py-2.5 !text-[14px]">
             Run a real mission
           </Link>
         </div>

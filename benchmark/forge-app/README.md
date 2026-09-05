@@ -19,9 +19,14 @@ money.js      validate.js        <- independent, run in parallel
 
 ## Running it
 
+From this directory:
+
 ```bash
-node --test test/
+node --test
 ```
 
-Four suites, 21 assertions. All fail on a clean checkout, which is the point:
+(`npm test` runs the same four files. `node --test test/` does not work on Node 24:
+a directory argument is treated as a module path and fails with "Cannot find module".)
+
+Four suites, 17 tests, 29 assertions. All fail on a clean checkout, which is the point:
 a benchmark you can pass by doing nothing measures nothing.

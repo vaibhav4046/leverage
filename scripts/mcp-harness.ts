@@ -96,6 +96,7 @@ async function main() {
       // the local runtime is down, which is how the RocketRide-only run is made.
       privacy: process.env.LEVERAGE_PRIVACY ?? 'prefer-local',
       maxWorkers: Number(process.env.LEVERAGE_MAX_WORKERS ?? 2),
+      ...(process.env.LEVERAGE_REPOSITORY_ROOT ? { repositoryRoot: process.env.LEVERAGE_REPOSITORY_ROOT } : {}),
     },
   });
   record('tools/call leverage_run', run);

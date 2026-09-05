@@ -18,7 +18,7 @@ money.js      validate.js      <- independent, run in parallel
        index.js                <- depends on split
 ```
 
-Four suites, 17 assertions. All fail on a clean checkout.
+Four suites, 17 tests, 29 assertions. All fail on a clean checkout.
 
 The design choice that makes it meaningful: test files are in each task's *reference*
 scope, not its *write* scope. A worker can read the tests it must satisfy and cannot
@@ -29,6 +29,7 @@ Reproduce:
 ```bash
 npm run fixture:reset
 npm run mission -- --inject-429 --out=demo/canonical-run.json
+cd benchmark/forge-app && node --test      # the suite the mission had to satisfy
 ```
 
 ---
@@ -172,6 +173,53 @@ existed. They did not design the game, choose the mechanic or write the renderer
 the run demonstrates is that free and subscription-backed models, coordinated and
 verified, can produce working code that passes tests they cannot edit — not that they
 produced a title.
+
+---
+
+## Control plane at volume
+
+`npm run scale` (`scripts/scale-harness.ts`) runs the real `MissionScheduler`, the same
+class the server and `scripts/run-mission.ts` construct, over a 100-task
+diamond-dependency graph with up to eight workers at once. Nothing external is called
+and no credit is spent. What is stubbed, exactly:
+
+- **Providers.** Three stub models (two local, one free) plus one paid model whose only
+  job is to be struck out by the policy filter on every auction. Worker latency and
+  outages are scripted before the run from one seeded PRNG, one draw per task per
+  attempt, so the handoff count is the same on every machine however the workers
+  interleave. An outage is thrown from the adapter and classified as a provider 5xx.
+- **Executor.** A stub that fails the run if it is ever called. `useRocketRide` is off
+  and every worker is invoked directly.
+- **Repository.** An empty temporary directory, removed afterwards. Each task is
+  verified by the scheduler's default `file-exists` check for its file scope, run by
+  the real verification engine. No test command is spawned.
+
+Everything else is the scheduler's own code: DAG readiness, claiming, the auction and
+policy filter, the context compiler, the budget governor, the scoped write path,
+verification, checkpoints and handoffs. The invariants are read back from the
+scheduler's event log, not from counters the harness keeps for itself. From
+`demo/scale-run.json`:
+
+```
+tasks completed           100 / 100
+workers hired             116
+handoffs                  16   (one per scripted outage, each checkpointed and replaced)
+paid candidate struck     116  (every auction, hard budget $0)
+duplicate claims          0
+ordering violations       0
+concurrency breaches      0
+budget overshoots         0
+paid calls                0
+executor calls            0
+events                    1696
+elapsed                   437 ms on the recording machine
+```
+
+What it does not measure: any provider's throughput, test-suite verification (the
+recorded missions cover that), or a worker that writes the wrong thing. Peak concurrency
+was 4 of the 8 allowed because each layer of the graph is four tasks wide, so the limit
+was respected, not reached. The free stub never won an auction against the local stubs,
+so every settled call in the ledger is local.
 
 ---
 

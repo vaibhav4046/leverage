@@ -20,7 +20,7 @@ import { MissionEventLog } from './events';
 import { assertTransition, isBlocked, isSettled, readyTasks, validateDag } from './dag';
 import { runAuction } from './auction';
 import { compileContext, safeJoin } from './context';
-import { computeQualityScore, runVerification } from './verify';
+import { computeQualityScore, runVerification, unverifiable } from './verify';
 import { buildCheckpoint, contextReduction, renderCheckpoint } from './checkpoint';
 import { ReputationStore } from './reputation';
 import type { ProviderRegistry } from '../providers/registry';
@@ -241,7 +241,11 @@ export class MissionScheduler {
   private finish(): MissionState {
     const { state } = this;
     state.completedAt = Date.now();
-    state.budget.assertInvariant();
+    const ledger = state.budget.snapshot();
+    // An overshoot was caught at settle time, failed its task and is on the
+    // ledger, so it is not a surprise here. Anything else that breaks the
+    // invariant is a scheduler bug, and throwing is the right response to a bug.
+    if (!ledger.overshot) state.budget.assertInvariant();
 
     if (this.cancelled) {
       state.status = 'CANCELLED';
@@ -254,7 +258,7 @@ export class MissionScheduler {
     const passed = state.tasks.filter((t) => t.state === 'PASSED').length;
     const failed = state.tasks.filter((t) => t.state === 'FAILED' || t.state === 'BLOCKED').length;
 
-    state.status = failed === 0 ? 'COMPLETED' : 'FAILED';
+    state.status = failed === 0 && !ledger.overshot ? 'COMPLETED' : 'FAILED';
     state.events.emit(
       failed === 0 ? 'mission.completed' : 'mission.failed',
       `Mission ${failed === 0 ? 'verified' : 'finished with failures'}: ${passed}/${state.tasks.length} tasks passed`,
@@ -321,6 +325,19 @@ export class MissionScheduler {
 
       // Failed. Keep the understanding, drop the worker.
       checkpoint = outcome.checkpoint;
+
+      // A terminal failure (the bill broke the hard budget) is not a reason to
+      // hire again. The checkpoint is kept for the record; the task ends here.
+      if (outcome.terminal) {
+        state.events.emit(
+          'task.failed',
+          `Task "${task.title}" failed: ${outcome.failureType}; no further workers will be hired`,
+          { taskId: task.id, data: { lastFailure: outcome.failureType } },
+        );
+        this.forceState(task, 'FAILED');
+        return;
+      }
+
       if (ATTRIBUTABLE_FAILURES.has(outcome.failureType)) {
         excluded.push(model.key);
       } else {
@@ -495,7 +512,13 @@ export class MissionScheduler {
   ): Promise<
     | { kind: 'passed' }
     | { kind: 'cancelled' }
-    | { kind: 'failed'; failureType: FailureType; checkpoint: CognitiveCheckpoint }
+    | {
+        kind: 'failed';
+        failureType: FailureType;
+        checkpoint: CognitiveCheckpoint;
+        /** True when the task must not be retried with another worker. */
+        terminal?: boolean;
+      }
   > {
     const { state } = this;
     const adapter = this.deps.registry.adapterFor(model)!;
@@ -624,23 +647,40 @@ export class MissionScheduler {
         ? ((promptTokens ?? estimate.estimatedPromptTokens) / 1e6) * model.pricing.inputPerMTok +
           ((completionTokens ?? estimate.estimatedCompletionTokens) / 1e6) * model.pricing.outputPerMTok
         : 0;
-    state.budget.settle(reservation, actualCost, model.costClass);
+    worker.actualCostUsd = actualCost;
+    worker.promptTokens = promptTokens;
+    worker.completionTokens = completionTokens;
     state.budget.recordFrontierEquivalent(
       promptTokens ?? bundle.approximateTokens,
       completionTokens ?? estimateTokens(text),
       FRONTIER_BASELINE,
     );
 
-    worker.actualCostUsd = actualCost;
-    worker.promptTokens = promptTokens;
-    worker.completionTokens = completionTokens;
+    try {
+      state.budget.settle(reservation, actualCost, model.costClass);
+    } catch (err) {
+      if (!(err instanceof BudgetExceededError)) throw err;
+      // The bill is already paid and it broke the hard budget. The ledger has
+      // recorded it; the output is discarded unverified, the task fails outright
+      // and nothing more is hired for it. Reservation was the preventive control,
+      // this is the detective one catching what the estimate missed.
+      state.events.emit('budget.blocked', err.message, { taskId: task.id, workerRunId: worker.id });
+      const outcome = this.failWorker(task, worker, bundle, 'POLICY_BLOCK', err.message, checkpoint);
+      return outcome.kind === 'failed' ? { ...outcome, terminal: true } : outcome;
+    }
 
     // --- Parse ------------------------------------------------------------
     let output;
     try {
       output = parseWorkerOutput(text);
     } catch (err) {
-      const detail = err instanceof InvalidWorkerOutputError ? err.message : String(err);
+      // What the model actually said, in brief, so the log explains the failure
+      // instead of only naming it: an empty answer and a prose answer are
+      // different problems with different fixes.
+      const began = text.trim().replace(/\s+/g, ' ').slice(0, 160);
+      const detail =
+        (err instanceof InvalidWorkerOutputError ? err.message : String(err)) +
+        ` (answer ${text.length} chars${began ? `, began: ${JSON.stringify(began)}` : ', empty'})`;
       return this.failWorker(task, worker, bundle, 'INVALID_OUTPUT', detail, checkpoint);
     }
 
@@ -687,9 +727,12 @@ export class MissionScheduler {
       workerRunId: worker.id,
     });
 
+    // No repository means no check can run, and a check that cannot run is not
+    // a pass. Every production caller supplies a root; this path exists so a
+    // mission compiled without one fails loudly instead of verifying nothing.
     const verification = repoRoot
       ? await runVerification(task, repoRoot, { signal: this.abort.signal })
-      : { checks: [] as ProofCheck[], passed: true };
+      : unverifiable('no verification could run: the mission has no repository root');
 
     for (const check of verification.checks) {
       state.events.emit(

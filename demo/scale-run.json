@@ -1,8 +1,8 @@
 {
   "label": "Synthetic control-plane stress test",
-  "methodology": "Deterministic local stub workers on a seeded PRNG. No provider is called and no credit is spent. This measures the control plane (DAG readiness, task claiming, budget ledger, recovery accounting) under a diamond-dependency graph. It is not a measurement of cloud worker throughput and must never be presented as one.",
+  "methodology": "The real MissionScheduler run over a diamond-dependency graph with stub provider adapters whose outages are scripted from a seeded PRNG. No provider is called and no credit is spent. The repository is an empty temporary directory; each task is verified by the default file-exists check for its file scope, so no test command is spawned. Invariants are read from the scheduler event log. It measures the control plane (DAG readiness, claiming, auction and policy filter, budget ledger, scoped writes, verification, checkpoint and handoff) under load. It is not a measurement of cloud worker throughput and must never be presented as one.",
   "seed": 20260904,
-  "ranAt": "2026-09-04T05:46:13.497Z",
+  "ranAt": "2026-09-05T14:56:18.641Z",
   "graph": {
     "tasks": 100,
     "shape": "diamond, 4 per layer",
@@ -13,18 +13,31 @@
     "peakConcurrent": 4
   },
   "results": {
+    "missionStatus": "COMPLETED",
     "completed": 100,
+    "failed": 0,
     "blocked": 0,
-    "handoffs": 15,
-    "events": 230,
-    "elapsedMs": 499,
-    "tasksPerSecond": 200.4
+    "unscheduled": 0,
+    "workersHired": 116,
+    "handoffs": 16,
+    "outagesScripted": 16,
+    "events": 1696,
+    "elapsedMs": 437,
+    "tasksPerSecond": 228.8
   },
   "invariants": {
     "duplicateClaims": 0,
-    "budgetOvershoots": 0,
     "orderingViolations": 0,
+    "concurrencyBreaches": 0,
+    "budgetOvershoots": 0,
+    "paidCandidatesStruckOut": 116,
+    "executorCalls": 0,
+    "unaccountedOutages": 0,
+    "unexplainedHandoffs": 0,
     "hardBudgetUsd": 0,
-    "settledUsd": 0
+    "settledUsd": 0,
+    "paidCalls": 0,
+    "localCalls": 100,
+    "freeCalls": 0
   }
 }

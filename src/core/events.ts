@@ -91,7 +91,32 @@ export class MissionEventLog {
  * known credential formats. The regression test in tests/security asserts that a
  * planted key never appears in events, API responses, ProofPacks or rendered HTML.
  */
-const SECRET_KEY_PATTERN = /(api[-_]?key|apikey|secret|token|password|passwd|credential|authorization|bearer)/i;
+/**
+ * Key names that carry a credential.
+ *
+ * Matched on whole words after the key is split into its camelCase, snake_case
+ * or kebab-case segments, so `apiKey`, `api_key`, `accessToken` and `X-Auth-Token`
+ * are redacted while counts such as `contextTokens`, `checkpointTokens` or
+ * `maxTokens` are not: a credential is a `token`, a count is `tokens`. The old
+ * substring match on "token" erased 33 numeric fields from a recorded run.
+ */
+const CREDENTIAL_KEY_WORDS =
+  /\b(api ?keys?|private ?keys?|secrets?|passwords?|passwd|token|credentials?|authorization|bearer|cookies?)\b/;
+
+/** `contextTokens` -> "context tokens", `X-API-Key` -> "x api key", `token1` -> "token 1". */
+function keyWords(key: string): string {
+  return key
+    .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')
+    .replace(/([A-Za-z])([0-9])/g, '$1 $2')
+    .replace(/[^A-Za-z0-9]+/g, ' ')
+    .trim()
+    .toLowerCase();
+}
+
+function isCredentialKey(key: string): boolean {
+  return CREDENTIAL_KEY_WORDS.test(keyWords(key));
+}
 
 const SECRET_VALUE_PATTERNS: RegExp[] = [
   /\brr_[A-Za-z0-9]{16,}\b/g, // RocketRide
@@ -125,7 +150,7 @@ function redactValue(value: unknown, depth: number): unknown {
   if (value && typeof value === 'object') {
     const out: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
-      out[k] = SECRET_KEY_PATTERN.test(k) ? REDACTED : redactValue(v, depth + 1);
+      out[k] = isCredentialKey(k) ? REDACTED : redactValue(v, depth + 1);
     }
     return out;
   }

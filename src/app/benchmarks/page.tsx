@@ -72,17 +72,49 @@ async function loadProbe(): Promise<{ results: { model: string; passed: number; 
   }
 }
 
+interface ScaleRun {
+  label: string;
+  methodology: string;
+  seed: number;
+  ranAt: string;
+  graph: { tasks: number; shape: string };
+  concurrency: { limit: number; peakConcurrent: number };
+  results: {
+    missionStatus: string;
+    completed: number;
+    failed: number;
+    workersHired: number;
+    handoffs: number;
+    outagesScripted: number;
+    events: number;
+    elapsedMs: number;
+    tasksPerSecond: number;
+  };
+  invariants: Record<string, number>;
+}
+
+async function loadScale(): Promise<ScaleRun | null> {
+  try {
+    return JSON.parse(await fs.readFile(path.resolve('demo/scale-run.json'), 'utf8')) as ScaleRun;
+  } catch {
+    return null;
+  }
+}
+
 export default async function BenchmarksPage() {
-  const [forge, arcade, probe, rr, rrMission] = await Promise.all([
+  const [forge, arcade, planned, probe, rr, rrMission, scale] = await Promise.all([
     loadRun('canonical-run.json'),
     loadRun('arcade-run.json'),
+    loadRun('planned-run.json'),
     loadProbe(),
     loadRocketRide(),
     loadRocketRideMission(),
+    loadScale(),
   ]);
   const runs = [
-    { label: 'forge-app', sub: 'receipt-splitting library', run: forge },
-    { label: 'arcade', sub: 'gravity-arena prototype', run: arcade },
+    { label: 'forge-app', sub: 'receipt-splitting library · committed plan', run: forge },
+    { label: 'arcade', sub: 'gravity-arena prototype · committed plan', run: arcade },
+    { label: 'greeter', sub: 'three small modules · plan written by a model', run: planned },
   ].filter((r) => r.run) as { label: string; sub: string; run: MissionSnapshot }[];
 
   const probePass = probe?.results.filter((r) => r.passed === r.total).length ?? 0;
@@ -355,6 +387,55 @@ ${runs.map((r) => `${r.label.padEnd(10)} $${r.run.usage.estimatedFrontierEquival
         </p>
       </Prose>
 
+      {scale && (
+        <>
+          <H2>The control plane under load</H2>
+          <Prose>
+            <p>
+              The same scheduler that ran the missions above, driven over a {scale.graph.tasks}-task
+              graph ({scale.graph.shape}) with stub providers whose outages are scripted from a seeded
+              generator. No provider is called and nothing is spent: this measures claiming, ordering,
+              the auction and policy filter, the budget ledger, scoped writes, verification and handoff,
+              and nothing about cloud throughput.
+            </p>
+          </Prose>
+          <Reveal className="min-w-0">
+            <div className="surface-card mt-8 p-6">
+              <div className="flex items-baseline justify-between gap-3">
+                <div>
+                  <div className="text-[18px] text-[var(--color-quartz)]">{scale.label}</div>
+                  <div className="mt-0.5 text-[13px] text-[var(--color-ash)]">
+                    seed {scale.seed} · {new Date(scale.ranAt).toISOString().slice(0, 10)}
+                  </div>
+                </div>
+                <span className="mono text-[11px] text-[var(--color-frosted-lilac)]">{scale.results.missionStatus}</span>
+              </div>
+              <dl className="mono mt-6 grid gap-x-8 gap-y-2.5 text-[12.5px] sm:grid-cols-2">
+                {[
+                  ['tasks completed', `${scale.results.completed} / ${scale.graph.tasks}`],
+                  ['workers hired', String(scale.results.workersHired)],
+                  ['outages scripted', String(scale.results.outagesScripted)],
+                  ['handoffs', String(scale.results.handoffs)],
+                  ['peak concurrent workers', `${scale.concurrency.peakConcurrent} of ${scale.concurrency.limit}`],
+                  ['events written', String(scale.results.events)],
+                  ['duplicate claims', String(scale.invariants.duplicateClaims ?? 0)],
+                  ['ordering violations', String(scale.invariants.orderingViolations ?? 0)],
+                  ['budget overshoots', String(scale.invariants.budgetOvershoots ?? 0)],
+                  ['paid candidates struck out', String(scale.invariants.paidCandidatesStruckOut ?? 0)],
+                  ['unexplained handoffs', String(scale.invariants.unexplainedHandoffs ?? 0)],
+                  ['elapsed', `${(scale.results.elapsedMs / 1000).toFixed(2)}s`],
+                ].map(([k, v]) => (
+                  <div key={k} className="flex justify-between gap-4">
+                    <dt className="text-[var(--color-ash)]">{k}</dt>
+                    <dd className="tabular-nums text-[var(--color-mist)]">{v}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </Reveal>
+        </>
+      )}
+
       <H2>What is deliberately absent</H2>
       <Prose>
         <p>
@@ -388,7 +469,10 @@ ${runs.map((r) => `${r.label.padEnd(10)} $${r.run.usage.estimatedFrontierEquival
 npm run mission -- --inject-429
 
 npm run fixture:reset:arcade
-npm run mission -- --arcade`}</Code>
+npm run mission -- --arcade
+
+npm run scale                        # the control-plane stress test above
+npm run mission -- --repo=/abs/path/to/your/repo --goal="make test/ pass"`}</Code>
       <Prose>
         <p>
           It will not reproduce identically. These are stochastic models on free routes and the

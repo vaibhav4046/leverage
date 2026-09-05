@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { cancelMission } from '@/server/missions';
+import { cancelMission, getMission, getMissionSnapshot } from '@/server/missions';
 import { requireIdentity, requireWritable, AuthError } from '@/auth/identity';
 
 export const dynamic = 'force-dynamic';
@@ -15,8 +15,20 @@ export async function POST(req: NextRequest, ctx: { params: Promise<{ missionId:
   }
 
   const { missionId } = await ctx.params;
-  const ok = cancelMission(missionId, identity.workspaceId);
-  if (!ok) return NextResponse.json({ error: 'mission not found' }, { status: 404 });
+  const result = cancelMission(missionId, identity.workspaceId);
+  // A mission that only exists as a recorded snapshot is finished by definition.
+  const recorded =
+    result === 'not-found' ? await getMissionSnapshot(missionId, identity.workspaceId) : null;
+  if (result === 'not-found' && !recorded) {
+    return NextResponse.json({ error: 'mission not found' }, { status: 404 });
+  }
+  if (result === 'finished' || recorded) {
+    const status = getMission(missionId, identity.workspaceId)?.status ?? recorded?.mission.status ?? 'finished';
+    return NextResponse.json(
+      { error: `mission already finished (${status}); nothing to cancel`, cancelled: false, status },
+      { status: 409 },
+    );
+  }
 
   return NextResponse.json({ cancelled: true });
 }

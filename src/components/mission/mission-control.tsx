@@ -127,6 +127,21 @@ export function MissionControl({
 
 /* ------------------------------------------------------------------ header */
 
+/** Where the task graph came from: a planner model, or the fixture's committed plan. */
+function PlanOrigin({ snapshot }: { snapshot: MissionSnapshot }) {
+  const compiled = snapshot.events.find((e) => e.type === 'mission.compiled');
+  const planner = compiled?.data?.planner as
+    | { displayName?: string; costClass?: string; taskCount?: number; durationMs?: number }
+    | undefined;
+  return (
+    <div className="mono mt-2 text-[11.5px] text-[var(--color-ash)]">
+      {planner?.displayName
+        ? `plan written by ${planner.displayName} (${planner.costClass ?? 'free'}) · ${planner.taskCount ?? snapshot.tasks.length} tasks in ${((planner.durationMs ?? 0) / 1000).toFixed(1)}s`
+        : `committed plan · ${snapshot.tasks.length} tasks`}
+    </div>
+  );
+}
+
 function MissionHeader({
   snapshot,
   connected,
@@ -171,6 +186,7 @@ function MissionHeader({
           <h1 className="heading mt-1 max-w-[52rem] text-[22px] text-[var(--color-quartz)]">
             {mission.goal}
           </h1>
+          <PlanOrigin snapshot={snapshot} />
         </div>
 
         <div className="flex items-center gap-3">
@@ -394,6 +410,13 @@ function TaskGraph({
 /* ---------------------------------------------------------------- workforce */
 
 function WorkforcePanel({ snapshot }: { snapshot: MissionSnapshot }) {
+  // Which workers executed as RocketRide pipelines, from the log rather than
+  // from a cost class: the scheduler stamps `via` on worker.started.
+  const viaRocketRide = new Set(
+    snapshot.events
+      .filter((e) => e.type === 'worker.started' && (e.data as { via?: string } | undefined)?.via === 'rocketride-pipeline')
+      .map((e) => e.workerRunId),
+  );
   return (
     <section className="surface-card p-5 xl:max-h-[560px] xl:overflow-y-auto" aria-label="Workforce" tabIndex={0}>
       <div className="mono mb-4 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
@@ -414,7 +437,15 @@ function WorkforcePanel({ snapshot }: { snapshot: MissionSnapshot }) {
                   <div className="mono mt-0.5 truncate text-[12px] text-[var(--color-mist)]">
                     {w.displayName}
                     <span className="ml-2 text-[var(--color-ash)]">
-                      {w.costClass === 'local' ? 'local runtime' : w.costClass === 'free' ? 'free route' : 'paid'}
+                      {viaRocketRide.has(w.id)
+                        ? 'RocketRide pipeline'
+                        : w.costClass === 'local'
+                          ? 'local runtime'
+                          : w.costClass === 'free'
+                            ? 'free route'
+                            : w.costClass === 'host'
+                              ? 'your seat'
+                              : 'paid'}
                     </span>
                   </div>
                 </div>
@@ -470,8 +501,17 @@ function WorkerBadge({ status }: { status: string }) {
 
 function EventTimeline({ events }: { events: MissionEvent[] }) {
   const endRef = useRef<HTMLDivElement>(null);
+  const mounted = useRef(false);
   useEffect(() => {
-    endRef.current?.scrollIntoView({ block: 'nearest' });
+    // Scroll the log's own box, never the page. scrollIntoView walked up to the
+    // document and dropped a visitor two thousand pixels down a mission page on
+    // load; and on first render there is nothing new to follow yet.
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
+    const box = endRef.current?.closest<HTMLElement>('[role="log"]');
+    if (box) box.scrollTop = box.scrollHeight;
   }, [events.length]);
 
   return (

@@ -91,7 +91,7 @@ export function RocketRideProof({ run }: { run: MissionSnapshot | null }) {
             </Link>
             <Link
               href={`/app/missions/${run.mission.id}`}
-              className="mono inline-flex items-center gap-2 text-[12.5px] text-[var(--color-frosted-lilac)]"
+              className="mono inline-flex min-h-[44px] items-center gap-2 text-[12.5px] text-[var(--color-frosted-lilac)]"
             >
               Or open the recorded run
               <IconArrowRight size={13} />

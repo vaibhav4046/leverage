@@ -18,7 +18,7 @@ with a compiler or a test suite, and replaces any worker that fails without rest
 the work.
 
 In the recorded canonical run, Leverage completed and verified 4 of 4 tasks, passed
-8 proof checks and 17 fixture assertions, survived 3 cognitive handoffs, and recorded
+8 proof checks and 17 fixture tests, survived 3 cognitive handoffs, and recorded
 **$0.00** of paid inference. In a second recorded run, RocketRide executed 3 of the
 6 workers and they finished 3 of the 4 tasks, all verified. In a third, on the
 permanent hosted pool with no tunnel anywhere, RocketRide executed all 4 workers,
@@ -73,11 +73,14 @@ Full path with commands: [JUDGE_GUIDE.md](JUDGE_GUIDE.md).
 
 ## What holds at volume
 
-`npm run scale` runs a 100-task diamond-dependency graph against deterministic stub
-workers on a seeded PRNG. 100 completed, **0 duplicate claims, 0 budget overshoots,
-0 ordering violations**, in 499 ms. It is labelled a synthetic control-plane test in
-the file itself. It measures whether the scheduler keeps its own promises under load.
-It is not cloud throughput and is never presented as such.
+`npm run scale` (`scripts/scale-harness.ts`) runs the real `MissionScheduler` over a
+100-task diamond-dependency graph with stub providers whose outages are scripted from a
+seeded PRNG. 100 of 100 tasks completed, 116 workers hired, 16 handoffs for 16 scripted
+outages, and, read from the scheduler's own event log: **0 duplicate claims, 0 ordering
+violations, 0 budget overshoots**, 0 paid calls under a hard $0 with the paid candidate
+struck out on all 116 auctions. The file says what is stubbed: the providers, the
+RocketRide executor, and a temporary repository verified by `file-exists` checks rather
+than a test suite. It is not cloud throughput and is never presented as such.
 
 ## Human in the loop
 
@@ -133,4 +136,4 @@ claude mcp add leverage -- node /abs/path/to/leverage/mcp/server.ts
 
 > Use Leverage. Finish this application. Budget $0. Quality production.
 
-60 tests (53 invariants, 7 pool guards): `npm run test`. Full verification: `npm run verify`.
+81 tests (63 invariants, 7 pool guards, 11 planner): `npm run test`. Full verification: `npm run verify`.

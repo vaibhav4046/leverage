@@ -79,11 +79,23 @@ export class OllamaAdapter implements ProviderAdapter {
     };
   }
 
-  async invoke(
+  // ponytail: one request in flight per runtime. Two models resident at once on a
+  // 6 GB card is an out-of-memory failure, not parallelism; a per-model queue if
+  // a bigger card ever wants it.
+  private queue: Promise<unknown> = Promise.resolve();
+
+  invoke(model: ModelDescriptor, request: NormalizedModelRequest, signal: AbortSignal): Promise<NormalizedModelResponse> {
+    const turn = this.queue.then(() => this.invokeNow(model, request, signal));
+    this.queue = turn.catch(() => undefined);
+    return turn;
+  }
+
+  private async invokeNow(
     model: ModelDescriptor,
     request: NormalizedModelRequest,
     signal: AbortSignal,
   ): Promise<NormalizedModelResponse> {
+    if (signal.aborted) throw new Error('cancelled before the local runtime was free');
     const started = Date.now();
     const res = await fetch(`${this.baseUrl}/api/chat`, {
       method: 'POST',

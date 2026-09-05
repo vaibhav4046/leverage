@@ -14,17 +14,27 @@ import type { BudgetLedger, CostClass, MissionBudget } from './types';
  *
  * Reservation matters because workers run concurrently: without it, four workers
  * could each check "is there $0.05 left?" simultaneously and all four proceed.
+ *
+ * Two controls, in order: `reserve` is preventive and refuses a call before it is
+ * made; `settle` is detective and, when a bill comes in above the estimate and
+ * over the line, records it, marks the ledger overshot and throws so the caller
+ * stops hiring. Hiding a real bill would be worse than admitting it.
  */
 
 export class BudgetExceededError extends Error {
   constructor(
     readonly attemptedUsd: number,
     readonly ledger: BudgetLedger,
+    /** `reserve` refused the call before it ran; `settle` found the bill after it did. */
+    readonly phase: 'reserve' | 'settle' = 'reserve',
   ) {
     super(
-      `Paid call of $${attemptedUsd.toFixed(6)} refused: would exceed hard budget ` +
-        `$${ledger.maxUsd.toFixed(2)} (settled $${ledger.settledUsd.toFixed(6)}, ` +
-        `reserved $${ledger.reservedUsd.toFixed(6)})`,
+      phase === 'reserve'
+        ? `Paid call of $${attemptedUsd.toFixed(6)} refused: would exceed hard budget ` +
+            `$${ledger.maxUsd.toFixed(2)} (settled $${ledger.settledUsd.toFixed(6)}, ` +
+            `reserved $${ledger.reservedUsd.toFixed(6)})`
+        : `Paid call settled at $${attemptedUsd.toFixed(6)} overshot hard budget ` +
+            `$${ledger.maxUsd.toFixed(2)}: settled $${ledger.settledUsd.toFixed(6)} in total`,
     );
     this.name = 'BudgetExceededError';
   }
@@ -37,6 +47,14 @@ export interface Reservation {
 }
 
 /**
+ * The ledger plus the one thing only the governor can know: whether a settled
+ * bill ever pushed a hard budget past its limit. Once true it stays true.
+ */
+export interface GovernorLedger extends BudgetLedger {
+  overshot: boolean;
+}
+
+/**
  * A mission's money.
  *
  * Single-process and synchronous on purpose: JavaScript's run-to-completion
@@ -46,7 +64,7 @@ export interface Reservation {
  * check — the interface is deliberately shaped so that swap is local.
  */
 export class BudgetGovernor {
-  private ledger: BudgetLedger;
+  private ledger: GovernorLedger;
   private reservations = new Map<string, Reservation>();
   private nextId = 1;
 
@@ -62,10 +80,11 @@ export class BudgetGovernor {
       hostCalls: 0,
       estimatedFrontierEquivalentUsd: 0,
       blockedAttempts: 0,
+      overshot: false,
     };
   }
 
-  snapshot(): BudgetLedger {
+  snapshot(): GovernorLedger {
     return { ...this.ledger };
   }
 
@@ -112,8 +131,12 @@ export class BudgetGovernor {
    * Convert a reservation into actual spend once the provider reports usage.
    *
    * `actualUsd` may exceed the reservation (a model produced more output than
-   * estimated). We settle the true number — the ledger must reflect reality — but
-   * an overshoot on a hard budget is recorded so it is visible rather than silent.
+   * estimated). The true number is always recorded, because the money is spent
+   * and a ledger that hides it is worse than one that is over. When the settled
+   * total crosses a hard budget the ledger is marked overshot and this throws, so
+   * the caller fails the task and stops hiring. Throwing after recording is the
+   * point: the spend is visible either way, the exception is what stops the next
+   * one.
    */
   settle(reservation: Reservation, actualUsd: number, costClass: CostClass): void {
     if (this.reservations.has(reservation.id)) {
@@ -125,6 +148,11 @@ export class BudgetGovernor {
     if (costClass === 'paid') {
       this.ledger.settledUsd += actualUsd;
       this.ledger.paidCalls += 1;
+      // Float dust only, matching assertInvariant.
+      if (this.ledger.hard && this.ledger.settledUsd > this.ledger.maxUsd + 1e-9) {
+        this.ledger.overshot = true;
+        throw new BudgetExceededError(actualUsd, this.snapshot(), 'settle');
+      }
     } else if (costClass === 'local') {
       this.ledger.localCalls += 1;
     } else if (costClass === 'host') {

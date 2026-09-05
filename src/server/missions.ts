@@ -10,6 +10,7 @@ import { FaultInjector, INJECTED_RATE_LIMIT } from '../core/faults';
 import { RocketRideExecutor } from '../rocketride/executor';
 import type { MissionTask } from '../core/types';
 import { buildFixturePlan } from './fixture-plan';
+import { announcePlan, planWithModel } from './planner';
 import { DEMO_WORKSPACE_ID } from '../auth/identity';
 import { getRepository } from '../db';
 
@@ -104,6 +105,14 @@ export interface CreateMissionInput {
    * read-only filesystem passes a copy of it in the function's temp directory.
    */
   repositoryRoot?: string;
+  /**
+   * How the task graph is produced. 'fixture' is the committed plan for the
+   * bundled benchmark; 'model' asks a planner model to turn the goal and the
+   * repository into a validated graph. Default: 'model' when a repository root is
+   * given, 'fixture' otherwise, so the benchmark stays reproducible and a real
+   * repository never silently runs the benchmark's plan.
+   */
+  plan?: 'fixture' | 'model';
 }
 
 const idempotency: Map<string, string> = (globalStore.__leverageIdempotency ??= new Map());
@@ -117,12 +126,23 @@ export async function createMission(input: CreateMissionInput): Promise<MissionS
     }
   }
 
+  const plan = input.plan ?? (input.repositoryRoot ? 'model' : 'fixture');
+  const repositoryRoot = input.repositoryRoot ?? path.resolve('benchmark/forge-app');
+  if (plan === 'model') {
+    // A planner writes into this directory through the workers, so it must exist
+    // and be a directory before anything is hired. Relative paths are refused:
+    // "my-repo" means something different on every machine.
+    if (!path.isAbsolute(repositoryRoot)) throw new Error('repositoryRoot must be an absolute path');
+    const stat = await fs.stat(repositoryRoot).catch(() => null);
+    if (!stat?.isDirectory()) throw new Error(`repositoryRoot is not a directory: ${repositoryRoot}`);
+  }
+
   const spec = compileMissionSpec({
     goal: input.goal,
     workspaceId: input.workspaceId,
     createdBy: input.userId,
-    repositoryRoot: input.repositoryRoot ?? path.resolve('benchmark/forge-app'),
-    repositoryLabel: 'forge-app',
+    repositoryRoot,
+    repositoryLabel: plan === 'model' ? path.basename(repositoryRoot) : 'forge-app',
     overrides: {
       budgetMaxUsd: input.budgetMaxUsd,
       qualityTarget: input.qualityTarget,
@@ -131,8 +151,20 @@ export async function createMission(input: CreateMissionInput): Promise<MissionS
     },
   });
 
-  const tasks: MissionTask[] = buildFixturePlan(spec.id);
+  let tasks: MissionTask[];
+  let planned: Awaited<ReturnType<typeof planWithModel>> | null = null;
+  if (plan === 'model') {
+    const registry = getRegistry();
+    await registry.sweep();
+    // A plan the compiler rejects is a failed mission with a reason, never a
+    // silent fall back to the benchmark's plan.
+    planned = await planWithModel({ spec, goal: input.goal, repositoryRoot, registry });
+    tasks = planned.tasks;
+  } else {
+    tasks = buildFixturePlan(spec.id);
+  }
   const state = createMissionState(spec, tasks);
+  if (planned) announcePlan(state, planned.planner, tasks, planned.planText);
 
   missions.set(spec.id, { state, running: false });
   if (input.idempotencyKey) idempotency.set(input.idempotencyKey, spec.id);
@@ -167,6 +199,9 @@ const DEMO_RUN_FILES = [
   // The same question answered again on the permanent hosted pool: every worker
   // free-class, every one a RocketRide pipeline, no tunnel anywhere.
   'hosted-pool-mission.json',
+  // The only recorded mission with no committed plan: a planner model read the
+  // greeter fixture and wrote the task graph from the goal.
+  'planned-run.json',
 ];
 
 /**
@@ -261,10 +296,20 @@ export async function startMission(
     );
   }
 
+  // Cloud-class workers run as RocketRide pipelines when the fabric has a key.
+  // Without one they are invoked directly, and the mission log says so, rather
+  // than every hire failing with "No authorization provided".
+  const useRocketRide = Boolean(process.env.ROCKETRIDE_APIKEY);
+  if (!useRocketRide) {
+    entry.state.events.emit(
+      'worker.progress',
+      'ROCKETRIDE_APIKEY is not set: cloud-class workers are invoked directly rather than as RocketRide pipelines',
+    );
+  }
   const scheduler = new MissionScheduler(
     entry.state,
     { registry: reg, executor: getExecutor(), reputation: await getReputation(), faults },
-    { maxConcurrency: entry.state.spec.parallelism.maxWorkers ?? 2 },
+    { maxConcurrency: entry.state.spec.parallelism.maxWorkers ?? 2, useRocketRide },
   );
 
   entry.scheduler = scheduler;
@@ -315,11 +360,13 @@ export function resolveApproval(
   return true;
 }
 
-export function cancelMission(missionId: string, workspaceId: string): boolean {
+export function cancelMission(missionId: string, workspaceId: string): 'cancelled' | 'finished' | 'not-found' {
   const entry = missions.get(missionId);
-  if (!entry || entry.state.spec.workspaceId !== workspaceId) return false;
+  if (!entry || entry.state.spec.workspaceId !== workspaceId) return 'not-found';
+  // A finished mission is a record, not a process; "cancelled" would be a lie.
+  if (['COMPLETED', 'FAILED', 'CANCELLED'].includes(entry.state.status)) return 'finished';
   entry.scheduler?.cancel();
-  return true;
+  return 'cancelled';
 }
 
 async function persist(state: MissionState): Promise<void> {

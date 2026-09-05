@@ -197,10 +197,11 @@ export function WorkforceLedger({ models }: { models: ModelRow[] }) {
             It learns which models are actually good.
           </h2>
           <p className="mt-5 max-w-[46rem] text-[17px] font-light leading-relaxed text-[var(--color-ash)]">
-            This installation&rsquo;s own record of which models passed verification on real
-            work, rather than a leaderboard someone else published. Rates are shrunk toward a
-            neutral prior and carry their sample count, so nothing here can claim more than it
-            has earned.
+            Observed on the machine that ran the recorded missions: which models passed
+            verification on real work, rather than a leaderboard someone else published. Rates
+            are shrunk toward a neutral prior and carry their sample count, so nothing here can
+            claim more than it has earned. The deployment&rsquo;s own live roster is under
+            Models in Mission Control.
           </p>
         </Reveal>
 

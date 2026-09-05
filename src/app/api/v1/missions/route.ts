@@ -64,6 +64,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'budgetMaxUsd must be between 0 and 1000' }, { status: 400 });
   }
 
+  const maxWorkers = body.maxWorkers;
+  if (
+    maxWorkers !== undefined &&
+    (!Number.isInteger(maxWorkers) || (maxWorkers as number) < 1 || (maxWorkers as number) > 8)
+  ) {
+    return NextResponse.json({ error: 'maxWorkers must be an integer between 1 and 8' }, { status: 400 });
+  }
+
   try {
     const mission = await createMission({
       goal,
@@ -73,6 +81,10 @@ export async function POST(req: NextRequest) {
       qualityTarget: typeof body.qualityTarget === 'number' ? body.qualityTarget : undefined,
       privacy: privacy as 'local-only' | 'prefer-local' | 'cloud-allowed' | undefined,
       maxWorkers: typeof body.maxWorkers === 'number' ? body.maxWorkers : undefined,
+      // An absolute path on the machine running Leverage. With it, a planner model
+      // turns the goal into tasks for that repository; without it, the bundled
+      // benchmark runs its committed plan.
+      repositoryRoot: typeof body.repositoryRoot === 'string' && body.repositoryRoot.trim() ? body.repositoryRoot.trim() : undefined,
       idempotencyKey: req.headers.get('idempotency-key') ?? undefined,
     });
     return NextResponse.json({ mission }, { status: 201 });

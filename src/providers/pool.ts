@@ -128,12 +128,16 @@ export class PoolAdapter implements ProviderAdapter {
 
     const body = (await res.json()) as {
       model?: string;
-      choices?: { message?: { content?: string } }[];
+      choices?: { message?: { content?: string | null; reasoning_content?: string; reasoning?: string } }[];
       usage?: { prompt_tokens?: number; completion_tokens?: number };
     };
 
+    // A reasoning model that spends its whole budget thinking returns an empty
+    // content and the answer, if any, in its reasoning field. Take that rather
+    // than fail the worker on an empty string.
+    const message = body.choices?.[0]?.message;
     return {
-      text: body.choices?.[0]?.message?.content ?? '',
+      text: message?.content || message?.reasoning_content || message?.reasoning || '',
       promptTokens: body.usage?.prompt_tokens,
       completionTokens: body.usage?.completion_tokens,
       // The router resolves an alias to a concrete model; record what actually ran

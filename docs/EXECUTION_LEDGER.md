@@ -39,8 +39,8 @@ State, evidence, test. Anything marked NOT BUILT is genuinely not built — see
 | Path traversal | **done** | `safeJoin` refuses escapes | `invariants.test.ts` · security |
 | Idempotency | **done** | same key returns the same mission | `createMission` |
 | Cancellation | **done** | AbortSignal propagates; no new hires | `scheduler.cancel()` |
-| Benchmark fixture | **done** | 17 assertions, all failing on clean checkout | `benchmark/forge-app` |
-| Showcase fixture | **done** | playable prototype, 22 assertions, 4/4 built by workers | `benchmark/arcade` |
+| Benchmark fixture | **done** | 17 tests (29 assertions), all failing on clean checkout | `benchmark/forge-app` |
+| Showcase fixture | **done** | playable prototype, 22 tests (45 assertions), 4/4 built by workers | `benchmark/arcade` |
 | Demo page | **done** | prototype embedded beside the ProofPack that produced it | `/demo` |
 | Execution surface | **done** | real event log sliced around the failure | `surfaces.tsx` |
 | Workforce ledger | **done** | measured reputation, shrunk, with sample counts | `surfaces.tsx` |

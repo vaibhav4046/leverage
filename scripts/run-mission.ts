@@ -11,6 +11,12 @@
  * prints are the numbers that happened.
  *
  *   npx tsx scripts/run-mission.ts --fixture --inject-429
+ *   npx tsx scripts/run-mission.ts --repo=/abs/path/to/repo --goal="make test/ pass"
+ *
+ * With --repo, a planner model turns the goal and the repository into the task
+ * graph (src/server/planner.ts); without it the bundled fixture runs its
+ * committed plan. Cloud-class workers run as RocketRide pipelines when
+ * ROCKETRIDE_APIKEY is set and are called directly when it is not.
  */
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.local' });
@@ -27,14 +33,18 @@ import { RocketRideExecutor } from '../src/rocketride/executor';
 import { formatElapsed } from '../src/core/events';
 import { buildFixturePlan } from '../src/server/fixture-plan';
 import { buildArcadePlan } from '../src/server/arcade-plan';
+import { announcePlan, planWithModel } from '../src/server/planner';
 
 const args = new Set(process.argv.slice(2));
 const INJECT = args.has('--inject-429');
 const DIRECT = args.has('--direct');
 const OUT = process.argv.find((a) => a.startsWith('--out='))?.slice(6);
+const REPO_ARG = process.argv.find((a) => a.startsWith('--repo='))?.slice(7);
+const GOAL_ARG = process.argv.find((a) => a.startsWith('--goal='))?.slice(7);
 
 const ARCADE = args.has('--arcade');
-const REPO = path.resolve(ARCADE ? 'benchmark/arcade' : 'benchmark/forge-app');
+const REPO = path.resolve(REPO_ARG ?? (ARCADE ? 'benchmark/arcade' : 'benchmark/forge-app'));
+if (REPO_ARG && !GOAL_ARG) throw new Error('--repo needs --goal="what must be true when this is done"');
 const STATE_DIR = path.resolve('.leverage-state');
 
 async function main() {
@@ -71,15 +81,16 @@ async function main() {
   // ---- Compile -----------------------------------------------------------
   const spec = compileMissionSpec({
     goal:
-      ARCADE
+      GOAL_ARG ??
+      (ARCADE
         ? 'Finish the arcade gravity-arena prototype so the whole existing test suite passes. ' +
           'Do not modify any file under test/. Budget: $0. Quality: production.'
         : 'Finish the forge-app receipt splitting library so the whole existing test suite passes. ' +
-          'Do not modify any file under test/. Budget: $0. Quality: production.',
+          'Do not modify any file under test/. Budget: $0. Quality: production.'),
     workspaceId: 'ws_local',
     createdBy: 'cli',
     repositoryRoot: REPO,
-    repositoryLabel: ARCADE ? 'arcade' : 'forge-app',
+    repositoryLabel: REPO_ARG ? path.basename(REPO) : ARCADE ? 'arcade' : 'forge-app',
   });
 
   console.log('\nMISSION', spec.id);
@@ -88,11 +99,28 @@ async function main() {
   console.log('  privacy   ', spec.privacy.mode);
   console.log('  constraints', spec.constraints.length ? spec.constraints.join(' | ') : '(none)');
 
-  const tasks = ARCADE ? buildArcadePlan(spec.id) : buildFixturePlan(spec.id);
-  console.log(`  plan       ${tasks.length} tasks`);
+  let tasks;
+  let planned: Awaited<ReturnType<typeof planWithModel>> | null = null;
+  if (REPO_ARG) {
+    console.log('  planning   asking a model for the task graph...');
+    planned = await planWithModel({ spec, goal: spec.goal, repositoryRoot: REPO, registry });
+    tasks = planned.tasks;
+    console.log(
+      `  plan       ${tasks.length} tasks by ${planned.planner.displayName} (${planned.planner.costClass}) in ${(planned.planner.durationMs / 1000).toFixed(1)}s`,
+    );
+    for (const s of planned.planner.skipped) console.log(`             skipped ${s}`);
+    for (const t of tasks) {
+      const suite = t.verification.checks.find((c) => c.kind === 'command');
+      console.log(`             ${t.id.padEnd(16)} ${t.title}  <- ${suite?.label ?? 'existence only'}`);
+    }
+  } else {
+    tasks = ARCADE ? buildArcadePlan(spec.id) : buildFixturePlan(spec.id);
+    console.log(`  plan       ${tasks.length} tasks (committed plan)`);
+  }
 
   const reputation = await loadReputation();
   const state = createMissionState(spec, tasks);
+  if (planned) announcePlan(state, planned.planner, tasks, planned.planText);
 
   // ---- Execute -----------------------------------------------------------
   const executor = new RocketRideExecutor({
@@ -112,10 +140,14 @@ async function main() {
     console.log(`${formatElapsed(e.elapsedMs)}  ${e.type.padEnd(22)}${tag} ${e.message}`);
   });
 
+  const useRocketRide = !DIRECT && Boolean(process.env.ROCKETRIDE_APIKEY);
+  console.log(
+    `  executor   ${useRocketRide ? 'RocketRide pipelines for cloud-class workers' : 'direct calls (no ROCKETRIDE_APIKEY' + (DIRECT ? ', --direct' : '') + ')'}`,
+  );
   const scheduler = new MissionScheduler(
     state,
     { registry, executor, reputation, faults },
-    { useRocketRide: !DIRECT, maxConcurrency: 2 },
+    { useRocketRide, maxConcurrency: 2 },
   );
 
   process.on('SIGINT', () => {

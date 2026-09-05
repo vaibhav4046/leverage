@@ -168,9 +168,21 @@ export const PLANNER_OUTPUT_CONTRACT = `Return a single JSON object and nothing 
   "acceptance":["a checkable statement"]
 }]}
 Rules: 3-8 tasks. Dependencies must reference ids in this list. No cycles.
-fileScope paths are relative to the repository root and must not contain "..".`;
+fileScope paths are relative to the repository root and must not contain "..".
+Every task needs at least one fileScope path; a task with nothing to verify is rejected.`;
+
+/** What the planner proposed for one task, as the check-builder sees it. */
+export interface PlannedTaskShape {
+  id: string;
+  category: TaskCategory;
+  fileScope: string[];
+  referenceFiles: string[];
+  /** The verify command the planner named, unvalidated. */
+  verify?: unknown;
+}
 
 interface RawTask {
+  verify?: unknown;
   id?: unknown;
   title?: unknown;
   description?: unknown;
@@ -202,7 +214,7 @@ export class PlanRejectedError extends Error {
 export function parseTaskPlan(
   raw: string,
   mission: MissionSpec,
-  defaultChecks: (task: { category: TaskCategory; fileScope: string[] }) => VerificationCheckSpec[],
+  defaultChecks: (task: PlannedTaskShape) => VerificationCheckSpec[],
 ): MissionTask[] {
   const objText = extractJsonObject(raw);
   let parsed: unknown;
@@ -233,6 +245,22 @@ export function parseTaskPlan(
       .filter((p) => !p.includes('..') && !p.startsWith('/') && !/^[a-zA-Z]:/.test(p))
       .slice(0, 12);
 
+    const referenceFiles = asStringArray(rt.referenceFiles)
+      .filter((f) => !f.includes('..') && !f.startsWith('/') && !/^[a-zA-Z]:/.test(f))
+      .slice(0, 8);
+
+    // A task nothing can prove done is not a task, it is a hope. Refuse it here
+    // rather than let the verification gate meet an empty list downstream. The
+    // callback sees the whole proposal for the task, including the check the
+    // planner named, so it can accept, replace or refuse it.
+    const checks = defaultChecks({ id, category, fileScope, referenceFiles, verify: rt.verify });
+    if (checks.length === 0) {
+      throw new PlanRejectedError(
+        `task "${id}" has no verification checks: give it a fileScope or a test command so something can prove it done`,
+        raw,
+      );
+    }
+
     return {
       id,
       missionId: mission.id,
@@ -245,11 +273,9 @@ export function parseTaskPlan(
       qualityTarget: mission.quality.target,
       budgetUsd: mission.budget.maxUsd,
       fileScope,
-      referenceFiles: asStringArray(rt.referenceFiles)
-        .filter((f) => !f.includes('..') && !f.startsWith('/') && !/^[a-zA-Z]:/.test(f))
-        .slice(0, 8),
+      referenceFiles,
       verification: {
-        checks: defaultChecks({ category, fileScope }),
+        checks,
         acceptance: asStringArray(rt.acceptance).slice(0, 8),
       },
       state: 'PENDING',

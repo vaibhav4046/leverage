@@ -25,7 +25,9 @@ import { parseWorkerOutput, WORKER_OUTPUT_CONTRACT } from '../src/core/worker-ou
 import type { TaskCategory } from '../src/core/types';
 
 const STATE_DIR = path.resolve('.leverage-state');
-const PROBE_TIMEOUT_MS = 25_000;
+// A 4B model on a laptop GPU needs more than 25 s for a real answer; the cap is
+// generous so the probe measures capability, not the card.
+const PROBE_TIMEOUT_MS = 60_000;
 
 /**
  * One probe per capability family. Each is checked by *executing* what the model
@@ -161,6 +163,9 @@ ${WORKER_OUTPUT_CONTRACT}`,
     console.log('No model passed. The mission would have nothing to hire.');
     process.exit(1);
   }
+  // Keep-alive sockets from the runtimes would otherwise hold the process open
+  // after the summary; the report is written, so leave.
+  process.exit(0);
 }
 
 /**

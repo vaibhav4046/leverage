@@ -82,6 +82,9 @@ export function defaultChecksFor(
   return checks;
 }
 
+/** Longest list a snapshot checkpoint carries per field. */
+const SNAPSHOT_LIST_LIMIT = 12;
+
 /** A serialisable snapshot for the API, the UI and the canonical run artefact. */
 export function snapshotMission(state: MissionState) {
   const ledger = state.budget.snapshot();
@@ -123,6 +126,11 @@ export function snapshotMission(state: MissionState) {
           ? Math.round((1 - c.checkpointTokens / c.originalContextTokens) * 100)
           : 0,
       remainingWork: c.remainingWork,
+      // What the checkpoint actually carried, so the UI can show a handoff was
+      // more than a token count. Bounded here as well as in buildCheckpoint.
+      decisions: c.decisions.slice(0, SNAPSHOT_LIST_LIMIT),
+      assumptions: c.assumptions.slice(0, SNAPSHOT_LIST_LIMIT),
+      filesChanged: c.filesChanged.slice(0, SNAPSHOT_LIST_LIMIT),
     })),
     proofs: state.proofs,
     auctions: state.auctions,

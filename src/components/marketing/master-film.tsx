@@ -51,7 +51,7 @@ export function MasterFilm({
   }, [started]);
 
   return (
-    <section className="border-t border-[var(--color-obsidian-edge)] bg-[var(--color-abyss)]">
+    <section id="film" className="scroll-mt-14 border-t border-[var(--color-obsidian-edge)] bg-[var(--color-abyss)]">
       <div className="mx-auto max-w-[1200px] px-6 py-20">
         <div className="mono text-[12px] uppercase tracking-[0.08em] text-[var(--color-ash)]">{eyebrow}</div>
         <h2 className="heading mt-3 max-w-[44rem] text-[clamp(1.75rem,4vw,2.25rem)] text-[var(--color-quartz)]">
@@ -89,7 +89,7 @@ export function MasterFilm({
                   <IconPlay size={26} />
                 </span>
                 <span
-                  className="mono absolute bottom-5 left-5 rounded-full px-3 py-1.5 text-[11px] uppercase tracking-[0.08em] text-[var(--color-mist)]"
+                  className="mono absolute bottom-5 left-5 whitespace-nowrap rounded-full px-3 py-1.5 text-[11px] uppercase tracking-[0.08em] text-[var(--color-mist)]"
                   style={{ background: 'rgba(14,17,27,0.72)' }}
                 >
                   Sound on · {length}

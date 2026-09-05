@@ -32,6 +32,7 @@ export function MissionComposer({ readOnly }: { readOnly: boolean }) {
     'prefer-local',
   );
   const [workers, setWorkers] = useState(2);
+  const [repository, setRepository] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,6 +50,7 @@ export function MissionComposer({ readOnly }: { readOnly: boolean }) {
           qualityTarget: quality,
           privacy,
           maxWorkers: workers,
+          ...(repository.trim() ? { repositoryRoot: repository.trim() } : {}),
         }),
       });
       const body = (await res.json()) as { mission?: { mission: { id: string } }; error?: string };
@@ -112,6 +114,28 @@ export function MissionComposer({ readOnly }: { readOnly: boolean }) {
             />
             <p className="mono mt-2.5 text-[11.5px] text-[var(--color-ash)] opacity-75">
               {goal.length.toLocaleString()} / 8,000 characters
+            </p>
+          </div>
+
+          <div>
+            <label htmlFor="repository" className="text-[13px] text-[var(--color-mist)]">
+              Repository <span className="text-[var(--color-ash)]">(optional)</span>
+            </label>
+            <input
+              id="repository"
+              type="text"
+              value={repository}
+              onChange={(e) => setRepository(e.target.value)}
+              spellCheck={false}
+              autoComplete="off"
+              maxLength={1024}
+              className="mono mt-3 w-full rounded-[9px] border border-[var(--color-obsidian-edge)] bg-[var(--color-void)] px-4 py-3 text-[13px] text-[var(--color-quartz)] outline-none transition-colors placeholder:text-[var(--color-ash)] placeholder:opacity-60 focus:border-[var(--color-frosted-lilac)]"
+              placeholder="D:\\work\\my-service   or   /home/me/my-service"
+            />
+            <p className="mt-2.5 text-[12.5px] leading-relaxed text-[var(--color-ash)]">
+              An absolute path on the machine running Leverage. With it, a planner model reads
+              the repository and writes the task graph for this goal; the repository&rsquo;s own
+              tests verify the result. Empty runs the bundled benchmark on its committed plan.
             </p>
           </div>
 

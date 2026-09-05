@@ -5,7 +5,7 @@
 > Your best model should make the expensive decisions. It should not write the fortieth test.
 
 [![Live](https://img.shields.io/badge/live-useleverage.vercel.app-4ade80?style=flat-square)](https://useleverage.vercel.app)
-[![Tests](https://img.shields.io/badge/tests-60%20passing-4ade80?style=flat-square)](tests/invariants.test.ts)
+[![Tests](https://img.shields.io/badge/tests-81%20passing-4ade80?style=flat-square)](tests/invariants.test.ts)
 [![Paid inference](https://img.shields.io/badge/actual%20paid%20inference-%240.00-4ade80?style=flat-square)](demo/canonical-run.json)
 [![RocketRide](https://img.shields.io/badge/RocketRide-staging%20verified-85a6e9?style=flat-square)](docs/ROCKETRIDE_FINDINGS.md)
 
@@ -33,9 +33,11 @@ Finish this application and make the test suite pass.
 Budget: $0.  Quality: production.  Privacy: prefer local.
 ```
 
-Leverage compiles that into a task graph, discovers every model it can reach, scores them
-against each task, hires the best *eligible* one, gives it the smallest context that can do
-the job, executes it as a RocketRide pipeline, and refuses to call the task done until a
+Given a repository, a planner model turns that into a task graph and the compiler validates
+it (the bundled benchmarks carry a committed plan so they measure the workforce, not the
+planner). Leverage then discovers every model it can reach, scores them against each task,
+hires the best *eligible* one, gives it the smallest context that can do the job, executes
+cloud-class workers as RocketRide pipelines, and refuses to call the task done until a
 compiler or a test runner says so. When a worker dies it keeps the worker's understanding
 and hands it to a replacement.
 
@@ -98,15 +100,17 @@ Reproduce it:
 ```bash
 npm run fixture:reset
 npm run mission -- --inject-429 --out=demo/canonical-run.json
+cd benchmark/forge-app && node --test      # 17 tests, 29 assertions
 ```
 
 ## Quickstart
 
 ```bash
 npm install
-cp .env.example .env.local          # fill in ROCKETRIDE_APIKEY
+cp .env.example .env.local          # LEVERAGE_DEV_AUTH=1 is preset so a local checkout can run missions
 npm run probe:models                # measure what your models can actually do
-npm run mission                     # run the benchmark mission for real
+npm run mission                     # the benchmark mission, for real, on the bundled fixture
+npm run mission -- --repo=/abs/path/to/your/repo --goal="make test/ pass"   # your repository: a planner model writes the task graph
 npm run dev                         # Mission Control at http://localhost:3000
 ```
 
@@ -120,7 +124,11 @@ You need at least one source of intelligence. In order of "least setup":
 | **Any OpenAI-compatible endpoint** | set `OMNIROUTE_BASE_URL` | yours |
 | **The hosted pool** | your deployment's `/api/v1/pool`, with `POOL_UPSTREAMS`, `POOL_KEY_*`, `POOL_MODELS` and `POOL_ACCESS_TOKEN` set on it (see `.env.example`) | free-tier provider keys work; `node scripts/pool-sweep.mjs` tells you which models actually answer |
 
-plus a RocketRide staging key for the execution fabric.
+A RocketRide key is optional on your machine: with `ROCKETRIDE_APIKEY` set, cloud-class
+workers run as RocketRide pipelines; without it they are called directly and the mission
+log says so. To use the hosted pool from a checkout, set `OMNIROUTE_BASE_URL` to
+`https://<your deployment>/api/v1/pool` and `OMNIROUTE_API_KEY` to that deployment's
+`POOL_ACCESS_TOKEN`; without a token the pool answers 401 and is simply not hired.
 
 ## Using the subscription you already pay for
 
@@ -196,7 +204,7 @@ places where the published docs disagree with the running system —
 ## Verify it yourself
 
 ```bash
-npm run verify              # typecheck, lint, 60 tests (53 invariants, 7 pool guards), production build
+npm run verify              # typecheck, lint, 81 tests (63 invariants, 7 pool guards, 11 planner), production build
 npm run verify:rocketride   # real inference through a real pipeline, real credit delta
 ```
 

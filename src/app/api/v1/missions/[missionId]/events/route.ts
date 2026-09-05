@@ -1,5 +1,5 @@
 import type { NextRequest } from 'next/server';
-import { getMission } from '@/server/missions';
+import { getMission, getMissionSnapshot } from '@/server/missions';
 import { requireIdentity } from '@/auth/identity';
 import type { MissionEvent } from '@/core/types';
 
@@ -23,10 +23,28 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ missionId: 
 
   const { missionId } = await ctx.params;
   const state = getMission(missionId, identity.workspaceId);
-  if (!state) return new Response('mission not found', { status: 404 });
 
   const lastId = req.headers.get('last-event-id') ?? req.nextUrl.searchParams.get('after') ?? '0';
   const after = Number.parseInt(lastId, 10) || 0;
+
+  if (!state) {
+    // Not live here, but a recorded or persisted mission still has a log. Replay
+    // it as a finite stream in the same framing, then close: the same client
+    // code reads both, and a judge poking the endpoint gets the log, not a 404.
+    const snapshot = await getMissionSnapshot(missionId, identity.workspaceId);
+    if (!snapshot) return new Response('mission not found', { status: 404 });
+    const body = snapshot.events
+      .filter((e) => e.seq > after)
+      .map((e) => `id: ${e.seq}\nevent: ${e.type}\ndata: ${JSON.stringify(e)}\n\n`)
+      .join('');
+    return new Response(body, {
+      headers: {
+        'Content-Type': 'text/event-stream; charset=utf-8',
+        'Cache-Control': 'no-cache, no-transform',
+        'X-Leverage-Replay': 'recorded',
+      },
+    });
+  }
 
   const encoder = new TextEncoder();
   let unsubscribe: (() => void) | undefined;

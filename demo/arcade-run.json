@@ -88,7 +88,7 @@
       "status": "passed",
       "startedAt": "2026-09-03T04:06:17.791Z",
       "actualCostUsd": 0,
-      "auctionRationale": "100 task fit · no prior jobs · scored on the neutral prior · your own host seat, no API key",
+      "auctionRationale": "100% task fit · no prior jobs · scored on the neutral prior · your own host seat, no API key",
       "contextTokens": 556,
       "finishedAt": "2026-09-03T04:07:06.158Z"
     },
@@ -104,7 +104,7 @@
       "status": "replaced",
       "startedAt": "2026-09-03T04:06:17.800Z",
       "actualCostUsd": 0,
-      "auctionRationale": "100 task fit · no prior jobs · scored on the neutral prior · your own host seat, no API key",
+      "auctionRationale": "100% task fit · no prior jobs · scored on the neutral prior · your own host seat, no API key",
       "contextTokens": 467,
       "failureType": "INVALID_OUTPUT",
       "finishedAt": "2026-09-03T04:06:53.245Z"
@@ -122,7 +122,7 @@
       "startedAt": "2026-09-03T04:06:53.264Z",
       "actualCostUsd": 0,
       "resumedFromCheckpointId": "cp_70f8ec2896de",
-      "auctionRationale": "78 task fit · 67 verified success over 34 prior jobs · free route, no spend · 1 candidate excluded by policy",
+      "auctionRationale": "78% task fit · 67% verified success over 34 prior jobs · free route, no spend · 1 candidate excluded by policy",
       "contextTokens": 483,
       "finishedAt": "2026-09-03T04:07:11.739Z"
     },
@@ -138,7 +138,7 @@
       "status": "replaced",
       "startedAt": "2026-09-03T04:07:11.743Z",
       "actualCostUsd": 0,
-      "auctionRationale": "100 task fit · 58 verified success over 2 prior jobs · your own host seat, no API key",
+      "auctionRationale": "100% task fit · 58% verified success over 2 prior jobs · your own host seat, no API key",
       "contextTokens": 1050,
       "failureType": "PROVIDER_5XX",
       "finishedAt": "2026-09-03T04:10:11.751Z"
@@ -156,7 +156,7 @@
       "startedAt": "2026-09-03T04:11:06.284Z",
       "actualCostUsd": 0,
       "resumedFromCheckpointId": "cp_bc1d9e84b68f",
-      "auctionRationale": "78 task fit · 68 verified success over 35 prior jobs · free route, no spend · 1 candidate excluded by policy",
+      "auctionRationale": "78% task fit · 68% verified success over 35 prior jobs · free route, no spend · 1 candidate excluded by policy",
       "contextTokens": 1065,
       "finishedAt": "2026-09-03T04:12:07.416Z"
     },
@@ -172,7 +172,7 @@
       "status": "passed",
       "startedAt": "2026-09-03T04:12:12.656Z",
       "actualCostUsd": 0,
-      "auctionRationale": "100 task fit · 86 verified success over 7 prior jobs · local runtime, no spend",
+      "auctionRationale": "100% task fit · 86% verified success over 7 prior jobs · local runtime, no spend",
       "contextTokens": 2741,
       "promptTokens": 3988,
       "completionTokens": 2792,
@@ -875,7 +875,7 @@
         "sampleCount": 0,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit · no prior jobs, scored on the neutral prior · your own host seat, no API key"
+      "rationale": "100% task fit · no prior jobs, scored on the neutral prior · your own host seat, no API key"
     },
     {
       "taskId": "vector",
@@ -1337,7 +1337,7 @@
         "sampleCount": 0,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit · no prior jobs, scored on the neutral prior · your own host seat, no API key"
+      "rationale": "100% task fit · no prior jobs, scored on the neutral prior · your own host seat, no API key"
     },
     {
       "taskId": "vector",
@@ -1800,7 +1800,7 @@
         "sampleCount": 34,
         "estimatedCostUsd": 0
       },
-      "rationale": "78 task fit · 67 verified success over 34 prior jobs · free route, no spend · 1 candidate excluded by policy"
+      "rationale": "78% task fit · 67% verified success over 34 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "taskId": "physics",
@@ -2262,7 +2262,7 @@
         "sampleCount": 2,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit · 58 verified success over 2 prior jobs · your own host seat, no API key"
+      "rationale": "100% task fit · 58% verified success over 2 prior jobs · your own host seat, no API key"
     },
     {
       "taskId": "physics",
@@ -2725,7 +2725,7 @@
         "sampleCount": 35,
         "estimatedCostUsd": 0
       },
-      "rationale": "78 task fit · 68 verified success over 35 prior jobs · free route, no spend · 1 candidate excluded by policy"
+      "rationale": "78% task fit · 68% verified success over 35 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "taskId": "game",
@@ -3187,7 +3187,7 @@
         "sampleCount": 7,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit · 86 verified success over 7 prior jobs · local runtime, no spend"
+      "rationale": "100% task fit · 86% verified success over 7 prior jobs · local runtime, no spend"
     }
   ],
   "usage": {
@@ -3482,7 +3482,7 @@
       "at": "2026-09-03T04:06:17.790Z",
       "elapsedMs": 1361,
       "taskId": "spawner",
-      "message": "Winner: OpenCode (your subscription) · 100 task fit · no prior jobs · scored on the neutral prior · your own host seat, no API key"
+      "message": "Winner: OpenCode (your subscription) · 100% task fit · no prior jobs · scored on the neutral prior · your own host seat, no API key"
     },
     {
       "seq": 18,
@@ -3632,7 +3632,7 @@
       "at": "2026-09-03T04:06:17.800Z",
       "elapsedMs": 1371,
       "taskId": "vector",
-      "message": "Winner: OpenCode (your subscription) · 100 task fit · no prior jobs · scored on the neutral prior · your own host seat, no API key"
+      "message": "Winner: OpenCode (your subscription) · 100% task fit · no prior jobs · scored on the neutral prior · your own host seat, no API key"
     },
     {
       "seq": 28,
@@ -3840,7 +3840,7 @@
       "at": "2026-09-03T04:06:53.264Z",
       "elapsedMs": 36835,
       "taskId": "vector",
-      "message": "Winner: Pool · best-free · 78 task fit · 67 verified success over 34 prior jobs · free route, no spend · 1 candidate excluded by policy"
+      "message": "Winner: Pool · best-free · 78% task fit · 67% verified success over 34 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "seq": 42,
@@ -4167,7 +4167,7 @@
       "at": "2026-09-03T04:07:11.743Z",
       "elapsedMs": 55314,
       "taskId": "physics",
-      "message": "Winner: OpenCode (your subscription) · 100 task fit · 58 verified success over 2 prior jobs · your own host seat, no API key"
+      "message": "Winner: OpenCode (your subscription) · 100% task fit · 58% verified success over 2 prior jobs · your own host seat, no API key"
     },
     {
       "seq": 65,
@@ -4375,7 +4375,7 @@
       "at": "2026-09-03T04:11:06.284Z",
       "elapsedMs": 289855,
       "taskId": "physics",
-      "message": "Winner: Pool · best-free · 78 task fit · 68 verified success over 35 prior jobs · free route, no spend · 1 candidate excluded by policy"
+      "message": "Winner: Pool · best-free · 78% task fit · 68% verified success over 35 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "seq": 79,
@@ -4618,7 +4618,7 @@
       "at": "2026-09-03T04:12:12.656Z",
       "elapsedMs": 356227,
       "taskId": "game",
-      "message": "Winner: kodro-tutor · 100 task fit · 86 verified success over 7 prior jobs · local runtime, no spend"
+      "message": "Winner: kodro-tutor · 100% task fit · 86% verified success over 7 prior jobs · local runtime, no spend"
     },
     {
       "seq": 96,

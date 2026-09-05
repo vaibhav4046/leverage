@@ -44,3 +44,6 @@ motion/snapshots/
 # Film source captures are reproducible with scripts/walkthrough-record.mjs; the rendered film ships in public/motion
 motion/assets/capture/raw/*.mp4
 motion/assets/capture/framed/*.mp4
+
+# The greeter fixture is planned by a model at run time; its src/ is worker output.
+benchmark/greeter/src/*.js

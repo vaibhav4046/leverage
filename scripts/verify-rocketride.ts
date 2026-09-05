@@ -8,6 +8,8 @@
  *   npm run verify:rocketride
  */
 import dotenv from 'dotenv';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 dotenv.config({ path: '.env.local' });
 dotenv.config();
 
@@ -81,6 +83,31 @@ async function main() {
         `${answer.slice(0, 120)}. The pool endpoint is probably not reachable from RocketRide's cloud.`,
     );
   }
+  // The run is only evidence if it lands in a file. Same shape the benchmarks
+  // page reads, so the page shows the latest verified run, not the first one.
+  const evidence = {
+    label: 'RocketRide staging load-bearing worker execution',
+    capturedAt: new Date().toISOString(),
+    endpoint: uri,
+    org: health.orgId ?? null,
+    sdk: 'rocketride@1.3.0',
+    poolReachability: `public OpenAI-compatible endpoint at ${redactHost(pool!)}`,
+    credentialsInThisFile: 'none',
+    run: {
+      modelId: process.env.POOL_MODEL ?? 'auto/best-free',
+      latencyMs: Date.now() - started,
+      engineTokens: result.engineTokens ?? null,
+      creditsConsumed: before && after ? Number((before.balance - after.balance).toFixed(2)) : null,
+      workerOutput: answer.slice(0, 200),
+    },
+    before: before ? { credits: before.balance, granted: before.granted } : null,
+    after: after ? { credits: after.balance, granted: after.granted } : null,
+  };
+  const out = path.resolve('demo/evidence/rocketride-run.json');
+  await fs.mkdir(path.dirname(out), { recursive: true });
+  await fs.writeFile(out, JSON.stringify(evidence, null, 2) + '\n');
+  console.log(`evidence  ${path.relative(process.cwd(), out)}`);
+
   console.log('\nRocketRide execution path verified.');
 }
 

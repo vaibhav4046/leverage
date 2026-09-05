@@ -31,12 +31,22 @@ const TOOLS = [
   {
     name: 'leverage_run',
     description:
-      'Start a Leverage mission. Describe the outcome and the policy; Leverage compiles a task ' +
-      'graph, hires models against it, verifies every result and replaces workers that fail. ' +
-      'Returns immediately with a mission id — poll leverage_status for progress.',
+      'Start a Leverage mission. Describe the outcome and the policy. With repositoryRoot, a ' +
+      'planner model turns the goal into a validated task graph for that repository; without it, ' +
+      'the bundled benchmark repository runs its committed plan. Leverage hires models against the ' +
+      "graph, verifies every result with the repository's own checks and replaces workers that " +
+      'fail. Returns immediately with a mission id; poll leverage_status for progress.',
     inputSchema: {
       type: 'object',
       properties: {
+        repositoryRoot: {
+          type: 'string',
+          description:
+            'Absolute path to the repository the mission should work in, on the machine running ' +
+            'this MCP server. Omit to run the bundled benchmark fixture.',
+          minLength: 2,
+          maxLength: 1024,
+        },
         goal: {
           type: 'string',
           description: 'What must be true when this is done. Plain language.',
@@ -76,7 +86,8 @@ const TOOLS = [
     name: 'leverage_status',
     description:
       'Current state of a mission: task states, hired workers, handoffs, spend and elapsed time. ' +
-      'Safe to poll.',
+      'Safe to poll. Terminal states are COMPLETED, FAILED and CANCELLED; anything else is still ' +
+      'running, so keep polling every few seconds.',
     inputSchema: {
       type: 'object',
       properties: { missionId: { type: 'string' } },
@@ -86,7 +97,8 @@ const TOOLS = [
   {
     name: 'leverage_cancel',
     description:
-      'Stop a mission. No further workers are hired; in-flight work is checkpointed where possible.',
+      'Stop a running mission. No further workers are hired; in-flight work is checkpointed where ' +
+      'possible. A mission that has already finished is left as it is and the call fails with 409.',
     inputSchema: {
       type: 'object',
       properties: { missionId: { type: 'string' } },
@@ -98,7 +110,8 @@ const TOOLS = [
     description:
       'The evidence for a mission: every check that ran, what it returned, files changed, quality ' +
       'breakdown and actual spend. This is what makes a completed mission checkable rather than ' +
-      'merely claimed.',
+      'merely claimed. On a FAILED mission the failed checks and each failed worker are listed ' +
+      'instead of a proof.',
     inputSchema: {
       type: 'object',
       properties: { missionId: { type: 'string' } },
@@ -151,6 +164,7 @@ async function dispatch(name: string, args: Record<string, unknown>): Promise<un
           qualityTarget: args.qualityTarget ?? 0.95,
           privacy: args.privacy ?? 'prefer-local',
           maxWorkers: args.parallelism ?? 2,
+          repositoryRoot: args.repositoryRoot,
         }),
       })) as { mission: { mission: { id: string } } };
 
@@ -199,17 +213,35 @@ async function dispatch(name: string, args: Record<string, unknown>): Promise<un
         mission: MissionShape;
       };
       const m = body.mission;
-      const checks = m.proofs.flatMap((p) => p.checks);
+      const proven = m.proofs.flatMap((p) => p.checks.map((c) => ({ taskId: p.taskId, label: c.label, status: c.status, detail: c.detail })));
+      // A proof is only issued for a task that passed. What a failed task leaves
+      // behind is its failed checks in the event log and the failure type on each
+      // worker; a caller reasoning about a FAILED mission gets both.
+      const failed = (m.events ?? [])
+        .filter((e) => e.type === 'proof.check' && e.data?.status === 'fail')
+        .map((e) => {
+          const [label, ...rest] = e.message.split(': FAIL: ');
+          return { taskId: e.taskId, label, status: 'fail', detail: rest.join(': FAIL: ') };
+        });
+      const failedWorkers = m.workers
+        .filter((w) => w.status === 'failed')
+        .map((w) => ({ taskId: w.taskId, model: w.displayName, costClass: w.costClass, failureType: w.failureType }));
+      const checks = [...proven, ...failed];
       return {
         missionId: m.mission.id,
         status: m.mission.status,
-        checks: checks.map((c) => ({ label: c.label, status: c.status, detail: c.detail })),
+        checks,
         checksPassed: `${checks.filter((c) => c.status === 'pass').length}/${checks.length}`,
+        failedWorkers,
         filesChanged: [...new Set(m.proofs.flatMap((p) => p.filesChanged))],
         quality: m.proofs.map((p) => ({ taskId: p.taskId, score: p.qualityScore.total })),
         paidSpendUsd: m.usage.paidSpendUsd,
         estimatedFrontierEquivalentUsd: m.usage.estimatedFrontierEquivalentUsd,
-        note: 'estimatedFrontierEquivalentUsd is an estimate of what this token workload would have cost at published frontier rates. It is not a charge.',
+        note:
+          (m.mission.status === 'COMPLETED'
+            ? ''
+            : 'No proof is issued for a task that never passed; its failed checks and worker failure types are listed instead. ') +
+          'estimatedFrontierEquivalentUsd is an estimate of what this token workload would have cost at published frontier rates. It is not a charge.',
       };
     }
 
@@ -227,12 +259,15 @@ interface MissionShape {
   mission: { id: string; status: string; elapsedMs: number };
   tasks: { id: string; title: string; state: string; attemptCount: number }[];
   workers: {
+    taskId?: string;
     role: string;
     displayName: string;
     costClass: string;
     status: string;
+    failureType?: string;
     resumedFromCheckpointId?: string;
   }[];
+  events?: { type: string; taskId?: string; message: string; data?: { status?: string } }[];
   checkpoints: { taskId: string; reason: string; reductionPct: number }[];
   proofs: {
     taskId?: string;
@@ -266,7 +301,7 @@ async function api(path: string, init: RequestInit = {}): Promise<unknown> {
 }
 
 function str(v: unknown): string {
-  if (typeof v !== 'string' || !v) throw new Error('missionId is required');
+  if (typeof v !== 'string' || !v) throw new Error('missionId must be a string like LVR-1a2b3c4d');
   // The id goes into a URL path; refuse anything that is not the id shape rather
   // than letting a crafted value traverse the API surface.
   if (!/^LVR-[A-Za-z0-9-]{1,40}$/.test(v)) throw new Error(`invalid missionId: ${v.slice(0, 40)}`);

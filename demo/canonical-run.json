@@ -87,7 +87,7 @@
       "status": "replaced",
       "startedAt": "2026-09-03T03:24:09.751Z",
       "actualCostUsd": 0,
-      "auctionRationale": "72 task fit · 70 verified success over 28 prior jobs · free route, no spend",
+      "auctionRationale": "72% task fit · 70% verified success over 28 prior jobs · free route, no spend",
       "contextTokens": 453,
       "failureType": "RATE_LIMIT",
       "finishedAt": "2026-09-03T03:24:09.752Z"
@@ -104,7 +104,7 @@
       "status": "replaced",
       "startedAt": "2026-09-03T03:24:09.754Z",
       "actualCostUsd": 0,
-      "auctionRationale": "100 task fit · 29 verified success over 15 prior jobs · local runtime, no spend",
+      "auctionRationale": "100% task fit · 29% verified success over 15 prior jobs · local runtime, no spend",
       "contextTokens": 421,
       "promptTokens": 695,
       "completionTokens": 414,
@@ -124,7 +124,7 @@
       "startedAt": "2026-09-03T03:24:09.762Z",
       "actualCostUsd": 0,
       "resumedFromCheckpointId": "cp_e79faf1d95be",
-      "auctionRationale": "100 task fit · 29 verified success over 15 prior jobs · local runtime, no spend · 1 candidate excluded by policy",
+      "auctionRationale": "100% task fit · 29% verified success over 15 prior jobs · local runtime, no spend · 1 candidate excluded by policy",
       "contextTokens": 464,
       "promptTokens": 1203,
       "completionTokens": 295,
@@ -144,7 +144,7 @@
       "startedAt": "2026-09-03T03:24:33.467Z",
       "actualCostUsd": 0,
       "resumedFromCheckpointId": "cp_f749a1d987f6",
-      "auctionRationale": "72 task fit · 68 verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy",
+      "auctionRationale": "72% task fit · 68% verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy",
       "contextTokens": 858,
       "finishedAt": "2026-09-03T03:25:51.578Z"
     },
@@ -161,7 +161,7 @@
       "startedAt": "2026-09-03T03:24:40.125Z",
       "actualCostUsd": 0,
       "resumedFromCheckpointId": "cp_9e28829ad996",
-      "auctionRationale": "72 task fit · 68 verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy",
+      "auctionRationale": "72% task fit · 68% verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy",
       "contextTokens": 621,
       "finishedAt": "2026-09-03T03:25:32.708Z"
     },
@@ -177,7 +177,7 @@
       "status": "passed",
       "startedAt": "2026-09-03T03:25:57.992Z",
       "actualCostUsd": 0,
-      "auctionRationale": "72 task fit · 70 verified success over 31 prior jobs · free route, no spend",
+      "auctionRationale": "72% task fit · 70% verified success over 31 prior jobs · free route, no spend",
       "contextTokens": 1120,
       "finishedAt": "2026-09-03T03:26:31.742Z"
     },
@@ -193,7 +193,7 @@
       "status": "passed",
       "startedAt": "2026-09-03T03:26:31.764Z",
       "actualCostUsd": 0,
-      "auctionRationale": "100 task fit · 85 verified success over 6 prior jobs · local runtime, no spend",
+      "auctionRationale": "100% task fit · 85% verified success over 6 prior jobs · local runtime, no spend",
       "contextTokens": 553,
       "promptTokens": 926,
       "completionTokens": 216,
@@ -884,7 +884,7 @@
         "sampleCount": 28,
         "estimatedCostUsd": 0
       },
-      "rationale": "72 task fit · 70 verified success over 28 prior jobs · free route, no spend"
+      "rationale": "72% task fit · 70% verified success over 28 prior jobs · free route, no spend"
     },
     {
       "taskId": "validate",
@@ -1327,7 +1327,7 @@
         "sampleCount": 15,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit · 29 verified success over 15 prior jobs · local runtime, no spend"
+      "rationale": "100% task fit · 29% verified success over 15 prior jobs · local runtime, no spend"
     },
     {
       "taskId": "money",
@@ -1771,7 +1771,7 @@
         "sampleCount": 15,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit · 29 verified success over 15 prior jobs · local runtime, no spend · 1 candidate excluded by policy"
+      "rationale": "100% task fit · 29% verified success over 15 prior jobs · local runtime, no spend · 1 candidate excluded by policy"
     },
     {
       "taskId": "validate",
@@ -2215,7 +2215,7 @@
         "sampleCount": 29,
         "estimatedCostUsd": 0
       },
-      "rationale": "72 task fit · 68 verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy"
+      "rationale": "72% task fit · 68% verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "taskId": "money",
@@ -2659,7 +2659,7 @@
         "sampleCount": 29,
         "estimatedCostUsd": 0
       },
-      "rationale": "72 task fit · 68 verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy"
+      "rationale": "72% task fit · 68% verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "taskId": "split",
@@ -3102,7 +3102,7 @@
         "sampleCount": 31,
         "estimatedCostUsd": 0
       },
-      "rationale": "72 task fit · 70 verified success over 31 prior jobs · free route, no spend"
+      "rationale": "72% task fit · 70% verified success over 31 prior jobs · free route, no spend"
     },
     {
       "taskId": "index",
@@ -3545,7 +3545,7 @@
         "sampleCount": 6,
         "estimatedCostUsd": 0
       },
-      "rationale": "100 task fit · 85 verified success over 6 prior jobs · local runtime, no spend"
+      "rationale": "100% task fit · 85% verified success over 6 prior jobs · local runtime, no spend"
     }
   ],
   "usage": {
@@ -3837,7 +3837,7 @@
       "at": "2026-09-03T03:24:09.751Z",
       "elapsedMs": 1884,
       "taskId": "money",
-      "message": "Winner: Pool · best-free · 72 task fit · 70 verified success over 28 prior jobs · free route, no spend"
+      "message": "Winner: Pool · best-free · 72% task fit · 70% verified success over 28 prior jobs · free route, no spend"
     },
     {
       "seq": 18,
@@ -4059,7 +4059,7 @@
       "at": "2026-09-03T03:24:09.754Z",
       "elapsedMs": 1887,
       "taskId": "validate",
-      "message": "Winner: kodro-tutor · 100 task fit · 29 verified success over 15 prior jobs · local runtime, no spend"
+      "message": "Winner: kodro-tutor · 100% task fit · 29% verified success over 15 prior jobs · local runtime, no spend"
     },
     {
       "seq": 33,
@@ -4209,7 +4209,7 @@
       "at": "2026-09-03T03:24:09.762Z",
       "elapsedMs": 1895,
       "taskId": "money",
-      "message": "Winner: kodro-tutor · 100 task fit · 29 verified success over 15 prior jobs · local runtime, no spend · 1 candidate excluded by policy"
+      "message": "Winner: kodro-tutor · 100% task fit · 29% verified success over 15 prior jobs · local runtime, no spend · 1 candidate excluded by policy"
     },
     {
       "seq": 43,
@@ -4485,7 +4485,7 @@
       "at": "2026-09-03T03:24:33.467Z",
       "elapsedMs": 25600,
       "taskId": "validate",
-      "message": "Winner: Pool · best-free · 72 task fit · 68 verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy"
+      "message": "Winner: Pool · best-free · 72% task fit · 68% verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "seq": 62,
@@ -4761,7 +4761,7 @@
       "at": "2026-09-03T03:24:40.125Z",
       "elapsedMs": 32258,
       "taskId": "money",
-      "message": "Winner: Pool · best-free · 72 task fit · 68 verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy"
+      "message": "Winner: Pool · best-free · 72% task fit · 68% verified success over 29 prior jobs · free route, no spend · 1 candidate excluded by policy"
     },
     {
       "seq": 81,
@@ -5087,7 +5087,7 @@
       "at": "2026-09-03T03:25:57.992Z",
       "elapsedMs": 110125,
       "taskId": "split",
-      "message": "Winner: Pool · best-free · 72 task fit · 70 verified success over 31 prior jobs · free route, no spend"
+      "message": "Winner: Pool · best-free · 72% task fit · 70% verified success over 31 prior jobs · free route, no spend"
     },
     {
       "seq": 104,
@@ -5330,7 +5330,7 @@
       "at": "2026-09-03T03:26:31.764Z",
       "elapsedMs": 143897,
       "taskId": "index",
-      "message": "Winner: kodro-tutor · 100 task fit · 85 verified success over 6 prior jobs · local runtime, no spend"
+      "message": "Winner: kodro-tutor · 100% task fit · 85% verified success over 6 prior jobs · local runtime, no spend"
     },
     {
       "seq": 121,

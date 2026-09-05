@@ -25,11 +25,38 @@ export interface VerifyResult {
   passed: boolean;
 }
 
+/**
+ * The verdict when nothing could be checked.
+ *
+ * A task with no checks cannot be proven done, so an empty gate fails instead of
+ * passing by default. The single synthetic check carries the reason into the
+ * proof pack and the timeline, so the failure is legible rather than mysterious.
+ */
+export function unverifiable(detail: string): VerifyResult {
+  return {
+    checks: [
+      {
+        id: 'no-verification',
+        label: 'Verification defined',
+        status: 'fail',
+        detail,
+        durationMs: 0,
+        weight: 1,
+      },
+    ],
+    passed: false,
+  };
+}
+
 export async function runVerification(
   task: MissionTask,
   repoRoot: string,
   opts: { signal?: AbortSignal } = {},
 ): Promise<VerifyResult> {
+  if (task.verification.checks.length === 0) {
+    return unverifiable('no verification was defined for this task');
+  }
+
   const checks: ProofCheck[] = [];
 
   for (const spec of task.verification.checks) {
@@ -111,7 +138,7 @@ async function runCheck(
           detail:
             result.code === 0
               ? lastLine(result.stdout) || `exit 0`
-              : `exit ${result.code}: ${lastLine(result.stderr || result.stdout)}`,
+              : `exit ${result.code}: ${failureExcerpt(result.stdout, result.stderr)}`,
           durationMs: Date.now() - started,
         };
       }
@@ -210,6 +237,29 @@ export function execArgv(
       resolve({ code: code ?? 1, stdout, stderr });
     });
   });
+}
+
+/**
+ * The lines of a failed run that say what went wrong: the failing test's name and
+ * its assertion, not the closing brace of a stack trace. A replacement worker
+ * reads this from the checkpoint, so the difference between "exit 1: }" and
+ * "expected 'a-b-c', actual 'abc'" is the difference between a handoff that
+ * fixes the bug and one that repeats it.
+ */
+const FAILURE_LINE = /\b(not ok|fail(?:ing|ed|ure)?|error|expected|actual|assert)\b|✖|×|✗/i;
+const FAILURE_NOISE = /^\s*at\s|^\s*[{}\]\[],?\s*$|^\s*(operator|generatedMessage|diff|code):/;
+
+export function failureExcerpt(stdout: string, stderr: string, max = 600): string {
+  const seen = new Set<string>();
+  const picked: string[] = [];
+  for (const raw of `${stdout}\n${stderr}`.split(/\r?\n/)) {
+    const line = raw.trim().replace(/^#\s*/, '');
+    if (!line || !FAILURE_LINE.test(line) || FAILURE_NOISE.test(line) || seen.has(line)) continue;
+    seen.add(line);
+    picked.push(line.slice(0, 200));
+    if (picked.join(' | ').length > max) break;
+  }
+  return picked.length ? picked.join(' | ').slice(0, max) : lastLine(stderr || stdout);
 }
 
 function lastLine(text: string): string {

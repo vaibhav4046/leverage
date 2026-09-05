@@ -18,6 +18,35 @@ const NAV: [string, string][] = [
   ['/docs', 'Docs'],
 ];
 
+/**
+ * Below md the header used to drop every link with no menu, so a phone visitor
+ * could reach nothing but the wordmark and the primary button. A native
+ * details/summary needs no script and closes on navigation.
+ */
+export function MobileMenu({ links }: { links: [string, string][] }) {
+  return (
+    <details className="relative md:hidden">
+      <summary
+        className="mono cursor-pointer list-none rounded-full border border-[var(--color-sapphire-hairline)] px-3 py-1.5 text-[11px] uppercase tracking-[0.08em] text-[var(--color-mist)] [&::-webkit-details-marker]:hidden"
+        aria-label="Menu"
+      >
+        Menu
+      </summary>
+      <div className="absolute right-0 top-full z-50 mt-2 min-w-[13rem] rounded-[12px] border border-[var(--color-obsidian-edge)] bg-[var(--color-abyss)] p-2 shadow-[0_24px_60px_rgba(0,0,0,0.55)]">
+        {links.map(([href, label]) => (
+          <Link
+            key={href}
+            href={href}
+            className="block rounded-[8px] px-3 py-2.5 text-[14px] text-[var(--color-mist)] hover:bg-[rgba(255,255,255,0.04)] hover:text-[var(--color-quartz)]"
+          >
+            {label}
+          </Link>
+        ))}
+      </div>
+    </details>
+  );
+}
+
 export function SiteNav() {
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--color-obsidian-edge)] bg-[rgba(11,12,14,0.82)] backdrop-blur-xl">
@@ -40,13 +69,14 @@ export function SiteNav() {
           ))}
         </div>
         <div className="flex items-center gap-3">
+          <MobileMenu links={[...NAV, ['/app', 'Mission Control'], ['/demo', 'Demo']]} />
           <Link
             href="/app"
             className="hidden text-[14px] text-[var(--color-ash)] transition-colors hover:text-[var(--color-quartz)] sm:block"
           >
             Mission Control
           </Link>
-          <Link href="/app/live" className="btn-primary !py-2 !text-[14px]">
+          <Link href="/app/live" className="btn-primary !py-2.5 !text-[14px]">
             Run a real mission
           </Link>
         </div>
@@ -67,7 +97,7 @@ export function SiteFooter() {
             ['/how-it-works', 'How it works'],
             ['/demo', 'Demo'],
           ].map(([href, label]) => (
-            <Link key={href} href={href} className="hover:text-[var(--color-quartz)]">
+            <Link key={href} href={href} className="inline-block py-2 hover:text-[var(--color-quartz)]">
               {label}
             </Link>
           ))}

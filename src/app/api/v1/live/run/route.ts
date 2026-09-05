@@ -93,6 +93,8 @@ export async function POST(req: NextRequest) {
       privacy: 'cloud-allowed',
       maxWorkers: 2,
       repositoryRoot: work,
+      // The live run is the benchmark on a fresh copy, so its committed plan.
+      plan: 'fixture',
     });
     missionId = created.mission.id;
   } catch (err) {

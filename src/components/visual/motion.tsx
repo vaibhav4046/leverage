@@ -60,6 +60,9 @@ export function Reveal({
 
     el.style.opacity = '0';
     el.style.transform = `translateY(${y}px)`;
+    // On a throttled phone the observer can lag a flick by seconds, which reads
+    // as blank screens. Whatever happens, nothing stays hidden past this.
+    setTimeout(show, 1400);
     el.style.transition =
       `opacity 620ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms, ` +
       `transform 620ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`;
