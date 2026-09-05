@@ -32,11 +32,11 @@ const ok = (s) => `\x1b[32m${s}\x1b[0m`;
 const warn = (s) => `\x1b[33m${s}\x1b[0m`;
 const bad = (s) => `\x1b[31m${s}\x1b[0m`;
 
-async function probe(url, timeoutMs = 4000) {
+async function probe(url, timeoutMs = 4000, headers = {}) {
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), timeoutMs);
   try {
-    const res = await fetch(url, { signal: ctrl.signal });
+    const res = await fetch(url, { signal: ctrl.signal, headers });
     if (!res.ok) return null;
     return await res.json();
   } catch {
@@ -173,35 +173,46 @@ async function main() {
   const env = fs.existsSync('.env.local') ? fs.readFileSync('.env.local', 'utf8') : '';
   const hasKey = /^ROCKETRIDE_APIKEY=.+/m.test(env);
   const pool = env.match(/^OMNIROUTE_BASE_URL=(.+)$/m)?.[1]?.trim() ?? '';
+  const poolKey = env.match(/^OMNIROUTE_API_KEY=(.+)$/m)?.[1]?.trim() ?? '';
 
   // Probe the pool, never pattern-match it. A stale tunnel hostname still sitting
   // in .env.local looks exactly like a public URL and answers nothing; reporting
-  // it "ready" is the one lie this script exists to prevent.
+  // it "ready" is the one lie this script exists to prevent. The hosted pool is
+  // token-gated, so the probe carries the same credential the executor sends.
   let poolState = 'none';
+  let poolModels = 0;
   if (/^https?:\/\//.test(pool)) {
-    const answers = ((await probe(`${pool}/v1/models`, 8000))?.data?.length ?? 0) > 0;
+    const headers = poolKey ? { authorization: `Bearer ${poolKey}` } : {};
+    poolModels = (await probe(`${pool}/v1/models`, 8000, headers))?.data?.length ?? 0;
     const local = /127\.0\.0\.1|localhost/.test(pool);
-    poolState = !answers ? 'unreachable' : local ? 'local' : 'public';
+    poolState = poolModels === 0 ? 'unreachable' : local ? 'local' : 'public';
   }
   console.log(
     !hasKey
       ? `rocketride  ${warn('no key')}  cloud path off; local and agent-cli workers still run`
       : poolState === 'public'
-        ? `rocketride  ${ok('ready')}  key present, public pool answers`
+        ? `rocketride  ${ok('ready')}  key present, hosted pool answers with ${poolModels} models`
         : poolState === 'local'
           ? `rocketride  ${warn('local')}  key present, pool answers but only on localhost; cloud workers cannot reach it`
           : `rocketride  ${warn('pool down')}  key present, but OMNIROUTE_BASE_URL does not answer; cloud workers would fail. Hosted pool: OMNIROUTE_BASE_URL=https://<deployment>/api/v1/pool plus its OMNIROUTE_API_KEY. Local-only run: OMNIROUTE_BASE_URL=${PROXY}`,
   );
 
   // ------------------------------------------------------------------ verdict
-  const workforce = ollamaModels + routerModels;
+  // A hosted pool counts only when it is not the local router seen twice.
+  const hostedModels = poolState === 'public' ? poolModels : 0;
+  const workforce = ollamaModels + routerModels + hostedModels;
   console.log();
   if (workforce === 0) {
     console.log(bad('No workforce reachable. A mission would have nobody to hire.'));
     console.log('Install Ollama and pull one model, or start the router, then run this again.');
     process.exit(1);
   }
-  console.log(ok(`Workforce ready: ${workforce} models across ${ollamaModels > 0 ? 'local' : ''}${ollamaModels > 0 && routerModels > 0 ? ' + ' : ''}${routerModels > 0 ? 'free' : ''}.`));
+  const sources = [
+    ollamaModels > 0 ? `${ollamaModels} local` : '',
+    routerModels > 0 ? `${routerModels} free via router` : '',
+    hostedModels > 0 ? `${hostedModels} hosted, via RocketRide` : '',
+  ].filter(Boolean);
+  console.log(ok(`Workforce ready: ${workforce} models (${sources.join(' + ')}).`));
   console.log('Next: npm run dev, then start a mission from /app/new or through MCP.');
 }
 
