@@ -165,8 +165,8 @@ export default async function Home() {
 
                 <Reveal delay={200}>
                   <div className="mt-9 flex flex-wrap items-center gap-3">
-                    <Link href="/app/new" className="btn-primary">
-                      Run your first mission
+                    <Link href="/app/live" className="btn-primary">
+                      Run a real mission now
                     </Link>
                     <Link href="/demo" className="btn-ghost">
                       Watch the proof
@@ -531,8 +531,8 @@ export default async function Home() {
                 Give your best model a workforce.
               </h2>
               <div className="mt-9 flex flex-wrap justify-center gap-3">
-                <Link href="/app/new" className="btn-primary">
-                  Run your first mission
+                <Link href="/app/live" className="btn-primary">
+                  Run a real mission now
                 </Link>
                 <Link href="/docs/mcp" className="btn-ghost">
                   Install the MCP server
@@ -581,7 +581,7 @@ function Nav() {
           >
             Sign in
           </Link>
-          <Link href="/app/new" className="btn-primary !py-2 !text-[14px]">
+          <Link href="/app/live" className="btn-primary !py-2 !text-[14px]">
             Deploy Leverage
           </Link>
         </div>
