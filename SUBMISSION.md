@@ -66,6 +66,7 @@ hundred-percent model.
 | Seconds | Open | You will see |
 |---|---|---|
 | 0–90 | `/app/live`, press Run | a real mission executes on RocketRide while you watch, then renders as a mission page |
+| or 0–130 | `/app/live`, press the second button | a planner model reads a repository with no committed plan, writes the task graph, and the run follows; the recorded transcript of one is `demo/evidence/live-planned-run-LVR-2d4d56e0.sse` |
 | 0–20 | https://useleverage.vercel.app | `$0.00` actual paid inference, from a recorded run |
 | or 0–108 | the film on the landing page, sound on | a narrated walkthrough over real footage of the live site, including a real live run; every figure spoken is on this site with its evidence |
 | 20–60 | `/app/missions/LVR-f8f72d56` | 4/4 verified · 3 handoffs · 129 events |

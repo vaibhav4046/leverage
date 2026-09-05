@@ -9,6 +9,7 @@ delete the older, because a record that was true when it was made stays true.
 | `rocketride-run.json` | `npm run verify:rocketride`: one worker executed as a RocketRide pipeline, with the org and credit balances read from billing before and after | tunnel era |
 | `rocketride-mission-summary.json` | the first whole mission executed through RocketRide, when the pool was reached through a temporary public tunnel to a local router | tunnel era |
 | `live-run-LVR-783bade5.sse` | the SSE transcript of the first live run on the deployed site: every event, credits before and after | hosted pool |
+| `live-planned-run-LVR-2d4d56e0.sse` | the SSE transcript of a live run of the greeter fixture on the deployed site: a planner model wrote the task graph in 62 s, three tasks passed on their own test files, the whole suite ran green, 15.8 credits, 121 s | hosted pool |
 | `pool-sweep.json` | `node scripts/pool-sweep.mjs`: every candidate id on each upstream asked for one completion, with status and latency | hosted pool |
 | `mcp-*.json`, `mcp-*.jsonl` | `scripts/mcp-harness.ts`: a mission driven end to end through the MCP server, request by request | both |
 

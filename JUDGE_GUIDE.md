@@ -154,8 +154,16 @@ If you would rather press a button than read: open
 https://useleverage.vercel.app/app/live and press **Run a real mission now**. A mission
 starts inside that deployment, the auction hires from the hosted pool, the workers run
 as RocketRide pipelines, the fixture's tests verify each task, and the finished run
-renders in the same view as the recorded ones. One to three minutes. Bounded: fixed
+renders in the same view as the recorded ones. One to two minutes. Bounded: fixed
 goal, one run per visitor every ten minutes, cancelled if you leave.
+
+The second button on that page, **Or let a model plan one first**, runs the greeter
+fixture instead: it has no committed plan, so a planner model reads the repository and
+its tests, writes the task graph, the compiler validates it, and only then is anyone
+hired. Three to four minutes when the planner routes are answering. One such run,
+`LVR-2d4d56e0`, is transcribed in `demo/evidence/live-planned-run-LVR-2d4d56e0.sse`:
+planned in 62 seconds, 3 of 3 verified on their own test files, whole suite green,
+15.8 RocketRide credits, 121 seconds end to end.
 
 If you would rather be told than read: the landing page carries a narrated
 walkthrough (1:51) over untouched footage of the live site, including one real live

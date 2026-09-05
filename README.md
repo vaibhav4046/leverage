@@ -11,8 +11,9 @@
 
 **Live: https://useleverage.vercel.app**, seeded with the runs that actually happened,
 plus one page that is not a recording: [/app/live](https://useleverage.vercel.app/app/live)
-runs a real mission on RocketRide through the hosted pool while you watch. Every other
-mutating route answers `403`.
+runs a real mission on RocketRide through the hosted pool while you watch, on the
+benchmark's committed plan or, with the second button, on a plan a model writes first.
+Every other mutating route answers `403`.
 
 ![Leverage landing page](docs/shots/landing-hero.png)
 
