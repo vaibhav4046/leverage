@@ -5,7 +5,7 @@
 > Your best model should make the expensive decisions. It should not write the fortieth test.
 
 [![Live](https://img.shields.io/badge/live-useleverage.vercel.app-4ade80?style=flat-square)](https://useleverage.vercel.app)
-[![Tests](https://img.shields.io/badge/tests-53%20passing-4ade80?style=flat-square)](tests/invariants.test.ts)
+[![Tests](https://img.shields.io/badge/tests-60%20passing-4ade80?style=flat-square)](tests/invariants.test.ts)
 [![Paid inference](https://img.shields.io/badge/actual%20paid%20inference-%240.00-4ade80?style=flat-square)](demo/canonical-run.json)
 [![RocketRide](https://img.shields.io/badge/RocketRide-staging%20verified-85a6e9?style=flat-square)](docs/ROCKETRIDE_FINDINGS.md)
 
