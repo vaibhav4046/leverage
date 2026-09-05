@@ -57,6 +57,9 @@ const nextConfig: NextConfig = {
     '/app/missions/[missionId]': ['./demo/**/*.json'],
     '/api/v1/missions': ['./demo/**/*.json'],
     '/api/v1/missions/[missionId]': ['./demo/**/*.json'],
+    // A live run copies the fixture into the function's writable temp directory
+    // and verifies against its own test files, so the fixture must ship too.
+    '/api/v1/live/run': ['./benchmark/forge-app/**'],
   },
 };
 

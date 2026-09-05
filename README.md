@@ -9,9 +9,10 @@
 [![Paid inference](https://img.shields.io/badge/actual%20paid%20inference-%240.00-4ade80?style=flat-square)](demo/canonical-run.json)
 [![RocketRide](https://img.shields.io/badge/RocketRide-staging%20verified-85a6e9?style=flat-square)](docs/ROCKETRIDE_FINDINGS.md)
 
-**Live: https://useleverage.vercel.app** — a read-only public demo, seeded with the
-runs that actually happened. Every mutating route answers `403`; executing a mission
-needs a local repository to write into and a local model pool to hire from.
+**Live: https://useleverage.vercel.app**, seeded with the runs that actually happened,
+plus one page that is not a recording: [/app/live](https://useleverage.vercel.app/app/live)
+runs a real mission on RocketRide through the hosted pool while you watch. Every other
+mutating route answers `403`.
 
 ![Leverage landing page](docs/shots/landing-hero.png)
 

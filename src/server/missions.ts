@@ -99,6 +99,11 @@ export interface CreateMissionInput {
   injectFailure?: boolean;
   /** Idempotency key: the same key returns the same mission rather than a second one. */
   idempotencyKey?: string;
+  /**
+   * Where the mission writes. Defaults to the checked-in fixture; a live run on a
+   * read-only filesystem passes a copy of it in the function's temp directory.
+   */
+  repositoryRoot?: string;
 }
 
 const idempotency: Map<string, string> = (globalStore.__leverageIdempotency ??= new Map());
@@ -116,7 +121,7 @@ export async function createMission(input: CreateMissionInput): Promise<MissionS
     goal: input.goal,
     workspaceId: input.workspaceId,
     createdBy: input.userId,
-    repositoryRoot: path.resolve('benchmark/forge-app'),
+    repositoryRoot: input.repositoryRoot ?? path.resolve('benchmark/forge-app'),
     repositoryLabel: 'forge-app',
     overrides: {
       budgetMaxUsd: input.budgetMaxUsd,
@@ -318,7 +323,14 @@ export function cancelMission(missionId: string, workspaceId: string): boolean {
 }
 
 async function persist(state: MissionState): Promise<void> {
-  await getRepository().save(state.spec.workspaceId, snapshotMission(state));
+  try {
+    await getRepository().save(state.spec.workspaceId, snapshotMission(state));
+  } catch (err) {
+    // A read-only filesystem (a live run inside a serverless function) cannot keep
+    // the record; the run still happened and its snapshot went to the caller. An
+    // unhandled rejection here would take the whole function down with it.
+    state.events.emit('worker.progress', `Snapshot not persisted: ${(err as Error).message}`);
+  }
 }
 
 async function persistReputation(): Promise<void> {

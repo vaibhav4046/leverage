@@ -84,13 +84,19 @@ export function RocketRideProof({ run }: { run: MissionSnapshot | null }) {
             is how {tasksViaRocketRide.size} of the {run.tasks.length} tasks were finished, and
             their output passed verification. Open it and read the event log yourself.
           </p>
-          <Link
-            href={`/app/missions/${run.mission.id}`}
-            className="btn-primary inline-flex shrink-0 items-center gap-2"
-          >
-            Open the run
-            <IconArrowRight size={15} />
-          </Link>
+          <div className="flex shrink-0 flex-col items-start gap-3">
+            <Link href="/app/live" className="btn-primary inline-flex items-center gap-2">
+              Run one yourself, now
+              <IconArrowRight size={15} />
+            </Link>
+            <Link
+              href={`/app/missions/${run.mission.id}`}
+              className="mono inline-flex items-center gap-2 text-[12.5px] text-[var(--color-frosted-lilac)]"
+            >
+              Or open the recorded run
+              <IconArrowRight size={13} />
+            </Link>
+          </div>
         </div>
       </div>
     </section>

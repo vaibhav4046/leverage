@@ -60,6 +60,7 @@ hundred-percent model.
 
 | Seconds | Open | You will see |
 |---|---|---|
+| 0–90 | `/app/live`, press Run | a real mission executes on RocketRide while you watch, then renders as a mission page |
 | 0–20 | https://useleverage.vercel.app | `$0.00` actual paid inference, from a recorded run |
 | or 0–68 | the film on the landing page, sound on | seven scenes, narrated; every figure spoken is on this site with its evidence |
 | 20–60 | `/app/missions/LVR-f8f72d56` | 4/4 verified · 3 handoffs · 129 events |
@@ -88,9 +89,14 @@ by key or by value shape, a path that escapes the repository is refused.
 
 ## What is honest about the limits
 
-The public deployment is deliberately read-only. It replays real recorded missions;
-every mutation answers 403. Executing a mission needs a local repository to write into
-and a local model pool to hire from.
+The public deployment is read-only everywhere except one page. `/app/live` runs a real
+mission inside the deployment while you watch: a fresh copy of the fixture in the
+function's temp directory, workers hired from the hosted pool and executed as
+RocketRide pipelines, every task verified by the fixture's own tests, the finished
+snapshot rendered in the same view as every recorded run. It is bounded on purpose:
+fixed goal, one run per visitor every ten minutes, cancelled if you leave, stopped at
+four and a half minutes. Every other mutation answers 403. The first run of it on the
+deployed site: `LVR-783bade5`, 4/4 verified, 12.0 credits, 69 seconds.
 
 The hosted pool endpoint at `/api/v1/pool` forwards to OpenRouter and NVIDIA behind
 an access token and a 13-model allowlist in which every id answered a real completion

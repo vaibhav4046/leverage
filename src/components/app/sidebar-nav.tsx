@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   IconOverview,
+  IconPlay,
   IconNewMission,
   IconMissions,
   IconModels,
@@ -24,6 +25,7 @@ import {
 const NAV: { href: string; label: string; icon: (p: IconProps) => React.ReactElement }[] = [
   { href: '/app', label: 'Overview', icon: IconOverview },
   { href: '/app/new', label: 'New mission', icon: IconNewMission },
+  { href: '/app/live', label: 'Live run', icon: IconPlay },
   { href: '/app/missions', label: 'Missions', icon: IconMissions },
   { href: '/app/models', label: 'Models', icon: IconModels },
   { href: '/app/providers', label: 'Providers', icon: IconProviders },

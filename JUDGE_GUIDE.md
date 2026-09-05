@@ -140,6 +140,13 @@ single inference yourself:
 npm run verify:rocketride
 ```
 
+If you would rather press a button than read: open
+https://useleverage.vercel.app/app/live and press **Run a real mission now**. A mission
+starts inside that deployment, the auction hires from the hosted pool, the workers run
+as RocketRide pipelines, the fixture's tests verify each task, and the finished run
+renders in the same view as the recorded ones. One to three minutes. Bounded: fixed
+goal, one run per visitor every ten minutes, cancelled if you leave.
+
 If you would rather be told than read: the landing page carries a 68-second
 narrated film (`motion/compositions/film.html`, rendered with HyperFrames, voiced
 with ElevenLabs by `scripts/narrate-film.mjs`, scenes cut on the narration's own
