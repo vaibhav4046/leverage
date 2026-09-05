@@ -632,8 +632,9 @@ function Nav() {
           >
             Mission Control
           </Link>
-          <Link href="/app/live" className="btn-primary !py-2.5 !text-[14px]">
-            Run a real mission
+          <Link href="/app/live" className="btn-primary whitespace-nowrap !py-2.5 !text-[14px]">
+            <span className="sm:hidden">Run one</span>
+            <span className="hidden sm:inline">Run a real mission</span>
           </Link>
         </div>
       </nav>
