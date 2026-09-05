@@ -162,6 +162,9 @@ const DEMO_RUN_FILES = [
   // load-bearing or decorative", and it was sitting on disk unreadable by anyone
   // without a terminal and a staging key.
   'rocketride-mission.json',
+  // The same question answered again on the permanent hosted pool: every worker
+  // free-class, every one a RocketRide pipeline, no tunnel anywhere.
+  'hosted-pool-mission.json',
 ];
 
 async function loadDemoRuns(): Promise<MissionSnapshot[]> {

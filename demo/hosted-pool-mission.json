@@ -1,0 +1,2587 @@
+{
+  "mission": {
+    "id": "LVR-719a8c22",
+    "goal": "Finish the forge-app receipt splitting library so the whole existing test suite passes. Do not modify any file under test/. Budget: $0. Quality: production.",
+    "status": "COMPLETED",
+    "budget": {
+      "maxUsd": 0,
+      "hard": true
+    },
+    "quality": {
+      "target": 0.95
+    },
+    "privacy": {
+      "mode": "cloud-allowed"
+    },
+    "startedAt": "2026-09-05T04:14:22.732Z",
+    "completedAt": "2026-09-05T04:15:46.584Z",
+    "elapsedMs": 83852
+  },
+  "tasks": [
+    {
+      "id": "money",
+      "title": "Implement money helpers",
+      "category": "backend",
+      "state": "PASSED",
+      "dependencies": [],
+      "attemptCount": 1,
+      "workerRunId": "wr_460ff104",
+      "fileScope": [
+        "src/money.js"
+      ]
+    },
+    {
+      "id": "validate",
+      "title": "Implement receipt validation",
+      "category": "backend",
+      "state": "PASSED",
+      "dependencies": [],
+      "attemptCount": 1,
+      "workerRunId": "wr_efe68dd6",
+      "fileScope": [
+        "src/validate.js"
+      ]
+    },
+    {
+      "id": "split",
+      "title": "Implement the split calculation",
+      "category": "backend",
+      "state": "PASSED",
+      "dependencies": [
+        "money",
+        "validate"
+      ],
+      "attemptCount": 1,
+      "workerRunId": "wr_8cdc3a8c",
+      "fileScope": [
+        "src/split.js"
+      ]
+    },
+    {
+      "id": "index",
+      "title": "Implement the request handler",
+      "category": "integration",
+      "state": "PASSED",
+      "dependencies": [
+        "split"
+      ],
+      "attemptCount": 1,
+      "workerRunId": "wr_01df261f",
+      "fileScope": [
+        "src/index.js"
+      ]
+    }
+  ],
+  "workers": [
+    {
+      "id": "wr_460ff104",
+      "missionId": "LVR-719a8c22",
+      "taskId": "money",
+      "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+      "providerId": "pool",
+      "displayName": "MiniMax M3 via OpenRouter",
+      "role": "Backend Engineer",
+      "costClass": "free",
+      "status": "passed",
+      "startedAt": "2026-09-05T04:14:27.970Z",
+      "actualCostUsd": 0,
+      "auctionRationale": "80 task fit \u00b7 no prior jobs \u2014 scored on the neutral prior \u00b7 free route, no spend",
+      "contextTokens": 615,
+      "finishedAt": "2026-09-05T04:14:56.965Z"
+    },
+    {
+      "id": "wr_efe68dd6",
+      "missionId": "LVR-719a8c22",
+      "taskId": "validate",
+      "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+      "providerId": "pool",
+      "displayName": "MiniMax M3 via OpenRouter",
+      "role": "Backend Engineer",
+      "costClass": "free",
+      "status": "passed",
+      "startedAt": "2026-09-05T04:14:27.991Z",
+      "actualCostUsd": 0,
+      "auctionRationale": "80 task fit \u00b7 no prior jobs \u2014 scored on the neutral prior \u00b7 free route, no spend",
+      "contextTokens": 674,
+      "finishedAt": "2026-09-05T04:14:56.940Z"
+    },
+    {
+      "id": "wr_8cdc3a8c",
+      "missionId": "LVR-719a8c22",
+      "taskId": "split",
+      "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+      "providerId": "pool",
+      "displayName": "MiniMax M3 via OpenRouter",
+      "role": "Backend Engineer",
+      "costClass": "free",
+      "status": "passed",
+      "startedAt": "2026-09-05T04:14:57.634Z",
+      "actualCostUsd": 0,
+      "auctionRationale": "80 task fit \u00b7 75 verified success over 2 prior jobs \u00b7 free route, no spend",
+      "contextTokens": 1005,
+      "finishedAt": "2026-09-05T04:15:18.641Z"
+    },
+    {
+      "id": "wr_01df261f",
+      "missionId": "LVR-719a8c22",
+      "taskId": "index",
+      "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+      "providerId": "pool",
+      "displayName": "MiniMax M3 via OpenRouter",
+      "role": "Integrator",
+      "costClass": "free",
+      "status": "passed",
+      "startedAt": "2026-09-05T04:15:18.650Z",
+      "actualCostUsd": 0,
+      "auctionRationale": "80 task fit \u00b7 78 verified success over 3 prior jobs \u00b7 free route, no spend",
+      "contextTokens": 740,
+      "finishedAt": "2026-09-05T04:15:46.583Z"
+    }
+  ],
+  "checkpoints": [],
+  "proofs": [
+    {
+      "id": "pf_db1b78ae",
+      "missionId": "LVR-719a8c22",
+      "taskId": "validate",
+      "status": "verified",
+      "worker": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "providerId": "pool",
+        "displayName": "MiniMax M3 via OpenRouter"
+      },
+      "filesChanged": [
+        "src/validate.js"
+      ],
+      "patchHash": "a95c4f3859af8038",
+      "checks": [
+        {
+          "id": "exists-0",
+          "label": "src/validate.js exists",
+          "weight": 1,
+          "status": "pass",
+          "detail": "src/validate.js exists",
+          "durationMs": 0
+        },
+        {
+          "id": "suite",
+          "label": "test/validate.test.js",
+          "weight": 4,
+          "status": "pass",
+          "detail": "\u001b[34m\u2139 duration_ms 509.1679\u001b[39m",
+          "durationMs": 1003
+        }
+      ],
+      "unresolved": [],
+      "qualityScore": {
+        "total": 100,
+        "acceptance": 100,
+        "automated": 100,
+        "staticChecks": 100,
+        "weights": {
+          "acceptance": 0.4444444444444445,
+          "automated": 0.38888888888888884,
+          "staticChecks": 0.16666666666666666
+        }
+      },
+      "metrics": {
+        "durationMs": 28948,
+        "actualCostUsd": 0
+      },
+      "createdAt": "2026-09-05T04:14:56.940Z"
+    },
+    {
+      "id": "pf_dc4c145a",
+      "missionId": "LVR-719a8c22",
+      "taskId": "money",
+      "status": "verified",
+      "worker": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "providerId": "pool",
+        "displayName": "MiniMax M3 via OpenRouter"
+      },
+      "filesChanged": [
+        "src/money.js"
+      ],
+      "patchHash": "7b67264664fd8b29",
+      "checks": [
+        {
+          "id": "exists-0",
+          "label": "src/money.js exists",
+          "weight": 1,
+          "status": "pass",
+          "detail": "src/money.js exists",
+          "durationMs": 1
+        },
+        {
+          "id": "suite",
+          "label": "test/money.test.js",
+          "weight": 4,
+          "status": "pass",
+          "detail": "\u001b[34m\u2139 duration_ms 513.017\u001b[39m",
+          "durationMs": 1047
+        }
+      ],
+      "unresolved": [],
+      "qualityScore": {
+        "total": 100,
+        "acceptance": 100,
+        "automated": 100,
+        "staticChecks": 100,
+        "weights": {
+          "acceptance": 0.4444444444444445,
+          "automated": 0.38888888888888884,
+          "staticChecks": 0.16666666666666666
+        }
+      },
+      "metrics": {
+        "durationMs": 28994,
+        "actualCostUsd": 0
+      },
+      "createdAt": "2026-09-05T04:14:56.965Z"
+    },
+    {
+      "id": "pf_32bf4236",
+      "missionId": "LVR-719a8c22",
+      "taskId": "split",
+      "status": "verified",
+      "worker": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "providerId": "pool",
+        "displayName": "MiniMax M3 via OpenRouter"
+      },
+      "filesChanged": [
+        "src/split.js"
+      ],
+      "patchHash": "ad295b5247c26997",
+      "checks": [
+        {
+          "id": "exists-0",
+          "label": "src/split.js exists",
+          "weight": 1,
+          "status": "pass",
+          "detail": "src/split.js exists",
+          "durationMs": 0
+        },
+        {
+          "id": "suite",
+          "label": "test/split.test.js",
+          "weight": 4,
+          "status": "pass",
+          "detail": "\u001b[34m\u2139 duration_ms 165.5513\u001b[39m",
+          "durationMs": 647
+        }
+      ],
+      "unresolved": [],
+      "qualityScore": {
+        "total": 100,
+        "acceptance": 100,
+        "automated": 100,
+        "staticChecks": 100,
+        "weights": {
+          "acceptance": 0.4444444444444445,
+          "automated": 0.38888888888888884,
+          "staticChecks": 0.16666666666666666
+        }
+      },
+      "metrics": {
+        "durationMs": 21007,
+        "actualCostUsd": 0
+      },
+      "createdAt": "2026-09-05T04:15:18.641Z"
+    },
+    {
+      "id": "pf_3f993905",
+      "missionId": "LVR-719a8c22",
+      "taskId": "index",
+      "status": "verified",
+      "worker": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "providerId": "pool",
+        "displayName": "MiniMax M3 via OpenRouter"
+      },
+      "filesChanged": [
+        "src/index.js"
+      ],
+      "patchHash": "f940c5b71839c371",
+      "checks": [
+        {
+          "id": "exists-0",
+          "label": "src/index.js exists",
+          "weight": 1,
+          "status": "pass",
+          "detail": "src/index.js exists",
+          "durationMs": 0
+        },
+        {
+          "id": "suite",
+          "label": "test/index.test.js",
+          "weight": 4,
+          "status": "pass",
+          "detail": "\u001b[34m\u2139 duration_ms 626.3973\u001b[39m",
+          "durationMs": 1460
+        }
+      ],
+      "unresolved": [],
+      "qualityScore": {
+        "total": 100,
+        "acceptance": 100,
+        "automated": 100,
+        "staticChecks": 100,
+        "weights": {
+          "acceptance": 0.4444444444444445,
+          "automated": 0.38888888888888884,
+          "staticChecks": 0.16666666666666666
+        }
+      },
+      "metrics": {
+        "durationMs": 27933,
+        "actualCostUsd": 0
+      },
+      "createdAt": "2026-09-05T04:15:46.583Z"
+    }
+  ],
+  "auctions": [
+    {
+      "taskId": "money",
+      "candidates": [
+        {
+          "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+          "displayName": "MiniMax M3 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6920000000000001,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+          "displayName": "MiniMax M2.7 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6920000000000001,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/minimaxai/minimax-m3",
+          "displayName": "MiniMax M3 via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6920000000000001,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+          "displayName": "Nemotron 3 Nano 30B via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+          "displayName": "Nemotron 3 Super 120B via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+          "displayName": "Nemotron 3 Nano 30B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-super-120b-a12b",
+          "displayName": "Nemotron 3 Super 120B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-ultra-550b-a55b",
+          "displayName": "Nemotron 3 Ultra 550B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/openai/gpt-oss-20b",
+          "displayName": "GPT-OSS 20B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3.5-lightning:free",
+          "displayName": "Nemotron 3.5 Lightning via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/poolside/laguna-s-2.1:free",
+          "displayName": "Laguna S 2.1 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b",
+          "displayName": "Nemotron 3.5 Lightning via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/poolside/laguna-xs-2.1",
+          "displayName": "Laguna XS 2.1 via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "displayName": "MiniMax M3 via OpenRouter",
+        "providerId": "pool",
+        "costClass": "free",
+        "eligible": true,
+        "utility": 0.6920000000000001,
+        "breakdown": {
+          "taskFit": 0.8,
+          "reputation": 0.62,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.5,
+          "costPenalty": 0.02,
+          "quotaRisk": 0.25
+        },
+        "sampleCount": 0,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "80 task fit \u00b7 no prior jobs \u2014 scored on the neutral prior \u00b7 free route, no spend"
+    },
+    {
+      "taskId": "validate",
+      "candidates": [
+        {
+          "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+          "displayName": "MiniMax M3 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6920000000000001,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+          "displayName": "MiniMax M2.7 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6920000000000001,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/minimaxai/minimax-m3",
+          "displayName": "MiniMax M3 via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6920000000000001,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+          "displayName": "Nemotron 3 Nano 30B via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+          "displayName": "Nemotron 3 Super 120B via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+          "displayName": "Nemotron 3 Nano 30B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-super-120b-a12b",
+          "displayName": "Nemotron 3 Super 120B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-ultra-550b-a55b",
+          "displayName": "Nemotron 3 Ultra 550B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/openai/gpt-oss-20b",
+          "displayName": "GPT-OSS 20B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3.5-lightning:free",
+          "displayName": "Nemotron 3.5 Lightning via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/poolside/laguna-s-2.1:free",
+          "displayName": "Laguna S 2.1 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b",
+          "displayName": "Nemotron 3.5 Lightning via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/poolside/laguna-xs-2.1",
+          "displayName": "Laguna XS 2.1 via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "displayName": "MiniMax M3 via OpenRouter",
+        "providerId": "pool",
+        "costClass": "free",
+        "eligible": true,
+        "utility": 0.6920000000000001,
+        "breakdown": {
+          "taskFit": 0.8,
+          "reputation": 0.62,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.5,
+          "costPenalty": 0.02,
+          "quotaRisk": 0.25
+        },
+        "sampleCount": 0,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "80 task fit \u00b7 no prior jobs \u2014 scored on the neutral prior \u00b7 free route, no spend"
+    },
+    {
+      "taskId": "split",
+      "candidates": [
+        {
+          "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+          "displayName": "MiniMax M3 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6990754064409238,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.06903455179317249,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+          "displayName": "MiniMax M2.7 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6920000000000001,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/minimaxai/minimax-m3",
+          "displayName": "MiniMax M3 via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6920000000000001,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+          "displayName": "Nemotron 3 Nano 30B via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+          "displayName": "Nemotron 3 Super 120B via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+          "displayName": "Nemotron 3 Nano 30B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-super-120b-a12b",
+          "displayName": "Nemotron 3 Super 120B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-ultra-550b-a55b",
+          "displayName": "Nemotron 3 Ultra 550B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/openai/gpt-oss-20b",
+          "displayName": "GPT-OSS 20B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3.5-lightning:free",
+          "displayName": "Nemotron 3.5 Lightning via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/poolside/laguna-s-2.1:free",
+          "displayName": "Laguna S 2.1 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b",
+          "displayName": "Nemotron 3.5 Lightning via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/poolside/laguna-xs-2.1",
+          "displayName": "Laguna XS 2.1 via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "displayName": "MiniMax M3 via OpenRouter",
+        "providerId": "pool",
+        "costClass": "free",
+        "eligible": true,
+        "utility": 0.6990754064409238,
+        "breakdown": {
+          "taskFit": 0.8,
+          "reputation": 0.7466666666666667,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.06903455179317249,
+          "costPenalty": 0.02,
+          "quotaRisk": 0.25
+        },
+        "sampleCount": 2,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "80 task fit \u00b7 75 verified success over 2 prior jobs \u00b7 free route, no spend"
+    },
+    {
+      "taskId": "index",
+      "candidates": [
+        {
+          "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+          "displayName": "MiniMax M3 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.708488221244004,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.7828571428571429,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.0690894016857814,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+          "displayName": "MiniMax M2.7 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6920000000000001,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/minimaxai/minimax-m3",
+          "displayName": "MiniMax M3 via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6920000000000001,
+          "breakdown": {
+            "taskFit": 0.8,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+          "displayName": "Nemotron 3 Nano 30B via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+          "displayName": "Nemotron 3 Super 120B via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+          "displayName": "Nemotron 3 Nano 30B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-super-120b-a12b",
+          "displayName": "Nemotron 3 Super 120B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-ultra-550b-a55b",
+          "displayName": "Nemotron 3 Ultra 550B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/openai/gpt-oss-20b",
+          "displayName": "GPT-OSS 20B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6636666666666667,
+          "breakdown": {
+            "taskFit": 0.7166666666666668,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3.5-lightning:free",
+          "displayName": "Nemotron 3.5 Lightning via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/poolside/laguna-s-2.1:free",
+          "displayName": "Laguna S 2.1 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b",
+          "displayName": "Nemotron 3.5 Lightning via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/poolside/laguna-xs-2.1",
+          "displayName": "Laguna XS 2.1 via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.5786666666666668,
+          "breakdown": {
+            "taskFit": 0.4666666666666667,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "displayName": "MiniMax M3 via OpenRouter",
+        "providerId": "pool",
+        "costClass": "free",
+        "eligible": true,
+        "utility": 0.708488221244004,
+        "breakdown": {
+          "taskFit": 0.8,
+          "reputation": 0.7828571428571429,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.0690894016857814,
+          "costPenalty": 0.02,
+          "quotaRisk": 0.25
+        },
+        "sampleCount": 3,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "80 task fit \u00b7 78 verified success over 3 prior jobs \u00b7 free route, no spend"
+    }
+  ],
+  "usage": {
+    "paidSpendUsd": 0,
+    "budgetMaxUsd": 0,
+    "budgetHard": true,
+    "localCalls": 0,
+    "hostCalls": 0,
+    "freeCalls": 4,
+    "paidCalls": 0,
+    "blockedPaidAttempts": 0,
+    "estimatedFrontierEquivalentUsd": 0.0202
+  },
+  "events": [
+    {
+      "seq": 1,
+      "id": "LVR-719a8c22-1",
+      "missionId": "LVR-719a8c22",
+      "type": "mission.created",
+      "at": "2026-09-05T04:14:22.732Z",
+      "elapsedMs": 0,
+      "message": "Mission created: Finish the forge-app receipt splitting library so the whole existing test suite passes. Do not modify any file under test/. Budget: $0. Quality: production.",
+      "data": {
+        "budgetUsd": 0,
+        "budgetHard": true,
+        "privacy": "cloud-allowed",
+        "qualityTarget": 0.95
+      }
+    },
+    {
+      "seq": 2,
+      "id": "LVR-719a8c22-2",
+      "missionId": "LVR-719a8c22",
+      "type": "mission.compiled",
+      "at": "2026-09-05T04:14:22.733Z",
+      "elapsedMs": 1,
+      "message": "Compiled into 4 tasks",
+      "data": {
+        "tasks": [
+          {
+            "id": "money",
+            "title": "Implement money helpers",
+            "dependsOn": []
+          },
+          {
+            "id": "validate",
+            "title": "Implement receipt validation",
+            "dependsOn": []
+          },
+          {
+            "id": "split",
+            "title": "Implement the split calculation",
+            "dependsOn": [
+              "money",
+              "validate"
+            ]
+          },
+          {
+            "id": "index",
+            "title": "Implement the request handler",
+            "dependsOn": [
+              "split"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "seq": 3,
+      "id": "LVR-719a8c22-3",
+      "missionId": "LVR-719a8c22",
+      "type": "task.created",
+      "at": "2026-09-05T04:14:22.733Z",
+      "elapsedMs": 1,
+      "taskId": "money",
+      "message": "Task: Implement money helpers",
+      "data": {
+        "category": "backend",
+        "dependencies": [],
+        "fileScope": [
+          "src/money.js"
+        ]
+      }
+    },
+    {
+      "seq": 4,
+      "id": "LVR-719a8c22-4",
+      "missionId": "LVR-719a8c22",
+      "type": "task.created",
+      "at": "2026-09-05T04:14:22.733Z",
+      "elapsedMs": 1,
+      "taskId": "validate",
+      "message": "Task: Implement receipt validation",
+      "data": {
+        "category": "backend",
+        "dependencies": [],
+        "fileScope": [
+          "src/validate.js"
+        ]
+      }
+    },
+    {
+      "seq": 5,
+      "id": "LVR-719a8c22-5",
+      "missionId": "LVR-719a8c22",
+      "type": "task.created",
+      "at": "2026-09-05T04:14:22.733Z",
+      "elapsedMs": 1,
+      "taskId": "split",
+      "message": "Task: Implement the split calculation",
+      "data": {
+        "category": "backend",
+        "dependencies": [
+          "money",
+          "validate"
+        ],
+        "fileScope": [
+          "src/split.js"
+        ]
+      }
+    },
+    {
+      "seq": 6,
+      "id": "LVR-719a8c22-6",
+      "missionId": "LVR-719a8c22",
+      "type": "task.created",
+      "at": "2026-09-05T04:14:22.733Z",
+      "elapsedMs": 1,
+      "taskId": "index",
+      "message": "Task: Implement the request handler",
+      "data": {
+        "category": "integration",
+        "dependencies": [
+          "split"
+        ],
+        "fileScope": [
+          "src/index.js"
+        ]
+      }
+    },
+    {
+      "seq": 7,
+      "id": "LVR-719a8c22-7",
+      "missionId": "LVR-719a8c22",
+      "type": "mission.started",
+      "at": "2026-09-05T04:14:26.761Z",
+      "elapsedMs": 4029,
+      "message": "Mission started: Finish the forge-app receipt splitting library so the whole existing test suite passes. Do not modify any file under tes",
+      "data": {
+        "tasks": 4,
+        "budgetUsd": 0,
+        "budgetHard": true,
+        "privacy": "cloud-allowed",
+        "qualityTarget": 0.95
+      }
+    },
+    {
+      "seq": 8,
+      "id": "LVR-719a8c22-8",
+      "missionId": "LVR-719a8c22",
+      "type": "task.ready",
+      "at": "2026-09-05T04:14:27.960Z",
+      "elapsedMs": 5228,
+      "taskId": "money",
+      "message": "Task ready: Implement money helpers"
+    },
+    {
+      "seq": 9,
+      "id": "LVR-719a8c22-9",
+      "missionId": "LVR-719a8c22",
+      "type": "task.ready",
+      "at": "2026-09-05T04:14:27.960Z",
+      "elapsedMs": 5228,
+      "taskId": "validate",
+      "message": "Task ready: Implement receipt validation"
+    },
+    {
+      "seq": 10,
+      "id": "LVR-719a8c22-10",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.started",
+      "at": "2026-09-05T04:14:27.968Z",
+      "elapsedMs": 5236,
+      "taskId": "money",
+      "message": "Auction opened for \"Implement money helpers\"",
+      "data": {
+        "requires": [
+          "code",
+          "backend",
+          "reasoning"
+        ],
+        "contextTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 11,
+      "id": "LVR-719a8c22-11",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:27.969Z",
+      "elapsedMs": 5237,
+      "taskId": "money",
+      "message": "MiniMax M3 via OpenRouter: utility 0.692 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "eligible": true,
+        "utility": 0.6920000000000001
+      }
+    },
+    {
+      "seq": 12,
+      "id": "LVR-719a8c22-12",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:27.969Z",
+      "elapsedMs": 5237,
+      "taskId": "money",
+      "message": "MiniMax M2.7 via OpenRouter: utility 0.692 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "eligible": true,
+        "utility": 0.6920000000000001
+      }
+    },
+    {
+      "seq": 13,
+      "id": "LVR-719a8c22-13",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:27.969Z",
+      "elapsedMs": 5237,
+      "taskId": "money",
+      "message": "MiniMax M3 via NVIDIA: utility 0.692 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:nvidia/minimaxai/minimax-m3",
+        "eligible": true,
+        "utility": 0.6920000000000001
+      }
+    },
+    {
+      "seq": 14,
+      "id": "LVR-719a8c22-14",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:27.969Z",
+      "elapsedMs": 5237,
+      "taskId": "money",
+      "message": "Nemotron 3 Nano 30B via OpenRouter: utility 0.664 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+        "eligible": true,
+        "utility": 0.6636666666666667
+      }
+    },
+    {
+      "seq": 15,
+      "id": "LVR-719a8c22-15",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:27.969Z",
+      "elapsedMs": 5237,
+      "taskId": "money",
+      "message": "Nemotron 3 Super 120B via OpenRouter: utility 0.664 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+        "eligible": true,
+        "utility": 0.6636666666666667
+      }
+    },
+    {
+      "seq": 16,
+      "id": "LVR-719a8c22-16",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:27.969Z",
+      "elapsedMs": 5237,
+      "taskId": "money",
+      "message": "Nemotron 3 Nano 30B via NVIDIA: utility 0.664 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+        "eligible": true,
+        "utility": 0.6636666666666667
+      }
+    },
+    {
+      "seq": 17,
+      "id": "LVR-719a8c22-17",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.completed",
+      "at": "2026-09-05T04:14:27.969Z",
+      "elapsedMs": 5237,
+      "taskId": "money",
+      "message": "Winner: MiniMax M3 via OpenRouter \u2014 80 task fit \u00b7 no prior jobs \u2014 scored on the neutral prior \u00b7 free route, no spend"
+    },
+    {
+      "seq": 18,
+      "id": "LVR-719a8c22-18",
+      "missionId": "LVR-719a8c22",
+      "type": "worker.hired",
+      "at": "2026-09-05T04:14:27.970Z",
+      "elapsedMs": 5238,
+      "taskId": "money",
+      "workerRunId": "wr_460ff104",
+      "message": "Hired MiniMax M3 via OpenRouter as Backend Engineer",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "costClass": "free"
+      }
+    },
+    {
+      "seq": 19,
+      "id": "LVR-719a8c22-19",
+      "missionId": "LVR-719a8c22",
+      "type": "worker.started",
+      "at": "2026-09-05T04:14:27.971Z",
+      "elapsedMs": 5239,
+      "taskId": "money",
+      "workerRunId": "wr_460ff104",
+      "message": "MiniMax M3 via OpenRouter started work",
+      "data": {
+        "contextTokens": "[redacted]",
+        "availableRepoTokens": "[redacted]",
+        "contextReductionPct": 71,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 20,
+      "id": "LVR-719a8c22-20",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.started",
+      "at": "2026-09-05T04:14:27.991Z",
+      "elapsedMs": 5259,
+      "taskId": "validate",
+      "message": "Auction opened for \"Implement receipt validation\"",
+      "data": {
+        "requires": [
+          "code",
+          "backend",
+          "reasoning"
+        ],
+        "contextTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 21,
+      "id": "LVR-719a8c22-21",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:27.991Z",
+      "elapsedMs": 5259,
+      "taskId": "validate",
+      "message": "MiniMax M3 via OpenRouter: utility 0.692 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "eligible": true,
+        "utility": 0.6920000000000001
+      }
+    },
+    {
+      "seq": 22,
+      "id": "LVR-719a8c22-22",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:27.991Z",
+      "elapsedMs": 5259,
+      "taskId": "validate",
+      "message": "MiniMax M2.7 via OpenRouter: utility 0.692 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "eligible": true,
+        "utility": 0.6920000000000001
+      }
+    },
+    {
+      "seq": 23,
+      "id": "LVR-719a8c22-23",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:27.991Z",
+      "elapsedMs": 5259,
+      "taskId": "validate",
+      "message": "MiniMax M3 via NVIDIA: utility 0.692 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:nvidia/minimaxai/minimax-m3",
+        "eligible": true,
+        "utility": 0.6920000000000001
+      }
+    },
+    {
+      "seq": 24,
+      "id": "LVR-719a8c22-24",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:27.991Z",
+      "elapsedMs": 5259,
+      "taskId": "validate",
+      "message": "Nemotron 3 Nano 30B via OpenRouter: utility 0.664 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+        "eligible": true,
+        "utility": 0.6636666666666667
+      }
+    },
+    {
+      "seq": 25,
+      "id": "LVR-719a8c22-25",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:27.991Z",
+      "elapsedMs": 5259,
+      "taskId": "validate",
+      "message": "Nemotron 3 Super 120B via OpenRouter: utility 0.664 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+        "eligible": true,
+        "utility": 0.6636666666666667
+      }
+    },
+    {
+      "seq": 26,
+      "id": "LVR-719a8c22-26",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:27.991Z",
+      "elapsedMs": 5259,
+      "taskId": "validate",
+      "message": "Nemotron 3 Nano 30B via NVIDIA: utility 0.664 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+        "eligible": true,
+        "utility": 0.6636666666666667
+      }
+    },
+    {
+      "seq": 27,
+      "id": "LVR-719a8c22-27",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.completed",
+      "at": "2026-09-05T04:14:27.991Z",
+      "elapsedMs": 5259,
+      "taskId": "validate",
+      "message": "Winner: MiniMax M3 via OpenRouter \u2014 80 task fit \u00b7 no prior jobs \u2014 scored on the neutral prior \u00b7 free route, no spend"
+    },
+    {
+      "seq": 28,
+      "id": "LVR-719a8c22-28",
+      "missionId": "LVR-719a8c22",
+      "type": "worker.hired",
+      "at": "2026-09-05T04:14:27.991Z",
+      "elapsedMs": 5259,
+      "taskId": "validate",
+      "workerRunId": "wr_efe68dd6",
+      "message": "Hired MiniMax M3 via OpenRouter as Backend Engineer",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "costClass": "free"
+      }
+    },
+    {
+      "seq": 29,
+      "id": "LVR-719a8c22-29",
+      "missionId": "LVR-719a8c22",
+      "type": "worker.started",
+      "at": "2026-09-05T04:14:27.991Z",
+      "elapsedMs": 5259,
+      "taskId": "validate",
+      "workerRunId": "wr_efe68dd6",
+      "message": "MiniMax M3 via OpenRouter started work",
+      "data": {
+        "contextTokens": "[redacted]",
+        "availableRepoTokens": "[redacted]",
+        "contextReductionPct": 68,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 30,
+      "id": "LVR-719a8c22-30",
+      "missionId": "LVR-719a8c22",
+      "type": "worker.progress",
+      "at": "2026-09-05T04:14:55.917Z",
+      "elapsedMs": 33185,
+      "taskId": "money",
+      "workerRunId": "wr_460ff104",
+      "message": "MiniMax M3 via OpenRouter wrote 1 file(s)",
+      "data": {
+        "files": [
+          "src/money.js"
+        ]
+      }
+    },
+    {
+      "seq": 31,
+      "id": "LVR-719a8c22-31",
+      "missionId": "LVR-719a8c22",
+      "type": "verification.started",
+      "at": "2026-09-05T04:14:55.917Z",
+      "elapsedMs": 33185,
+      "taskId": "money",
+      "workerRunId": "wr_460ff104",
+      "message": "Verifying \"Implement money helpers\""
+    },
+    {
+      "seq": 32,
+      "id": "LVR-719a8c22-32",
+      "missionId": "LVR-719a8c22",
+      "type": "worker.progress",
+      "at": "2026-09-05T04:14:55.936Z",
+      "elapsedMs": 33204,
+      "taskId": "validate",
+      "workerRunId": "wr_efe68dd6",
+      "message": "MiniMax M3 via OpenRouter wrote 1 file(s)",
+      "data": {
+        "files": [
+          "src/validate.js"
+        ]
+      }
+    },
+    {
+      "seq": 33,
+      "id": "LVR-719a8c22-33",
+      "missionId": "LVR-719a8c22",
+      "type": "verification.started",
+      "at": "2026-09-05T04:14:55.936Z",
+      "elapsedMs": 33204,
+      "taskId": "validate",
+      "workerRunId": "wr_efe68dd6",
+      "message": "Verifying \"Implement receipt validation\""
+    },
+    {
+      "seq": 34,
+      "id": "LVR-719a8c22-34",
+      "missionId": "LVR-719a8c22",
+      "type": "proof.check",
+      "at": "2026-09-05T04:14:56.939Z",
+      "elapsedMs": 34207,
+      "taskId": "validate",
+      "workerRunId": "wr_efe68dd6",
+      "message": "src/validate.js exists: PASS \u2014 src/validate.js exists",
+      "data": {
+        "checkId": "exists-0",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 35,
+      "id": "LVR-719a8c22-35",
+      "missionId": "LVR-719a8c22",
+      "type": "proof.check",
+      "at": "2026-09-05T04:14:56.939Z",
+      "elapsedMs": 34207,
+      "taskId": "validate",
+      "workerRunId": "wr_efe68dd6",
+      "message": "test/validate.test.js: PASS \u2014 \u001b[34m\u2139 duration_ms 509.1679\u001b[39m",
+      "data": {
+        "checkId": "suite",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 36,
+      "id": "LVR-719a8c22-36",
+      "missionId": "LVR-719a8c22",
+      "type": "verification.passed",
+      "at": "2026-09-05T04:14:56.940Z",
+      "elapsedMs": 34208,
+      "taskId": "validate",
+      "workerRunId": "wr_efe68dd6",
+      "message": "\"Implement receipt validation\" verified \u2014 quality 100",
+      "data": {
+        "proofId": "pf_db1b78ae",
+        "quality": 100
+      }
+    },
+    {
+      "seq": 37,
+      "id": "LVR-719a8c22-37",
+      "missionId": "LVR-719a8c22",
+      "type": "task.completed",
+      "at": "2026-09-05T04:14:56.940Z",
+      "elapsedMs": 34208,
+      "taskId": "validate",
+      "workerRunId": "wr_efe68dd6",
+      "message": "Task completed: Implement receipt validation"
+    },
+    {
+      "seq": 38,
+      "id": "LVR-719a8c22-38",
+      "missionId": "LVR-719a8c22",
+      "type": "proof.check",
+      "at": "2026-09-05T04:14:56.965Z",
+      "elapsedMs": 34233,
+      "taskId": "money",
+      "workerRunId": "wr_460ff104",
+      "message": "src/money.js exists: PASS \u2014 src/money.js exists",
+      "data": {
+        "checkId": "exists-0",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 39,
+      "id": "LVR-719a8c22-39",
+      "missionId": "LVR-719a8c22",
+      "type": "proof.check",
+      "at": "2026-09-05T04:14:56.965Z",
+      "elapsedMs": 34233,
+      "taskId": "money",
+      "workerRunId": "wr_460ff104",
+      "message": "test/money.test.js: PASS \u2014 \u001b[34m\u2139 duration_ms 513.017\u001b[39m",
+      "data": {
+        "checkId": "suite",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 40,
+      "id": "LVR-719a8c22-40",
+      "missionId": "LVR-719a8c22",
+      "type": "verification.passed",
+      "at": "2026-09-05T04:14:56.965Z",
+      "elapsedMs": 34233,
+      "taskId": "money",
+      "workerRunId": "wr_460ff104",
+      "message": "\"Implement money helpers\" verified \u2014 quality 100",
+      "data": {
+        "proofId": "pf_dc4c145a",
+        "quality": 100
+      }
+    },
+    {
+      "seq": 41,
+      "id": "LVR-719a8c22-41",
+      "missionId": "LVR-719a8c22",
+      "type": "task.completed",
+      "at": "2026-09-05T04:14:56.965Z",
+      "elapsedMs": 34233,
+      "taskId": "money",
+      "workerRunId": "wr_460ff104",
+      "message": "Task completed: Implement money helpers"
+    },
+    {
+      "seq": 42,
+      "id": "LVR-719a8c22-42",
+      "missionId": "LVR-719a8c22",
+      "type": "task.ready",
+      "at": "2026-09-05T04:14:56.966Z",
+      "elapsedMs": 34234,
+      "taskId": "split",
+      "message": "Task ready: Implement the split calculation"
+    },
+    {
+      "seq": 43,
+      "id": "LVR-719a8c22-43",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.started",
+      "at": "2026-09-05T04:14:56.975Z",
+      "elapsedMs": 34243,
+      "taskId": "split",
+      "message": "Auction opened for \"Implement the split calculation\"",
+      "data": {
+        "requires": [
+          "code",
+          "backend",
+          "reasoning"
+        ],
+        "contextTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 44,
+      "id": "LVR-719a8c22-44",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:57.634Z",
+      "elapsedMs": 34902,
+      "taskId": "split",
+      "message": "MiniMax M3 via OpenRouter: utility 0.699 (2 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "eligible": true,
+        "utility": 0.6990754064409238
+      }
+    },
+    {
+      "seq": 45,
+      "id": "LVR-719a8c22-45",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:57.634Z",
+      "elapsedMs": 34902,
+      "taskId": "split",
+      "message": "MiniMax M2.7 via OpenRouter: utility 0.692 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "eligible": true,
+        "utility": 0.6920000000000001
+      }
+    },
+    {
+      "seq": 46,
+      "id": "LVR-719a8c22-46",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:57.634Z",
+      "elapsedMs": 34902,
+      "taskId": "split",
+      "message": "MiniMax M3 via NVIDIA: utility 0.692 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:nvidia/minimaxai/minimax-m3",
+        "eligible": true,
+        "utility": 0.6920000000000001
+      }
+    },
+    {
+      "seq": 47,
+      "id": "LVR-719a8c22-47",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:57.634Z",
+      "elapsedMs": 34902,
+      "taskId": "split",
+      "message": "Nemotron 3 Nano 30B via OpenRouter: utility 0.664 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+        "eligible": true,
+        "utility": 0.6636666666666667
+      }
+    },
+    {
+      "seq": 48,
+      "id": "LVR-719a8c22-48",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:57.634Z",
+      "elapsedMs": 34902,
+      "taskId": "split",
+      "message": "Nemotron 3 Super 120B via OpenRouter: utility 0.664 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+        "eligible": true,
+        "utility": 0.6636666666666667
+      }
+    },
+    {
+      "seq": 49,
+      "id": "LVR-719a8c22-49",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:14:57.634Z",
+      "elapsedMs": 34902,
+      "taskId": "split",
+      "message": "Nemotron 3 Nano 30B via NVIDIA: utility 0.664 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+        "eligible": true,
+        "utility": 0.6636666666666667
+      }
+    },
+    {
+      "seq": 50,
+      "id": "LVR-719a8c22-50",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.completed",
+      "at": "2026-09-05T04:14:57.634Z",
+      "elapsedMs": 34902,
+      "taskId": "split",
+      "message": "Winner: MiniMax M3 via OpenRouter \u2014 80 task fit \u00b7 75 verified success over 2 prior jobs \u00b7 free route, no spend"
+    },
+    {
+      "seq": 51,
+      "id": "LVR-719a8c22-51",
+      "missionId": "LVR-719a8c22",
+      "type": "worker.hired",
+      "at": "2026-09-05T04:14:57.634Z",
+      "elapsedMs": 34902,
+      "taskId": "split",
+      "workerRunId": "wr_8cdc3a8c",
+      "message": "Hired MiniMax M3 via OpenRouter as Backend Engineer",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "costClass": "free"
+      }
+    },
+    {
+      "seq": 52,
+      "id": "LVR-719a8c22-52",
+      "missionId": "LVR-719a8c22",
+      "type": "worker.started",
+      "at": "2026-09-05T04:14:57.634Z",
+      "elapsedMs": 34902,
+      "taskId": "split",
+      "workerRunId": "wr_8cdc3a8c",
+      "message": "MiniMax M3 via OpenRouter started work",
+      "data": {
+        "contextTokens": "[redacted]",
+        "availableRepoTokens": "[redacted]",
+        "contextReductionPct": 53,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 53,
+      "id": "LVR-719a8c22-53",
+      "missionId": "LVR-719a8c22",
+      "type": "worker.progress",
+      "at": "2026-09-05T04:15:17.994Z",
+      "elapsedMs": 55262,
+      "taskId": "split",
+      "workerRunId": "wr_8cdc3a8c",
+      "message": "MiniMax M3 via OpenRouter wrote 1 file(s)",
+      "data": {
+        "files": [
+          "src/split.js"
+        ]
+      }
+    },
+    {
+      "seq": 54,
+      "id": "LVR-719a8c22-54",
+      "missionId": "LVR-719a8c22",
+      "type": "verification.started",
+      "at": "2026-09-05T04:15:17.994Z",
+      "elapsedMs": 55262,
+      "taskId": "split",
+      "workerRunId": "wr_8cdc3a8c",
+      "message": "Verifying \"Implement the split calculation\""
+    },
+    {
+      "seq": 55,
+      "id": "LVR-719a8c22-55",
+      "missionId": "LVR-719a8c22",
+      "type": "proof.check",
+      "at": "2026-09-05T04:15:18.641Z",
+      "elapsedMs": 55909,
+      "taskId": "split",
+      "workerRunId": "wr_8cdc3a8c",
+      "message": "src/split.js exists: PASS \u2014 src/split.js exists",
+      "data": {
+        "checkId": "exists-0",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 56,
+      "id": "LVR-719a8c22-56",
+      "missionId": "LVR-719a8c22",
+      "type": "proof.check",
+      "at": "2026-09-05T04:15:18.641Z",
+      "elapsedMs": 55909,
+      "taskId": "split",
+      "workerRunId": "wr_8cdc3a8c",
+      "message": "test/split.test.js: PASS \u2014 \u001b[34m\u2139 duration_ms 165.5513\u001b[39m",
+      "data": {
+        "checkId": "suite",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 57,
+      "id": "LVR-719a8c22-57",
+      "missionId": "LVR-719a8c22",
+      "type": "verification.passed",
+      "at": "2026-09-05T04:15:18.641Z",
+      "elapsedMs": 55909,
+      "taskId": "split",
+      "workerRunId": "wr_8cdc3a8c",
+      "message": "\"Implement the split calculation\" verified \u2014 quality 100",
+      "data": {
+        "proofId": "pf_32bf4236",
+        "quality": 100
+      }
+    },
+    {
+      "seq": 58,
+      "id": "LVR-719a8c22-58",
+      "missionId": "LVR-719a8c22",
+      "type": "task.completed",
+      "at": "2026-09-05T04:15:18.641Z",
+      "elapsedMs": 55909,
+      "taskId": "split",
+      "workerRunId": "wr_8cdc3a8c",
+      "message": "Task completed: Implement the split calculation"
+    },
+    {
+      "seq": 59,
+      "id": "LVR-719a8c22-59",
+      "missionId": "LVR-719a8c22",
+      "type": "task.ready",
+      "at": "2026-09-05T04:15:18.642Z",
+      "elapsedMs": 55910,
+      "taskId": "index",
+      "message": "Task ready: Implement the request handler"
+    },
+    {
+      "seq": 60,
+      "id": "LVR-719a8c22-60",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.started",
+      "at": "2026-09-05T04:15:18.649Z",
+      "elapsedMs": 55917,
+      "taskId": "index",
+      "message": "Auction opened for \"Implement the request handler\"",
+      "data": {
+        "requires": [
+          "code",
+          "backend",
+          "reasoning"
+        ],
+        "contextTokens": "[redacted]"
+      }
+    },
+    {
+      "seq": 61,
+      "id": "LVR-719a8c22-61",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:15:18.650Z",
+      "elapsedMs": 55918,
+      "taskId": "index",
+      "message": "MiniMax M3 via OpenRouter: utility 0.708 (3 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "eligible": true,
+        "utility": 0.708488221244004
+      }
+    },
+    {
+      "seq": 62,
+      "id": "LVR-719a8c22-62",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:15:18.650Z",
+      "elapsedMs": 55918,
+      "taskId": "index",
+      "message": "MiniMax M2.7 via OpenRouter: utility 0.692 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "eligible": true,
+        "utility": 0.6920000000000001
+      }
+    },
+    {
+      "seq": 63,
+      "id": "LVR-719a8c22-63",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:15:18.650Z",
+      "elapsedMs": 55918,
+      "taskId": "index",
+      "message": "MiniMax M3 via NVIDIA: utility 0.692 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:nvidia/minimaxai/minimax-m3",
+        "eligible": true,
+        "utility": 0.6920000000000001
+      }
+    },
+    {
+      "seq": 64,
+      "id": "LVR-719a8c22-64",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:15:18.650Z",
+      "elapsedMs": 55918,
+      "taskId": "index",
+      "message": "Nemotron 3 Nano 30B via OpenRouter: utility 0.664 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+        "eligible": true,
+        "utility": 0.6636666666666667
+      }
+    },
+    {
+      "seq": 65,
+      "id": "LVR-719a8c22-65",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:15:18.650Z",
+      "elapsedMs": 55918,
+      "taskId": "index",
+      "message": "Nemotron 3 Super 120B via OpenRouter: utility 0.664 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+        "eligible": true,
+        "utility": 0.6636666666666667
+      }
+    },
+    {
+      "seq": 66,
+      "id": "LVR-719a8c22-66",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.candidate",
+      "at": "2026-09-05T04:15:18.650Z",
+      "elapsedMs": 55918,
+      "taskId": "index",
+      "message": "Nemotron 3 Nano 30B via NVIDIA: utility 0.664 (0 prior jobs)",
+      "data": {
+        "modelKey": "pool:nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+        "eligible": true,
+        "utility": 0.6636666666666667
+      }
+    },
+    {
+      "seq": 67,
+      "id": "LVR-719a8c22-67",
+      "missionId": "LVR-719a8c22",
+      "type": "auction.completed",
+      "at": "2026-09-05T04:15:18.650Z",
+      "elapsedMs": 55918,
+      "taskId": "index",
+      "message": "Winner: MiniMax M3 via OpenRouter \u2014 80 task fit \u00b7 78 verified success over 3 prior jobs \u00b7 free route, no spend"
+    },
+    {
+      "seq": 68,
+      "id": "LVR-719a8c22-68",
+      "missionId": "LVR-719a8c22",
+      "type": "worker.hired",
+      "at": "2026-09-05T04:15:18.650Z",
+      "elapsedMs": 55918,
+      "taskId": "index",
+      "workerRunId": "wr_01df261f",
+      "message": "Hired MiniMax M3 via OpenRouter as Integrator",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "costClass": "free"
+      }
+    },
+    {
+      "seq": 69,
+      "id": "LVR-719a8c22-69",
+      "missionId": "LVR-719a8c22",
+      "type": "worker.started",
+      "at": "2026-09-05T04:15:18.650Z",
+      "elapsedMs": 55918,
+      "taskId": "index",
+      "workerRunId": "wr_01df261f",
+      "message": "MiniMax M3 via OpenRouter started work",
+      "data": {
+        "contextTokens": "[redacted]",
+        "availableRepoTokens": "[redacted]",
+        "contextReductionPct": 65,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 70,
+      "id": "LVR-719a8c22-70",
+      "missionId": "LVR-719a8c22",
+      "type": "worker.progress",
+      "at": "2026-09-05T04:15:45.123Z",
+      "elapsedMs": 82391,
+      "taskId": "index",
+      "workerRunId": "wr_01df261f",
+      "message": "MiniMax M3 via OpenRouter wrote 1 file(s)",
+      "data": {
+        "files": [
+          "src/index.js"
+        ]
+      }
+    },
+    {
+      "seq": 71,
+      "id": "LVR-719a8c22-71",
+      "missionId": "LVR-719a8c22",
+      "type": "verification.started",
+      "at": "2026-09-05T04:15:45.123Z",
+      "elapsedMs": 82391,
+      "taskId": "index",
+      "workerRunId": "wr_01df261f",
+      "message": "Verifying \"Implement the request handler\""
+    },
+    {
+      "seq": 72,
+      "id": "LVR-719a8c22-72",
+      "missionId": "LVR-719a8c22",
+      "type": "proof.check",
+      "at": "2026-09-05T04:15:46.583Z",
+      "elapsedMs": 83851,
+      "taskId": "index",
+      "workerRunId": "wr_01df261f",
+      "message": "src/index.js exists: PASS \u2014 src/index.js exists",
+      "data": {
+        "checkId": "exists-0",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 73,
+      "id": "LVR-719a8c22-73",
+      "missionId": "LVR-719a8c22",
+      "type": "proof.check",
+      "at": "2026-09-05T04:15:46.583Z",
+      "elapsedMs": 83851,
+      "taskId": "index",
+      "workerRunId": "wr_01df261f",
+      "message": "test/index.test.js: PASS \u2014 \u001b[34m\u2139 duration_ms 626.3973\u001b[39m",
+      "data": {
+        "checkId": "suite",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 74,
+      "id": "LVR-719a8c22-74",
+      "missionId": "LVR-719a8c22",
+      "type": "verification.passed",
+      "at": "2026-09-05T04:15:46.583Z",
+      "elapsedMs": 83851,
+      "taskId": "index",
+      "workerRunId": "wr_01df261f",
+      "message": "\"Implement the request handler\" verified \u2014 quality 100",
+      "data": {
+        "proofId": "pf_3f993905",
+        "quality": 100
+      }
+    },
+    {
+      "seq": 75,
+      "id": "LVR-719a8c22-75",
+      "missionId": "LVR-719a8c22",
+      "type": "task.completed",
+      "at": "2026-09-05T04:15:46.583Z",
+      "elapsedMs": 83851,
+      "taskId": "index",
+      "workerRunId": "wr_01df261f",
+      "message": "Task completed: Implement the request handler"
+    },
+    {
+      "seq": 76,
+      "id": "LVR-719a8c22-76",
+      "missionId": "LVR-719a8c22",
+      "type": "mission.completed",
+      "at": "2026-09-05T04:15:46.584Z",
+      "elapsedMs": 83852,
+      "message": "Mission verified: 4/4 tasks passed",
+      "data": {
+        "passed": 4,
+        "failed": 0,
+        "paidSpendUsd": 0,
+        "ledger": {
+          "maxUsd": 0,
+          "hard": true,
+          "reservedUsd": 0,
+          "settledUsd": 0,
+          "freeCalls": 4,
+          "paidCalls": 0,
+          "localCalls": 0,
+          "hostCalls": 0,
+          "estimatedFrontierEquivalentUsd": 0.020247,
+          "blockedAttempts": 0
+        }
+      }
+    }
+  ]
+}

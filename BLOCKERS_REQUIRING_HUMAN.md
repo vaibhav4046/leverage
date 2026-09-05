@@ -51,6 +51,9 @@ Leverage's auction, not the proxy.
 Verified 2026-09-05 with `npm run verify:rocketride` against the permanent URL:
 the pipeline ran on staging.rocketride.ai, the worker answered `READY` through
 `nvidia/nvidia/nemotron-3-super-120b-a12b`, 14.40 credits consumed, 67 s end to end.
+Then a whole mission, `LVR-719a8c22`, ran with the local runtime stopped: all four
+workers were hosted-pool models executed as RocketRide pipelines, all four tasks
+passed, 13.6 credits, $0.00. It is browsable on the live site.
 
 **What only you can do.**
 

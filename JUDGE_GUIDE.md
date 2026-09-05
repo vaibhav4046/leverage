@@ -140,7 +140,14 @@ single inference yourself:
 npm run verify:rocketride
 ```
 
-This is the run against the permanent hosted pool on 5 Sep 2026:
+There is also a whole mission that ran this way. `/app/missions/LVR-719a8c22` was
+started through MCP with the local runtime stopped and privacy set to
+`cloud-allowed`: the auction had 13 hosted models to choose from, hired
+`pool:openrouter/minimax/minimax-m3:free` for all four tasks, every worker ran as
+a RocketRide pipeline through the hosted pool, all four passed verification, and
+the RocketRide balance dropped by 13.6 credits. $0.00 paid. 84 seconds.
+
+This is a single inference against the permanent hosted pool on 5 Sep 2026:
 
 ```
 endpoint  https://staging.rocketride.ai

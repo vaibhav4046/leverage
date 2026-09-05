@@ -20,7 +20,9 @@ the work.
 In the recorded canonical run, Leverage completed and verified 4 of 4 tasks, passed
 8 proof checks and 17 fixture assertions, survived 3 cognitive handoffs, and recorded
 **$0.00** of paid inference. In a second recorded run, RocketRide executed 3 of the
-6 workers and they finished 3 of the 4 tasks, all verified.
+6 workers and they finished 3 of the 4 tasks, all verified. In a third, on the
+permanent hosted pool with no tunnel anywhere, RocketRide executed all 4 workers,
+all 4 tasks passed, 13.6 credits, $0.00, 84 seconds.
 
 ---
 
@@ -62,6 +64,7 @@ hundred-percent model.
 | 20–60 | `/app/missions/LVR-f8f72d56` | 4/4 verified · 3 handoffs · 129 events |
 | 60–90 | scrub to `worker.failed` → `checkpoint.created` → `handoff.completed` | the model failed; the work did not restart |
 | 90–120 | `/app/missions/LVR-bda3ba68` | RocketRide executed 3 of 6 workers · 3 of 4 tasks · all verified |
+| 120–140 | `/app/missions/LVR-719a8c22` | RocketRide executed 4 of 4 workers through the hosted pool · 4 of 4 verified · $0.00 |
 | 120–150 | `/benchmarks` | the control plane holding 100 tasks with 0 duplicate claims, 0 budget overshoots |
 
 Full path with commands: [JUDGE_GUIDE.md](JUDGE_GUIDE.md).
