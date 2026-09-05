@@ -14,7 +14,9 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      # npm install, not npm ci: the lockfile is written on Windows and cannot carry
+      # the Linux-only optional packages sharp resolves on the runner.
+      - run: npm install --no-audit --no-fund
       - run: npx tsc --noEmit
       - run: npx eslint . --max-warnings 0
       - run: npx vitest run
