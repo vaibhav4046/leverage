@@ -65,8 +65,8 @@
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-duration="108" data-width="1920" data-height="1080">
-      <audio id="voice" src="assets/walkthrough-voice.mp3" data-start="0" data-duration="106.7" data-track-index="10" data-volume="1"></audio>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="110.9" data-width="1920" data-height="1080">
+      <audio id="voice" src="assets/walkthrough-voice.mp3" data-start="0" data-duration="109.6" data-track-index="10" data-volume="1"></audio>
 
       <div id="aurora"></div>
       <div id="grid"></div>
@@ -75,35 +75,35 @@
       <div id="progress"></div>
 
       <!-- 1 · intro: landing -->
-      <div class="win" id="w1"><video id="v1" src="assets/capture/raw/landing.mp4" data-start="0" data-duration="16.6" data-media-start="0" muted></video></div>
+      <div class="win" id="w1"><video id="v1" src="assets/capture/raw/landing.mp4" data-start="0.0" data-duration="17.6" data-media-start="0" muted></video></div>
       <div class="lt" id="l1"><div class="k mono">useleverage.vercel.app</div><div class="h">One frontier brain. An elastic workforce.</div></div>
 
       <!-- 2 · live: press Run -->
-      <div class="win" id="w2"><video id="v2" src="assets/capture/raw/live-run.mp4" data-start="16.6" data-duration="12.8" data-media-start="6.82" muted></video></div>
+      <div class="win" id="w2"><video id="v2" src="assets/capture/raw/live-run.mp4" data-start="17.6" data-duration="12.6" data-media-start="6.82" muted></video></div>
       <div class="lt" id="l2"><div class="k mono">/app/live</div><div class="h">Not a recording. <em>A mission starts now.</em></div></div>
 
       <!-- 3 · live: streaming -->
-      <div class="win" id="w3"><video id="v3" src="assets/capture/raw/live-run.mp4" data-start="29.4" data-duration="16.4" data-media-start="12.82" muted></video></div>
+      <div class="win" id="w3"><video id="v3" src="assets/capture/raw/live-run.mp4" data-start="30.2" data-duration="16.8" data-media-start="12.82" muted></video></div>
       <div class="lt" id="l3"><div class="k mono">Auction · hosted pool · RocketRide</div><div class="h">Thirteen candidates. The best eligible one is hired.</div></div>
 
       <!-- 4 · live: finished -->
-      <div class="win" id="w4"><video id="v4" src="assets/capture/raw/live-run.mp4" data-start="45.8" data-duration="11.2" data-media-start="70.50" muted></video></div>
-      <div class="lt" id="l4"><div class="k mono">Verified</div><div class="h"><em>4 of 4.</em> Twelve credits measured. $0.00 paid.</div></div>
+      <div class="win" id="w4"><video id="v4" src="assets/capture/raw/live-run.mp4" data-start="47.0" data-duration="12.0" data-media-start="70.50" muted></video></div>
+      <div class="lt" id="l4"><div class="k mono">Verified</div><div class="h"><em>4 of 4.</em> Ten credits measured. $0.00 paid.</div></div>
 
       <!-- 5 · mission page -->
-      <div class="win" id="w5"><video id="v5" src="assets/capture/raw/mission.mp4" data-start="57.0" data-duration="14.0" data-media-start="6.0" muted></video></div>
+      <div class="win" id="w5"><video id="v5" src="assets/capture/raw/mission.mp4" data-start="59.0" data-duration="13.9" data-media-start="6.0" muted></video></div>
       <div class="lt" id="l5"><div class="k mono">Mission LVR-719a8c22</div><div class="h">Every hire carries its auction rationale.</div></div>
 
       <!-- 6 · handoff -->
-      <div class="win" id="w6"><video id="v6" src="assets/capture/raw/handoff.mp4" data-start="71.0" data-duration="14.0" data-media-start="7.0" muted></video></div>
+      <div class="win" id="w6"><video id="v6" src="assets/capture/raw/handoff.mp4" data-start="72.9" data-duration="13.3" data-media-start="7.0" muted></video></div>
       <div class="lt" id="l6"><div class="k mono">Cognitive handoff</div><div class="h">worker.failed, checkpoint.created, resumed. <em>Nothing restarts.</em></div></div>
 
       <!-- 7 · supply -->
-      <div class="win" id="w7"><video id="v7" src="assets/capture/raw/providers.mp4" data-start="85.0" data-duration="12.8" data-media-start="0" muted></video></div>
+      <div class="win" id="w7"><video id="v7" src="assets/capture/raw/providers.mp4" data-start="86.2" data-duration="13.9" data-media-start="0" muted></video></div>
       <div class="lt" id="l7"><div class="k mono">Providers · Models</div><div class="h">Thirteen proven models. Credits read from billing.</div></div>
 
       <!-- 8 · close -->
-      <div class="win" id="w8"><video id="v8" src="assets/capture/raw/benchmarks.mp4" data-start="97.8" data-duration="5.0" data-media-start="0" muted></video></div>
+      <div class="win" id="w8"><video id="v8" src="assets/capture/raw/benchmarks.mp4" data-start="100.1" data-duration="5.0" data-media-start="0" muted></video></div>
       <div id="close">
         <div class="stat" id="st1"><div class="v">4<span class="dim">/4</span></div><div class="l mono">verified, live, just now</div></div>
         <div class="stat" id="st2"><div class="v">13</div><div class="l mono">hosted models on RocketRide</div></div>
@@ -120,8 +120,8 @@
        * live-run scenes are one real run, recorded once, in order.
        */
       const S = {
-        intro: 0, live_start: 16.6, live_stream: 29.4, live_finish: 45.8,
-        mission: 57.0, handoff: 71.0, supply: 85.0, close: 97.8, card: 102.8, end: 108,
+        intro: 0.0, live_start: 17.6, live_stream: 30.2, live_finish: 47.0,
+        mission: 59.0, handoff: 72.9, supply: 86.2, close: 100.1, card: 105.1, end: 110.9,
       };
       const build = () => {
         const tl = gsap.timeline({ paused: true });

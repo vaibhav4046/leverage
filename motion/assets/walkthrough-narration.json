@@ -2,7 +2,7 @@
   { "id": "intro", "text": "This is Leverage. One frontier brain, an elastic workforce. Your best model stays the strategist. Leverage hires local, free and connected models underneath it, verifies what they produce, and replaces the ones that fail." },
   { "id": "live_start", "text": "Nothing on this page is a recording. Press Run, and a mission starts inside the deployment: a fresh copy of the repository, a fixed goal, a zero dollar budget." },
   { "id": "live_stream", "text": "The auction scores thirteen hosted models and hires the best eligible one. Each worker executes as a RocketRide pipeline, through a permanent, token gated pool. A task passes only when the repository's own tests say so." },
-  { "id": "live_finish", "text": "About a minute later: four of four verified, twelve RocketRide credits measured, zero dollars paid, and the run is a mission page like any other." },
+  { "id": "live_finish", "text": "About a minute later: four of four verified, ten RocketRide credits measured, zero dollars paid, and the run is a mission page like any other." },
   { "id": "mission", "text": "Every mission is inspectable. The auction shows each candidate's utility and the winner's reasoning. The event log is append only. The proof pack lists every check, with its result." },
   { "id": "handoff", "text": "When a worker fails, Leverage writes a checkpoint of what it understood and hands it to a replacement. The transcript is not carried. The understanding is. The work does not restart." },
   { "id": "supply", "text": "Supply is measured, not assumed. Thirteen hosted models, each proven with a real completion, and a RocketRide balance read from billing, so the cost of a run is a fact." },

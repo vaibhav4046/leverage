@@ -1,55 +1,55 @@
 {
   "voiceId": "onwK4e9ZLuTAKqWW03F9",
   "modelId": "eleven_multilingual_v2",
-  "duration": 106.626,
+  "duration": 109.459,
   "lines": [
     {
       "id": "intro",
       "text": "This is Leverage. One frontier brain, an elastic workforce. Your best model stays the strategist. Leverage hires local, free and connected models underneath it, verifies what they produce, and replaces the ones that fail.",
       "start": 0,
-      "end": 16.463
+      "end": 17.171
     },
     {
       "id": "live_start",
       "text": "Nothing on this page is a recording. Press Run, and a mission starts inside the deployment: a fresh copy of the repository, a fixed goal, a zero dollar budget.",
-      "start": 17.067,
-      "end": 29.048
+      "start": 17.775,
+      "end": 29.872
     },
     {
       "id": "live_stream",
       "text": "The auction scores thirteen hosted models and hires the best eligible one. Each worker executes as a RocketRide pipeline, through a permanent, token gated pool. A task passes only when the repository's own tests say so.",
-      "start": 29.652,
-      "end": 45.523
+      "start": 30.383,
+      "end": 46.753
     },
     {
       "id": "live_finish",
-      "text": "About a minute later: four of four verified, twelve RocketRide credits measured, zero dollars paid, and the run is a mission page like any other.",
-      "start": 45.964,
-      "end": 56.749
+      "text": "About a minute later: four of four verified, ten RocketRide credits measured, zero dollars paid, and the run is a mission page like any other.",
+      "start": 47.195,
+      "end": 58.55
     },
     {
       "id": "mission",
       "text": "Every mission is inspectable. The auction shows each candidate's utility and the winner's reasoning. The event log is append only. The proof pack lists every check, with its result.",
-      "start": 57.132,
-      "end": 70.495
+      "start": 59.142,
+      "end": 72.389
     },
     {
       "id": "handoff",
       "text": "When a worker fails, Leverage writes a checkpoint of what it understood and hands it to a replacement. The transcript is not carried. The understanding is. The work does not restart.",
-      "start": 71.099,
-      "end": 84.636
+      "start": 73.074,
+      "end": 85.961
     },
     {
       "id": "supply",
       "text": "Supply is measured, not assumed. Thirteen hosted models, each proven with a real completion, and a RocketRide balance read from billing, so the cost of a run is a fact.",
-      "start": 85.019,
-      "end": 97.628
+      "start": 86.391,
+      "end": 99.962
     },
     {
       "id": "close",
       "text": "Open the site. Press the button. Then read the log. One frontier brain. An elastic workforce. Leverage.",
-      "start": 98.011,
-      "end": 106.626
+      "start": 100.287,
+      "end": 109.459
     }
   ]
 }
