@@ -20,7 +20,7 @@ import { MissionEventLog } from './events';
 import { assertTransition, isBlocked, isSettled, readyTasks, validateDag } from './dag';
 import { runAuction } from './auction';
 import { compileContext, safeJoin } from './context';
-import { computeQualityScore, runVerification, unverifiable } from './verify';
+import { computeQualityScore, runVerification, unverifiable, wholeSuiteCheck } from './verify';
 import { buildCheckpoint, contextReduction, renderCheckpoint } from './checkpoint';
 import { ReputationStore } from './reputation';
 import type { ProviderRegistry } from '../providers/registry';
@@ -235,10 +235,10 @@ export class MissionScheduler {
 
     await Promise.allSettled([...running]);
 
-    return this.finish();
+    return await this.finish();
   }
 
-  private finish(): MissionState {
+  private async finish(): Promise<MissionState> {
     const { state } = this;
     state.completedAt = Date.now();
     const ledger = state.budget.snapshot();
@@ -258,14 +258,33 @@ export class MissionScheduler {
     const passed = state.tasks.filter((t) => t.state === 'PASSED').length;
     const failed = state.tasks.filter((t) => t.state === 'FAILED' || t.state === 'BLOCKED').length;
 
-    state.status = failed === 0 && !ledger.overshot ? 'COMPLETED' : 'FAILED';
+    // The parts passed; now the whole. A task's tests prove that task; only the
+    // repository's own suite proves that the tasks did not break each other.
+    let suite: ProofCheck | null = null;
+    if (failed === 0 && state.spec.repository) {
+      suite = await wholeSuiteCheck(state.spec.repository.root, this.abort.signal);
+      if (suite) {
+        state.events.emit('proof.check', `${suite.label}: ${suite.status.toUpperCase()}: ${suite.detail}`, {
+          data: { checkId: suite.id, status: suite.status, durationMs: suite.durationMs },
+        });
+      }
+    }
+    const suiteFailed = suite?.status === 'fail';
+
+    state.status = failed === 0 && !suiteFailed && !ledger.overshot ? 'COMPLETED' : 'FAILED';
+    const verified = state.status === 'COMPLETED';
     state.events.emit(
-      failed === 0 ? 'mission.completed' : 'mission.failed',
-      `Mission ${failed === 0 ? 'verified' : 'finished with failures'}: ${passed}/${state.tasks.length} tasks passed`,
+      verified ? 'mission.completed' : 'mission.failed',
+      verified
+        ? `Mission verified: ${passed}/${state.tasks.length} tasks passed${suite ? ', whole suite green' : ''}`
+        : suiteFailed
+          ? `Mission failed the whole-suite check after ${passed}/${state.tasks.length} tasks passed: ${suite!.detail.slice(0, 300)}`
+          : `Mission finished with failures: ${passed}/${state.tasks.length} tasks passed`,
       {
         data: {
           passed,
           failed,
+          wholeSuite: suite ? suite.status : 'not-run',
           paidSpendUsd: state.budget.snapshot().settledUsd,
           ledger: state.budget.snapshot(),
         },

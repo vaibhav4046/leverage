@@ -1,3 +1,6 @@
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { PlanRejectedError, type PlannedTaskShape } from '../src/core/compiler';
 import { acceptedCommand, checksForTask, type RepositoryDigest } from '../src/server/planner';
@@ -140,4 +143,30 @@ describe('stripAnsi', () => {
     expect(stripAnsi('\u001b[34mℹ duration_ms 404.1\u001b[39m')).toBe('ℹ duration_ms 404.1');
     expect(failureExcerpt('', '\u001b[31mnot ok 1 - x\u001b[39m')).toBe('not ok 1 - x');
   });
+});
+
+
+describe('wholeSuiteCheck', () => {
+  const tmp = (pkg: object | null) => {
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lvr-suite-'));
+    if (pkg) fs.writeFileSync(path.join(dir, 'package.json'), JSON.stringify(pkg));
+    return dir;
+  };
+
+  it('is skipped, not passed, when the repository defines no test script', async () => {
+    const { wholeSuiteCheck } = await import('../src/core/verify');
+    expect(await wholeSuiteCheck(tmp(null))).toBeNull();
+    expect(await wholeSuiteCheck(tmp({ name: 'x', scripts: { build: 'true' } }))).toBeNull();
+  });
+
+  it('passes on exit 0 and fails with the reason otherwise', async () => {
+    const { wholeSuiteCheck } = await import('../src/core/verify');
+    const ok = await wholeSuiteCheck(tmp({ name: 'ok', scripts: { test: 'node -e "console.log(\'all green\')"' } }));
+    expect(ok?.status).toBe('pass');
+    const bad = await wholeSuiteCheck(
+      tmp({ name: 'bad', scripts: { test: 'node -e "console.error(\'not ok 1 - money rounds\'); process.exit(1)"' } }),
+    );
+    expect(bad?.status).toBe('fail');
+    expect(bad?.detail).toContain('not ok 1 - money rounds');
+  }, 60_000);
 });

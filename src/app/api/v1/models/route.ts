@@ -14,7 +14,13 @@ export async function GET(req: NextRequest) {
   }
 
   const registry = getRegistry();
-  await registry.sweep();
+  // Stale while revalidating: a roster that has been swept before is served from
+  // the cache and refreshed behind the answer. Only a cold instance waits, since
+  // it has nothing to serve yet. Probing every provider can take a minute when a
+  // CLI seat or a hosted route is slow, and a tool described as safe to poll
+  // must not take that long to answer.
+  if (registry.hasSwept) void registry.sweep();
+  else await registry.sweep();
   const reputation = await getReputation();
 
   const models = registry.allModels().map((m) => {

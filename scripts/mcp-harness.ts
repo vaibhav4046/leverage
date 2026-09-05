@@ -75,7 +75,10 @@ async function main() {
   summary.schemaProblems = schemaProblems;
 
   // -------------------------------------------------------------- leverage_models
-  const models = await client.callTool({ name: 'leverage_models', arguments: {} });
+  // A host's default per-call timeout is a minute; the roster and admission calls
+  // are given more here so the harness measures the server, not the client.
+  const slow = { timeout: 180_000 };
+  const models = await client.callTool({ name: 'leverage_models', arguments: {} }, undefined, slow);
   record('tools/call leverage_models', models);
   const modelsText = textOf(models);
   summary.modelsPreview = modelsText.slice(0, 400);
@@ -101,7 +104,7 @@ async function main() {
       maxWorkers: Number(process.env.LEVERAGE_MAX_WORKERS ?? 2),
       ...(process.env.LEVERAGE_REPOSITORY_ROOT ? { repositoryRoot: process.env.LEVERAGE_REPOSITORY_ROOT } : {}),
     },
-  });
+  }, undefined, slow);
   record('tools/call leverage_run', run);
   const runText = textOf(run);
   let missionId = runText.match(/LVR-[A-Za-z0-9-]+/)?.[0] ?? null;

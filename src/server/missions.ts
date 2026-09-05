@@ -62,6 +62,9 @@ export function getRegistry(): ProviderRegistry {
       poolBaseUrl: process.env.OMNIROUTE_BASE_URL,
       poolApiKey: process.env.OMNIROUTE_API_KEY ?? 'sk-leverage-pool',
     });
+    // Warm the roster as soon as the process has a registry, so the first
+    // caller finds a sweep already in flight instead of starting one.
+    void registry.sweep().catch(() => undefined);
   }
   return registry;
 }

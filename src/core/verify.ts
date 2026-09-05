@@ -1,5 +1,6 @@
 import { spawn } from 'node:child_process';
 import fs from 'node:fs/promises';
+import path from 'node:path';
 import type {
   MissionTask,
   ProofCheck,
@@ -167,6 +168,44 @@ export interface ExecResult {
  * via cmd.exe with the argv passed as separate arguments — the arguments are still
  * never concatenated into a command string.
  */
+/**
+ * The repository's own whole test suite, run once every task has passed.
+ *
+ * Each task is verified by the tests that reach it, in parallel with its
+ * siblings. That proves the parts; it does not prove the whole, because a worker
+ * on one task may have broken a file another task's tests cover. So a mission is
+ * "verified" only when `npm test` in the repository exits 0 as well. Returns null
+ * when the repository defines no test script: there is nothing to run, and the
+ * mission record says so rather than pretending.
+ */
+export async function wholeSuiteCheck(
+  repoRoot: string,
+  signal?: AbortSignal,
+  timeoutMs = 180_000,
+): Promise<ProofCheck | null> {
+  let scripts: Record<string, string> | undefined;
+  try {
+    const pkg = JSON.parse(await fs.readFile(path.join(repoRoot, 'package.json'), 'utf8')) as {
+      scripts?: Record<string, string>;
+    };
+    scripts = pkg.scripts;
+  } catch {
+    return null;
+  }
+  if (typeof scripts?.test !== 'string' || !scripts.test.trim()) return null;
+
+  const started = Date.now();
+  const result = await execArgv(['npm', 'test'], repoRoot, timeoutMs, signal);
+  return {
+    id: 'whole-suite',
+    label: 'Whole test suite (npm test)',
+    status: result.code === 0 ? 'pass' : 'fail',
+    detail: result.code === 0 ? lastLine(result.stdout) || 'exit 0' : `exit ${result.code}: ${failureExcerpt(result.stdout, result.stderr)}`,
+    weight: 4,
+    durationMs: Date.now() - started,
+  };
+}
+
 export function execArgv(
   argv: string[],
   cwd: string,

@@ -165,7 +165,8 @@ export class ProviderHttpError extends Error {
     readonly status: number,
     readonly body: string,
   ) {
-    super(`provider returned HTTP ${status}: ${body.slice(0, 200)}`);
+    // A CLI's stderr arrives with colour codes; an error message is text.
+    super(`provider returned HTTP ${status}: ${body.replace(/\u001b\[[0-9;]*[A-Za-z]/g, '').replace(/\s+/g, ' ').trim().slice(0, 200)}`);
     this.name = 'ProviderHttpError';
   }
 }

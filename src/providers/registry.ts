@@ -37,6 +37,12 @@ const HEALTH_TTL_MS = 30_000;
 export class ProviderRegistry {
   private providers = new Map<string, RegisteredProvider>();
   private lastSweep = 0;
+  private inflight: Promise<void> | null = null;
+
+  /** Whether a sweep has ever completed, so a caller can serve the cache and refresh behind it. */
+  get hasSwept(): boolean {
+    return this.lastSweep > 0 && this.inflight === null;
+  }
 
   register(adapter: ProviderAdapter, label: string): void {
     this.providers.set(adapter.providerId, {
@@ -82,6 +88,16 @@ export class ProviderRegistry {
   /** Refresh health and catalogue for every provider, concurrently. */
   async sweep(force = false): Promise<void> {
     if (!force && Date.now() - this.lastSweep < HEALTH_TTL_MS) return;
+    // One sweep at a time; a second caller waits on the first instead of
+    // probing every provider again.
+    if (this.inflight) return this.inflight;
+    this.inflight = this.sweepNow().finally(() => {
+      this.inflight = null;
+    });
+    return this.inflight;
+  }
+
+  private async sweepNow(): Promise<void> {
     this.lastSweep = Date.now();
 
     await Promise.all(
