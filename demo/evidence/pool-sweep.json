@@ -1,0 +1,781 @@
+{
+  "sweptAt": "2026-09-05T03:10:00.339Z",
+  "prompt": "Reply with exactly: READY",
+  "upstreams": {
+    "openrouter": {
+      "base": "https://openrouter.ai/api",
+      "quota": {
+        "limit": null,
+        "usage": 0,
+        "isFreeTier": true,
+        "rateLimit": {
+          "requests": -1,
+          "interval": "10s",
+          "note": "This field is deprecated and safe to ignore."
+        }
+      },
+      "listed": 431,
+      "swept": 19,
+      "answered": 5,
+      "results": [
+        {
+          "id": "openrouter/cohere/north-mini-code:free",
+          "status": 200,
+          "ms": 374,
+          "ok": false,
+          "sample": "{\"id\":\"gen-1788577861-25qyeBkUKkZzuSqMihzA\",\"object\":\"chat.completion\",\"created\":1788577861,\"model\":"
+        },
+        {
+          "id": "openrouter/dots-studio/dots-3-note-preview:free",
+          "status": 200,
+          "ms": 1238,
+          "ok": false,
+          "sample": "\n         \n{\"id\":\"gen-1788577811-Q5muF7Q8IEVZY8bVfRGO\",\"object\":\"chat.completion\",\"created\":17885778"
+        },
+        {
+          "id": "openrouter/google/gemma-4-26b-a4b-it:free",
+          "status": 429,
+          "ms": 788,
+          "ok": false,
+          "sample": "Provider returned error",
+          "retried": true
+        },
+        {
+          "id": "openrouter/google/gemma-4-31b-it:free",
+          "status": 429,
+          "ms": 816,
+          "ok": false,
+          "sample": "Provider returned error",
+          "retried": true
+        },
+        {
+          "id": "openrouter/inclusionai/ling-3.0-flash-fin:free",
+          "status": 200,
+          "ms": 767,
+          "ok": false,
+          "sample": "\n         \n{\"id\":\"gen-1788577807-VW1UAvdoRbWhiAJEm092\",\"object\":\"chat.completion\",\"created\":17885778"
+        },
+        {
+          "id": "openrouter/inclusionai/ling-3.0-flash-sante:free",
+          "status": 200,
+          "ms": 868,
+          "ok": false,
+          "sample": "\n         \n{\"id\":\"gen-1788577803-icClxkOVO24eKS8sLoyx\",\"object\":\"chat.completion\",\"created\":17885778"
+        },
+        {
+          "id": "openrouter/liquid/lfm-2.5-2.6b:free",
+          "status": 200,
+          "ms": 640,
+          "ok": false,
+          "sample": "\n         \n{\"id\":\"gen-1788577816-DtrTw6Tz0bPEmd4Z8ApN\",\"object\":\"chat.completion\",\"created\":17885778"
+        },
+        {
+          "id": "openrouter/minimax/minimax-m2.7:free",
+          "status": 200,
+          "ms": 1782,
+          "ok": false,
+          "sample": "\n         \n{\"id\":\"gen-1788577961-P8riSL7XpyezKtWDwUaI\",\"object\":\"chat.completion\",\"created\":17885779"
+        },
+        {
+          "id": "openrouter/minimax/minimax-m3:free",
+          "status": 200,
+          "ms": 3773,
+          "ok": true,
+          "sample": "READY"
+        },
+        {
+          "id": "openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+          "status": 200,
+          "ms": 1406,
+          "ok": true,
+          "sample": "READY"
+        },
+        {
+          "id": "openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+          "status": 200,
+          "ms": 4932,
+          "ok": true,
+          "sample": "The user asks: \"Reply with exactly: READY\". So we must output"
+        },
+        {
+          "id": "openrouter/nvidia/nemotron-3-ultra-550b-a55b:free",
+          "status": 200,
+          "ms": 1187,
+          "ok": false,
+          "sample": "Upstream error from Nvidia: Service temporarily overloaded"
+        },
+        {
+          "id": "openrouter/nvidia/nemotron-3.5-content-safety:free",
+          "status": 200,
+          "ms": 288,
+          "ok": false,
+          "sample": "{\"id\":\"gen-1788577890-Jf5V7FMgbcdFewQYrpvm\",\"object\":\"chat.completion\",\"created\":1788577890,\"model\":"
+        },
+        {
+          "id": "openrouter/nvidia/nemotron-3.5-lightning:free",
+          "status": 200,
+          "ms": 654,
+          "ok": true,
+          "sample": "Here's a thinking process:\n\n1.  **Analyze User Input:** The"
+        },
+        {
+          "id": "openrouter/poolside/laguna-s-2.1:free",
+          "status": 200,
+          "ms": 1123,
+          "ok": true,
+          "sample": "READY"
+        },
+        {
+          "id": "openrouter/poolside/laguna-xs-2.1:free",
+          "status": 200,
+          "ms": 677,
+          "ok": false,
+          "sample": "{\"id\":\"gen-1788577857-tFFNrn7pdbeX1yZ8Repp\",\"object\":\"chat.completion\",\"created\":1788577857,\"model\":",
+          "retried": true
+        },
+        {
+          "id": "openrouter/thinkingmachines/inkling-small:free",
+          "status": 403,
+          "ms": 37,
+          "ok": false,
+          "sample": "thinkingmachines/inkling-small:free is only available on agentic harnesses. Try plugging it into a c"
+        },
+        {
+          "id": "openrouter/thinkingmachines/inkling:free",
+          "status": 403,
+          "ms": 46,
+          "ok": false,
+          "sample": "thinkingmachines/inkling:free is only available on agentic harnesses. Try plugging it into a coding "
+        },
+        {
+          "id": "openrouter/z-ai/glm-5.2:free",
+          "status": 429,
+          "ms": 722,
+          "ok": false,
+          "sample": "Provider returned error",
+          "retried": true
+        }
+      ]
+    },
+    "nvidia": {
+      "base": "https://integrate.api.nvidia.com",
+      "quota": null,
+      "listed": 81,
+      "swept": 81,
+      "answered": 13,
+      "results": [
+        {
+          "id": "nvidia/01-ai/yi-large",
+          "status": 404,
+          "ms": 243,
+          "ok": false,
+          "sample": "Function '23bd454d-b225-49a3-8118-582a62fc51b8': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/adept/fuyu-8b",
+          "status": 404,
+          "ms": 275,
+          "ok": false,
+          "sample": "Function 'e598bfc1-b058-41af-869d-556d3c7e1b48': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/ai21labs/jamba-1.5-large-instruct",
+          "status": 404,
+          "ms": 246,
+          "ok": false,
+          "sample": "Function '6497fc2b-7ff8-4019-8946-123dccbfc863': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/aisingapore/sea-lion-7b-instruct",
+          "status": 404,
+          "ms": 300,
+          "ok": false,
+          "sample": "Function '02f84bf4-c1a1-489b-a9de-ac3e8dcdec14': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/bigcode/starcoder2-15b",
+          "status": 404,
+          "ms": 299,
+          "ok": false,
+          "sample": "404 page not found\n"
+        },
+        {
+          "id": "nvidia/databricks/dbrx-instruct",
+          "status": 404,
+          "ms": 259,
+          "ok": false,
+          "sample": "Function '3d6c2ff8-8bfc-4d10-8fd0-b7337288e869': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/deepseek-ai/deepseek-coder-6.7b-instruct",
+          "status": 404,
+          "ms": 154,
+          "ok": false,
+          "sample": "Function 'e503b15c-62b0-4d69-b532-a88f0bfa2656': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/deepseek-ai/deepseek-v4-flash-0731",
+          "status": 0,
+          "ms": 30275,
+          "ok": false,
+          "sample": "timeout"
+        },
+        {
+          "id": "nvidia/deepseek-ai/deepseek-v4-pro-0813",
+          "status": 0,
+          "ms": 30275,
+          "ok": false,
+          "sample": "timeout"
+        },
+        {
+          "id": "nvidia/google/codegemma-1.1-7b",
+          "status": 404,
+          "ms": 124,
+          "ok": false,
+          "sample": "Function 'e2d298c5-204e-4213-b921-9f492cc9011b': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/google/codegemma-7b",
+          "status": 404,
+          "ms": 126,
+          "ok": false,
+          "sample": "Function '7dfc10a8-3cc4-448e-97c1-2213308dc222': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/google/deplot",
+          "status": 404,
+          "ms": 147,
+          "ok": false,
+          "sample": "Function '784a8ca4-ea7d-4c93-bb46-ec027c3fae47': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/google/diffusiongemma-26b-a4b-it",
+          "status": 200,
+          "ms": 2142,
+          "ok": false,
+          "sample": "{\"id\":\"chatcmpl-ad7aff95eae30ee5\",\"object\":\"chat.completion\",\"created\":1788577807,\"model\":\"google/di"
+        },
+        {
+          "id": "nvidia/google/gemma-2b",
+          "status": 404,
+          "ms": 209,
+          "ok": false,
+          "sample": "Function '04174188-f742-4069-9e72-d77c2b77d3cb': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/google/gemma-3-12b-it",
+          "status": 404,
+          "ms": 147,
+          "ok": false,
+          "sample": "Function 'ee47df99-c92b-4dc9-b3a7-f3fb0f087b73': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/google/gemma-3-4b-it",
+          "status": 404,
+          "ms": 123,
+          "ok": false,
+          "sample": "Function 'c322f327-55a3-4af3-a91f-c757e2b8b135': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/google/gemma-4-31b-it",
+          "status": 0,
+          "ms": 30056,
+          "ok": false,
+          "sample": "timeout"
+        },
+        {
+          "id": "nvidia/google/recurrentgemma-2b",
+          "status": 404,
+          "ms": 361,
+          "ok": false,
+          "sample": "Function '2f495340-a99f-4b4b-89bd-1beb003dd896': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/ibm/granite-3.0-3b-a800m-instruct",
+          "status": 404,
+          "ms": 519,
+          "ok": false,
+          "sample": "Function '67324577-3f91-4aa6-b750-97468262530d': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/ibm/granite-3.0-8b-instruct",
+          "status": 404,
+          "ms": 128,
+          "ok": false,
+          "sample": "Function '5a24a4f0-2d59-46b3-ac65-42307f2633d1': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/ibm/granite-34b-code-instruct",
+          "status": 404,
+          "ms": 126,
+          "ok": false,
+          "sample": "Function '4df48b4f-e3c5-4ade-82c7-c06b65e25d18': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/ibm/granite-8b-code-instruct",
+          "status": 404,
+          "ms": 132,
+          "ok": false,
+          "sample": "Function 'af7b6f03-f615-4c5f-86c6-388bd35cede0': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/meta/codellama-70b",
+          "status": 404,
+          "ms": 121,
+          "ok": false,
+          "sample": "Function 'f6b06895-d073-4714-8bb2-26c09e9f6597': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/meta/llama-3.2-11b-vision-instruct",
+          "status": 200,
+          "ms": 116,
+          "ok": true,
+          "sample": "READY"
+        },
+        {
+          "id": "nvidia/meta/llama-3.2-90b-vision-instruct",
+          "status": 0,
+          "ms": 30120,
+          "ok": false,
+          "sample": "timeout"
+        },
+        {
+          "id": "nvidia/meta/llama-guard-4-12b",
+          "status": 0,
+          "ms": 30010,
+          "ok": false,
+          "sample": "timeout"
+        },
+        {
+          "id": "nvidia/meta/llama2-70b",
+          "status": 404,
+          "ms": 132,
+          "ok": false,
+          "sample": "Function '2fddadfb-7e76-4c8a-9b82-f7d3fab94471': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/meta/muse-glimmer-30b",
+          "status": 200,
+          "ms": 377,
+          "ok": false,
+          "sample": "{\"id\":\"be74d4c39c329343\",\"choices\":[{\"index\":0,\"message\":{\"content\":null,\"role\":\"assistant\",\"reasoni"
+        },
+        {
+          "id": "nvidia/microsoft/kosmos-2",
+          "status": 404,
+          "ms": 201,
+          "ok": false,
+          "sample": "Function '6018fed7-f227-48dc-99bc-3fd4264d5037': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/microsoft/phi-3-vision-128k-instruct",
+          "status": 404,
+          "ms": 193,
+          "ok": false,
+          "sample": "Function '20f2537e-8593-4eb9-ad40-60eee3bbaa55': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/microsoft/phi-3.5-moe-instruct",
+          "status": 404,
+          "ms": 213,
+          "ok": false,
+          "sample": "Function 'e6cab982-62f4-481e-9a7a-3dedb87dbd01': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/minimaxai/minimax-m3",
+          "status": 200,
+          "ms": 390,
+          "ok": true,
+          "sample": "READY"
+        },
+        {
+          "id": "nvidia/mistralai/codestral-22b-instruct-v0.1",
+          "status": 404,
+          "ms": 198,
+          "ok": false,
+          "sample": "Function '9a10b012-e6df-46fd-83b2-700dcbc75814': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/mistralai/mistral-7b-instruct-v0.3",
+          "status": 404,
+          "ms": 225,
+          "ok": false,
+          "sample": "Function 'cd89bd68-13e3-47a9-861e-9a62e6e14b05': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/mistralai/mistral-large",
+          "status": 404,
+          "ms": 240,
+          "ok": false,
+          "sample": "Function '767b5b9a-3f9d-4c1d-86e8-fa861988cee7': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/mistralai/mistral-large-2-instruct",
+          "status": 404,
+          "ms": 181,
+          "ok": false,
+          "sample": "Function '7fadd4de-e22a-48e4-90e9-f02ef14a74b9': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/mistralai/mistral-nemotron",
+          "status": 0,
+          "ms": 30096,
+          "ok": false,
+          "sample": "timeout"
+        },
+        {
+          "id": "nvidia/mistralai/mixtral-8x22b-v0.1",
+          "status": 404,
+          "ms": 141,
+          "ok": false,
+          "sample": "Function '39655fc1-9ebc-4b24-963e-6915ea6680de': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/moonshotai/kimi-k2.6",
+          "status": 404,
+          "ms": 229,
+          "ok": false,
+          "sample": "Function '23d4f03a-b8a6-4adb-a183-7daa083a09cc': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/moonshotai/kimi-k3",
+          "status": 0,
+          "ms": 30012,
+          "ok": false,
+          "sample": "timeout"
+        },
+        {
+          "id": "nvidia/nv-mistralai/mistral-nemo-12b-instruct",
+          "status": 404,
+          "ms": 145,
+          "ok": false,
+          "sample": "Function 'f8c05193-d2e2-4f0f-bb4d-7ad70070002b': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/nvidia/ai-synthetic-video-detector",
+          "status": 500,
+          "ms": 68,
+          "ok": false,
+          "sample": "Internal error while making inference request"
+        },
+        {
+          "id": "nvidia/nvidia/cosmos-reason2-8b",
+          "status": 404,
+          "ms": 154,
+          "ok": false,
+          "sample": "Function 'e199b43b-6c62-4a63-9379-f60e1a953236': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/nvidia/embed-qa-4",
+          "status": 404,
+          "ms": 43,
+          "ok": false,
+          "sample": "404 page not found\n"
+        },
+        {
+          "id": "nvidia/nvidia/ising-calibration-1.5-31b",
+          "status": 200,
+          "ms": 568,
+          "ok": true,
+          "sample": "I bridge the gap between raw calibration data and actionable insights for quantum computing engineer"
+        },
+        {
+          "id": "nvidia/nvidia/llama-3.1-nemoguard-8b-content-safety",
+          "status": 200,
+          "ms": 398,
+          "ok": true,
+          "sample": "{\"User Safety\": \"safe\"} "
+        },
+        {
+          "id": "nvidia/nvidia/llama-3.1-nemoguard-8b-topic-control",
+          "status": 500,
+          "ms": 121,
+          "ok": false,
+          "sample": "Error during inference of request chat-c6b6a3a661be416983ca66102ec2cf20 -- Encountered an error in f"
+        },
+        {
+          "id": "nvidia/nvidia/llama-3.1-nemotron-51b-instruct",
+          "status": 404,
+          "ms": 125,
+          "ok": false,
+          "sample": "Function '5beba52c-65a9-4f46-8cd9-656689a1b205': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/nvidia/llama-3.1-nemotron-70b-instruct",
+          "status": 404,
+          "ms": 121,
+          "ok": false,
+          "sample": "Function '9b96341b-9791-4db9-a00d-4e43aa192a39': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/nvidia/llama-3.1-nemotron-safety-guard-8b-v3",
+          "status": 200,
+          "ms": 5886,
+          "ok": true,
+          "sample": "{\"User Safety\": \"safe\"} "
+        },
+        {
+          "id": "nvidia/nvidia/llama-3.1-nemotron-ultra-253b-v1",
+          "status": 404,
+          "ms": 127,
+          "ok": false,
+          "sample": "Function '84bf12ff-edbd-4435-baea-0fa6a7453d2e': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/nvidia/llama-3.2-nemoretriever-1b-vlm-embed-v1",
+          "status": 404,
+          "ms": 36,
+          "ok": false,
+          "sample": "404 page not found\n"
+        },
+        {
+          "id": "nvidia/nvidia/llama-3.2-nv-embedqa-1b-v1",
+          "status": 404,
+          "ms": 41,
+          "ok": false,
+          "sample": "404 page not found\n"
+        },
+        {
+          "id": "nvidia/nvidia/llama-nemotron-embed-vl-1b-v2",
+          "status": 404,
+          "ms": 42,
+          "ok": false,
+          "sample": "404 page not found\n"
+        },
+        {
+          "id": "nvidia/nvidia/llama3-chatqa-1.5-70b",
+          "status": 404,
+          "ms": 182,
+          "ok": false,
+          "sample": "Function '46594287-38b9-481c-a37f-baa02f2d3ba1': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/nvidia/mistral-nemo-minitron-8b-8k-instruct",
+          "status": 404,
+          "ms": 213,
+          "ok": false,
+          "sample": "Function '5aa06dd2-0a02-4a5d-be4c-bf88e956965d': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/nvidia/nemotron-3-embed-1b",
+          "status": 404,
+          "ms": 57,
+          "ok": false,
+          "sample": "404 page not found\n"
+        },
+        {
+          "id": "nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+          "status": 200,
+          "ms": 1736,
+          "ok": true,
+          "sample": "READY"
+        },
+        {
+          "id": "nvidia/nvidia/nemotron-3-super-120b-a12b",
+          "status": 200,
+          "ms": 461,
+          "ok": true,
+          "sample": "The user asks: \"Reply with exactly: READY\". So the response must"
+        },
+        {
+          "id": "nvidia/nvidia/nemotron-3-ultra-550b-a55b",
+          "status": 200,
+          "ms": 602,
+          "ok": true,
+          "sample": "The user wants me to reply with exactly \"READY\". I should output just"
+        },
+        {
+          "id": "nvidia/nvidia/nemotron-3.5-content-safety",
+          "status": 200,
+          "ms": 150,
+          "ok": true,
+          "sample": "User Safety: safe"
+        },
+        {
+          "id": "nvidia/nvidia/nemotron-3.5-lightning-30b-a3b",
+          "status": 200,
+          "ms": 633,
+          "ok": true,
+          "sample": "Here's a thinking process:\n\n1.  **Analyze User Input:** The"
+        },
+        {
+          "id": "nvidia/nvidia/nemotron-4-340b-instruct",
+          "status": 404,
+          "ms": 126,
+          "ok": false,
+          "sample": "Function 'b0fcd392-e905-4ab4-8eb9-aeae95c30b37': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/nvidia/nemotron-4-340b-reward",
+          "status": 404,
+          "ms": 146,
+          "ok": false,
+          "sample": "Function 'c53ee0e9-bad9-4e09-b365-52c9d6b71254': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/nvidia/nemotron-nano-3-30b-a3b",
+          "status": 404,
+          "ms": 215,
+          "ok": false,
+          "sample": "Function '2b2dcd47-c858-425a-9c04-4cacf2eac993': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/nvidia/nemotron-parse",
+          "status": 400,
+          "ms": 92,
+          "ok": false,
+          "sample": "{\"object\":\"error\",\"message\":\"Content cannot be a plain string. The model does not support text input"
+        },
+        {
+          "id": "nvidia/nvidia/neva-22b",
+          "status": 404,
+          "ms": 129,
+          "ok": false,
+          "sample": "Function 'bc205f8e-1740-40df-8d32-c4321763498a': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/nvidia/nv-embedqa-mistral-7b-v2",
+          "status": 404,
+          "ms": 36,
+          "ok": false,
+          "sample": "404 page not found\n"
+        },
+        {
+          "id": "nvidia/nvidia/nvclip",
+          "status": 404,
+          "ms": 120,
+          "ok": false,
+          "sample": "404 page not found\n"
+        },
+        {
+          "id": "nvidia/nvidia/riva-translate-4b-instruct",
+          "status": 404,
+          "ms": 146,
+          "ok": false,
+          "sample": "Function 'f35337fa-b4dd-4996-bcba-5476ee01171d': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/nvidia/riva-translate-4b-instruct-v1.1",
+          "status": 200,
+          "ms": 183,
+          "ok": true,
+          "sample": "Reply with exactly: \u0627\u0644\u0639\u062f\u0627\u0644\u0629"
+        },
+        {
+          "id": "nvidia/nvidia/riva-translate-4b-instruct-v2",
+          "status": 200,
+          "ms": 179,
+          "ok": true,
+          "sample": "Reply with exactly: READY"
+        },
+        {
+          "id": "nvidia/nvidia/vila",
+          "status": 404,
+          "ms": 159,
+          "ok": false,
+          "sample": "Function '1c8df143-2303-419b-8b28-b4dd82cfe113': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/openai/gpt-oss-20b",
+          "status": 200,
+          "ms": 449,
+          "ok": false,
+          "sample": "{\"id\":\"chatcmpl-a09afa1a5540b76c\",\"object\":\"chat.completion\",\"created\":1788577884,\"model\":\"openai/gp"
+        },
+        {
+          "id": "nvidia/poolside/laguna-xs-2.1",
+          "status": 200,
+          "ms": 15996,
+          "ok": true,
+          "sample": "READY"
+        },
+        {
+          "id": "nvidia/snowflake/arctic-embed-l",
+          "status": 404,
+          "ms": 36,
+          "ok": false,
+          "sample": "404 page not found\n"
+        },
+        {
+          "id": "nvidia/writer/palmyra-creative-122b",
+          "status": 404,
+          "ms": 248,
+          "ok": false,
+          "sample": "Function '00bdd0a7-e38f-4423-9007-c4d8730a3f78': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/writer/palmyra-fin-70b-32k",
+          "status": 404,
+          "ms": 129,
+          "ok": false,
+          "sample": "Function '316490c6-f1ed-41f9-9da8-3fa9e885653b': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/writer/palmyra-med-70b",
+          "status": 404,
+          "ms": 130,
+          "ok": false,
+          "sample": "Function 'aab71274-5281-4941-b0b8-20f339d1fc7e': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/writer/palmyra-med-70b-32k",
+          "status": 404,
+          "ms": 235,
+          "ok": false,
+          "sample": "Function 'd6faa974-3591-49a4-963d-97221d074b2e': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        },
+        {
+          "id": "nvidia/zyphra/zamba2-7b-instruct",
+          "status": 404,
+          "ms": 197,
+          "ok": false,
+          "sample": "Function '8378ffb2-51b0-4140-9684-dda1889373e6': Not found for account '5NKPx0EHy8CEa7Xpz-f3UJTVo19m"
+        }
+      ]
+    }
+  },
+  "allowlist": [
+    "openrouter/minimax/minimax-m3:free",
+    "openrouter/minimax/minimax-m2.7:free",
+    "openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+    "openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+    "openrouter/nvidia/nemotron-3.5-lightning:free",
+    "openrouter/poolside/laguna-s-2.1:free",
+    "nvidia/minimaxai/minimax-m3",
+    "nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+    "nvidia/nvidia/nemotron-3-super-120b-a12b",
+    "nvidia/nvidia/nemotron-3-ultra-550b-a55b",
+    "nvidia/nvidia/nemotron-3.5-lightning-30b-a3b",
+    "nvidia/openai/gpt-oss-20b",
+    "nvidia/poolside/laguna-xs-2.1"
+  ],
+  "curation": {
+    "rule": "Answered a real completion within a few seconds and is a general-purpose instruct or coding model. Ids that came back 200 with empty content at max_tokens 16 were re-asked with 512.",
+    "reasked_with_512": {
+      "nvidia/openai/gpt-oss-20b": "READY in 2.1s, kept",
+      "openrouter/minimax/minimax-m2.7:free": "READY in 2.7s, kept",
+      "openrouter/nvidia/nemotron-3-ultra-550b-a55b:free": "READY in 46s after a provider overload; the NVIDIA-direct id answers in under a second, so that one is kept instead",
+      "nvidia/moonshotai/kimi-k3": "READY in 52s, too slow for a worker turn",
+      "nvidia/deepseek-ai/deepseek-v4-pro-0813": "READY in 1s on the first probe, 90s timeout on the re-ask; too flaky",
+      "openrouter/z-ai/glm-5.2:free": "429 again",
+      "openrouter/google/gemma-4-31b-it:free": "429 again"
+    },
+    "not_reasked": [
+      "openrouter/cohere/north-mini-code:free",
+      "openrouter/poolside/laguna-xs-2.1:free",
+      "openrouter/liquid/lfm-2.5-2.6b:free",
+      "openrouter/dots-studio/dots-3-note-preview:free",
+      "openrouter/inclusionai/ling-3.0-flash-fin:free",
+      "openrouter/inclusionai/ling-3.0-flash-sante:free"
+    ],
+    "excluded_not_a_worker": [
+      "nvidia/nvidia/llama-3.1-nemoguard-8b-content-safety",
+      "nvidia/nvidia/llama-3.1-nemotron-safety-guard-8b-v3",
+      "nvidia/nvidia/nemotron-3.5-content-safety",
+      "nvidia/nvidia/riva-translate-4b-instruct-v1.1",
+      "nvidia/nvidia/riva-translate-4b-instruct-v2",
+      "nvidia/meta/llama-3.2-11b-vision-instruct",
+      "nvidia/nvidia/ising-calibration-1.5-31b"
+    ]
+  }
+}

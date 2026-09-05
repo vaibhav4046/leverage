@@ -54,7 +54,7 @@ async function main() {
   console.log('running   one inference through the worker pipeline...');
   const started = Date.now();
   const result = await executor.runWorker({
-    modelId: 'auto/best-free',
+    modelId: process.env.POOL_MODEL ?? 'auto/best-free',
     role: 'Connectivity check',
     bundle,
     ask: 'Reply with exactly the word READY and nothing else.',

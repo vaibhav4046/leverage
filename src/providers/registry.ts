@@ -6,6 +6,11 @@ import type {
 } from '../core/types';
 import { OllamaAdapter } from './ollama';
 import { PoolAdapter } from './pool';
+
+function poolModelsFromEnv(): string[] | undefined {
+  const list = process.env.POOL_MODELS?.split(',').map((m) => m.trim()).filter(Boolean);
+  return list?.length ? list : undefined;
+}
 import { HostAdapter } from './host';
 import { AgentCliAdapter } from './agent-cli';
 
@@ -132,7 +137,10 @@ export function buildRegistry(config: RegistryConfig): ProviderRegistry {
   }
   if (config.poolBaseUrl) {
     registry.register(
-      new PoolAdapter(config.poolBaseUrl, config.poolApiKey),
+      // POOL_MODELS lets a deployment name the models its upstream actually
+      // serves. The local router advertises `auto/best-free`; a hosted pool
+      // advertises `openrouter/…` and `nvidia/…`. Same adapter, same auction.
+      new PoolAdapter(config.poolBaseUrl, config.poolApiKey, poolModelsFromEnv()),
       'Free model pool (OpenAI-compatible)',
     );
   }

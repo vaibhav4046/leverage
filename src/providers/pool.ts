@@ -53,7 +53,8 @@ export class PoolAdapter implements ProviderAdapter {
           key: `pool:${id}`,
           providerId: this.providerId,
           modelId: id,
-          displayName: spec.label ?? id,
+          // `openrouter/google/gemma-4-31b-it:free` is an address, not a name.
+          displayName: spec.label ?? id.split('/').pop()!.replace(/:free$/, ''),
           costClass: this.costClass,
           pricing: { inputPerMTok: 0, outputPerMTok: 0 },
           // The gateway advertises 10M for its routers, which is a routing artefact
@@ -183,4 +184,19 @@ const POOL_MODEL_SPECS: Record<string, PoolSpec> = {
     label: 'Codestral 2501',
     caps: ['code', 'frontend', 'tests', 'long-context'],
   },
+  // Hosted pool: ids are prefixed with the upstream that serves them. Every id
+  // here answered a real completion; demo/evidence/pool-sweep.json has the sweep.
+  'openrouter/minimax/minimax-m3:free': { label: 'MiniMax M3 via OpenRouter', caps: ['code', 'backend', 'tests'] },
+  'openrouter/minimax/minimax-m2.7:free': { label: 'MiniMax M2.7 via OpenRouter', caps: ['code', 'backend'] },
+  'openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free': { label: 'Nemotron 3 Nano 30B via OpenRouter', caps: ['reasoning', 'code'] },
+  'openrouter/nvidia/nemotron-3-super-120b-a12b:free': { label: 'Nemotron 3 Super 120B via OpenRouter', caps: ['reasoning', 'code', 'tools'] },
+  'openrouter/nvidia/nemotron-3.5-lightning:free': { label: 'Nemotron 3.5 Lightning via OpenRouter', caps: ['code', 'docs'] },
+  'openrouter/poolside/laguna-s-2.1:free': { label: 'Laguna S 2.1 via OpenRouter', caps: ['code', 'tests'] },
+  'nvidia/minimaxai/minimax-m3': { label: 'MiniMax M3 via NVIDIA', caps: ['code', 'backend', 'tests'] },
+  'nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning': { label: 'Nemotron 3 Nano 30B via NVIDIA', caps: ['reasoning', 'code'] },
+  'nvidia/nvidia/nemotron-3-super-120b-a12b': { label: 'Nemotron 3 Super 120B via NVIDIA', caps: ['reasoning', 'code', 'tools'] },
+  'nvidia/nvidia/nemotron-3-ultra-550b-a55b': { label: 'Nemotron 3 Ultra 550B via NVIDIA', caps: ['reasoning', 'code', 'tools', 'long-context'] },
+  'nvidia/nvidia/nemotron-3.5-lightning-30b-a3b': { label: 'Nemotron 3.5 Lightning via NVIDIA', caps: ['code', 'docs'] },
+  'nvidia/openai/gpt-oss-20b': { label: 'GPT-OSS 20B via NVIDIA', caps: ['reasoning', 'code', 'tools'] },
+  'nvidia/poolside/laguna-xs-2.1': { label: 'Laguna XS 2.1 via NVIDIA', caps: ['code', 'tests'] },
 };
