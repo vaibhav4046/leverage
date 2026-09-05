@@ -699,7 +699,18 @@ function eventColor(type: string): string {
 /* -------------------------------------------------------------------- proof */
 
 function ProofPanel({ snapshot }: { snapshot: MissionSnapshot }) {
-  const checks = snapshot.proofs.flatMap((p) => p.checks);
+  // The whole-suite run belongs to the mission, not to a task, so it lives in
+  // the event log rather than in a task's proof pack. It is the check that
+  // proves the tasks did not break each other, so it is listed with the rest.
+  const suite = snapshot.events
+    .filter((e) => e.type === 'proof.check' && !e.taskId && typeof e.data?.status === 'string')
+    .map((e) => {
+      const status = e.data?.status as string;
+      const [label, ...rest] = e.message.split(`: ${status.toUpperCase()}: `);
+      return { id: String(e.data?.checkId ?? e.id), label, status, detail: rest.join(''), durationMs: 0, weight: 1 };
+    })
+    .filter((c): c is typeof c & { status: 'pass' | 'fail' | 'skipped' } => ['pass', 'fail', 'skipped'].includes(c.status));
+  const checks = [...snapshot.proofs.flatMap((p) => p.checks), ...suite];
   const passed = checks.filter((c) => c.status === 'pass').length;
 
   return (
