@@ -29,6 +29,9 @@ literal value.
 | Mission-id enumeration | A mission in another workspace returns 404, not 403 | `api/v1/missions/[missionId]` |
 | Runaway workers | Per-call timeout, bounded attempts, bounded retries, cancellation propagates via AbortSignal | `scheduler.ts` |
 | Unverified identity in production | Dev identity throws when `NODE_ENV=production` | `src/auth/identity.ts` |
+| Denial of wallet through the public live run | One run per instance, one per visitor per ten minutes, a credit floor below which the route refuses, a wall clock, and cancellation when the tab closes. Bounded, not closed: the guards are per warm instance, so the floor is the only global stop, and the key that funds the run is the one disclosed above until the owner rotates it | `api/v1/live/run` |
+| The hosted pool as a relay for the provider keys | Refuses without `POOL_ACCESS_TOKEN` (503, fail closed), constant-time token compare, a hard `POOL_MODELS` allowlist so a leaked token reaches no paid model, per-model cooldowns. Not mitigated: a leaked token can spend the free-tier daily quota; there is no per-token rate limit | `api/v1/pool`, `tests/pool-route.test.ts` |
+| A planned task verifying itself | The goal text reaches the planner, so a command it proposes is as trusted as the goal. Only four shapes are accepted (`node --test <files>`, `npm test`, `npm run <script in package.json>`, `npx vitest run <files>`), and a task allowed to edit `package.json` is never verified by an npm script it could rewrite | `src/server/planner.ts`, `tests/planner.test.ts` |
 
 ---
 
