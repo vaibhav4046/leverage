@@ -90,7 +90,15 @@ async function main() {
   const started = Date.now();
   const run = await client.callTool({
     name: 'leverage_run',
-    arguments: { goal, budgetMaxUsd: 0, qualityTarget: 0.95, privacy: 'prefer-local', maxWorkers: 2 },
+    arguments: {
+      goal,
+      budgetMaxUsd: 0,
+      qualityTarget: 0.95,
+      // LEVERAGE_PRIVACY=cloud-allowed sends the auction to the hosted pool when
+      // the local runtime is down, which is how the RocketRide-only run is made.
+      privacy: process.env.LEVERAGE_PRIVACY ?? 'prefer-local',
+      maxWorkers: Number(process.env.LEVERAGE_MAX_WORKERS ?? 2),
+    },
   });
   record('tools/call leverage_run', run);
   const runText = textOf(run);

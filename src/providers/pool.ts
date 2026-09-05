@@ -35,8 +35,13 @@ export class PoolAdapter implements ProviderAdapter {
     private readonly allowlist: string[] = DEFAULT_POOL_MODELS,
   ) {}
 
+  private authHeaders(): Record<string, string> {
+    return { Authorization: `Bearer ${this.apiKey}` };
+  }
+
   async discoverModels(): Promise<ModelDescriptor[]> {
-    const res = await fetch(`${this.baseUrl}/models`, { signal: AbortSignal.timeout(25_000) });
+    // The hosted pool is token-gated; the local router ignores the header.
+    const res = await fetch(`${this.baseUrl}/models`, { headers: this.authHeaders(), signal: AbortSignal.timeout(25_000) });
     if (!res.ok) throw new ProviderHttpError(res.status, await res.text().catch(() => ''));
 
     const body = (await res.json()) as {
@@ -69,7 +74,7 @@ export class PoolAdapter implements ProviderAdapter {
   async health(): Promise<ProviderHealth> {
     const checkedAt = new Date().toISOString();
     try {
-      const res = await fetch(`${this.baseUrl}/models`, { signal: AbortSignal.timeout(20_000) });
+      const res = await fetch(`${this.baseUrl}/models`, { headers: this.authHeaders(), signal: AbortSignal.timeout(20_000) });
       if (res.status === 429) {
         return { status: 'RATE_LIMITED', checkedAt, detail: 'gateway rate limited' };
       }
