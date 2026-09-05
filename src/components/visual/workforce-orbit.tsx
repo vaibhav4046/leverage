@@ -159,10 +159,16 @@ export function WorkforceOrbit({
       ctx.fill();
     };
 
-    const frame = () => {
+    // 30 fps is invisible on a slow orbit and halves the draw cost; the angle
+    // advances per drawn frame, so the speed is the same as it was at 60.
+    let lastDraw = 0;
+    const frame = (now: number) => {
       if (!running) return;
-      angle += 0.0022;
-      draw();
+      if (now - lastDraw >= 1000 / 30) {
+        lastDraw = now;
+        angle += 0.0044;
+        draw();
+      }
       raf = requestAnimationFrame(frame);
     };
 

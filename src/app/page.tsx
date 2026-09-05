@@ -30,7 +30,21 @@ export const dynamic = 'force-dynamic';
  * A product whose argument is "check the evidence, don't trust the model" cannot have
  * an invented hero.
  */
-async function loadRun(file: string): Promise<MissionSnapshot | null> {
+// In production the run files never change between deploys; parsing a megabyte
+// of JSON on every request was most of the landing page's server time.
+const runMemo = new Map<string, Promise<MissionSnapshot | null>>();
+
+function loadRun(file: string): Promise<MissionSnapshot | null> {
+  if (process.env.NODE_ENV !== 'production') return readRun(file);
+  let hit = runMemo.get(file);
+  if (!hit) {
+    hit = readRun(file);
+    runMemo.set(file, hit);
+  }
+  return hit;
+}
+
+async function readRun(file: string): Promise<MissionSnapshot | null> {
   try {
     return JSON.parse(await fs.readFile(path.resolve('demo', file), 'utf8')) as MissionSnapshot;
   } catch {

@@ -195,10 +195,10 @@ export function AuroraField({ className = '' }: { className?: string }) {
         return;
       }
       const dt = now - last;
-      if (sampled < 24) {
+      if (sampled < 10) {
         sampled += 1;
         if (dt > SLOW_MS) slow += 1;
-        if (sampled === 24 && slow >= 16) {
+        if (sampled === 10 && slow >= 7) {
           degraded = true;
           running = false;
           renderOnce();
