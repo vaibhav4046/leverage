@@ -148,7 +148,9 @@ export function AuroraField({ className = '' }: { className?: string }) {
     // Cap the drawing buffer. A 4K panel would otherwise shade 8M fragments per
     // frame for a background nobody is looking at closely.
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      // 1x is enough for a blurred gradient; 1.5x doubled the fragment count for
+      // nothing a viewer could see.
+      const dpr = Math.min(window.devicePixelRatio || 1, 1);
       const w = Math.min(canvas.clientWidth * dpr, 2200);
       const h = Math.min(canvas.clientHeight * dpr, 1400);
       if (canvas.width !== w || canvas.height !== h) {
@@ -174,10 +176,37 @@ export function AuroraField({ className = '' }: { className?: string }) {
     let elapsed = 0;
     let last = 0;
 
+    // Adaptive degradation. On a machine without a usable GPU (software WebGL,
+    // a throttled phone, Lighthouse's simulated mobile) this shader alone can
+    // keep the main thread busy for the life of the page. So the loop is capped
+    // at 30 fps, and the first two dozen drawn frames are timed: if most of them
+    // miss even that budget, the field freezes as one static frame and stays a
+    // background instead of becoming the page's whole CPU budget.
+    const FRAME_MS = 1000 / 30;
+    const SLOW_MS = 48;
+    let sampled = 0;
+    let slow = 0;
+    let degraded = false;
+
     const frame = (now: number) => {
       if (!running) return;
+      if (now - last < FRAME_MS) {
+        raf = requestAnimationFrame(frame);
+        return;
+      }
+      const dt = now - last;
+      if (sampled < 24) {
+        sampled += 1;
+        if (dt > SLOW_MS) slow += 1;
+        if (sampled === 24 && slow >= 16) {
+          degraded = true;
+          running = false;
+          renderOnce();
+          return;
+        }
+      }
       resize();
-      elapsed += now - last;
+      elapsed += dt;
       last = now;
 
       // Ease the pointer so the parallax glides instead of snapping.
@@ -206,7 +235,7 @@ export function AuroraField({ className = '' }: { className?: string }) {
     // motion, or the canvas scrolled out of view. Off-screen, rAF still fires at
     // full rate and the shader still burns GPU time that nobody can see.
     const sync = () => {
-      const shouldRun = inView && !document.hidden && !reduced.matches;
+      const shouldRun = !degraded && inView && !document.hidden && !reduced.matches;
       if (shouldRun === running) return;
       running = shouldRun;
       if (running) {

@@ -18,7 +18,7 @@ import { IconPlay } from '@/components/icons';
  */
 export function MasterFilm({
   src = '/motion/walkthrough.mp4',
-  poster = '/motion/walkthrough-poster.jpg',
+  poster = '/motion/walkthrough-poster.webp',
   eyebrow = 'The film · 1:51 · narrated',
   title = 'Press the button. Then read the log.',
   lede = 'A real mission runs on the site while you watch, then the auction, the handoff and the supply, all on untouched footage of the live deployment. No number is spoken that is not on the site with its evidence.',
@@ -80,7 +80,7 @@ export function MasterFilm({
                 type="button"
                 onClick={start}
                 className="group absolute inset-1.5 flex items-center justify-center"
-                aria-label="Play the film, with sound"
+                aria-label={`Play the film. Sound on · ${length}`}
               >
                 <span
                   className="flex h-20 w-20 items-center justify-center rounded-full border border-[var(--color-sapphire-hairline)] text-[var(--color-quartz)] backdrop-blur transition-transform group-hover:scale-105"
@@ -103,7 +103,7 @@ export function MasterFilm({
             real browser sessions against the deployment · voiced with ElevenLabs from{' '}
             <span className="text-[var(--color-mist)]">scripts/narrate-film.mjs</span> · the 69-second motion
             version is at{' '}
-            <a href="/motion/film.mp4" className="text-[var(--color-frosted-lilac)]">
+            <a href="/motion/film.mp4" className="text-[var(--color-frosted-lilac)] underline underline-offset-2">
               /motion/film.mp4
             </a>
           </figcaption>

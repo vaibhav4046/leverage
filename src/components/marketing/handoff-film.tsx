@@ -80,7 +80,7 @@ export function HandoffFilm() {
               playsInline
               loop
               preload="metadata"
-              poster="/motion/handoff-poster.jpg"
+              poster="/motion/handoff-poster.webp"
               onPlay={() => setPlaying(true)}
               onPause={() => setPlaying(false)}
               onLoadedData={() => setReady(true)}

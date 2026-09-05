@@ -38,7 +38,7 @@ export default async function MissionsPage() {
             action={{ href: '/app/new', label: 'Create one' }}
           />
         ) : (
-          <Table head={['Mission', 'Status', 'Tasks', 'Checkpoints', 'Paid', 'Elapsed', '']}>
+          <Table head={['Mission', 'Status', 'Tasks', 'Checkpoints', 'Paid', 'Elapsed', 'Open']}>
             {all.map((m) => {
               const passed = m.tasks.filter((t) => t.state === 'PASSED').length;
               return (

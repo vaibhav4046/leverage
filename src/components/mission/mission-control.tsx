@@ -395,7 +395,7 @@ function TaskGraph({
 
 function WorkforcePanel({ snapshot }: { snapshot: MissionSnapshot }) {
   return (
-    <section className="surface-card p-5 xl:max-h-[560px] xl:overflow-y-auto" aria-label="Workforce">
+    <section className="surface-card p-5 xl:max-h-[560px] xl:overflow-y-auto" aria-label="Workforce" tabIndex={0}>
       <div className="mono mb-4 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
         Workforce
       </div>
@@ -479,7 +479,7 @@ function EventTimeline({ events }: { events: MissionEvent[] }) {
       <div className="mono border-b border-[var(--color-obsidian-edge)] px-5 py-3 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
         Live execution · {events.length} events
       </div>
-      <div className="max-h-[340px] overflow-y-auto px-5 py-3" role="log" aria-live="polite">
+      <div className="max-h-[340px] overflow-y-auto px-5 py-3" role="log" aria-live="polite" aria-label="Execution log" tabIndex={0}>
         <ul className="space-y-1">
           {events.map((e) => (
             // Below md the fixed columns left ~110px for the message, so one row
