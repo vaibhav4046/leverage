@@ -22,7 +22,10 @@ In the recorded canonical run, Leverage completed and verified 4 of 4 tasks, pas
 **$0.00** of paid inference. In a second recorded run, RocketRide executed 3 of the
 6 workers and they finished 3 of the 4 tasks, all verified. In a third, on the
 permanent hosted pool with no tunnel anywhere, RocketRide executed all 4 workers,
-all 4 tasks passed, 13.6 credits, $0.00, 84 seconds.
+all 4 tasks passed, 13.6 credits, $0.00, 84 seconds. In a fourth, on a fixture with
+no committed plan, a planner model (Nemotron 3 Super via NVIDIA) wrote the task graph
+from the goal and the repository in 26 seconds, every task was held to its own test
+file, and all 3 passed on the first attempt: 20.2 credits, $0.00, 136 seconds.
 
 ---
 
@@ -67,6 +70,7 @@ hundred-percent model.
 | 60–90 | scrub to `worker.failed` → `checkpoint.created` → `handoff.started` → `worker.hired … resuming from cp_…` | the model failed; the work did not restart |
 | 90–120 | `/app/missions/LVR-bda3ba68` | RocketRide executed 3 of 6 workers · 3 of 4 tasks · all verified |
 | 120–140 | `/app/missions/LVR-719a8c22` | RocketRide executed 4 of 4 workers through the hosted pool · 4 of 4 verified · $0.00 |
+| 140–160 | `/app/missions/LVR-f2102fb1` | the plan itself written by a model from the goal and the repository · 3 of 3 verified, each by its own test file · the proposal is in the `mission.compiled` event |
 | 120–150 | `/benchmarks` | the control plane holding 100 tasks with 0 duplicate claims, 0 budget overshoots |
 
 Full path with commands: [JUDGE_GUIDE.md](JUDGE_GUIDE.md).

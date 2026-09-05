@@ -13,6 +13,7 @@ executes; everything else is a recording, and every other mutating route answers
 |---|---|
 | A real mission, run while you watch | <https://useleverage.vercel.app/app/live> |
 | The recorded mission, event by event | <https://useleverage.vercel.app/app/missions/LVR-f8f72d56> |
+| The mission a model planned, not a committed plan | <https://useleverage.vercel.app/app/missions/LVR-f2102fb1> |
 | The handoff, scrubbable | the replay on the landing page, under "A worker fails. The work does not." |
 | What free models built, playable | <https://useleverage.vercel.app/demo> |
 | Every measured number and its methodology | <https://useleverage.vercel.app/benchmarks> |

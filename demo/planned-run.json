@@ -1,0 +1,2737 @@
+{
+  "mission": {
+    "id": "LVR-f2102fb1",
+    "goal": "Implement src/ so that the whole test suite in test/ passes: the tests import src/greet.js, src/slug.js and src/wordcount.js. Do not modify any file under test/. Budget: $0. Quality: production.",
+    "status": "COMPLETED",
+    "budget": {
+      "maxUsd": 0,
+      "hard": true
+    },
+    "quality": {
+      "target": 0.95
+    },
+    "privacy": {
+      "mode": "prefer-local"
+    },
+    "startedAt": "2026-09-05T15:34:24.824Z",
+    "completedAt": "2026-09-05T15:36:41.203Z",
+    "elapsedMs": 136379
+  },
+  "tasks": [
+    {
+      "id": "greet-implement",
+      "title": "Implement greet.js",
+      "category": "backend",
+      "state": "PASSED",
+      "dependencies": [],
+      "attemptCount": 1,
+      "workerRunId": "wr_c177392e",
+      "fileScope": [
+        "src/greet.js"
+      ]
+    },
+    {
+      "id": "slug-implement",
+      "title": "Implement slug.js",
+      "category": "backend",
+      "state": "PASSED",
+      "dependencies": [],
+      "attemptCount": 1,
+      "workerRunId": "wr_2da106b1",
+      "fileScope": [
+        "src/slug.js"
+      ]
+    },
+    {
+      "id": "wordcount-implement",
+      "title": "Implement wordcount.js",
+      "category": "backend",
+      "state": "PASSED",
+      "dependencies": [],
+      "attemptCount": 1,
+      "workerRunId": "wr_93f3036f",
+      "fileScope": [
+        "src/wordcount.js"
+      ]
+    }
+  ],
+  "workers": [
+    {
+      "id": "wr_2da106b1",
+      "missionId": "LVR-f2102fb1",
+      "taskId": "slug-implement",
+      "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+      "providerId": "pool",
+      "displayName": "MiniMax M2.7 via OpenRouter",
+      "role": "Backend Engineer",
+      "costClass": "free",
+      "status": "passed",
+      "startedAt": "2026-09-05T15:34:26.704Z",
+      "actualCostUsd": 0,
+      "auctionRationale": "100% task fit · 75% verified success over 6 prior jobs · free route, no spend",
+      "contextTokens": 266,
+      "finishedAt": "2026-09-05T15:35:10.105Z"
+    },
+    {
+      "id": "wr_c177392e",
+      "missionId": "LVR-f2102fb1",
+      "taskId": "greet-implement",
+      "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+      "providerId": "pool",
+      "displayName": "MiniMax M2.7 via OpenRouter",
+      "role": "Backend Engineer",
+      "costClass": "free",
+      "status": "passed",
+      "startedAt": "2026-09-05T15:34:26.708Z",
+      "actualCostUsd": 0,
+      "auctionRationale": "100% task fit · 75% verified success over 6 prior jobs · free route, no spend",
+      "contextTokens": 245,
+      "finishedAt": "2026-09-05T15:35:05.208Z"
+    },
+    {
+      "id": "wr_93f3036f",
+      "missionId": "LVR-f2102fb1",
+      "taskId": "wordcount-implement",
+      "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+      "providerId": "pool",
+      "displayName": "MiniMax M2.7 via OpenRouter",
+      "role": "Backend Engineer",
+      "costClass": "free",
+      "status": "passed",
+      "startedAt": "2026-09-05T15:36:03.964Z",
+      "actualCostUsd": 0,
+      "auctionRationale": "100% task fit · 79% verified success over 8 prior jobs · free route, no spend",
+      "contextTokens": 288,
+      "finishedAt": "2026-09-05T15:36:41.203Z"
+    }
+  ],
+  "checkpoints": [],
+  "proofs": [
+    {
+      "id": "pf_d1abcbcf",
+      "missionId": "LVR-f2102fb1",
+      "taskId": "greet-implement",
+      "status": "verified",
+      "worker": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "providerId": "pool",
+        "displayName": "MiniMax M2.7 via OpenRouter"
+      },
+      "filesChanged": [
+        "src/greet.js"
+      ],
+      "patchHash": "e55cadc512339dbc",
+      "checks": [
+        {
+          "id": "exists-0",
+          "label": "src/greet.js exists",
+          "weight": 1,
+          "status": "pass",
+          "detail": "src/greet.js exists",
+          "durationMs": 1
+        },
+        {
+          "id": "suite",
+          "label": "test/greet.test.js pass",
+          "weight": 4,
+          "status": "pass",
+          "detail": "ℹ duration_ms 7736.7432",
+          "durationMs": 9066
+        }
+      ],
+      "unresolved": [],
+      "qualityScore": {
+        "total": 100,
+        "acceptance": 100,
+        "automated": 100,
+        "staticChecks": 100,
+        "weights": {
+          "acceptance": 0.4444444444444445,
+          "automated": 0.38888888888888884,
+          "staticChecks": 0.16666666666666666
+        }
+      },
+      "metrics": {
+        "durationMs": 38500,
+        "actualCostUsd": 0
+      },
+      "createdAt": "2026-09-05T15:35:05.208Z"
+    },
+    {
+      "id": "pf_083244f4",
+      "missionId": "LVR-f2102fb1",
+      "taskId": "slug-implement",
+      "status": "verified",
+      "worker": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "providerId": "pool",
+        "displayName": "MiniMax M2.7 via OpenRouter"
+      },
+      "filesChanged": [
+        "src/slug.js"
+      ],
+      "patchHash": "bcf1bd87e93629fa",
+      "checks": [
+        {
+          "id": "exists-0",
+          "label": "src/slug.js exists",
+          "weight": 1,
+          "status": "pass",
+          "detail": "src/slug.js exists",
+          "durationMs": 1
+        },
+        {
+          "id": "suite",
+          "label": "test/slug.test.js pass",
+          "weight": 4,
+          "status": "pass",
+          "detail": "ℹ duration_ms 81.3594",
+          "durationMs": 164
+        }
+      ],
+      "unresolved": [],
+      "qualityScore": {
+        "total": 100,
+        "acceptance": 100,
+        "automated": 100,
+        "staticChecks": 100,
+        "weights": {
+          "acceptance": 0.4444444444444445,
+          "automated": 0.38888888888888884,
+          "staticChecks": 0.16666666666666666
+        }
+      },
+      "metrics": {
+        "durationMs": 43399,
+        "actualCostUsd": 0
+      },
+      "createdAt": "2026-09-05T15:35:10.105Z"
+    },
+    {
+      "id": "pf_dc328a86",
+      "missionId": "LVR-f2102fb1",
+      "taskId": "wordcount-implement",
+      "status": "verified",
+      "worker": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "providerId": "pool",
+        "displayName": "MiniMax M2.7 via OpenRouter"
+      },
+      "filesChanged": [
+        "src/wordcount.js"
+      ],
+      "patchHash": "fdc2c164b78fa7e9",
+      "checks": [
+        {
+          "id": "exists-0",
+          "label": "src/wordcount.js exists",
+          "weight": 1,
+          "status": "pass",
+          "detail": "src/wordcount.js exists",
+          "durationMs": 0
+        },
+        {
+          "id": "suite",
+          "label": "test/wordcount.test.js pass",
+          "weight": 4,
+          "status": "pass",
+          "detail": "ℹ duration_ms 135.5661",
+          "durationMs": 241
+        }
+      ],
+      "unresolved": [],
+      "qualityScore": {
+        "total": 100,
+        "acceptance": 100,
+        "automated": 100,
+        "staticChecks": 100,
+        "weights": {
+          "acceptance": 0.4444444444444445,
+          "automated": 0.38888888888888884,
+          "staticChecks": 0.16666666666666666
+        }
+      },
+      "metrics": {
+        "durationMs": 37239,
+        "actualCostUsd": 0
+      },
+      "createdAt": "2026-09-05T15:36:41.203Z"
+    }
+  ],
+  "auctions": [
+    {
+      "taskId": "slug-implement",
+      "candidates": [
+        {
+          "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+          "displayName": "MiniMax M2.7 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.7667101394923395,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.748,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05716899153898925,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 6,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+          "displayName": "MiniMax M3 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.7328234926982011,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.6088888888888889,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.09520635978483362,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 5,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/minimaxai/minimax-m3",
+          "displayName": "MiniMax M3 via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.7010571428571429,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.49714285714285716,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen2.5-coder:3b",
+          "displayName": "qwen2.5-coder:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6684960199004976,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.3116666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.12437810945273634,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 20,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-tutor:latest",
+          "displayName": "kodro-tutor",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6404154851078397,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.2192,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05705808513066302,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 21,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-fast:latest",
+          "displayName": "kodro-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.637080784822442,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5675368898978433,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "agent-cli:opencode",
+          "displayName": "OpenCode (your subscription)",
+          "providerId": "agent-cli",
+          "costClass": "host",
+          "eligible": true,
+          "utility": 0.6306285714285714,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.24857142857142858,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0.15,
+            "quotaRisk": 0.2
+          },
+          "sampleCount": 10,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3.5-lightning:free",
+          "displayName": "Nemotron 3.5 Lightning via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/poolside/laguna-s-2.1:free",
+          "displayName": "Laguna S 2.1 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-super-120b-a12b",
+          "displayName": "Nemotron 3 Super 120B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-ultra-550b-a55b",
+          "displayName": "Nemotron 3 Ultra 550B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b",
+          "displayName": "Nemotron 3.5 Lightning via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/openai/gpt-oss-20b",
+          "displayName": "GPT-OSS 20B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/poolside/laguna-xs-2.1",
+          "displayName": "Laguna XS 2.1 via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-coder:latest",
+          "displayName": "kodro-coder",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6145803619561032,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19252984212552945,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b-instruct",
+          "displayName": "qwen3:4b-instruct",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3.5:4b",
+          "displayName": "qwen3.5:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b",
+          "displayName": "qwen3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:8b",
+          "displayName": "qwen3:8b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-v0.1:latest",
+          "displayName": "samantha-v0.1",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.4804087663657803,
+          "breakdown": {
+            "taskFit": 0.05,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4879238838741156,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-core:latest",
+          "displayName": "samantha-core",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.48035885695729824,
+          "breakdown": {
+            "taskFit": 0.05,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4870920603994155,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:llama3.2:3b",
+          "displayName": "llama3.2:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.4757555555555556,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:4b",
+          "displayName": "gemma3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.40522827942767825,
+          "breakdown": {
+            "taskFit": 0,
+            "reputation": 0.58,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.24047132379463748,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:robolearn-fast:latest",
+          "displayName": "robolearn-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.32046202173589405,
+          "breakdown": {
+            "taskFit": 0,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.8932559178204557,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:1b",
+          "displayName": "gemma3:1b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.2947866294400497,
+          "breakdown": {
+            "taskFit": 0,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4653327128897161,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "displayName": "MiniMax M2.7 via OpenRouter",
+        "providerId": "pool",
+        "costClass": "free",
+        "eligible": true,
+        "utility": 0.7667101394923395,
+        "breakdown": {
+          "taskFit": 1,
+          "reputation": 0.748,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.05716899153898925,
+          "costPenalty": 0.02,
+          "quotaRisk": 0.25
+        },
+        "sampleCount": 6,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "100% task fit · 75% verified success over 6 prior jobs · free route, no spend"
+    },
+    {
+      "taskId": "greet-implement",
+      "candidates": [
+        {
+          "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+          "displayName": "MiniMax M2.7 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.7667101394923395,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.748,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05716899153898925,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 6,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+          "displayName": "MiniMax M3 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.7328234926982011,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.6088888888888889,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.09520635978483362,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 5,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/minimaxai/minimax-m3",
+          "displayName": "MiniMax M3 via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.7010571428571429,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.49714285714285716,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen2.5-coder:3b",
+          "displayName": "qwen2.5-coder:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6684960199004976,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.3116666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.12437810945273634,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 20,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-tutor:latest",
+          "displayName": "kodro-tutor",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6404154851078397,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.2192,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05705808513066302,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 21,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-fast:latest",
+          "displayName": "kodro-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.637080784822442,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5675368898978433,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "agent-cli:opencode",
+          "displayName": "OpenCode (your subscription)",
+          "providerId": "agent-cli",
+          "costClass": "host",
+          "eligible": true,
+          "utility": 0.6306285714285714,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.24857142857142858,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0.15,
+            "quotaRisk": 0.2
+          },
+          "sampleCount": 10,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3.5-lightning:free",
+          "displayName": "Nemotron 3.5 Lightning via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/poolside/laguna-s-2.1:free",
+          "displayName": "Laguna S 2.1 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-super-120b-a12b",
+          "displayName": "Nemotron 3 Super 120B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-ultra-550b-a55b",
+          "displayName": "Nemotron 3 Ultra 550B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b",
+          "displayName": "Nemotron 3.5 Lightning via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/openai/gpt-oss-20b",
+          "displayName": "GPT-OSS 20B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/poolside/laguna-xs-2.1",
+          "displayName": "Laguna XS 2.1 via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-coder:latest",
+          "displayName": "kodro-coder",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6145803619561032,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19252984212552945,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b-instruct",
+          "displayName": "qwen3:4b-instruct",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3.5:4b",
+          "displayName": "qwen3.5:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b",
+          "displayName": "qwen3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:8b",
+          "displayName": "qwen3:8b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-v0.1:latest",
+          "displayName": "samantha-v0.1",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.4804087663657803,
+          "breakdown": {
+            "taskFit": 0.05,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4879238838741156,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-core:latest",
+          "displayName": "samantha-core",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.48035885695729824,
+          "breakdown": {
+            "taskFit": 0.05,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4870920603994155,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:llama3.2:3b",
+          "displayName": "llama3.2:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.4757555555555556,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:4b",
+          "displayName": "gemma3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.40522827942767825,
+          "breakdown": {
+            "taskFit": 0,
+            "reputation": 0.58,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.24047132379463748,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:robolearn-fast:latest",
+          "displayName": "robolearn-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.32046202173589405,
+          "breakdown": {
+            "taskFit": 0,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.8932559178204557,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:1b",
+          "displayName": "gemma3:1b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.2947866294400497,
+          "breakdown": {
+            "taskFit": 0,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4653327128897161,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "displayName": "MiniMax M2.7 via OpenRouter",
+        "providerId": "pool",
+        "costClass": "free",
+        "eligible": true,
+        "utility": 0.7667101394923395,
+        "breakdown": {
+          "taskFit": 1,
+          "reputation": 0.748,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.05716899153898925,
+          "costPenalty": 0.02,
+          "quotaRisk": 0.25
+        },
+        "sampleCount": 6,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "100% task fit · 75% verified success over 6 prior jobs · free route, no spend"
+    },
+    {
+      "taskId": "wordcount-implement",
+      "candidates": [
+        {
+          "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+          "displayName": "MiniMax M2.7 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.777365224730956,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.79,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.052753745515931635,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 8,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+          "displayName": "MiniMax M3 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.7328234926982011,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.6088888888888889,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.09520635978483362,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 5,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/minimaxai/minimax-m3",
+          "displayName": "MiniMax M3 via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.7010571428571429,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.49714285714285716,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen2.5-coder:3b",
+          "displayName": "qwen2.5-coder:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6684960199004976,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.3116666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.12437810945273634,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 20,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-tutor:latest",
+          "displayName": "kodro-tutor",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6404154851078397,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.2192,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05705808513066302,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 21,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-fast:latest",
+          "displayName": "kodro-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.637080784822442,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5675368898978433,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "agent-cli:opencode",
+          "displayName": "OpenCode (your subscription)",
+          "providerId": "agent-cli",
+          "costClass": "host",
+          "eligible": true,
+          "utility": 0.6306285714285714,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.24857142857142858,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0.15,
+            "quotaRisk": 0.2
+          },
+          "sampleCount": 10,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free",
+          "displayName": "Nemotron 3 Nano 30B via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3-super-120b-a12b:free",
+          "displayName": "Nemotron 3 Super 120B via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/nvidia/nemotron-3.5-lightning:free",
+          "displayName": "Nemotron 3.5 Lightning via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:openrouter/poolside/laguna-s-2.1:free",
+          "displayName": "Laguna S 2.1 via OpenRouter",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+          "displayName": "Nemotron 3 Nano 30B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-super-120b-a12b",
+          "displayName": "Nemotron 3 Super 120B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-ultra-550b-a55b",
+          "displayName": "Nemotron 3 Ultra 550B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3.5-lightning-30b-a3b",
+          "displayName": "Nemotron 3.5 Lightning via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/openai/gpt-oss-20b",
+          "displayName": "GPT-OSS 20B via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "pool:nvidia/poolside/laguna-xs-2.1",
+          "displayName": "Laguna XS 2.1 via NVIDIA",
+          "providerId": "pool",
+          "costClass": "free",
+          "eligible": true,
+          "utility": 0.6258888888888889,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.62,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.5,
+            "costPenalty": 0.02,
+            "quotaRisk": 0.25
+          },
+          "sampleCount": 0,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:kodro-coder:latest",
+          "displayName": "kodro-coder",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6145803619561032,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.08857142857142856,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.19252984212552945,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 3,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b-instruct",
+          "displayName": "qwen3:4b-instruct",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3.5:4b",
+          "displayName": "qwen3.5:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:4b",
+          "displayName": "qwen3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:qwen3:8b",
+          "displayName": "qwen3:8b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.6098666666666667,
+          "breakdown": {
+            "taskFit": 1,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-v0.1:latest",
+          "displayName": "samantha-v0.1",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.4804087663657803,
+          "breakdown": {
+            "taskFit": 0.05,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4879238838741156,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:samantha-core:latest",
+          "displayName": "samantha-core",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.48035885695729824,
+          "breakdown": {
+            "taskFit": 0.05,
+            "reputation": 0.7466666666666667,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4870920603994155,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:llama3.2:3b",
+          "displayName": "llama3.2:3b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.4757555555555556,
+          "breakdown": {
+            "taskFit": 0.6055555555555556,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.05,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:4b",
+          "displayName": "gemma3:4b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.40522827942767825,
+          "breakdown": {
+            "taskFit": 0,
+            "reputation": 0.58,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.24047132379463748,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:robolearn-fast:latest",
+          "displayName": "robolearn-fast",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.32046202173589405,
+          "breakdown": {
+            "taskFit": 0,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.8932559178204557,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        },
+        {
+          "modelKey": "ollama:gemma3:1b",
+          "displayName": "gemma3:1b",
+          "providerId": "ollama",
+          "costClass": "local",
+          "eligible": true,
+          "utility": 0.2947866294400497,
+          "breakdown": {
+            "taskFit": 0,
+            "reputation": 0.10333333333333333,
+            "contextFit": 1,
+            "availability": 1,
+            "speed": 0.4653327128897161,
+            "costPenalty": 0,
+            "quotaRisk": 0
+          },
+          "sampleCount": 2,
+          "estimatedCostUsd": 0
+        }
+      ],
+      "winner": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "displayName": "MiniMax M2.7 via OpenRouter",
+        "providerId": "pool",
+        "costClass": "free",
+        "eligible": true,
+        "utility": 0.777365224730956,
+        "breakdown": {
+          "taskFit": 1,
+          "reputation": 0.79,
+          "contextFit": 1,
+          "availability": 1,
+          "speed": 0.052753745515931635,
+          "costPenalty": 0.02,
+          "quotaRisk": 0.25
+        },
+        "sampleCount": 8,
+        "estimatedCostUsd": 0
+      },
+      "rationale": "100% task fit · 79% verified success over 8 prior jobs · free route, no spend"
+    }
+  ],
+  "usage": {
+    "paidSpendUsd": 0,
+    "budgetMaxUsd": 0,
+    "budgetHard": true,
+    "localCalls": 0,
+    "hostCalls": 0,
+    "freeCalls": 3,
+    "paidCalls": 0,
+    "blockedPaidAttempts": 0,
+    "estimatedFrontierEquivalentUsd": 0.0138
+  },
+  "events": [
+    {
+      "seq": 1,
+      "id": "LVR-f2102fb1-1",
+      "missionId": "LVR-f2102fb1",
+      "type": "mission.created",
+      "at": "2026-09-05T15:34:24.825Z",
+      "elapsedMs": 1,
+      "message": "Mission created: Implement src/ so that the whole test suite in test/ passes: the tests import src/greet.js, src/slug.js and src/wordcount.js. Do not modify any file under test/",
+      "data": {
+        "budgetUsd": 0,
+        "budgetHard": true,
+        "privacy": "prefer-local",
+        "qualityTarget": 0.95
+      }
+    },
+    {
+      "seq": 2,
+      "id": "LVR-f2102fb1-2",
+      "missionId": "LVR-f2102fb1",
+      "type": "mission.compiled",
+      "at": "2026-09-05T15:34:24.826Z",
+      "elapsedMs": 2,
+      "message": "Compiled into 3 tasks",
+      "data": {
+        "tasks": [
+          {
+            "id": "greet-implement",
+            "title": "Implement greet.js",
+            "dependsOn": []
+          },
+          {
+            "id": "slug-implement",
+            "title": "Implement slug.js",
+            "dependsOn": []
+          },
+          {
+            "id": "wordcount-implement",
+            "title": "Implement wordcount.js",
+            "dependsOn": []
+          }
+        ]
+      }
+    },
+    {
+      "seq": 3,
+      "id": "LVR-f2102fb1-3",
+      "missionId": "LVR-f2102fb1",
+      "type": "task.created",
+      "at": "2026-09-05T15:34:24.826Z",
+      "elapsedMs": 2,
+      "taskId": "greet-implement",
+      "message": "Task: Implement greet.js",
+      "data": {
+        "category": "backend",
+        "dependencies": [],
+        "fileScope": [
+          "src/greet.js"
+        ]
+      }
+    },
+    {
+      "seq": 4,
+      "id": "LVR-f2102fb1-4",
+      "missionId": "LVR-f2102fb1",
+      "type": "task.created",
+      "at": "2026-09-05T15:34:24.826Z",
+      "elapsedMs": 2,
+      "taskId": "slug-implement",
+      "message": "Task: Implement slug.js",
+      "data": {
+        "category": "backend",
+        "dependencies": [],
+        "fileScope": [
+          "src/slug.js"
+        ]
+      }
+    },
+    {
+      "seq": 5,
+      "id": "LVR-f2102fb1-5",
+      "missionId": "LVR-f2102fb1",
+      "type": "task.created",
+      "at": "2026-09-05T15:34:24.826Z",
+      "elapsedMs": 2,
+      "taskId": "wordcount-implement",
+      "message": "Task: Implement wordcount.js",
+      "data": {
+        "category": "backend",
+        "dependencies": [],
+        "fileScope": [
+          "src/wordcount.js"
+        ]
+      }
+    },
+    {
+      "seq": 6,
+      "id": "LVR-f2102fb1-6",
+      "missionId": "LVR-f2102fb1",
+      "type": "mission.compiled",
+      "at": "2026-09-05T15:34:24.826Z",
+      "elapsedMs": 2,
+      "message": "Planned by Nemotron 3 Super 120B via NVIDIA: 3 tasks in 25.9s",
+      "data": {
+        "planner": {
+          "modelKey": "pool:nvidia/nvidia/nemotron-3-super-120b-a12b",
+          "displayName": "Nemotron 3 Super 120B via NVIDIA",
+          "costClass": "free",
+          "durationMs": 25906,
+          "taskCount": 3,
+          "promptTokens": 1086,
+          "completionTokens": 1062,
+          "skipped": [
+            "Nemotron 3 Nano 30B via OpenRouter: provider returned HTTP 429: {\"error\":{\"message\":\"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests",
+            "Nemotron 3 Super 120B via OpenRouter: provider returned HTTP 429: {\"error\":{\"message\":\"Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000 free model requests",
+            "Nemotron 3 Nano 30B via NVIDIA: provider returned HTTP 503: {\"error\":{\"message\":\"ResourceExhausted: Worker local total request limit reached (16/16)\",\"type\":\"Service Unavai"
+          ]
+        },
+        "checks": [
+          {
+            "taskId": "greet-implement",
+            "suite": "test/greet.test.js pass"
+          },
+          {
+            "taskId": "slug-implement",
+            "suite": "test/slug.test.js pass"
+          },
+          {
+            "taskId": "wordcount-implement",
+            "suite": "test/wordcount.test.js pass"
+          }
+        ],
+        "planText": "{\n  \"tasks\": [\n    {\n      \"id\": \"greet-implement\",\n      \"title\": \"Implement greet.js\",\n      \"description\": \"Create src/greet.js exporting greet(name) and shout(str) functions that satisfy the greet test suite.\",\n      \"fileScope\": [\"src/greet.js\"],\n      \"referenceFiles\": [\"test/greet.test.js\"],\n      \"verify\": [\"node\", \"--test\", \"test/greet.test.js\"],\n      \"acceptance\": [\n        \"greet('Ada') returns 'Hello, Ada!'\",\n        \"greet trims whitespace and throws on empty string\",\n        \"shout converts to uppercase and appends '!'\"\n      ]\n    },\n    {\n      \"id\": \"slug-implement\",\n      \"title\": \"Implement slug.js\",\n      \"description\": \"Create src/slug.js exporting slugify(str) function that satisfies the slug test suite.\",\n      \"fileScope\": [\"src/slug.js\"],\n      \"referenceFiles\": [\"test/slug.test.js\"],\n      \"verify\": [\"node\", \"--test\", \"test/slug.test.js\"],\n      \"acceptance\": [\n        \"slugify('Hello World') returns 'hello-world'\",\n        \"slugify strips punctuation and collapses separators\",\n        \"slugify throws on input that results in empty string\"\n      ]\n    },\n    {\n      \"id\": \"wordcount-implement\",\n      \"title\": \"Implement wordcount.js\",\n      \"description\": \"Create src/wordcount.js exporting countWords(str) and topWords(str, limit) functions that satisfy the wordcount test suite.\",\n      \"fileScope\": [\"src/wordcount.js\"],\n      \"referenceFiles\": [\"test/wordcount.test.js\"],\n      \"verify\": [\"node\", \"--test\", \"test/wordcount.test.js\"],\n      \"acceptance\": [\n        \"countWords counts whitespace-separated words correctly\",\n        \"topWords returns most frequent words lower-cased, ties broken alphabetically\",\n        \"topWords respects limit and returns empty list for no words\"\n      ]\n    }\n  ]\n}"
+      }
+    },
+    {
+      "seq": 7,
+      "id": "LVR-f2102fb1-7",
+      "missionId": "LVR-f2102fb1",
+      "type": "mission.started",
+      "at": "2026-09-05T15:34:26.008Z",
+      "elapsedMs": 1184,
+      "message": "Mission started: Implement src/ so that the whole test suite in test/ passes: the tests import src/greet.js, src/slug.js and src/wordcoun",
+      "data": {
+        "tasks": 3,
+        "budgetUsd": 0,
+        "budgetHard": true,
+        "privacy": "prefer-local",
+        "qualityTarget": 0.95
+      }
+    },
+    {
+      "seq": 8,
+      "id": "LVR-f2102fb1-8",
+      "missionId": "LVR-f2102fb1",
+      "type": "task.ready",
+      "at": "2026-09-05T15:34:26.686Z",
+      "elapsedMs": 1862,
+      "taskId": "greet-implement",
+      "message": "Task ready: Implement greet.js"
+    },
+    {
+      "seq": 9,
+      "id": "LVR-f2102fb1-9",
+      "missionId": "LVR-f2102fb1",
+      "type": "task.ready",
+      "at": "2026-09-05T15:34:26.687Z",
+      "elapsedMs": 1863,
+      "taskId": "slug-implement",
+      "message": "Task ready: Implement slug.js"
+    },
+    {
+      "seq": 10,
+      "id": "LVR-f2102fb1-10",
+      "missionId": "LVR-f2102fb1",
+      "type": "task.ready",
+      "at": "2026-09-05T15:34:26.687Z",
+      "elapsedMs": 1863,
+      "taskId": "wordcount-implement",
+      "message": "Task ready: Implement wordcount.js"
+    },
+    {
+      "seq": 11,
+      "id": "LVR-f2102fb1-11",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.started",
+      "at": "2026-09-05T15:34:26.701Z",
+      "elapsedMs": 1877,
+      "taskId": "slug-implement",
+      "message": "Auction opened for \"Implement slug.js\"",
+      "data": {
+        "requires": [
+          "code",
+          "backend"
+        ],
+        "contextTokens": 266
+      }
+    },
+    {
+      "seq": 12,
+      "id": "LVR-f2102fb1-12",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:34:26.704Z",
+      "elapsedMs": 1880,
+      "taskId": "slug-implement",
+      "message": "MiniMax M2.7 via OpenRouter: utility 0.767 (6 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "eligible": true,
+        "utility": 0.7667101394923395
+      }
+    },
+    {
+      "seq": 13,
+      "id": "LVR-f2102fb1-13",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:34:26.704Z",
+      "elapsedMs": 1880,
+      "taskId": "slug-implement",
+      "message": "MiniMax M3 via OpenRouter: utility 0.733 (5 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "eligible": true,
+        "utility": 0.7328234926982011
+      }
+    },
+    {
+      "seq": 14,
+      "id": "LVR-f2102fb1-14",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:34:26.704Z",
+      "elapsedMs": 1880,
+      "taskId": "slug-implement",
+      "message": "MiniMax M3 via NVIDIA: utility 0.701 (3 prior jobs)",
+      "data": {
+        "modelKey": "pool:nvidia/minimaxai/minimax-m3",
+        "eligible": true,
+        "utility": 0.7010571428571429
+      }
+    },
+    {
+      "seq": 15,
+      "id": "LVR-f2102fb1-15",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:34:26.704Z",
+      "elapsedMs": 1880,
+      "taskId": "slug-implement",
+      "message": "qwen2.5-coder:3b: utility 0.668 (20 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen2.5-coder:3b",
+        "eligible": true,
+        "utility": 0.6684960199004976
+      }
+    },
+    {
+      "seq": 16,
+      "id": "LVR-f2102fb1-16",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:34:26.704Z",
+      "elapsedMs": 1880,
+      "taskId": "slug-implement",
+      "message": "kodro-tutor: utility 0.640 (21 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "eligible": true,
+        "utility": 0.6404154851078397
+      }
+    },
+    {
+      "seq": 17,
+      "id": "LVR-f2102fb1-17",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:34:26.704Z",
+      "elapsedMs": 1880,
+      "taskId": "slug-implement",
+      "message": "kodro-fast: utility 0.637 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-fast:latest",
+        "eligible": true,
+        "utility": 0.637080784822442
+      }
+    },
+    {
+      "seq": 18,
+      "id": "LVR-f2102fb1-18",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.completed",
+      "at": "2026-09-05T15:34:26.704Z",
+      "elapsedMs": 1880,
+      "taskId": "slug-implement",
+      "message": "Winner: MiniMax M2.7 via OpenRouter · 100% task fit · 75% verified success over 6 prior jobs · free route, no spend"
+    },
+    {
+      "seq": 19,
+      "id": "LVR-f2102fb1-19",
+      "missionId": "LVR-f2102fb1",
+      "type": "worker.hired",
+      "at": "2026-09-05T15:34:26.704Z",
+      "elapsedMs": 1880,
+      "taskId": "slug-implement",
+      "workerRunId": "wr_2da106b1",
+      "message": "Hired MiniMax M2.7 via OpenRouter as Backend Engineer",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "costClass": "free"
+      }
+    },
+    {
+      "seq": 20,
+      "id": "LVR-f2102fb1-20",
+      "missionId": "LVR-f2102fb1",
+      "type": "worker.started",
+      "at": "2026-09-05T15:34:26.705Z",
+      "elapsedMs": 1881,
+      "taskId": "slug-implement",
+      "workerRunId": "wr_2da106b1",
+      "message": "MiniMax M2.7 via OpenRouter started work",
+      "data": {
+        "contextTokens": 266,
+        "availableRepoTokens": 639,
+        "contextReductionPct": 58,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 21,
+      "id": "LVR-f2102fb1-21",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.started",
+      "at": "2026-09-05T15:34:26.707Z",
+      "elapsedMs": 1883,
+      "taskId": "greet-implement",
+      "message": "Auction opened for \"Implement greet.js\"",
+      "data": {
+        "requires": [
+          "code",
+          "backend"
+        ],
+        "contextTokens": 245
+      }
+    },
+    {
+      "seq": 22,
+      "id": "LVR-f2102fb1-22",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:34:26.707Z",
+      "elapsedMs": 1883,
+      "taskId": "greet-implement",
+      "message": "MiniMax M2.7 via OpenRouter: utility 0.767 (6 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "eligible": true,
+        "utility": 0.7667101394923395
+      }
+    },
+    {
+      "seq": 23,
+      "id": "LVR-f2102fb1-23",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:34:26.707Z",
+      "elapsedMs": 1883,
+      "taskId": "greet-implement",
+      "message": "MiniMax M3 via OpenRouter: utility 0.733 (5 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "eligible": true,
+        "utility": 0.7328234926982011
+      }
+    },
+    {
+      "seq": 24,
+      "id": "LVR-f2102fb1-24",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:34:26.707Z",
+      "elapsedMs": 1883,
+      "taskId": "greet-implement",
+      "message": "MiniMax M3 via NVIDIA: utility 0.701 (3 prior jobs)",
+      "data": {
+        "modelKey": "pool:nvidia/minimaxai/minimax-m3",
+        "eligible": true,
+        "utility": 0.7010571428571429
+      }
+    },
+    {
+      "seq": 25,
+      "id": "LVR-f2102fb1-25",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:34:26.707Z",
+      "elapsedMs": 1883,
+      "taskId": "greet-implement",
+      "message": "qwen2.5-coder:3b: utility 0.668 (20 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen2.5-coder:3b",
+        "eligible": true,
+        "utility": 0.6684960199004976
+      }
+    },
+    {
+      "seq": 26,
+      "id": "LVR-f2102fb1-26",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:34:26.707Z",
+      "elapsedMs": 1883,
+      "taskId": "greet-implement",
+      "message": "kodro-tutor: utility 0.640 (21 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "eligible": true,
+        "utility": 0.6404154851078397
+      }
+    },
+    {
+      "seq": 27,
+      "id": "LVR-f2102fb1-27",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:34:26.708Z",
+      "elapsedMs": 1884,
+      "taskId": "greet-implement",
+      "message": "kodro-fast: utility 0.637 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-fast:latest",
+        "eligible": true,
+        "utility": 0.637080784822442
+      }
+    },
+    {
+      "seq": 28,
+      "id": "LVR-f2102fb1-28",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.completed",
+      "at": "2026-09-05T15:34:26.708Z",
+      "elapsedMs": 1884,
+      "taskId": "greet-implement",
+      "message": "Winner: MiniMax M2.7 via OpenRouter · 100% task fit · 75% verified success over 6 prior jobs · free route, no spend"
+    },
+    {
+      "seq": 29,
+      "id": "LVR-f2102fb1-29",
+      "missionId": "LVR-f2102fb1",
+      "type": "worker.hired",
+      "at": "2026-09-05T15:34:26.708Z",
+      "elapsedMs": 1884,
+      "taskId": "greet-implement",
+      "workerRunId": "wr_c177392e",
+      "message": "Hired MiniMax M2.7 via OpenRouter as Backend Engineer",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "costClass": "free"
+      }
+    },
+    {
+      "seq": 30,
+      "id": "LVR-f2102fb1-30",
+      "missionId": "LVR-f2102fb1",
+      "type": "worker.started",
+      "at": "2026-09-05T15:34:26.708Z",
+      "elapsedMs": 1884,
+      "taskId": "greet-implement",
+      "workerRunId": "wr_c177392e",
+      "message": "MiniMax M2.7 via OpenRouter started work",
+      "data": {
+        "contextTokens": 245,
+        "availableRepoTokens": 639,
+        "contextReductionPct": 62,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 31,
+      "id": "LVR-f2102fb1-31",
+      "missionId": "LVR-f2102fb1",
+      "type": "worker.progress",
+      "at": "2026-09-05T15:34:56.140Z",
+      "elapsedMs": 31316,
+      "taskId": "greet-implement",
+      "workerRunId": "wr_c177392e",
+      "message": "MiniMax M2.7 via OpenRouter wrote 1 file(s)",
+      "data": {
+        "files": [
+          "src/greet.js"
+        ]
+      }
+    },
+    {
+      "seq": 32,
+      "id": "LVR-f2102fb1-32",
+      "missionId": "LVR-f2102fb1",
+      "type": "verification.started",
+      "at": "2026-09-05T15:34:56.140Z",
+      "elapsedMs": 31316,
+      "taskId": "greet-implement",
+      "workerRunId": "wr_c177392e",
+      "message": "Verifying \"Implement greet.js\""
+    },
+    {
+      "seq": 33,
+      "id": "LVR-f2102fb1-33",
+      "missionId": "LVR-f2102fb1",
+      "type": "proof.check",
+      "at": "2026-09-05T15:35:05.207Z",
+      "elapsedMs": 40383,
+      "taskId": "greet-implement",
+      "workerRunId": "wr_c177392e",
+      "message": "src/greet.js exists: PASS: src/greet.js exists",
+      "data": {
+        "checkId": "exists-0",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 34,
+      "id": "LVR-f2102fb1-34",
+      "missionId": "LVR-f2102fb1",
+      "type": "proof.check",
+      "at": "2026-09-05T15:35:05.207Z",
+      "elapsedMs": 40383,
+      "taskId": "greet-implement",
+      "workerRunId": "wr_c177392e",
+      "message": "test/greet.test.js pass: PASS: ℹ duration_ms 7736.7432",
+      "data": {
+        "checkId": "suite",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 35,
+      "id": "LVR-f2102fb1-35",
+      "missionId": "LVR-f2102fb1",
+      "type": "verification.passed",
+      "at": "2026-09-05T15:35:05.208Z",
+      "elapsedMs": 40384,
+      "taskId": "greet-implement",
+      "workerRunId": "wr_c177392e",
+      "message": "\"Implement greet.js\" verified, quality 100",
+      "data": {
+        "proofId": "pf_d1abcbcf",
+        "quality": 100
+      }
+    },
+    {
+      "seq": 36,
+      "id": "LVR-f2102fb1-36",
+      "missionId": "LVR-f2102fb1",
+      "type": "task.completed",
+      "at": "2026-09-05T15:35:05.208Z",
+      "elapsedMs": 40384,
+      "taskId": "greet-implement",
+      "workerRunId": "wr_c177392e",
+      "message": "Task completed: Implement greet.js"
+    },
+    {
+      "seq": 37,
+      "id": "LVR-f2102fb1-37",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.started",
+      "at": "2026-09-05T15:35:05.213Z",
+      "elapsedMs": 40389,
+      "taskId": "wordcount-implement",
+      "message": "Auction opened for \"Implement wordcount.js\"",
+      "data": {
+        "requires": [
+          "code",
+          "backend"
+        ],
+        "contextTokens": 288
+      }
+    },
+    {
+      "seq": 38,
+      "id": "LVR-f2102fb1-38",
+      "missionId": "LVR-f2102fb1",
+      "type": "worker.progress",
+      "at": "2026-09-05T15:35:09.939Z",
+      "elapsedMs": 45115,
+      "taskId": "slug-implement",
+      "workerRunId": "wr_2da106b1",
+      "message": "MiniMax M2.7 via OpenRouter wrote 1 file(s)",
+      "data": {
+        "files": [
+          "src/slug.js"
+        ]
+      }
+    },
+    {
+      "seq": 39,
+      "id": "LVR-f2102fb1-39",
+      "missionId": "LVR-f2102fb1",
+      "type": "verification.started",
+      "at": "2026-09-05T15:35:09.939Z",
+      "elapsedMs": 45115,
+      "taskId": "slug-implement",
+      "workerRunId": "wr_2da106b1",
+      "message": "Verifying \"Implement slug.js\""
+    },
+    {
+      "seq": 40,
+      "id": "LVR-f2102fb1-40",
+      "missionId": "LVR-f2102fb1",
+      "type": "proof.check",
+      "at": "2026-09-05T15:35:10.104Z",
+      "elapsedMs": 45280,
+      "taskId": "slug-implement",
+      "workerRunId": "wr_2da106b1",
+      "message": "src/slug.js exists: PASS: src/slug.js exists",
+      "data": {
+        "checkId": "exists-0",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 41,
+      "id": "LVR-f2102fb1-41",
+      "missionId": "LVR-f2102fb1",
+      "type": "proof.check",
+      "at": "2026-09-05T15:35:10.104Z",
+      "elapsedMs": 45280,
+      "taskId": "slug-implement",
+      "workerRunId": "wr_2da106b1",
+      "message": "test/slug.test.js pass: PASS: ℹ duration_ms 81.3594",
+      "data": {
+        "checkId": "suite",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 42,
+      "id": "LVR-f2102fb1-42",
+      "missionId": "LVR-f2102fb1",
+      "type": "verification.passed",
+      "at": "2026-09-05T15:35:10.105Z",
+      "elapsedMs": 45281,
+      "taskId": "slug-implement",
+      "workerRunId": "wr_2da106b1",
+      "message": "\"Implement slug.js\" verified, quality 100",
+      "data": {
+        "proofId": "pf_083244f4",
+        "quality": 100
+      }
+    },
+    {
+      "seq": 43,
+      "id": "LVR-f2102fb1-43",
+      "missionId": "LVR-f2102fb1",
+      "type": "task.completed",
+      "at": "2026-09-05T15:35:10.105Z",
+      "elapsedMs": 45281,
+      "taskId": "slug-implement",
+      "workerRunId": "wr_2da106b1",
+      "message": "Task completed: Implement slug.js"
+    },
+    {
+      "seq": 44,
+      "id": "LVR-f2102fb1-44",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:36:03.963Z",
+      "elapsedMs": 99139,
+      "taskId": "wordcount-implement",
+      "message": "MiniMax M2.7 via OpenRouter: utility 0.777 (8 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "eligible": true,
+        "utility": 0.777365224730956
+      }
+    },
+    {
+      "seq": 45,
+      "id": "LVR-f2102fb1-45",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:36:03.964Z",
+      "elapsedMs": 99140,
+      "taskId": "wordcount-implement",
+      "message": "MiniMax M3 via OpenRouter: utility 0.733 (5 prior jobs)",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m3:free",
+        "eligible": true,
+        "utility": 0.7328234926982011
+      }
+    },
+    {
+      "seq": 46,
+      "id": "LVR-f2102fb1-46",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:36:03.964Z",
+      "elapsedMs": 99140,
+      "taskId": "wordcount-implement",
+      "message": "MiniMax M3 via NVIDIA: utility 0.701 (3 prior jobs)",
+      "data": {
+        "modelKey": "pool:nvidia/minimaxai/minimax-m3",
+        "eligible": true,
+        "utility": 0.7010571428571429
+      }
+    },
+    {
+      "seq": 47,
+      "id": "LVR-f2102fb1-47",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:36:03.964Z",
+      "elapsedMs": 99140,
+      "taskId": "wordcount-implement",
+      "message": "qwen2.5-coder:3b: utility 0.668 (20 prior jobs)",
+      "data": {
+        "modelKey": "ollama:qwen2.5-coder:3b",
+        "eligible": true,
+        "utility": 0.6684960199004976
+      }
+    },
+    {
+      "seq": 48,
+      "id": "LVR-f2102fb1-48",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:36:03.964Z",
+      "elapsedMs": 99140,
+      "taskId": "wordcount-implement",
+      "message": "kodro-tutor: utility 0.640 (21 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-tutor:latest",
+        "eligible": true,
+        "utility": 0.6404154851078397
+      }
+    },
+    {
+      "seq": 49,
+      "id": "LVR-f2102fb1-49",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.candidate",
+      "at": "2026-09-05T15:36:03.964Z",
+      "elapsedMs": 99140,
+      "taskId": "wordcount-implement",
+      "message": "kodro-fast: utility 0.637 (3 prior jobs)",
+      "data": {
+        "modelKey": "ollama:kodro-fast:latest",
+        "eligible": true,
+        "utility": 0.637080784822442
+      }
+    },
+    {
+      "seq": 50,
+      "id": "LVR-f2102fb1-50",
+      "missionId": "LVR-f2102fb1",
+      "type": "auction.completed",
+      "at": "2026-09-05T15:36:03.964Z",
+      "elapsedMs": 99140,
+      "taskId": "wordcount-implement",
+      "message": "Winner: MiniMax M2.7 via OpenRouter · 100% task fit · 79% verified success over 8 prior jobs · free route, no spend"
+    },
+    {
+      "seq": 51,
+      "id": "LVR-f2102fb1-51",
+      "missionId": "LVR-f2102fb1",
+      "type": "worker.hired",
+      "at": "2026-09-05T15:36:03.964Z",
+      "elapsedMs": 99140,
+      "taskId": "wordcount-implement",
+      "workerRunId": "wr_93f3036f",
+      "message": "Hired MiniMax M2.7 via OpenRouter as Backend Engineer",
+      "data": {
+        "modelKey": "pool:openrouter/minimax/minimax-m2.7:free",
+        "costClass": "free"
+      }
+    },
+    {
+      "seq": 52,
+      "id": "LVR-f2102fb1-52",
+      "missionId": "LVR-f2102fb1",
+      "type": "worker.started",
+      "at": "2026-09-05T15:36:03.964Z",
+      "elapsedMs": 99140,
+      "taskId": "wordcount-implement",
+      "workerRunId": "wr_93f3036f",
+      "message": "MiniMax M2.7 via OpenRouter started work",
+      "data": {
+        "contextTokens": 288,
+        "availableRepoTokens": 823,
+        "contextReductionPct": 65,
+        "via": "rocketride-pipeline"
+      }
+    },
+    {
+      "seq": 53,
+      "id": "LVR-f2102fb1-53",
+      "missionId": "LVR-f2102fb1",
+      "type": "worker.progress",
+      "at": "2026-09-05T15:36:40.960Z",
+      "elapsedMs": 136136,
+      "taskId": "wordcount-implement",
+      "workerRunId": "wr_93f3036f",
+      "message": "MiniMax M2.7 via OpenRouter wrote 1 file(s)",
+      "data": {
+        "files": [
+          "src/wordcount.js"
+        ]
+      }
+    },
+    {
+      "seq": 54,
+      "id": "LVR-f2102fb1-54",
+      "missionId": "LVR-f2102fb1",
+      "type": "verification.started",
+      "at": "2026-09-05T15:36:40.960Z",
+      "elapsedMs": 136136,
+      "taskId": "wordcount-implement",
+      "workerRunId": "wr_93f3036f",
+      "message": "Verifying \"Implement wordcount.js\""
+    },
+    {
+      "seq": 55,
+      "id": "LVR-f2102fb1-55",
+      "missionId": "LVR-f2102fb1",
+      "type": "proof.check",
+      "at": "2026-09-05T15:36:41.203Z",
+      "elapsedMs": 136379,
+      "taskId": "wordcount-implement",
+      "workerRunId": "wr_93f3036f",
+      "message": "src/wordcount.js exists: PASS: src/wordcount.js exists",
+      "data": {
+        "checkId": "exists-0",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 56,
+      "id": "LVR-f2102fb1-56",
+      "missionId": "LVR-f2102fb1",
+      "type": "proof.check",
+      "at": "2026-09-05T15:36:41.203Z",
+      "elapsedMs": 136379,
+      "taskId": "wordcount-implement",
+      "workerRunId": "wr_93f3036f",
+      "message": "test/wordcount.test.js pass: PASS: ℹ duration_ms 135.5661",
+      "data": {
+        "checkId": "suite",
+        "status": "pass"
+      }
+    },
+    {
+      "seq": 57,
+      "id": "LVR-f2102fb1-57",
+      "missionId": "LVR-f2102fb1",
+      "type": "verification.passed",
+      "at": "2026-09-05T15:36:41.203Z",
+      "elapsedMs": 136379,
+      "taskId": "wordcount-implement",
+      "workerRunId": "wr_93f3036f",
+      "message": "\"Implement wordcount.js\" verified, quality 100",
+      "data": {
+        "proofId": "pf_dc328a86",
+        "quality": 100
+      }
+    },
+    {
+      "seq": 58,
+      "id": "LVR-f2102fb1-58",
+      "missionId": "LVR-f2102fb1",
+      "type": "task.completed",
+      "at": "2026-09-05T15:36:41.203Z",
+      "elapsedMs": 136379,
+      "taskId": "wordcount-implement",
+      "workerRunId": "wr_93f3036f",
+      "message": "Task completed: Implement wordcount.js"
+    },
+    {
+      "seq": 59,
+      "id": "LVR-f2102fb1-59",
+      "missionId": "LVR-f2102fb1",
+      "type": "mission.completed",
+      "at": "2026-09-05T15:36:41.203Z",
+      "elapsedMs": 136379,
+      "message": "Mission verified: 3/3 tasks passed",
+      "data": {
+        "passed": 3,
+        "failed": 0,
+        "paidSpendUsd": 0,
+        "ledger": {
+          "maxUsd": 0,
+          "hard": true,
+          "reservedUsd": 0,
+          "settledUsd": 0,
+          "freeCalls": 3,
+          "paidCalls": 0,
+          "localCalls": 0,
+          "hostCalls": 0,
+          "estimatedFrontierEquivalentUsd": 0.013781999999999999,
+          "blockedAttempts": 0,
+          "overshot": false
+        }
+      }
+    }
+  ],
+  "finalSuiteExitCode": 0
+}
