@@ -336,7 +336,8 @@ export async function planWithModel(opts: {
   const request = {
     system: systemPrompt(),
     user: userPrompt(opts.goal, digest),
-    maxOutputTokens: 2000,
+    // A plan of six tasks with real descriptions runs past two thousand tokens.
+    maxOutputTokens: 4000,
     temperature: 0.2,
     timeoutMs: ATTEMPT_TIMEOUT_MS,
   };
@@ -378,6 +379,15 @@ export async function planWithModel(opts: {
       tasks = parseTaskPlan(text, opts.spec, (task) => checksForTask(task, digest));
     } catch (err) {
       if (err instanceof PlanRejectedError) {
+        // An answer that is not JSON at all (truncated, or prose around a broken
+        // object) is not a plan the compiler judged; it is a model that failed
+        // to answer. The next candidate gets the same question. A well-formed
+        // plan the compiler rejects is final: the planner understood the task
+        // and proposed something that cannot be run.
+        if (/not valid JSON|no JSON object/i.test(err.message)) {
+          skipped.push(`${model.displayName}: ${err.message.slice(0, 140)}`);
+          continue;
+        }
         throw new PlanRejectedError(`${model.displayName} proposed a plan the compiler rejected: ${err.message}`, text);
       }
       throw err;

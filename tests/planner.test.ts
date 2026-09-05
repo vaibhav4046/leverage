@@ -268,6 +268,41 @@ describe('ProviderRegistry keeps a known catalogue through a failed probe', () =
   });
 });
 
+describe('planWithModel moves on from an answer that is not JSON', () => {
+  it('takes the next candidate plan and records the malformed one as skipped', async () => {
+    const { ProviderRegistry } = await import('../src/providers/registry');
+    const { compileMissionSpec } = await import('../src/core/compiler');
+    const { planWithModel } = await import('../src/server/planner');
+    const root = fs.mkdtempSync(path.join(os.tmpdir(), 'lvr-plan-'));
+    fs.mkdirSync(path.join(root, 'test'));
+    fs.writeFileSync(path.join(root, 'package.json'), JSON.stringify({ name: 'x', scripts: { test: 'node --test test/*.test.js' } }));
+    fs.writeFileSync(path.join(root, 'test', 'greet.test.js'), "const test = require('node:test'); test('x', () => {});\n");
+    const plan = JSON.stringify({
+      tasks: [{ id: 'greet', title: 'Implement greet', description: 'write src/greet.js', category: 'backend', dependencies: [], fileScope: ['src/greet.js'], referenceFiles: ['test/greet.test.js'], verify: { argv: ['node', '--test', 'test/greet.test.js'], label: 'greet passes' }, acceptance: ['greet passes'] }],
+    });
+    const adapter = (id: string, text: string) => ({
+      providerId: id,
+      costClass: 'free',
+      async health() { return { status: 'HEALTHY', checkedAt: new Date().toISOString() }; },
+      async discoverModels() {
+        return [{ key: `${id}:m`, providerId: id, modelId: 'm', displayName: id, costClass: 'free', pricing: { inputPerMTok: 0, outputPerMTok: 0 }, contextTokens: 8000, capabilities: ['code', 'reasoning'], supportsTools: false }];
+      },
+      estimate: () => ({ estimatedPromptTokens: 0, estimatedCompletionTokens: 0, estimatedCostUsd: 0 }),
+      invoke: async () => ({ text, durationMs: 1 }),
+      classifyError: () => ({ type: 'UNKNOWN', message: '', retryable: false }),
+    });
+    const registry = new ProviderRegistry();
+    registry.register(adapter('broken', 'Here is the plan: {"tasks": [{"id": "greet", "title": "Imp') as never, 'broken');
+    registry.register(adapter('good', plan) as never, 'good');
+    await registry.sweep(true);
+    const spec = compileMissionSpec({ goal: 'make the tests pass. Budget: $0.', workspaceId: 'ws', createdBy: 'u' });
+    const out = await planWithModel({ spec, goal: spec.goal, repositoryRoot: root, registry });
+    expect(out.tasks.map((t) => t.id)).toEqual(['greet']);
+    expect(out.planner.displayName).toBe('good');
+    expect(out.planner.skipped.join(' ')).toMatch(/broken/);
+  });
+});
+
 describe('failureExcerpt keeps the assertion message', () => {
   it('carries the failing input named in an AssertionError line', async () => {
     const { failureExcerpt } = await import('../src/core/verify');
