@@ -2,6 +2,8 @@ import { getExecutor, getRegistry } from '@/server/missions';
 import { Page, PageHead, Section, Pill } from '@/components/app/shell';
 import { IconLocal, IconCloud, IconHost, IconProviders, IconShield } from '@/components/icons';
 
+export const metadata = { title: 'Providers · Leverage' };
+
 export const dynamic = 'force-dynamic';
 
 /** One glyph per kind of supply, so the grid is scannable without reading labels. */

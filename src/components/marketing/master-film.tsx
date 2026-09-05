@@ -89,7 +89,7 @@ export function MasterFilm({
                   <IconPlay size={26} />
                 </span>
                 <span
-                  className="mono absolute bottom-5 left-5 whitespace-nowrap rounded-full px-3 py-1.5 text-[11px] uppercase tracking-[0.08em] text-[var(--color-mist)]"
+                  className="mono absolute left-3 top-3 whitespace-nowrap rounded-full px-3 py-1.5 text-[11px] uppercase tracking-[0.08em] text-[var(--color-mist)] sm:bottom-5 sm:left-5 sm:top-auto"
                   style={{ background: 'rgba(14,17,27,0.72)' }}
                 >
                   Sound on · {length}

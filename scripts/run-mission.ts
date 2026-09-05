@@ -175,9 +175,12 @@ async function main() {
   console.log(
     `  est. frontier-equiv $${snapshot.usage.estimatedFrontierEquivalentUsd.toFixed(4)} (estimate, see BENCHMARKS.md)`,
   );
-  if (creditsBefore && creditsAfter) {
+  if (state.rocketRideCredits) {
+    const c = state.rocketRideCredits;
+    console.log(`  rocketride credits  ${c.before} -> ${c.after} (used ${c.used}, recorded in usage.rocketRideCredits)`);
+  } else if (creditsBefore && creditsAfter) {
     console.log(
-      `  rocketride credits  ${creditsBefore.balance} -> ${creditsAfter.balance} (used ${(creditsBefore.balance - creditsAfter.balance).toFixed(2)})`,
+      `  rocketride credits  ${creditsBefore.balance} -> ${creditsAfter.balance} (used ${(creditsBefore.balance - creditsAfter.balance).toFixed(2)}, console only)`,
     );
   }
 

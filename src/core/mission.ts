@@ -145,6 +145,8 @@ export function snapshotMission(state: MissionState) {
       paidCalls: ledger.paidCalls,
       blockedPaidAttempts: ledger.blockedAttempts,
       estimatedFrontierEquivalentUsd: Number(ledger.estimatedFrontierEquivalentUsd.toFixed(4)),
+      // Present only when the run went through RocketRide and billing answered.
+      rocketRideCredits: state.rocketRideCredits,
     },
     events: state.events.all(),
   };

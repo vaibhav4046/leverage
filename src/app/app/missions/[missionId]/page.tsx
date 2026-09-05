@@ -6,6 +6,11 @@ import { MissionControl } from '@/components/mission/mission-control';
 
 export const dynamic = 'force-dynamic';
 
+export async function generateMetadata({ params }: { params: Promise<{ missionId: string }> }) {
+  const { missionId } = await params;
+  return { title: `Mission ${missionId} · Leverage` };
+}
+
 export default async function MissionPage({
   params,
 }: {

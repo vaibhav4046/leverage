@@ -2,6 +2,8 @@ import { getPageIdentity } from '@/auth/identity';
 import { AuthNotice } from '@/components/app/auth-notice';
 import { MissionComposer } from '@/components/app/mission-composer';
 
+export const metadata = { title: 'New mission · Leverage' };
+
 export const dynamic = 'force-dynamic';
 
 /**

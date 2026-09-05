@@ -4,6 +4,8 @@ import { SiteNav, SiteFooter } from '@/components/marketing/page-shell';
 import { Reveal } from '@/components/visual/motion';
 import type { MissionSnapshot } from '@/core/mission';
 
+export const metadata = { title: 'Demo · Leverage' };
+
 export const dynamic = 'force-dynamic';
 
 /**

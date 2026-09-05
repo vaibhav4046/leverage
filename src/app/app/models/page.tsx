@@ -3,6 +3,8 @@ import { loadRecordedWorkforce, countsByCostClass } from '@/server/recorded-work
 import { Page, PageHead, Table, Row, Cell, Pill, Stat, Empty } from '@/components/app/shell';
 import { IconModels, IconLocal, IconCloud, IconBudget, IconShield } from '@/components/icons';
 
+export const metadata = { title: 'Models · Leverage' };
+
 export const dynamic = 'force-dynamic';
 
 const COST_TONE = {

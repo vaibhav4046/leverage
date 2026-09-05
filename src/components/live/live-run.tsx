@@ -245,8 +245,25 @@ export function LiveRun({ enabled }: { enabled: boolean }) {
 
       {snapshot && (
         <div>
-          <div className="mono mb-3 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-            Your run, in the same view every recorded mission uses
+          <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <div className="mono text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
+              Your run, in the same view every recorded mission uses
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: 'application/json' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = `${snapshot.mission.id}.json`;
+                a.click();
+                URL.revokeObjectURL(a.href);
+              }}
+              className="mono text-[11.5px] text-[var(--color-frosted-lilac)] underline-offset-4 hover:underline"
+              title="This run lives in this tab; the deployment keeps no record of it. The file is the same shape as every recorded mission."
+            >
+              Save this run as JSON
+            </button>
           </div>
           <MissionControl initial={snapshot} readOnly readOnlyLabel="your run · view only" />
         </div>

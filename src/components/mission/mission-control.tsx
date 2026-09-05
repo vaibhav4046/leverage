@@ -106,7 +106,7 @@ export function MissionControl({
       </div>
 
       <div className="px-4 pb-4">
-        <EventTimeline events={events} />
+        <EventTimeline events={events} live={connected && !terminal} />
       </div>
 
       <div className="grid grid-cols-[minmax(0,1fr)] gap-4 px-4 pb-8 lg:grid-cols-2">
@@ -501,7 +501,7 @@ function WorkerBadge({ status }: { status: string }) {
 
 /* ----------------------------------------------------------------- timeline */
 
-function EventTimeline({ events }: { events: MissionEvent[] }) {
+function EventTimeline({ events, live }: { events: MissionEvent[]; live: boolean }) {
   const endRef = useRef<HTMLDivElement>(null);
   const mounted = useRef(false);
   useEffect(() => {
@@ -519,7 +519,7 @@ function EventTimeline({ events }: { events: MissionEvent[] }) {
   return (
     <section className="surface-card" aria-label="Execution timeline">
       <div className="mono border-b border-[var(--color-obsidian-edge)] px-5 py-3 text-[11px] uppercase tracking-[0.08em] text-[var(--color-ash)]">
-        Live execution · {events.length} events
+        {live ? 'Live execution' : 'Execution log'} · {events.length} events
       </div>
       <div className="max-h-[340px] overflow-y-auto px-5 py-3" role="log" aria-live="polite" aria-label="Execution log" tabIndex={0}>
         <ul className="space-y-1">
@@ -613,6 +613,12 @@ function UsagePanel({ snapshot }: { snapshot: MissionSnapshot }) {
       </div>
       <dl className="grid grid-cols-2 gap-4">
         <Usage label="Paid spend" value={`$${u.paidSpendUsd.toFixed(2)}`} accent />
+        {u.rocketRideCredits && (
+          <Usage
+            label="RocketRide credits"
+            value={`${u.rocketRideCredits.used} used · ${u.rocketRideCredits.before} to ${u.rocketRideCredits.after}`}
+          />
+        )}
         <Usage label="Blocked paid attempts" value={String(u.blockedPaidAttempts)} />
         <Usage label="Local calls" value={String(u.localCalls)} />
         <Usage label="Free cloud calls" value={String(u.freeCalls)} />

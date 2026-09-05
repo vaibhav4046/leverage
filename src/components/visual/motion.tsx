@@ -129,16 +129,20 @@ export function Counter({
 
     let raf = 0;
     const animate = () => {
+        // The figure is evidence: it must never read as anything but itself. The
+        // count-up used to reset to zero on mount, so a page whose argument is
+        // "check the number" showed a wrong number for a second. The value now
+        // stays put and only settles in opacity.
         const start = performance.now();
+        el.style.opacity = '0.35';
         const tick = (now: number) => {
           const t = Math.min(1, (now - start) / durationMs);
-          // Ease-out expo: fast start, long settle. Reads as a value arriving
-          // rather than a slot machine.
           const eased = t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-          setDisplay(value * eased);
+          el.style.opacity = String(0.35 + 0.65 * eased);
           if (t < 1) raf = requestAnimationFrame(tick);
+          else el.style.opacity = '';
         };
-        setDisplay(0);
+        setDisplay(value);
         raf = requestAnimationFrame(tick);
     };
 

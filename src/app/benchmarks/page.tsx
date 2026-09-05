@@ -356,10 +356,9 @@ export default async function BenchmarksPage() {
       </Prose>
 
       <Callout title="The probe is unstable between runs" tone="warn">
-        Run twice against the same models, minutes apart, the results disagreed:
-        <span className="mono"> qwen2.5-coder</span> went 2/2 then 1/2,
-        <span className="mono"> gemma3:4b</span> went 2/2 then 0/2,
-        <span className="mono"> kodro-fast</span> went 0/2 then 2/2. That is what small models on
+        Run twice against the same models, minutes apart, the results disagreed on three of
+        them, and the committed probe file is the later of the two runs (the earlier one was
+        overwritten, so only the disagreement, not its exact figures, is on record). That is what small models on
         free routes actually behave like, and it is the strongest argument for the architecture: a
         system that picks one model up front and trusts it is betting on a coin flip. Leverage
         assumes any worker may fail, verifies every result, and keeps the understanding when one

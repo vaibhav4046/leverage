@@ -5,6 +5,8 @@ import { AuthNotice } from '@/components/app/auth-notice';
 import { Page, PageHead, Table, Row, Cell, Pill, Empty, toneForStatus } from '@/components/app/shell';
 import { IconMissions, IconArrowRight } from '@/components/icons';
 
+export const metadata = { title: 'Missions · Leverage' };
+
 export const dynamic = 'force-dynamic';
 
 export default async function MissionsPage() {

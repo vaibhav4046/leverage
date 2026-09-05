@@ -13,7 +13,7 @@ executes; everything else is a recording, and every other mutating route answers
 |---|---|
 | A real mission, run while you watch | <https://useleverage.vercel.app/app/live> |
 | The recorded mission, event by event | <https://useleverage.vercel.app/app/missions/LVR-f8f72d56> |
-| The mission a model planned, not a committed plan | <https://useleverage.vercel.app/app/missions/LVR-f2102fb1> |
+| The mission a model planned, not a committed plan | <https://useleverage.vercel.app/app/missions/LVR-31eacf88> |
 | The handoff, scrubbable | the replay on the landing page, under "A worker fails. The work does not." |
 | What free models built, playable | <https://useleverage.vercel.app/demo> |
 | Every measured number and its methodology | <https://useleverage.vercel.app/benchmarks> |
@@ -163,20 +163,23 @@ There is also a whole mission that ran this way. `/app/missions/LVR-719a8c22` wa
 started through MCP with the local runtime stopped and privacy set to
 `cloud-allowed`: the auction had 13 hosted models to choose from, hired
 `pool:openrouter/minimax/minimax-m3:free` for all four tasks, every worker ran as
-a RocketRide pipeline through the hosted pool, all four passed verification, and
-the RocketRide balance dropped by 13.6 credits. $0.00 paid. 84 seconds.
+a RocketRide pipeline through the hosted pool, all four passed verification. $0.00
+paid. 84 seconds. (That run's credit cost was printed to a console and not kept; since
+then every run records `usage.rocketRideCredits`, read from billing before and after.)
 
-This is a single inference against the permanent hosted pool on 5 Sep 2026:
+This is a single inference against the permanent hosted pool, from
+`demo/evidence/rocketride-run.json` (captured 2026-09-05T16:50:20Z by
+`npm run verify:rocketride`):
 
 ```
 endpoint  https://staging.rocketride.ai
-pool      https://useleverage.vercel.app
-auth      ok (org df58d291...)
-credits   4628.4 / 5000
+pool      https://useleverage.vercel.app/api/v1/pool
+model     openrouter/minimax/minimax-m2.7:free
+credits   4188.6 / 5000 before, 4186.3 after
 answer    "READY"
-latency   67022ms
-engine    14 tokens
-consumed  14.40 credits
+latency   19356ms
+engine    1.9 tokens
+consumed  2.3 credits
 
 RocketRide execution path verified.
 ```
@@ -216,7 +219,7 @@ claude mcp add leverage -- node /abs/path/to/leverage/mcp/server.ts
 npm run verify
 ```
 
-81 tests. The ones that matter:
+84 tests. The ones that matter:
 
 - a hard budget cannot be overshot, including by concurrent reservations
 - a paid model is *ineligible* at `$0`, not merely out-ranked
@@ -249,5 +252,5 @@ npm run verify
   committed migrations but **has never been executed against a live database**. Both are in
   [BLOCKERS_REQUIRING_HUMAN.md](BLOCKERS_REQUIRING_HUMAN.md) with what is needed.
 - **Small local models fail often.** That is visible in the run rather than hidden: the
-  capability probe found 5 of 14 local models usable, and the failures are what the handoff
-  machinery exists for.
+  capability probe (`demo/proof/capability-probe.json`) found 8 of 22 models completing every
+  probe, one on one of two, and the failures are what the handoff machinery exists for.

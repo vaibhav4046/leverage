@@ -4090,7 +4090,7 @@
         "contextTokens": "[redacted]",
         "availableRepoTokens": "[redacted]",
         "contextReductionPct": 70,
-        "via": "rocketride-pipeline"
+        "via": "local-runtime"
       }
     },
     {
@@ -4240,7 +4240,7 @@
         "contextTokens": "[redacted]",
         "availableRepoTokens": "[redacted]",
         "contextReductionPct": 67,
-        "via": "rocketride-pipeline"
+        "via": "local-runtime"
       }
     },
     {
@@ -5361,7 +5361,7 @@
         "contextTokens": "[redacted]",
         "availableRepoTokens": "[redacted]",
         "contextReductionPct": 74,
-        "via": "rocketride-pipeline"
+        "via": "local-runtime"
       }
     },
     {
@@ -5473,5 +5473,13 @@
       }
     }
   ],
-  "finalSuiteExitCode": 0
+  "finalSuiteExitCode": 0,
+  "annotations": [
+    {
+      "at": "2026-09-05T18:20:00Z",
+      "field": "events[].data.via",
+      "changed": 3,
+      "note": "via stamps corrected on 2026-09-05: this run predates the executor rule that only free-class and paid-class workers run as RocketRide pipelines (local runtimes and host seats are invoked directly, since RocketRide cannot reach this machine); the stamp had been applied to every worker.started event when the field was introduced. No other field was changed."
+    }
+  ]
 }

@@ -1,6 +1,8 @@
 import { Page, PageHead } from '@/components/app/shell';
 import { LiveRun } from '@/components/live/live-run';
 
+export const metadata = { title: 'Live run · Leverage' };
+
 export const dynamic = 'force-dynamic';
 
 /** The one place on the public site where something actually runs. */

@@ -99,6 +99,12 @@ export interface MissionState {
   budget: BudgetGovernor;
   startedAt: number;
   completedAt?: number;
+  /**
+   * RocketRide's credit balance read from billing before the first worker and
+   * after the last, when the mission ran cloud-class workers as pipelines. The
+   * cost of a run is then a fact on the record, not a number in a console.
+   */
+  rocketRideCredits?: { before: number; after: number; used: number };
 }
 
 export class MissionScheduler {
@@ -133,6 +139,7 @@ export class MissionScheduler {
     validateDag(state.tasks);
 
     state.status = 'RUNNING';
+    const creditsBefore = this.opts.useRocketRide ? await this.readCredits() : null;
     state.events.emit('mission.started', `Mission started: ${state.spec.goal.slice(0, 120)}`, {
       data: {
         tasks: state.tasks.length,
@@ -235,7 +242,29 @@ export class MissionScheduler {
 
     await Promise.allSettled([...running]);
 
-    return await this.finish();
+    const finished = await this.finish();
+    if (creditsBefore !== null) {
+      const after = await this.readCredits();
+      if (after !== null) {
+        finished.rocketRideCredits = { before: creditsBefore, after, used: Number((creditsBefore - after).toFixed(2)) };
+        state.events.emit('worker.progress', `RocketRide credits: ${creditsBefore} before, ${after} after, ${finished.rocketRideCredits.used} used`, {
+          data: { rocketRideCredits: finished.rocketRideCredits },
+        });
+      }
+    }
+    return finished;
+  }
+
+  /** The RocketRide balance, or null when billing is unreachable or the executor is a stub. */
+  private async readCredits(): Promise<number | null> {
+    const exec = this.deps.executor as { credits?: () => Promise<{ balance: number } | null> };
+    if (typeof exec.credits !== 'function') return null;
+    try {
+      const c = await exec.credits();
+      return c ? c.balance : null;
+    } catch {
+      return null;
+    }
   }
 
   private async finish(): Promise<MissionState> {

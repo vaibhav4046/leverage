@@ -21,6 +21,8 @@ import {
   IconArrowRight,
 } from '@/components/icons';
 
+export const metadata = { title: 'Mission Control · Leverage' };
+
 export const dynamic = 'force-dynamic';
 
 export default async function AppOverview() {

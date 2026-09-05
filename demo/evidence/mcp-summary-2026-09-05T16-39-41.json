@@ -1,0 +1,24 @@
+{
+  "apiUrl": "http://127.0.0.1:3000",
+  "startedAt": "2026-09-05T16:39:41.376Z",
+  "server": {
+    "name": "leverage",
+    "version": "1.0.0"
+  },
+  "tools": [
+    "leverage_run",
+    "leverage_status",
+    "leverage_cancel",
+    "leverage_proof",
+    "leverage_models"
+  ],
+  "schemaProblems": [],
+  "modelsPreview": "{\n  \"models\": [\n    {\n      \"key\": \"ollama:samantha-v0.1:latest\",\n      \"displayName\": \"samantha-v0.1\",\n      \"provider\": \"ollama\",\n      \"costClass\": \"local\",\n      \"contextTokens\": 262144,\n      \"capabilities\": [\n        \"reasoning\",\n        \"tools\"\n      ],\n      \"supportsTools\": true,\n      \"health\": \"HEALTHY\",\n      \"reputation\": {\n        \"samples\": 2,\n        \"verifiedSuccesses\": 2,\n       ",
+  "missionId": "LVR-a7d9766a",
+  "runAdmittedMs": 124,
+  "polls": 75,
+  "finalStatus": "{\n  \"missionId\": \"LVR-a7d9766a\",\n  \"status\": \"COMPLETED\",\n  \"elapsedMs\": 332653,\n  \"tasks\": [\n    {\n      \"id\": \"src-greet\",\n      \"title\": \"Implement greet module\",\n      \"state\": \"PASSED\",\n      \"attempts\": 2\n    },\n    {\n      \"id\": \"src-slug\",\n      \"title\": \"Implement slugify module\",\n      \"state\": \"PASSED\",\n      \"attempts\": 3\n    },\n    {\n      \"id\": \"src-wordcount\",\n      \"title\": \"Implement wordcount module\",\n      \"state\": \"PASSED\",\n      \"attempts\": 1\n    }\n  ],\n  \"workers\": [\n    {\n      \"role\": \"Backend Engineer\",\n      \"model\": \"MiniMax M2.7 via OpenRouter\",\n      \"costClass\": \"",
+  "proofPreview": "{\n  \"missionId\": \"LVR-a7d9766a\",\n  \"status\": \"COMPLETED\",\n  \"checks\": [\n    {\n      \"taskId\": \"src-greet\",\n      \"label\": \"src/greet.js exists\",\n      \"status\": \"pass\",\n      \"detail\": \"src/greet.js exists\"\n    },\n    {\n      \"taskId\": \"src-greet\",\n      \"label\": \"test/greet.test.js pass\",\n      \"status\": \"pass\",\n      \"detail\": \"ℹ duration_ms 213.4711\"\n    },\n    {\n      \"taskId\": \"src-wordcount\",\n      \"label\": \"src/wordcount.js exists\",\n      \"status\": \"pass\",\n      \"detail\": \"src/wordcount.js exists\"\n    },\n    {\n      \"taskId\": \"src-wordcount\",\n      \"label\": \"test/wordcount.test.js pass\",\n      \"status\": \"pass\",\n      \"detail\": \"ℹ duration_ms 207.3851\"\n    },\n    {\n      \"taskId\": \"src-slug\",\n      \"label\": \"src/slug.js exists\",\n      \"status\": \"pass\",\n      \"detail\": \"src/slug.js ex",
+  "malformedRefused": true,
+  "finishedAt": "2026-09-05T16:45:18.533Z"
+}

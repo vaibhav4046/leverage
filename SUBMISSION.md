@@ -22,10 +22,12 @@ In the recorded canonical run, Leverage completed and verified 4 of 4 tasks, pas
 **$0.00** of paid inference. In a second recorded run, RocketRide executed 3 of the
 6 workers and they finished 3 of the 4 tasks, all verified. In a third, on the
 permanent hosted pool with no tunnel anywhere, RocketRide executed all 4 workers,
-all 4 tasks passed, 13.6 credits, $0.00, 84 seconds. In a fourth, on a fixture with
-no committed plan, a planner model (Nemotron 3 Super via NVIDIA) wrote the task graph
-from the goal and the repository in 26 seconds, every task was held to its own test
-file, and all 3 passed on the first attempt: 20.2 credits, $0.00, 136 seconds.
+all 4 tasks passed, $0.00, 84 seconds. In a fourth, on a fixture with
+no committed plan, a planner model (Nemotron 3 Nano 30B via NVIDIA) wrote the task graph
+from the goal and the repository in 24 seconds, every task was held to its own test
+file, all 3 passed on the first attempt, the whole suite was run once more and was green,
+$0.00 paid, and the 24.6 RocketRide credits it consumed are recorded in the run file
+itself (`usage.rocketRideCredits`).
 
 ---
 
@@ -70,7 +72,7 @@ hundred-percent model.
 | 60–90 | scrub to `worker.failed` → `checkpoint.created` → `handoff.started` → `worker.hired … resuming from cp_…` | the model failed; the work did not restart |
 | 90–120 | `/app/missions/LVR-bda3ba68` | RocketRide executed 3 of 6 workers · 3 of 4 tasks · all verified |
 | 120–140 | `/app/missions/LVR-719a8c22` | RocketRide executed 4 of 4 workers through the hosted pool · 4 of 4 verified · $0.00 |
-| 140–160 | `/app/missions/LVR-f2102fb1` | the plan itself written by a model from the goal and the repository · 3 of 3 verified, each by its own test file · the proposal is in the `mission.compiled` event |
+| 140–160 | `/app/missions/LVR-31eacf88` | the plan itself written by a model from the goal and the repository · 3 of 3 verified, each by its own test file, then the whole suite · the proposal is in the `mission.compiled` event · 24.6 RocketRide credits, recorded in the run |
 | 120–150 | `/benchmarks` | the control plane holding 100 tasks with 0 duplicate claims, 0 budget overshoots |
 
 Full path with commands: [JUDGE_GUIDE.md](JUDGE_GUIDE.md).
@@ -90,7 +92,7 @@ than a test suite. It is not cloud throughput and is never presented as such.
 
 A high-risk task enters `AWAITING_APPROVAL`. That branch pauses. Independent branches
 keep running. A read-only identity cannot approve. Asserted in `tests/invariants.test.ts`
-alongside the other 50 invariants: no task runs before every dependency passed, a hard
+alongside the other invariants in `tests/`: no task runs before every dependency passed, a hard
 budget cannot be overshot under concurrency, a credential never reaches the event log
 by key or by value shape, a path that escapes the repository is refused.
 
@@ -103,13 +105,15 @@ RocketRide pipelines, every task verified by the fixture's own tests, the finish
 snapshot rendered in the same view as every recorded run. It is bounded on purpose:
 fixed goal, one run per visitor every ten minutes, cancelled if you leave, stopped at
 four and a half minutes. Every other mutation answers 403. The first run of it on the
-deployed site: `LVR-783bade5`, 4/4 verified, 12.0 credits, 69 seconds.
+deployed site: `LVR-783bade5`, 4/4 verified, 12.0 credits (the SSE transcript in
+`demo/evidence/live-run-LVR-783bade5.sse` carries the balance before and after), 69 seconds.
 
 The hosted pool endpoint at `/api/v1/pool` forwards to OpenRouter and NVIDIA behind
 an access token and a 13-model allowlist in which every id answered a real completion
 (`demo/evidence/pool-sweep.json` is the sweep). `npm run verify:rocketride` ran
 against that permanent URL on 5 Sep 2026: a RocketRide pipeline on
-staging.rocketride.ai, `READY`, 14.40 credits. The endpoint refuses anything outside
+staging.rocketride.ai, `READY`, 2.3 credits, 19.4 seconds
+(`demo/evidence/rocketride-run.json`). The endpoint refuses anything outside
 the allowlist and never fabricates a completion, because a fabricated result here
 would end up inside a ProofPack.
 
@@ -140,4 +144,4 @@ claude mcp add leverage -- node /abs/path/to/leverage/mcp/server.ts
 
 > Use Leverage. Finish this application. Budget $0. Quality production.
 
-81 tests (63 invariants, 7 pool guards, 11 planner): `npm run test`. Full verification: `npm run verify`.
+84 tests (63 invariants, 7 pool guards, 14 planner and verification): `npm run test`. Full verification: `npm run verify`.

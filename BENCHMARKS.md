@@ -263,11 +263,13 @@ Measured from `billing.getCreditBalance`, not estimated:
 | Pipeline | Credits |
 |---|---|
 | `webhook -> response` (no model) | 0.4 |
-| `webhook -> llm_openai_api -> response`, one question | 2.0 – 2.5 |
-| Full 4-task benchmark mission | not recorded per mission |
+| `webhook -> llm_openai_api -> response`, one question | 2.3 (`demo/evidence/rocketride-run.json`) |
+| Live run of the 4-task benchmark on the deployed site | 12.0 (`demo/evidence/live-run-LVR-783bade5.sse`) |
+| Any mission run since 5 Sep | recorded in its own file as `usage.rocketRideCredits` |
 
-At that rate the 5,000-credit hackathon grant is roughly 160-340 full missions. Total
-consumed across all development and verification for this build: about 240 credits.
+Total consumed across all development, verification and the persona runs for this build
+is whatever `/api/v1/health` reports as granted minus balance at the time you read it;
+it is not restated here because it changes with every live run.
 
 ---
 

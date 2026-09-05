@@ -92,7 +92,7 @@ export default function HowItWorksPage() {
           <code className="mono">tests/invariants.test.ts</code> rather than merely intended.
         </p>
       </Prose>
-      <Code label="60 tests, run with npm run test">{`no task runs before every dependency has PASSED
+      <Code label="84 tests, run with npm run test">{`no task runs before every dependency has PASSED
 a failed dependency blocks permanently, it is not retried forever
 a hard budget cannot be overshot, including by concurrent reservations
 a paid model is INELIGIBLE at $0, not merely out-ranked

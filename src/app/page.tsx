@@ -493,7 +493,7 @@ export default async function Home() {
                   <HandoffCell
                     label="Context reduction"
                     value={`${handoff.reductionPct}%`}
-                    detail="measured, not estimated"
+                    detail="counted from the text, 3.6 characters per token"
                   />
                 </div>
               </div>
