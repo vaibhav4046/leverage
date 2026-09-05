@@ -52,6 +52,13 @@ const nextConfig: NextConfig = {
     return [{ source: '/(.*)', headers: securityHeaders }];
   },
   outputFileTracingRoot: __dirname,
+  // The tracer had been emitting the whole repository into every function, so
+  // the film renders and raw captures rode along and pushed the shared bundle
+  // past Vercel's size ceiling, which split it into more functions than the
+  // plan allows. None of these directories is read at request time.
+  outputFileTracingExcludes: {
+    '*': ['./motion/**', './public/**', './docs/**', './scripts/**', './.git/**', './benchmark/results/**'],
+  },
   outputFileTracingIncludes: {
     // Every route that reads the evidence gets the same list, on purpose: Vercel
     // groups routes with identical traces into one function, and the Hobby plan
