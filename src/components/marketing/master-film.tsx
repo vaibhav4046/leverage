@@ -19,10 +19,10 @@ import { IconPlay } from '@/components/icons';
 export function MasterFilm({
   src = '/motion/walkthrough.mp4',
   poster = '/motion/walkthrough-poster.jpg',
-  eyebrow = 'The film · 1:48 · narrated',
+  eyebrow = 'The film · 1:51 · narrated',
   title = 'Press the button. Then read the log.',
   lede = 'A real mission runs on the site while you watch, then the auction, the handoff and the supply, all on untouched footage of the live deployment. No number is spoken that is not on the site with its evidence.',
-  length = '1:48',
+  length = '1:51',
   sourceNote = 'motion/compositions/walkthrough.html',
 }: {
   src?: string;
