@@ -1,0 +1,24 @@
+{
+  "apiUrl": "http://127.0.0.1:3000",
+  "startedAt": "2026-09-05T03:57:23.633Z",
+  "server": {
+    "name": "leverage",
+    "version": "1.0.0"
+  },
+  "tools": [
+    "leverage_run",
+    "leverage_status",
+    "leverage_cancel",
+    "leverage_proof",
+    "leverage_models"
+  ],
+  "schemaProblems": [],
+  "modelsPreview": "leverage error: The operation was aborted due to timeout",
+  "missionId": "LVR-1d053443",
+  "runAdmittedMs": 2486,
+  "polls": 69,
+  "finalStatus": "{\n  \"missionId\": \"LVR-1d053443\",\n  \"status\": \"COMPLETED\",\n  \"elapsedMs\": 285257,\n  \"tasks\": [\n    {\n      \"id\": \"money\",\n      \"title\": \"Implement money helpers\",\n      \"state\": \"PASSED\",\n      \"attempts\": 1\n    },\n    {\n      \"id\": \"validate\",\n      \"title\": \"Implement receipt validation\",\n      \"state\": \"PASSED\",\n      \"attempts\": 1\n    },\n    {\n      \"id\": \"split\",\n      \"title\": \"Implement the split calculation\",\n      \"state\": \"PASSED\",\n      \"attempts\": 1\n    },\n    {\n      \"id\": \"index\",\n      \"title\": \"Implement the request handler\",\n      \"state\": \"PASSED\",\n      \"attempts\": 1\n    }\n ",
+  "proofPreview": "{\n  \"missionId\": \"LVR-1d053443\",\n  \"status\": \"COMPLETED\",\n  \"checks\": [\n    {\n      \"label\": \"src/validate.js exists\",\n      \"status\": \"pass\",\n      \"detail\": \"src/validate.js exists\"\n    },\n    {\n      \"label\": \"test/validate.test.js\",\n      \"status\": \"pass\",\n      \"detail\": \"\\u001b[34mℹ duration_ms 1086.909\\u001b[39m\"\n    },\n    {\n      \"label\": \"src/money.js exists\",\n      \"status\": \"pass\",\n      \"detail\": \"src/money.js exists\"\n    },\n    {\n      \"label\": \"test/money.test.js\",\n      \"status\": \"pass\",\n      \"detail\": \"\\u001b[34mℹ duration_ms 811.2885\\u001b[39m\"\n    },\n    {\n      \"label\": \"src/split.js exists\",\n      \"status\": \"pass\",\n      \"detail\": \"src/split.js exists\"\n    },\n    {\n      \"label\": \"test/split.test.js\",\n      \"status\": \"pass\",\n      \"detail\": \"\\u001b[34mℹ duration_ms 50",
+  "malformedRefused": true,
+  "finishedAt": "2026-09-05T04:02:41.273Z"
+}
