@@ -33,9 +33,32 @@ const LIVE_WORKSPACE = 'ws_live';
 const WALL_CLOCK_MS = 270_000;
 const COOLDOWN_MS = 10 * 60_000;
 const CREDIT_FLOOR = 1000;
-const GOAL =
-  'Finish the forge-app receipt splitting library so the whole existing test suite passes. ' +
-  'Do not modify any file under test/. Budget: $0. Quality: production.';
+
+/**
+ * Two fixtures a visitor may run. The benchmark runs its committed plan, so the
+ * run measures the workforce. The greeter has no committed plan: a planner model
+ * reads the repository and writes the task graph first, so the run shows the
+ * whole path from a goal to verified code, at the cost of a slower start.
+ */
+const FIXTURES = {
+  'forge-app': {
+    dir: 'benchmark/forge-app',
+    plan: 'fixture' as const,
+    goal:
+      'Finish the forge-app receipt splitting library so the whole existing test suite passes. ' +
+      'Do not modify any file under test/. Budget: $0. Quality: production.',
+    workspace: 'a fresh copy of benchmark/forge-app in this function',
+  },
+  greeter: {
+    dir: 'benchmark/greeter',
+    plan: 'model' as const,
+    goal:
+      'Implement src/ so that the whole test suite in test/ passes: the tests import src/greet.js, ' +
+      'src/slug.js and src/wordcount.js. Do not modify any file under test/. Budget: $0. Quality: production.',
+    workspace: 'a fresh copy of benchmark/greeter in this function, planned by a model',
+  },
+};
+type FixtureName = keyof typeof FIXTURES;
 
 const store = globalThis as unknown as {
   __leverageLive?: { running: boolean; lastByIp: Map<string, number> };
@@ -77,15 +100,20 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // The only thing a visitor chooses: which fixture. No text of theirs reaches a model.
+  const body = (await req.json().catch(() => ({}))) as { fixture?: unknown };
+  const fixtureName: FixtureName = body.fixture === 'greeter' ? 'greeter' : 'forge-app';
+  const fixture = FIXTURES[fixtureName];
+
   live.running = true;
   live.lastByIp.set(ip, Date.now());
 
   const work = path.join(os.tmpdir(), `lvr-live-${Math.random().toString(36).slice(2, 10)}`);
   let missionId: string;
   try {
-    await fs.cp(path.resolve('benchmark/forge-app'), work, { recursive: true });
+    await fs.cp(path.resolve(fixture.dir), work, { recursive: true });
     const created = await createMission({
-      goal: GOAL,
+      goal: fixture.goal,
       workspaceId: LIVE_WORKSPACE,
       userId: 'visitor',
       budgetMaxUsd: 0,
@@ -93,8 +121,7 @@ export async function POST(req: NextRequest) {
       privacy: 'cloud-allowed',
       maxWorkers: 2,
       repositoryRoot: work,
-      // The live run is the benchmark on a fresh copy, so its committed plan.
-      plan: 'fixture',
+      plan: fixture.plan,
     });
     missionId = created.mission.id;
   } catch (err) {
@@ -135,12 +162,17 @@ export async function POST(req: NextRequest) {
 
       send('live.started', {
         missionId,
+        fixture: fixtureName,
+        plan: fixture.plan,
         creditsBefore: before.balance,
         startedAt: new Date().toISOString(),
-        workspace: 'a fresh copy of benchmark/forge-app in this function',
+        workspace: fixture.workspace,
       });
 
       try {
+        // For a model-planned fixture the mission is still PLANNING here; the start
+        // is honoured the moment the compiler accepts the plan, and the loop below
+        // follows PLANNING, QUEUED and RUNNING to a terminal state.
         const started = await startMission(missionId, LIVE_WORKSPACE);
         if (!started.started) {
           send('live.error', { message: started.reason ?? 'could not start' });

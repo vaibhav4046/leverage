@@ -78,14 +78,19 @@ export function LiveRun({ enabled }: { enabled: boolean }) {
 
   useEffect(() => () => abortRef.current?.abort(), []);
 
-  const start = async () => {
+  const start = async (fixture: 'forge-app' | 'greeter' = 'forge-app') => {
     const controller = new AbortController();
     abortRef.current = controller;
     setPhase('running');
     setLive({ events: [], startedAt: Date.now() });
     let res: Response;
     try {
-      res = await fetch('/api/v1/live/run', { method: 'POST', signal: controller.signal });
+      res = await fetch('/api/v1/live/run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fixture }),
+        signal: controller.signal,
+      });
     } catch (err) {
       setLive((l) => ({ ...l, error: (err as Error).message }));
       setPhase('error');
@@ -168,26 +173,41 @@ export function LiveRun({ enabled }: { enabled: boolean }) {
     <div className="space-y-6">
       {phase === 'idle' && (
         <div className="glass p-6 md:p-8">
-          <button
-            type="button"
-            onClick={start}
-            disabled={!ready}
-            className="btn-primary mb-6 inline-flex items-center gap-2 disabled:cursor-wait disabled:opacity-70"
-          >
-            <IconPlay size={15} />
-            {ready ? 'Run a real mission now' : 'Loading the console…'}
-          </button>
+          <div className="mb-6 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => start('forge-app')}
+              disabled={!ready}
+              className="btn-primary inline-flex items-center gap-2 disabled:cursor-wait disabled:opacity-70"
+            >
+              <IconPlay size={15} />
+              {ready ? 'Run a real mission now' : 'Loading the console…'}
+            </button>
+            <button
+              type="button"
+              onClick={() => start('greeter')}
+              disabled={!ready}
+              className="btn-ghost inline-flex items-center gap-2 disabled:cursor-wait disabled:opacity-70"
+              title="The greeter fixture has no committed plan: a planner model writes the task graph first. Slower, usually three to four minutes."
+            >
+              Or let a model plan one first
+            </button>
+          </div>
           <p className="max-w-[52rem] text-[16px] font-light leading-relaxed text-[var(--color-mist)]">
-            Press the button and a mission starts on this deployment, now. The workspace is a fresh
-            copy of the fixture in this function&rsquo;s temp directory. Workers are hired from the
-            hosted pool by the auction and executed as RocketRide pipelines. Each task is verified by
-            the fixture&rsquo;s own tests before it can pass. Nothing is recorded or replayed; you are
-            watching the real event log as it is written.
+            Press the first button and the benchmark mission starts on this deployment, now, on
+            its committed plan. Press the second and a planner model first reads a repository
+            with no plan at all, writes the task graph, and the compiler validates it before
+            anyone is hired. Either way the workspace is a fresh copy of the fixture in this
+            function&rsquo;s temp directory, workers are hired from the hosted pool by the auction
+            and executed as RocketRide pipelines, and each task is verified by the fixture&rsquo;s
+            own tests before it can pass. Nothing is recorded or replayed; you are watching the
+            real event log as it is written.
           </p>
           <p className="mt-3 max-w-[52rem] text-[13px] leading-relaxed text-[var(--color-ash)]">
             Bounded on purpose: the goal is fixed, one run per visitor every ten minutes, one at a
-            time per instance, cancelled if you leave, and stopped at four and a half minutes. It
-            usually takes one to three.
+            time per instance, cancelled if you leave, and stopped at four and a half minutes. The
+            benchmark usually takes one to two minutes; the planned mission three to four, and if a
+            planner route is out of quota that day the log says which one and why.
           </p>
         </div>
       )}
