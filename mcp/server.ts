@@ -166,15 +166,19 @@ async function dispatch(name: string, args: Record<string, unknown>): Promise<un
           maxWorkers: args.parallelism ?? 2,
           repositoryRoot: args.repositoryRoot,
         }),
-      })) as { mission: { mission: { id: string } } };
+      })) as { mission: { mission: { id: string; status: string } } };
 
       const missionId = created.mission.mission.id;
       await api(`/api/v1/missions/${missionId}/start`, { method: 'POST', body: '{}' });
+      const status = created.mission.mission.status;
 
       return {
         missionId,
-        status: 'planning',
-        note: 'Mission admitted and started. Poll leverage_status; call leverage_proof when it completes.',
+        status,
+        note:
+          status === 'PLANNING'
+            ? 'Mission admitted; a planner model is writing the task graph from the repository and the mission starts as soon as the compiler accepts it. Poll leverage_status: PLANNING, then RUNNING, then COMPLETED or FAILED.'
+            : 'Mission admitted and started. Poll leverage_status; call leverage_proof when it completes.',
       };
     }
 

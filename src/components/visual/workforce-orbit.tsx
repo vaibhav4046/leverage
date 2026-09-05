@@ -72,6 +72,9 @@ export function WorkforceOrbit({
       resize();
       const w = canvas.width;
       const h = canvas.height;
+      // Hidden on phones (display: none) the canvas has no size; the ring radius
+      // would be 0 and every depth NaN, which the gradient API throws on.
+      if (!(w > 0 && h > 0)) return;
       const cx = w / 2;
       const cy = h / 2;
       const scale = Math.min(w, h);

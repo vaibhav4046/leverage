@@ -8,7 +8,6 @@ import { ReputationStore } from '../core/reputation';
 import { buildRegistry, ProviderRegistry } from '../providers/registry';
 import { FaultInjector, INJECTED_RATE_LIMIT } from '../core/faults';
 import { RocketRideExecutor } from '../rocketride/executor';
-import type { MissionTask } from '../core/types';
 import { buildFixturePlan } from './fixture-plan';
 import { announcePlan, planWithModel } from './planner';
 import { DEMO_WORKSPACE_ID } from '../auth/identity';
@@ -34,6 +33,8 @@ interface Entry {
   state: MissionState;
   scheduler?: MissionScheduler;
   running: boolean;
+  /** A start requested while the mission was still PLANNING. */
+  startWhenPlanned?: { injectFailure?: boolean };
 }
 
 /**
@@ -151,25 +152,54 @@ export async function createMission(input: CreateMissionInput): Promise<MissionS
     },
   });
 
-  let tasks: MissionTask[];
-  let planned: Awaited<ReturnType<typeof planWithModel>> | null = null;
-  if (plan === 'model') {
-    const registry = getRegistry();
-    await registry.sweep();
-    // A plan the compiler rejects is a failed mission with a reason, never a
-    // silent fall back to the benchmark's plan.
-    planned = await planWithModel({ spec, goal: input.goal, repositoryRoot, registry });
-    tasks = planned.tasks;
-  } else {
-    tasks = buildFixturePlan(spec.id);
-  }
-  const state = createMissionState(spec, tasks);
-  if (planned) announcePlan(state, planned.planner, tasks, planned.planText);
-
-  missions.set(spec.id, { state, running: false });
+  // A model-planned mission is admitted first and planned second: the caller
+  // gets the id at once and watches the plan arrive in the event stream, rather
+  // than holding a request open for as long as a planner takes. The mission is
+  // PLANNING until the plan is validated, then QUEUED; a plan the compiler
+  // rejects fails the mission with the reason, never a silent fall back to the
+  // benchmark's plan.
+  const state = createMissionState(spec, plan === 'model' ? [] : buildFixturePlan(spec.id));
+  const entry: Entry = { state, running: false };
+  missions.set(spec.id, entry);
   if (input.idempotencyKey) idempotency.set(input.idempotencyKey, spec.id);
 
+  if (plan === 'model') {
+    state.status = 'PLANNING';
+    state.events.emit('worker.progress', `Planning: reading ${path.basename(repositoryRoot)} and asking a model for the task graph`);
+    void planInBackground(entry, input.goal, repositoryRoot);
+  }
+
   return snapshotMission(state);
+}
+
+async function planInBackground(entry: Entry, goal: string, repositoryRoot: string): Promise<void> {
+  const { state } = entry;
+  try {
+    const registry = getRegistry();
+    await registry.sweep();
+    const planned = await planWithModel({ spec: state.spec, goal, repositoryRoot, registry });
+    state.tasks = planned.tasks;
+    for (const task of planned.tasks) {
+      state.events.emit('task.created', `Task: ${task.title}`, {
+        taskId: task.id,
+        data: { category: task.category, dependencies: task.dependencies, fileScope: task.fileScope },
+      });
+    }
+    announcePlan(state, planned.planner, planned.tasks, planned.planText);
+    state.status = 'QUEUED';
+  } catch (err) {
+    state.status = 'FAILED';
+    state.completedAt = Date.now();
+    state.events.emit('mission.failed', `Planning failed: ${(err as Error).message.slice(0, 600)}`);
+    await persist(state);
+    return;
+  }
+  // A start requested while the plan was being written takes effect now.
+  const pending = entry.startWhenPlanned;
+  if (pending) {
+    entry.startWhenPlanned = undefined;
+    await startMission(state.spec.id, state.spec.workspaceId, pending);
+  }
 }
 
 /**
@@ -278,6 +308,11 @@ export async function startMission(
     return { started: false, reason: 'not found' };
   }
   if (entry.running) return { started: false, reason: 'already running' };
+  if (entry.state.status === 'PLANNING') {
+    // Honoured the moment the plan is validated; refused if the plan is rejected.
+    entry.startWhenPlanned = opts;
+    return { started: true, reason: 'starts when the plan is ready' };
+  }
   if (entry.state.status !== 'QUEUED') {
     return { started: false, reason: `mission is ${entry.state.status}` };
   }

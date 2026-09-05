@@ -81,9 +81,12 @@ async function main() {
   summary.modelsPreview = modelsText.slice(0, 400);
 
   // ----------------------------------------------------------------- leverage_run
+  // LEVERAGE_GOAL states the outcome for a repository of your own; the default is
+  // the bundled benchmark's goal, which only makes sense for its fixture.
   const goal =
+    process.env.LEVERAGE_GOAL ??
     'Finish the forge-app receipt splitting library so the whole existing test suite passes. ' +
-    'Do not modify any file under test/. Budget: $0. Quality: production.';
+      'Do not modify any file under test/. Budget: $0. Quality: production.';
 
   const started = Date.now();
   const run = await client.callTool({

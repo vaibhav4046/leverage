@@ -23,7 +23,8 @@ export function createMissionState(spec: MissionSpec, tasks: MissionTask[]): Mis
       qualityTarget: spec.quality.target,
     },
   });
-  events.emit('mission.compiled', `Compiled into ${tasks.length} tasks`, {
+  // A mission admitted before its plan exists says so, rather than "0 tasks".
+  events.emit('mission.compiled', tasks.length ? `Compiled into ${tasks.length} tasks` : 'Admitted; the task graph is being planned', {
     data: {
       tasks: tasks.map((t) => ({ id: t.id, title: t.title, dependsOn: t.dependencies })),
     },

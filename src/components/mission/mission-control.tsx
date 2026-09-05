@@ -133,13 +133,15 @@ function PlanOrigin({ snapshot }: { snapshot: MissionSnapshot }) {
   const planner = compiled?.data?.planner as
     | { displayName?: string; costClass?: string; taskCount?: number; durationMs?: number }
     | undefined;
-  return (
-    <div className="mono mt-2 text-[11.5px] text-[var(--color-ash)]">
-      {planner?.displayName
+  const text =
+    snapshot.mission.status === 'PLANNING'
+      ? 'a planner model is reading the repository and writing the task graph'
+      : planner?.displayName
         ? `plan written by ${planner.displayName} (${planner.costClass ?? 'free'}) · ${planner.taskCount ?? snapshot.tasks.length} tasks in ${((planner.durationMs ?? 0) / 1000).toFixed(1)}s`
-        : `committed plan · ${snapshot.tasks.length} tasks`}
-    </div>
-  );
+        : snapshot.tasks.length === 0
+          ? 'no plan was accepted'
+          : `committed plan · ${snapshot.tasks.length} tasks`;
+  return <div className="mono mt-2 text-[11.5px] text-[var(--color-ash)]">{text}</div>;
 }
 
 function MissionHeader({
