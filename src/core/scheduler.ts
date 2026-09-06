@@ -103,6 +103,13 @@ const TRANSPORT_FAILURES = new Set<FailureType>([
 ]);
 
 const DEFAULT_MAX_TRANSPORT_FAILURES = 8;
+
+/**
+ * A worker's answer is a whole module. Reasoning models spend part of this on
+ * thinking before the file, and 3k left a 150-line module as a stub or a cut
+ * regular expression; 8k leaves room for both.
+ */
+const WORKER_MAX_OUTPUT_TOKENS = 8192;
 const DEFAULT_TRANSPORT_BACKOFF_MS = 2_000;
 const MAX_TRANSPORT_BACKOFF_MS = 30_000;
 
@@ -111,7 +118,7 @@ export const DEFAULT_SCHEDULER_OPTIONS: SchedulerOptions = {
   maxAttemptsPerTask: 4,
   maxTransportFailuresPerTask: DEFAULT_MAX_TRANSPORT_FAILURES,
   transportBackoffMs: DEFAULT_TRANSPORT_BACKOFF_MS,
-  workerTimeoutMs: 180_000,
+  workerTimeoutMs: 300_000,
   maxContextTokens: 12_000,
   useRocketRide: true,
 };
@@ -659,7 +666,7 @@ export class MissionScheduler {
     const estimate = adapter.estimate(model, {
       system: ask,
       user: JSON.stringify(bundle).slice(0, 100),
-      maxOutputTokens: 3072,
+      maxOutputTokens: WORKER_MAX_OUTPUT_TOKENS,
       temperature: 0.2,
       timeoutMs: this.opts.workerTimeoutMs,
     });
@@ -728,7 +735,7 @@ export class MissionScheduler {
           {
             system: `You are a ${worker.role}. ${ask}`,
             user: renderBundle(bundle, checkpoint),
-            maxOutputTokens: 3072,
+            maxOutputTokens: WORKER_MAX_OUTPUT_TOKENS,
             temperature: 0.2,
             timeoutMs: this.opts.workerTimeoutMs,
           },
