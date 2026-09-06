@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { PoolAdapter } from '../src/providers/pool';
-import { ProviderHttpError } from '../src/providers/ollama';
+import { ProviderHttpError, classifyHttpish } from '../src/providers/ollama';
 import { isGatewayErrorText } from '../src/core/worker-output';
 
 const GATEWAY_TEXT = '**LLM error** — ValueError: An error occurred with the API.';
@@ -16,6 +16,13 @@ describe('isGatewayErrorText', () => {
     expect(isGatewayErrorText('FILE: src/physics.js\nexport function step() {}')).toBe(false);
     expect(isGatewayErrorText('The LLM error handling lives in provider.js; here is the module:')).toBe(false);
     expect(isGatewayErrorText('')).toBe(false);
+  });
+});
+
+describe('classifyHttpish', () => {
+  it('reads a dropped pipeline stream as a connection failure, not the model\'s fault', () => {
+    expect(classifyHttpish(new Error('Connection closed unexpectedly')).type).toBe('CONNECTION');
+    expect(classifyHttpish(new Error('socket hang up')).type).toBe('CONNECTION');
   });
 });
 

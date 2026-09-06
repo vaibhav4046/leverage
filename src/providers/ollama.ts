@@ -220,7 +220,10 @@ export function classifyHttpish(error: unknown): ProviderFailure {
     if (error.name === 'AbortError' || /abort|cancel/i.test(error.message)) {
       return { type: 'CANCELLED', message: error.message, retryable: false };
     }
-    if (/fetch failed|ECONNREFUSED|ENOTFOUND|network/i.test(error.message)) {
+    // "Connection closed unexpectedly" is what the pipeline SDK says when the
+    // fabric drops the stream; it is the wire failing, so it must not be charged
+    // to the model as UNKNOWN.
+    if (/fetch failed|ECONNREFUSED|ENOTFOUND|ECONNRESET|socket hang up|connection closed|closed unexpectedly|network/i.test(error.message)) {
       return { type: 'CONNECTION', message: error.message, retryable: true };
     }
     return { type: 'UNKNOWN', message: error.message, retryable: false };
