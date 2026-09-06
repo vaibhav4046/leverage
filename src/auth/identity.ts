@@ -23,6 +23,12 @@ export { AuthError, requireWritable, type Identity } from './policy';
 const isProduction = process.env.NODE_ENV === 'production';
 const devAuthEnabled = process.env.LEVERAGE_DEV_AUTH === '1';
 /**
+ * A production build on a private machine (pm2 running `next start` to host
+ * missions locally) may opt back into dev auth with this second flag. It is
+ * never set on a deployment, so the production safety below still holds there.
+ */
+const devAuthInProductionAllowed = process.env.LEVERAGE_DEV_AUTH_IN_PRODUCTION === '1';
+/**
  * The public demo identity.
  *
  * Distinct from dev auth on purpose. Dev auth is a convenience that must never
@@ -57,7 +63,7 @@ export type AuthMode = 'privy' | 'public-demo' | 'dev' | 'unconfigured';
 export function authMode(): AuthMode {
   if (authConfigured()) return 'privy';
   if (publicDemoEnabled) return 'public-demo';
-  if (!isProduction && devAuthEnabled) return 'dev';
+  if ((!isProduction || devAuthInProductionAllowed) && devAuthEnabled) return 'dev';
   return 'unconfigured';
 }
 const privyAppId = process.env.NEXT_PUBLIC_PRIVY_APP_ID;
@@ -74,7 +80,7 @@ export async function requireIdentity(req: NextRequest): Promise<Identity> {
 
   if (publicDemoEnabled) return DEMO_IDENTITY;
 
-  if (isProduction) {
+  if (isProduction && !devAuthInProductionAllowed) {
     // Deliberately fatal. Shipping dev identity to production would be the single
     // worst bug in this codebase, so it is impossible rather than discouraged.
     throw new AuthError(

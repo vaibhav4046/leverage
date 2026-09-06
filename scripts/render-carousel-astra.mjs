@@ -27,6 +27,8 @@ const shots = Object.fromEntries(
 );
 
 const logo = fs.readFileSync(path.resolve('docs/linkedin/brand/rocketride-logo-white.svg'), 'utf8');
+const bannerData = `data:image/png;base64,${fs.readFileSync(path.resolve('docs/shots/banner.png')).toString('base64')}`;
+
 
 function rng(seed) {
   let s = seed >>> 0;
@@ -43,24 +45,6 @@ function specks(seed, n) {
   return `<svg class="specks" viewBox="0 0 1080 1350" width="1080" height="1350">${out}</svg>`;
 }
 
-function galaxy() {
-  const r = rng(7);
-  let out = '';
-  const cx = 540, cy = 840;
-  for (let arm = 0; arm < 2; arm++) {
-    for (let i = 0; i < 1500; i++) {
-      const t = r() * 4.2;
-      const radius = 18 + t * 92 + (r() - 0.5) * 60 * (0.4 + t / 4);
-      const ang = t * 1.9 + arm * Math.PI + (r() - 0.5) * 0.35;
-      const x = cx + Math.cos(ang) * radius * 1.15, y = cy + Math.sin(ang) * radius * 0.78;
-      const s = 0.5 + r() * (t < 1.2 ? 2.2 : 1.4), a = 0.15 + r() * 0.75;
-      const tint = r() < 0.12 ? '#9fb8ff' : r() < 0.2 ? '#ffe4b8' : '#ffffff';
-      out += `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="${s.toFixed(2)}" fill="${tint}" opacity="${a.toFixed(2)}"/>`;
-    }
-  }
-  out += `<circle cx="${cx}" cy="${cy}" r="70" fill="url(#core)"/>`;
-  return `<svg class="galaxy" viewBox="0 0 1080 1350" width="1080" height="1350"><defs><radialGradient id="core"><stop offset="0" stop-color="#fff" stop-opacity="0.95"/><stop offset="0.35" stop-color="#dfe6ff" stop-opacity="0.45"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient></defs>${out}</svg>`;
-}
 
 /* A node-and-edge figure: the harness as it actually sits in the stack. */
 function architecture() {
@@ -133,10 +117,12 @@ const slides = [
   { h: 'The tests are<br>the boss.', sub: 'A task is finished when the test runner says so, not when a model says so. After the last task, the whole suite runs once more. Everything that passed is written into a proof pack you can read.',
     fig: `<div class="trio"><div><b>Exit 0</b><span>or it is not done</span></div><div><b>Whole suite</b><span>runs again at the end</span></div><div><b>Proof pack</b><span>checks, files, hash, spend</span></div></div>` },
   { shot: 'quill', h: 'Tonight it built<br>a chat product.', sub: 'We wrote the tests for a Claude-style assistant: conversations, a context window, rate limits, a model adapter, an HTTP server and the page. Then one message. This is Quill, running against a model on the laptop.' },
-  { shot: 'paper', h: 'Then it wrote<br>a paper.', sub: 'A position paper on delegation in the AGI era, held to tests: the sections, the length, an evidence section that may only quote what a running system recorded, and six real references. Four checks green. The fifth is still red: the worker keeps inventing citations, and the test refuses invented ones. That red mark is the product doing its job.' },
-  { shot: 'mission', h: 'It shows<br>its failures.', sub: 'The first pass on Quill: three of six modules green, fifteen workers hired, every failed one named with its checkpoint. Two short follow-up missions finished the rest. The console never hides a red task, and that is the point.' },
+  { shot: 'saas', h: 'Then a billing SaaS,<br>five agents at once.', sub: 'Plans and entitlements, usage metering, prorated invoices, signed webhooks, tenant isolation. Five independent modules, so the planner ran five workers in parallel. This is the console while they worked.' },
+  { shot: 'guards', h: 'Then, on the live site,<br>one button.', sub: 'A repository with no plan at all. A model writes the task graph, three workers are hired, three tasks pass their own tests, the whole suite runs green, and the RocketRide credits are read from billing before and after: 4129.1 to 4117.1.' },
+  { shot: 'contra', h: 'Then a run-and-gun<br>you can play.', sub: 'Contra Run: physics, bullets, enemies, collisions and the game loop, five modules from a test spec, four of them built in parallel. The canvas shell was given; every line of logic came from workers and passed its tests.' },
+  { shot: 'mario', h: 'Then a platformer.', sub: 'Plumber Bros: a level parsed from ASCII, question blocks, coins, goombas you stomp, a flag to reach. Same recipe: tests first, workers second, nothing counts until the suite is green.' },
   { h: 'Things people<br>hand to it.', sub: 'From the missions it has actually run.',
-    fig: `<div class="list"><div><b>The failing suite before standup</b><span>a four-task repo, seventeen tests, three worker failures survived</span></div><div><b>The physics for a small game</b><span>vector maths, a seeded spawner, a state machine, 22 tests green</span></div><div><b>A chat product from a test spec</b><span>six modules, one mission, running against a local model the same night</span></div><div><b>A paper that may not lie</b><span>structure, references and honesty checked by tests before anyone reads it</span></div></div>` },
+    fig: `<div class="list"><div><b>The failing suite before standup</b><span>a four-task repo, seventeen tests, three worker failures survived</span></div><div><b>The physics for a small game</b><span>vector maths, a seeded spawner, a state machine, 22 tests green</span></div><div><b>A chat product from a test spec</b><span>six modules, one mission, running against a local model the same night</span></div><div><b>Three security guards from one chat message</b><span>open redirect, request forgery, rate limiting, planned in 45 seconds, every test green</span></div></div>` },
   { h: 'It costs what<br>you already pay.', sub: 'Local models on your laptop. Free hosted routes. The subscription seat you have. Set the budget to zero and paid routes are not discouraged, they are removed from the room before the auction starts.',
     fig: `<div class="trio"><div><b>Local</b><span>Ollama, on your machine</span></div><div><b>Free</b><span>hosted routes, swept for the ones that answer</span></div><div><b>Yours</b><span>the seat you already pay for</span></div></div>` },
   { cta: true, h: 'Press the button.', sub: 'A real mission runs on the live site while you watch. Planned by a model, verified by its tests.', url: 'useleverage.vercel.app', foot: 'Links in the first comment.' },
@@ -165,9 +151,23 @@ const css = `
   .foot { position: absolute; left: 84px; right: 84px; bottom: 76px; font-size: 18px; line-height: 1.5; color: #6f7078; }
   .num { position: absolute; right: 84px; top: 68px; font-size: 16px; color: #6f7078; letter-spacing: 0.02em; }
   .brand { position: absolute; left: 84px; top: 64px; font-size: 18px; color: #6f7078; font-weight: 500; letter-spacing: -0.01em; }
+  .k-cover .banner { position: absolute; left: 60px; right: 60px; top: 150px; border-radius: 22px; overflow: hidden; border: 1px solid #1f2026; }
+  .k-cover .banner img { display: block; width: 100%; }
+  .k-cover .hero { position: absolute; left: 84px; right: 84px; top: 470px; }
+  .k-cover .wm { display: flex; align-items: center; gap: 18px; font-size: 92px; font-weight: 600; letter-spacing: -0.045em; line-height: 1; }
+  .k-cover .tag { margin-top: 14px; font-size: 30px; color: #c9cbd1; font-weight: 500; letter-spacing: -0.01em; }
+  .k-cover .line { margin-top: 0; font-size: 26px; color: #c9cbd1; line-height: 1.45; max-width: 900px; }
+  .k-cover .pills { position: absolute; left: 84px; right: 84px; top: 640px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .k-cover .pill { display: inline-flex; border-radius: 6px; overflow: hidden; font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .k-cover .pill i { font-style: normal; background: #1c1d22; color: #c9cbd1; padding: 7px 10px; }
+  .k-cover .pill b { font-weight: 500; color: #0b0c0e; padding: 7px 10px; }
+  .k-cover .pill b.g { background: #4ade80; } .k-cover .pill b.b { background: #85a6e9; }
+  .k-cover .facts { position: absolute; left: 84px; right: 84px; top: 740px; border-collapse: collapse; width: 912px; font-size: 20px; }
+  .k-cover .facts td { padding: 11px 14px; border-top: 1px solid #1f2026; color: #c9cbd1; }
+  .k-cover .facts td:last-child { text-align: right; color: #fff; font-family: 'IBM Plex Mono', monospace; font-weight: 500; }
   .k-cover h1 { top: 120px; font-size: 76px; }
   .k-cover .sub { top: 236px; font-size: 28px; color: #c9cbd1; }
-  .k-cover .built { position: absolute; left: 84px; right: 84px; bottom: 84px; display: flex; align-items: center; gap: 22px; }
+  .k-cover .built { position: absolute; left: 84px; right: 84px; bottom: 52px; display: flex; align-items: center; gap: 22px; }
   .k-cover .built .t { font-size: 17px; color: #9a9ca4; letter-spacing: 0.01em; line-height: 1.4; }
   .k-cover .built .t b { display: block; color: #fff; font-weight: 500; font-size: 19px; }
   .k-cover .built svg { height: 44px; width: auto; }
@@ -184,7 +184,15 @@ const css = `
 function render(s, i) {
   const n = `<div class="brand">Leverage</div><div class="num">${i + 1} / ${slides.length}</div>`;
   if (s.cover) {
-    return `<section class="slide k-cover">${galaxy()}${specks(11, 120)}<h1>${s.h}</h1><div class="sub">${s.sub}</div>
+    const pills = [['live', 'useleverage.vercel.app', 'g'], ['tests', '88 green', 'g'], ['ci', 'passing', 'g'], ['mcp', '5 tools', 'b'], ['rocketride', 'staging verified', 'b'], ['license', 'MIT', 'b']]
+      .map(([k, v, tone]) => `<span class="pill"><i>${k}</i><b class="${tone}">${v}</b></span>`).join('');
+    const rows = [['Paid inference, five recorded missions', '$0.00'], ['Same workload at frontier rates, estimated', '$0.24'], ['Chat product from a test spec', '28 / 28 tests'], ['Billing SaaS, five modules in parallel', '23 / 23 tests'], ['Plan written by a free model', '45.7 s'], ['Workers replaced from a checkpoint', '2 of 2 resumed']]
+      .map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
+    return `<section class="slide k-cover">${specks(11, 120)}
+      <div class="banner"><img src="${bannerData}" alt="Leverage"></div>
+      <div class="hero"><div class="line">The intelligence resource manager under the model you already pay for. Cheaper models do the work. The repository’s own tests decide what counts.</div></div>
+      <div class="pills">${pills}</div>
+      <table class="facts">${rows}</table>
       <div class="built">${logo}<div class="sep"></div><div class="t"><b>Built for the RocketRide x SCU Buildathon</b>Cloud workers run as RocketRide pipelines. Credits read from billing.</div></div></section>`;
   }
   if (s.cta) return `<section class="slide k-cta">${specks(90 + i, 110)}${n}<h1>${s.h}</h1><div class="sub">${s.sub}</div><div class="url">${s.url}</div><div class="foot">${s.foot}</div></section>`;
@@ -197,7 +205,7 @@ function render(s, i) {
   return `<section class="slide">${specks(90 + i, 110)}${n}<h1>${s.h}</h1><div class="sub">${s.sub}</div>${fig}</section>`;
 }
 
-const head = `<!doctype html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=block" rel="stylesheet"><style>${css}</style></head><body>`;
+const head = `<!doctype html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet"><style>${css}</style></head><body>`;
 const html = head + slides.map(render).join('') + '</body></html>';
 
 const browser = await chromium.launch();
