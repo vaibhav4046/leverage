@@ -10,8 +10,27 @@ import { ProductModes, pickMarket } from '@/components/marketing/product-modes';
 import { Evidence } from '@/components/marketing/evidence';
 import { WorkforceMarquee, plannerOf } from '@/components/marketing/workforce-marquee';
 import { Faq } from '@/components/marketing/faq';
+import { Playground, type PlaygroundBuild } from '@/components/marketing/playground';
 import { Install } from '@/components/marketing/install';
 import { LandingFooter, LandingNav } from '@/components/marketing/landing-chrome';
+
+/**
+ * Builds hosted under public/play, from the repositories whose modules Leverage
+ * workers wrote. Quill's page is the shell that was given to the workers'
+ * modules; here it runs on a small browser shim in place of its Node server.
+ */
+const PLAYGROUND_BUILDS: PlaygroundBuild[] = [
+  {
+    id: 'quill',
+    name: 'Quill',
+    kind: 'Chat product',
+    src: '/play/quill/index.html',
+    blurb: 'A Claude-style assistant: conversations, context window, rate limits, model adapter, settings, projects, attachments, streaming.',
+    controls: 'Connect any OpenAI-compatible endpoint',
+    facts: ['53 tests written first', 'modules from Leverage workers, surface given as a shell', 'runs in your browser'],
+    note: 'Your endpoint, key and conversations stay in this browser. There is no key of ours in the page: a public key would be an open relay.',
+  },
+];
 import {
   countTests,
   loadLedger,
@@ -229,6 +248,9 @@ export default async function Home() {
         {/* ---------------------------------------------------------- See it run */}
         <MasterFilm />
         <HandoffFilm />
+
+        {/* ------------------------------------------------------------ Playground */}
+        <Playground builds={PLAYGROUND_BUILDS} />
 
         {/* ------------------------------------------------------------- Handoff */}
         <Section eyebrow="Cognitive handoff" title="Replace the worker, not the project." border>

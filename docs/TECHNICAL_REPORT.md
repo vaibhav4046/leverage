@@ -87,7 +87,7 @@ health endpoint reports the live balance.
 
 | Check | Result |
 |---|---|
-| `npm run verify` | typecheck 0 errors, lint 0 warnings, 88 tests passing (63 invariants, 7 pool guards, 18 planner and verification), production build |
+| `npm run verify` | typecheck 0 errors, lint 0 warnings, 95 tests passing (invariants, pool guards, planner, verification, process control), production build |
 | `npm run verify:rocketride` | real inference through a real pipeline with a real credit delta |
 | Layout audit | 40/40 viewport and console combinations clean across the site |
 | Accessibility audit (axe) | 0 violations on 12 pages |
@@ -163,7 +163,7 @@ Reverse-engineered against staging and recorded in
 
 ```bash
 git clone https://github.com/vaibhav4046/leverage && cd leverage && npm install
-npm run verify                    # 88 tests, typecheck, lint, build
+npm run verify                    # 95 tests, typecheck, lint, build
 npm run mission -- --inject-429 --out=demo/canonical-run.json   # reproduce the recorded run
 claude mcp add leverage -- node /abs/path/to/leverage/mcp/server.ts   # stdio host
 npm run mcp:http                  # Streamable HTTP host for chat connectors, :3200/mcp

@@ -116,10 +116,10 @@ const slides = [
   { h: 'A worker dies.<br>The work does not.', sub: 'When a model hits a limit or fails a test, Leverage writes down what it understood and hands that note to the next one. Nobody starts from zero.', fig: memoryGraph(), figTop: 440 },
   { h: 'The tests are<br>the boss.', sub: 'A task is finished when the test runner says so, not when a model says so. After the last task, the whole suite runs once more. Everything that passed is written into a proof pack you can read.',
     fig: `<div class="trio"><div><b>Exit 0</b><span>or it is not done</span></div><div><b>Whole suite</b><span>runs again at the end</span></div><div><b>Proof pack</b><span>checks, files, hash, spend</span></div></div>` },
-  { shot: 'quill', h: 'Tonight it built<br>a chat product.', sub: 'We wrote the tests for a Claude-style assistant: conversations, a context window, rate limits, a model adapter, an HTTP server and the page. Then one message. This is Quill, running against a model on the laptop.' },
-  { shot: 'saas', h: 'Then a billing SaaS,<br>five agents at once.', sub: 'Plans and entitlements, usage metering, prorated invoices, signed webhooks, tenant isolation. Five independent modules, so the planner ran five workers in parallel. This is the console while they worked.' },
+  { shot: 'quill', h: 'It built<br>a chat product.', sub: 'We wrote the tests for a Claude-style assistant: conversations, a context window, rate limits, a model adapter, an HTTP server, then settings, projects, attachments and streaming. Workers wrote every module; the surface was given as a shell, the way a canvas is. This is Quill, answering from a model on the laptop.' },
+  { shot: 'saas', h: 'Then a billing SaaS,<br>five agents, one mission.', sub: 'Plans and entitlements, usage metering, prorated invoices, signed webhooks, tenant isolation. Five independent modules, so the planner cut five tasks and hired a worker for each, two at a time. This is the console when they were done.' },
   { shot: 'guards', h: 'Then, on the live site,<br>one button.', sub: 'A repository with no plan at all. A model writes the task graph, three workers are hired, three tasks pass their own tests, the whole suite runs green, and the RocketRide credits are read from billing before and after: 4129.1 to 4117.1.' },
-  { shot: 'contra', h: 'Then a run-and-gun<br>you can play.', sub: 'Contra Run: physics, bullets, enemies, collisions and the game loop, five modules from a test spec, four of them built in parallel. The canvas shell was given; every line of logic came from workers and passed its tests.' },
+  { shot: 'contra', h: 'Then a run-and-gun<br>you can play.', sub: 'Contra Run: physics, bullets, enemies, collisions and the game loop, five modules from a test spec, each its own task. The canvas shell was given; every line of logic came from workers and passed its tests. It is playable on the site.' },
   { shot: 'mario', h: 'Then a platformer.', sub: 'Plumber Bros: a level parsed from ASCII, question blocks, coins, goombas you stomp, a flag to reach. Same recipe: tests first, workers second, nothing counts until the suite is green.' },
   { h: 'Things people<br>hand to it.', sub: 'From the missions it has actually run.',
     fig: `<div class="list"><div><b>The failing suite before standup</b><span>a four-task repo, seventeen tests, three worker failures survived</span></div><div><b>The physics for a small game</b><span>vector maths, a seeded spawner, a state machine, 22 tests green</span></div><div><b>A chat product from a test spec</b><span>six modules, one mission, running against a local model the same night</span></div><div><b>Three security guards from one chat message</b><span>open redirect, request forgery, rate limiting, planned in 45 seconds, every test green</span></div></div>` },
@@ -127,6 +127,8 @@ const slides = [
     fig: `<div class="trio"><div><b>Local</b><span>Ollama, on your machine</span></div><div><b>Free</b><span>hosted routes, swept for the ones that answer</span></div><div><b>Yours</b><span>the seat you already pay for</span></div></div>` },
   { cta: true, h: 'Press the button.', sub: 'A real mission runs on the live site while you watch. Planned by a model, verified by its tests.', url: 'useleverage.vercel.app', foot: 'Links in the first comment.' },
 ];
+// A slide whose screenshot was not supplied is left out rather than rendered empty.
+const deck = slides.filter((s) => !s.shot || shots[s.shot]);
 
 const css = `
   @page { size: 1080px 1350px; margin: 0; }
@@ -182,11 +184,11 @@ const css = `
 `;
 
 function render(s, i) {
-  const n = `<div class="brand">Leverage</div><div class="num">${i + 1} / ${slides.length}</div>`;
+  const n = `<div class="brand">Leverage</div><div class="num">${i + 1} / ${deck.length}</div>`;
   if (s.cover) {
-    const pills = [['live', 'useleverage.vercel.app', 'g'], ['tests', '88 green', 'g'], ['ci', 'passing', 'g'], ['mcp', '5 tools', 'b'], ['rocketride', 'staging verified', 'b'], ['license', 'MIT', 'b']]
+    const pills = [['live', 'useleverage.vercel.app', 'g'], ['tests', '97 green', 'g'], ['ci', 'passing', 'g'], ['mcp', '5 tools', 'b'], ['rocketride', 'staging verified', 'b'], ['license', 'MIT', 'b']]
       .map(([k, v, tone]) => `<span class="pill"><i>${k}</i><b class="${tone}">${v}</b></span>`).join('');
-    const rows = [['Paid inference, five recorded missions', '$0.00'], ['Same workload at frontier rates, estimated', '$0.24'], ['Chat product from a test spec', '28 / 28 tests'], ['Billing SaaS, five modules in parallel', '23 / 23 tests'], ['Plan written by a free model', '45.7 s'], ['Workers replaced from a checkpoint', '2 of 2 resumed']]
+    const rows = [['Paid inference, five recorded missions', '$0.00'], ['Same workload at frontier rates, estimated', '$0.24'], ['Chat product from a test spec', '28 / 28 tests'], ['Billing SaaS, five modules, one mission', '23 / 23 tests'], ['Plan written by a free model', '45.7 s'], ['Workers replaced from a checkpoint', '2 of 2 resumed']]
       .map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join('');
     return `<section class="slide k-cover">${specks(11, 120)}
       <div class="banner"><img src="${bannerData}" alt="Leverage"></div>
@@ -206,12 +208,12 @@ function render(s, i) {
 }
 
 const head = `<!doctype html><html><head><meta charset="utf-8"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=block" rel="stylesheet"><style>${css}</style></head><body>`;
-const html = head + slides.map(render).join('') + '</body></html>';
+const html = head + deck.map(render).join('') + '</body></html>';
 
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1080, height: 1350 }, deviceScaleFactor: 2 });
-for (let i = 0; i < slides.length; i++) {
-  await page.setContent(head + render(slides[i], i) + '</body></html>', { waitUntil: 'networkidle' });
+for (let i = 0; i < deck.length; i++) {
+  await page.setContent(head + render(deck[i], i) + '</body></html>', { waitUntil: 'networkidle' });
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(200);
   const file = path.join(outDir, `slide-${String(i + 1).padStart(2, '0')}.png`);
@@ -224,4 +226,4 @@ await page.waitForTimeout(300);
 await page.emulateMedia({ media: 'screen' });
 await page.pdf({ path: path.join(outDir, 'leverage-carousel.pdf'), width: '1080px', height: '1350px', printBackground: true, preferCSSPageSize: true });
 await browser.close();
-console.log(`wrote ${slides.length} slides to ${outDir}; shots: ${Object.keys(shots).join(', ') || 'none'}`);
+console.log(`wrote ${deck.length} slides to ${outDir}; shots: ${Object.keys(shots).join(', ') || 'none'}`);
