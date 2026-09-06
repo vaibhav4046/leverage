@@ -380,11 +380,11 @@ export async function planWithModel(opts: {
     } catch (err) {
       if (err instanceof PlanRejectedError) {
         // An answer that is not JSON at all (truncated, or prose around a broken
-        // object) is not a plan the compiler judged; it is a model that failed
-        // to answer. The next candidate gets the same question. A well-formed
-        // plan the compiler rejects is final: the planner understood the task
-        // and proposed something that cannot be run.
-        if (/not valid JSON|no JSON object/i.test(err.message)) {
+        // object), or one with no tasks in it, is not a plan the compiler judged;
+        // it is a model that failed to answer. The next candidate gets the same
+        // question. A well-formed plan the compiler rejects is final: the planner
+        // understood the task and proposed something that cannot be run.
+        if (/not valid JSON|no JSON object|returned no tasks/i.test(err.message)) {
           skipped.push(`${model.displayName}: ${err.message.slice(0, 140)}`);
           continue;
         }
