@@ -994,6 +994,35 @@ describe('scheduler: provider failures do not spend a task\'s model attempts', (
     expect(JSON.stringify(failed)).not.toMatch(/RATE_LIMIT|provider failures/);
   });
 
+  it('treats a gateway error handed back as the answer as a provider failure, on any execution path', async () => {
+    let calls = 0;
+    const adapter = {
+      estimate: () => ({ estimatedPromptTokens: 100, estimatedCompletionTokens: 100, estimatedCostUsd: 0 }),
+      invoke: async () => {
+        calls += 1;
+        return { text: calls === 1 ? '**LLM error** — ValueError: An error occurred with the API.' : OUTPUT, durationMs: 1 };
+      },
+      classifyError: () => ({ type: 'UNKNOWN' as const, message: 'n/a', retryable: false }),
+    };
+    const models = [model('pool:a', 'free'), model('pool:b', 'free')];
+    const registry = {
+      sweep: async () => {},
+      allModels: () => models,
+      adapterFor: () => adapter,
+      healthFor: () => HEALTHY,
+    } as unknown as ProviderRegistry;
+    const state = createMissionState(mission(), [task('t')]);
+    const scheduler = new MissionScheduler(
+      state,
+      { registry, executor: {} as RocketRideExecutor, reputation: new ReputationStore() },
+      { useRocketRide: false, maxAttemptsPerTask: 1, maxConcurrency: 1, maxTransportFailuresPerTask: 3 },
+    );
+    await scheduler.run();
+    expect(calls).toBe(2);
+    expect(state.workers[0].failureType).toBe('PROVIDER_5XX');
+    expect(state.tasks[0].attemptCount).toBe(1);
+  });
+
   it('still ends the task once the run of provider failures reaches its own cap', async () => {
     const { state, scheduler, calls } = stubScheduler({ failFirst: Infinity, maxTransport: 3 });
     await scheduler.run();

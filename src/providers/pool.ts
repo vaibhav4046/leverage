@@ -10,6 +10,7 @@ import type {
 } from '../core/types';
 import { estimateTokens } from '../core/tokens';
 import { ProviderHttpError, classifyHttpish } from './ollama';
+import { isGatewayErrorText } from '../core/worker-output';
 
 /**
  * OpenAI-compatible free model pool (OmniRoute).
@@ -158,15 +159,6 @@ export class PoolAdapter implements ProviderAdapter {
   classifyError(error: unknown): ProviderFailure {
     return classifyHttpish(error);
   }
-}
-
-/**
- * True when a completion body is an error message in disguise, for example
- * "**LLM error** — ValueError: An error occurred with the API." An answer that
- * merely mentions an error mid-text is not matched; only one that opens with it.
- */
-export function isGatewayErrorText(text: string): boolean {
-  return /^\W{0,4}(LLM|API|Provider|Gateway|Upstream) error\b/i.test(text.trim()) && text.trim().length < 600;
 }
 
 interface PoolSpec {

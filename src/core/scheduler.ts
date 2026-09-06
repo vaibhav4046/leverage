@@ -25,7 +25,7 @@ import { buildCheckpoint, contextReduction, renderCheckpoint } from './checkpoin
 import { ReputationStore } from './reputation';
 import type { ProviderRegistry } from '../providers/registry';
 import type { RocketRideExecutor } from '../rocketride/executor';
-import { parseWorkerOutput, InvalidWorkerOutputError, WORKER_OUTPUT_CONTRACT } from './worker-output';
+import { parseWorkerOutput, InvalidWorkerOutputError, WORKER_OUTPUT_CONTRACT, isGatewayErrorText } from './worker-output';
 import { estimateTokens } from './tokens';
 import type { FaultInjector } from './faults';
 
@@ -725,6 +725,15 @@ export class MissionScheduler {
         );
       }
       return this.failWorker(task, worker, bundle, failure.type, failure.message, checkpoint);
+    }
+
+    // A gateway that hit an upstream error can hand back the error text as the
+    // completion, on either execution path. That is the provider failing, not the
+    // model answering badly: fail the worker as a 5xx so the attempt is given back
+    // instead of charging the model with invalid output.
+    if (isGatewayErrorText(text)) {
+      state.budget.release(reservation);
+      return this.failWorker(task, worker, bundle, 'PROVIDER_5XX', `gateway answered with an error: ${text.trim().slice(0, 160)}`, checkpoint);
     }
 
     // Settle real spend. Local and free both settle at zero but are counted apart.

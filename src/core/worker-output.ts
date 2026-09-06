@@ -62,6 +62,17 @@ Write the whole file, not a diff or a fragment. Do not explain anything outside 
 const FILE_BLOCK =
   /###\s*FILE:\s*([^\n\r]+?)\s*\r?\n\s*```[a-zA-Z0-9]*\s*\r?\n([\s\S]*?)\r?\n?\s*```/g;
 
+/**
+ * True when a completion body is an error message in disguise, for example
+ * "**LLM error** — ValueError: An error occurred with the API." A gateway that
+ * hit an upstream error can hand this back with a 200. An answer that merely
+ * mentions an error mid-text is not matched; only one that opens with it.
+ */
+export function isGatewayErrorText(text: string): boolean {
+  const t = text.trim();
+  return t.length < 600 && /^\W{0,4}(LLM|API|Provider|Gateway|Upstream) error\b/i.test(t);
+}
+
 export function parseWorkerOutput(raw: string): WorkerOutput {
   const fenced = parseFencedFormat(raw);
   if (fenced.files.length > 0) return fenced;

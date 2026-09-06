@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { PoolAdapter, isGatewayErrorText } from '../src/providers/pool';
+import { PoolAdapter } from '../src/providers/pool';
 import { ProviderHttpError } from '../src/providers/ollama';
+import { isGatewayErrorText } from '../src/core/worker-output';
 
 const GATEWAY_TEXT = '**LLM error** — ValueError: An error occurred with the API.';
 
