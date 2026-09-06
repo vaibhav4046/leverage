@@ -9,6 +9,7 @@ import type {
 } from './types';
 import { isCommandAllowed } from './policy';
 import { safeJoin } from './context';
+import { killTree } from './kill-tree';
 
 /**
  * Verification engine.
@@ -238,14 +239,14 @@ export function execArgv(
     const timer = setTimeout(() => {
       if (settled) return;
       settled = true;
-      child.kill('SIGKILL');
+      void killTree(child);
       resolve({ code: 124, stdout, stderr: `${stderr}\ntimed out after ${timeoutMs}ms` });
     }, timeoutMs);
 
     const onAbort = () => {
       if (settled) return;
       settled = true;
-      child.kill('SIGKILL');
+      void killTree(child);
       clearTimeout(timer);
       resolve({ code: 130, stdout, stderr: `${stderr}\ncancelled` });
     };

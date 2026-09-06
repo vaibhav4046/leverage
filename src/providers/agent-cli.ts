@@ -9,6 +9,7 @@ import type {
   UsageEstimate,
 } from '../core/types';
 import { estimateTokens } from '../core/tokens';
+import { killTree } from '../core/kill-tree';
 import { classifyHttpish, ProviderHttpError } from './ollama';
 
 /**
@@ -323,12 +324,12 @@ function run(
     };
 
     const timer = setTimeout(() => {
-      child.kill('SIGKILL');
+      void killTree(child);
       finish(124, `\ntimed out after ${timeoutMs}ms`);
     }, timeoutMs);
 
     const onAbort = () => {
-      child.kill('SIGKILL');
+      void killTree(child);
       finish(130, '\ncancelled');
     };
     signal?.addEventListener('abort', onAbort, { once: true });

@@ -61,6 +61,10 @@ export function getRegistry(): ProviderRegistry {
       ollamaBaseUrl: process.env.OLLAMA_BASE_URL,
       poolBaseUrl: process.env.OMNIROUTE_BASE_URL,
       poolApiKey: process.env.OMNIROUTE_API_KEY ?? 'sk-leverage-pool',
+      // Probing agent CLIs launches each one (claude, codex, gemini, opencode) as a
+      // process of several hundred megabytes. LEVERAGE_AGENT_CLI=0 keeps a small
+      // machine's memory for the missions themselves.
+      agentCli: process.env.LEVERAGE_AGENT_CLI !== '0',
     });
     // Warm the roster as soon as the process has a registry, so the first
     // caller finds a sweep already in flight instead of starting one.
