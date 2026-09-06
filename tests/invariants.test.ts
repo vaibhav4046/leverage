@@ -976,7 +976,7 @@ describe('scheduler: provider failures do not spend a task\'s model attempts', (
     const scheduler = new MissionScheduler(
       state,
       { registry, executor: {} as RocketRideExecutor, reputation: new ReputationStore() },
-      { useRocketRide: false, maxAttemptsPerTask: 1, maxConcurrency: 1, maxTransportFailuresPerTask: input.maxTransport },
+      { useRocketRide: false, maxAttemptsPerTask: 1, maxConcurrency: 1, maxTransportFailuresPerTask: input.maxTransport, transportBackoffMs: 5 },
     );
     return { state, scheduler, calls: () => calls };
   }
@@ -988,6 +988,9 @@ describe('scheduler: provider failures do not spend a task\'s model attempts', (
     expect(calls()).toBe(3);
     expect(state.tasks[0].attemptCount).toBe(1);
     expect(state.workers.filter((w) => w.failureType === 'RATE_LIMIT')).toHaveLength(2);
+    // Each provider failure waits before the next hire, doubling: 5 ms, then 10 ms.
+    const waits = state.events.all().filter((e) => /waiting \d+s before the next hire/.test(e.message));
+    expect(waits).toHaveLength(2);
     // The stub mission has no repository, so the answered attempt fails at
     // verification; what matters is that the rate limits were not what ended it.
     const failed = state.events.all().find((e) => e.type === 'task.failed');
@@ -1015,7 +1018,7 @@ describe('scheduler: provider failures do not spend a task\'s model attempts', (
     const scheduler = new MissionScheduler(
       state,
       { registry, executor: {} as RocketRideExecutor, reputation: new ReputationStore() },
-      { useRocketRide: false, maxAttemptsPerTask: 1, maxConcurrency: 1, maxTransportFailuresPerTask: 3 },
+      { useRocketRide: false, maxAttemptsPerTask: 1, maxConcurrency: 1, maxTransportFailuresPerTask: 3, transportBackoffMs: 5 },
     );
     await scheduler.run();
     expect(calls).toBe(2);

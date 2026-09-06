@@ -62,6 +62,13 @@ export interface SchedulerOptions {
    * 429s says nothing about the workers, so it must not exhaust their budget.
    */
   maxTransportFailuresPerTask?: number;
+  /**
+   * Base of the wait before re-hiring after a provider-side failure, doubled per
+   * failure and capped at 30 s. A route that just said "cooling down" says it
+   * again when asked at once, and eight instant answers would end the task in
+   * seconds. Tests set 0.
+   */
+  transportBackoffMs?: number;
   workerTimeoutMs: number;
   maxContextTokens: number;
   /** Set false to invoke providers directly instead of via RocketRide pipelines. */
@@ -96,11 +103,14 @@ const TRANSPORT_FAILURES = new Set<FailureType>([
 ]);
 
 const DEFAULT_MAX_TRANSPORT_FAILURES = 8;
+const DEFAULT_TRANSPORT_BACKOFF_MS = 2_000;
+const MAX_TRANSPORT_BACKOFF_MS = 30_000;
 
 export const DEFAULT_SCHEDULER_OPTIONS: SchedulerOptions = {
   maxConcurrency: 3,
   maxAttemptsPerTask: 4,
   maxTransportFailuresPerTask: DEFAULT_MAX_TRANSPORT_FAILURES,
+  transportBackoffMs: DEFAULT_TRANSPORT_BACKOFF_MS,
   workerTimeoutMs: 180_000,
   maxContextTokens: 12_000,
   useRocketRide: true,
@@ -427,6 +437,20 @@ export class MissionScheduler {
           );
           this.forceState(task, 'FAILED');
           return;
+        }
+        const base = this.opts.transportBackoffMs ?? DEFAULT_TRANSPORT_BACKOFF_MS;
+        const wait = Math.min(base * 2 ** (transportFailures - 1), MAX_TRANSPORT_BACKOFF_MS);
+        if (wait > 0) {
+          state.events.emit(
+            'worker.progress',
+            `Provider-side failure ${transportFailures}: waiting ${Math.round(wait / 1000)}s before the next hire`,
+            { taskId: task.id },
+          );
+          await new Promise((resolve) => setTimeout(resolve, wait));
+          if (this.cancelled) {
+            this.forceState(task, 'CANCELLED');
+            return;
+          }
         }
       }
 
