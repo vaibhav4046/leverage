@@ -136,8 +136,16 @@ export class PoolAdapter implements ProviderAdapter {
     // content and the answer, if any, in its reasoning field. Take that rather
     // than fail the worker on an empty string.
     const message = body.choices?.[0]?.message;
+    const text = message?.content || message?.reasoning_content || message?.reasoning || '';
+
+    // A gateway that hit an upstream error may still answer 200 with the error
+    // text where the completion should be. That is the provider failing, not the
+    // model answering badly: surface it as a 502 so the scheduler treats it as
+    // transient infrastructure instead of charging the model with bad output.
+    if (isGatewayErrorText(text)) throw new ProviderHttpError(502, text);
+
     return {
-      text: message?.content || message?.reasoning_content || message?.reasoning || '',
+      text,
       promptTokens: body.usage?.prompt_tokens,
       completionTokens: body.usage?.completion_tokens,
       // The router resolves an alias to a concrete model; record what actually ran
@@ -150,6 +158,15 @@ export class PoolAdapter implements ProviderAdapter {
   classifyError(error: unknown): ProviderFailure {
     return classifyHttpish(error);
   }
+}
+
+/**
+ * True when a completion body is an error message in disguise, for example
+ * "**LLM error** — ValueError: An error occurred with the API." An answer that
+ * merely mentions an error mid-text is not matched; only one that opens with it.
+ */
+export function isGatewayErrorText(text: string): boolean {
+  return /^\W{0,4}(LLM|API|Provider|Gateway|Upstream) error\b/i.test(text.trim()) && text.trim().length < 600;
 }
 
 interface PoolSpec {

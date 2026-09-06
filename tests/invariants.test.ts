@@ -948,3 +948,58 @@ describe('scheduler: an empty gate fails and a blown budget stops the hiring', (
     expect(blocked?.message).toMatch(/overshot hard budget/);
   });
 });
+
+describe('scheduler: provider failures do not spend a task\'s model attempts', () => {
+  const OUTPUT = '### FILE: src/t.js\n```\nexport const a = 1;\n```\n';
+
+  function stubScheduler(input: { failFirst: number; maxTransport: number }) {
+    let calls = 0;
+    const adapter = {
+      estimate: () => ({ estimatedPromptTokens: 100, estimatedCompletionTokens: 100, estimatedCostUsd: 0 }),
+      invoke: async () => {
+        calls += 1;
+        if (calls <= input.failFirst) throw new Error('429 from the gateway');
+        return { text: OUTPUT, durationMs: 1 };
+      },
+      classifyError: () => ({ type: 'RATE_LIMIT' as const, message: '429', retryable: true }),
+    };
+    // Two models: a rate-limited one sits out the very next auction, so with a
+    // single model the task would end on "no eligible worker" instead.
+    const models = [model('pool:a', 'free'), model('pool:b', 'free')];
+    const registry = {
+      sweep: async () => {},
+      allModels: () => models,
+      adapterFor: () => adapter,
+      healthFor: () => HEALTHY,
+    } as unknown as ProviderRegistry;
+    const state = createMissionState(mission(), [task('t')]);
+    const scheduler = new MissionScheduler(
+      state,
+      { registry, executor: {} as RocketRideExecutor, reputation: new ReputationStore() },
+      { useRocketRide: false, maxAttemptsPerTask: 1, maxConcurrency: 1, maxTransportFailuresPerTask: input.maxTransport },
+    );
+    return { state, scheduler, calls: () => calls };
+  }
+
+  it('keeps hiring through a run of rate limits although only one model attempt is allowed', async () => {
+    const { state, scheduler, calls } = stubScheduler({ failFirst: 2, maxTransport: 5 });
+    await scheduler.run();
+    // Two providers failed before a model ever answered; the third hire got its answer.
+    expect(calls()).toBe(3);
+    expect(state.tasks[0].attemptCount).toBe(1);
+    expect(state.workers.filter((w) => w.failureType === 'RATE_LIMIT')).toHaveLength(2);
+    // The stub mission has no repository, so the answered attempt fails at
+    // verification; what matters is that the rate limits were not what ended it.
+    const failed = state.events.all().find((e) => e.type === 'task.failed');
+    expect(JSON.stringify(failed)).not.toMatch(/RATE_LIMIT|provider failures/);
+  });
+
+  it('still ends the task once the run of provider failures reaches its own cap', async () => {
+    const { state, scheduler, calls } = stubScheduler({ failFirst: Infinity, maxTransport: 3 });
+    await scheduler.run();
+    expect(calls()).toBe(3);
+    expect(state.tasks[0].state).toBe('FAILED');
+    const failed = state.events.all().find((e) => e.type === 'task.failed');
+    expect(failed?.message).toMatch(/3 provider failures in a row/);
+  });
+});

@@ -56,6 +56,12 @@ export interface SchedulerDeps {
 export interface SchedulerOptions {
   maxConcurrency: number;
   maxAttemptsPerTask: number;
+  /**
+   * How many provider-side failures (rate limits, timeouts, gateway errors) a
+   * task absorbs before it fails. These do not count as model attempts: a run of
+   * 429s says nothing about the workers, so it must not exhaust their budget.
+   */
+  maxTransportFailuresPerTask?: number;
   workerTimeoutMs: number;
   maxContextTokens: number;
   /** Set false to invoke providers directly instead of via RocketRide pipelines. */
@@ -79,9 +85,22 @@ const ATTRIBUTABLE_FAILURES = new Set<FailureType>([
   'TOOL_FAILURE',
 ]);
 
+/** Failures on the provider's side of the wire: the model never got to answer. */
+const TRANSPORT_FAILURES = new Set<FailureType>([
+  'RATE_LIMIT',
+  'QUOTA_EXHAUSTED',
+  'TIMEOUT',
+  'CONNECTION',
+  'PROVIDER_5XX',
+  'AUTH',
+]);
+
+const DEFAULT_MAX_TRANSPORT_FAILURES = 8;
+
 export const DEFAULT_SCHEDULER_OPTIONS: SchedulerOptions = {
   maxConcurrency: 3,
   maxAttemptsPerTask: 4,
+  maxTransportFailuresPerTask: DEFAULT_MAX_TRANSPORT_FAILURES,
   workerTimeoutMs: 180_000,
   maxContextTokens: 12_000,
   useRocketRide: true,
@@ -336,6 +355,8 @@ export class MissionScheduler {
     // when an injected 429 pushed the strongest candidate out of the running.
     let cooldown: string[] = [];
     let checkpoint: CognitiveCheckpoint | undefined;
+    let transportFailures = 0;
+    const maxTransportFailures = this.opts.maxTransportFailuresPerTask ?? DEFAULT_MAX_TRANSPORT_FAILURES;
 
     while (task.attemptCount < this.opts.maxAttemptsPerTask && !this.cancelled) {
       task.attemptCount += 1;
@@ -390,6 +411,23 @@ export class MissionScheduler {
         excluded.push(model.key);
       } else {
         cooldown.push(model.key);
+      }
+
+      if (TRANSPORT_FAILURES.has(outcome.failureType)) {
+        // The provider failed before the model could answer. Give the attempt
+        // back, so four 429s in a row cannot end a task the workers never got to
+        // try, and count the run separately so it still ends somewhere.
+        task.attemptCount -= 1;
+        transportFailures += 1;
+        if (transportFailures >= maxTransportFailures) {
+          state.events.emit(
+            'task.failed',
+            `Task "${task.title}" failed after ${transportFailures} provider failures in a row`,
+            { taskId: task.id, data: { lastFailure: outcome.failureType, transportFailures } },
+          );
+          this.forceState(task, 'FAILED');
+          return;
+        }
       }
 
       if (task.attemptCount >= this.opts.maxAttemptsPerTask) {
