@@ -112,7 +112,7 @@
     return full;
   }
 
-  function streamReply(conv, userContent) {
+  function streamReply(conv) {
     const encoder = new TextEncoder();
     return new ReadableStream({
       async start(controller) {
@@ -203,7 +203,7 @@
         if (conv.title === 'New chat') conv.title = content.slice(0, 40);
         conv.updatedAt = now();
         persist();
-        if (body.stream) return new Response(streamReply(conv, content), { headers: { 'content-type': 'text/event-stream' } });
+        if (body.stream) return new Response(streamReply(conv), { headers: { 'content-type': 'text/event-stream' } });
         try {
           const reply = await callModel(conv);
           const message = { role: 'assistant', content: reply, at: now() };
